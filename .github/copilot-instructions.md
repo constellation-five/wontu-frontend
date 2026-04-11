@@ -61,6 +61,7 @@ pnpm ng generate service service-name
 
 - **Standalone Components**: All new components must use standalone components with explicit `imports` array
 - **Signals**: Use `signal()` for reactive state instead of class properties
+- **Signal Forms**: Prefer Signal forms instead of Reactive or Template-driven ones
 - **Typing**: Always use TypeScript strict mode; type all function parameters and returns
 - **Formatting**: Prettier will auto-format; 100 char line width, single quotes
 - **Angular Templates**: Use modern control flow (`@if`, `@for`, `@switch`) instead of ngIf/ngFor directives
@@ -128,13 +129,23 @@ export class ExampleComponent {
 - [Vitest Documentation](https://vitest.dev)
 - [Tailwind CSS](https://tailwindcss.com)
 
-## Resources
+## Signal Forms
 
-Here are some links to the essentials for building Angular applications. Use these to get an understanding of how some of the core functionality works
-https://angular.dev/essentials/components
-https://angular.dev/essentials/signals
-https://angular.dev/essentials/templates
-https://angular.dev/essentials/dependency-injection
+Angular Signal Forms Implementation Directives
+
+1. Core API. Import form, Field, submit, apply, applyEach, and target validators from @angular/forms/signals.
+
+2. Form Initialization. Declare forms as protected readonly properties. Instantiate using the form<T>() function. Pass an initial value signal and a configuration callback. Syntax: protected readonly targetForm = form<Type>(this.initialSignal, (path) => { ... });.
+
+3. Validation Mapping. Assign validation rules inside the configuration callback using path targeting. Syntax: required(path.fieldName, { message: 'Required' });. Utilize applyEach for array fields and applyWhen for conditional logic.
+
+4. Template Binding. Discard formGroup and formControlName. Bind template inputs using the [field] directive. Syntax: <input [field]="targetForm.fieldName" />.
+
+5. Value Retrieval. Access form states and values directly via signal execution. Syntax: targetForm.fieldName.value().
+
+6. Submission Handling. Manage submission events via the submit() function.
+
+7. Legacy Obsolescence. Do not utilize RxJS Observables, FormGroup, FormControl, or FormBuilder. Restrict all logic to the signal-driven API architecture.
 
 ## Best practices & Style guide
 
@@ -173,7 +184,7 @@ Here is a link to the most recent Angular style guide https://angular.dev/style-
 - Use `computed()` for derived state learn more about signals here https://angular.dev/guide/signals.
 - Set `changeDetection: ChangeDetectionStrategy.OnPush` in `@Component` decorator
 - Prefer inline templates for small components
-- Prefer Reactive forms instead of Template-driven ones
+- Prefer Signal forms instead of Reactive or Template-driven ones
 - Do NOT use `ngClass`, use `class` bindings instead, for context: https://angular.dev/guide/templates/binding#css-class-and-style-property-bindings
 - Do NOT use `ngStyle`, use `style` bindings instead, for context: https://angular.dev/guide/templates/binding#css-class-and-style-property-bindings
 
