@@ -17,6 +17,12 @@
 - Set `ChangeDetectionStrategy.OnPush` on components.
 - Keep strict typing; avoid `any`.
 
+## Naming
+
+- Do not use type suffixes in file names (no `.component`, `.service`, `.pipe`, `.directive`, `.guard`, `.interceptor`, `.module`, `.routing`).
+- Do not use type suffixes in class names (no `Component`, `Service`, `Pipe`, `Directive`, `Guard`, `Interceptor`, `Module`).
+- Prefer concise domain names: `user-profile.ts`, `auth.ts`, `currency-format.ts`; classes like `UserProfile`, `Auth`, `CurrencyFormat`.
+
 ## Project Structure (Respect This Layout)
 
 - Keep app code under `src/app` with `core`, `shared`, `features`, and `app.*`.
@@ -27,50 +33,6 @@
 - Keep `assets`, `environments`, `styles`, `main.ts`, and `index.html` at `src` root.
 - Prefer lazy loading for feature routes.
 - Keep files grouped by feature to reduce coupling and merge conflicts.
-
-### Target Tree
-
-```text
-src/
-	app/
-		core/
-			interceptors/
-			guards/
-			auth.service.ts
-			user.service.ts
-		shared/
-			components/
-				navbar/
-				sidebar/
-			directives/
-			pipes/
-			shared.module.ts
-		features/
-			admin/
-				components/
-				services/
-				admin.module.ts
-				admin-routing.module.ts
-			user/
-				components/
-				services/
-				user.module.ts
-				user-routing.module.ts
-			products/
-				components/
-				services/
-				products.module.ts
-				products-routing.module.ts
-			state/
-				reducers/
-				actions/
-		app.*
-	assets/
-	environments/
-	styles/
-	main.ts
-	index.html
-```
 
 ## Styling and Theming (Material + Tailwind)
 
