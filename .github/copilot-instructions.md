@@ -1,211 +1,114 @@
-# WontuFrontend - Copilot Instructions
+# WontuFrontend Copilot Instructions
 
-## Project Overview
+## Stack
 
-**WontuFrontend** is a modern Angular 21 application using standalone components, Tailwind CSS, and Vitest for testing. It follows current Angular best practices with reactive signals and functional routing.
+- Angular 21 (standalone APIs)
+- pnpm
+- Vitest
+- Tailwind CSS 4
+- Angular Material (required for UI components and theming)
 
-## Technology Stack
+## Core Rules
 
-- **Framework**: Angular 21.2.6
-- **Package Manager**: pnpm (configured in `angular.json`)
-- **Testing**: Vitest 4.0.8 with Angular testing utilities
-- **Styling**: Tailwind CSS 4.1.12 + PostCSS
-- **TypeScript**: 5.9.2
-- **Code Style**: Prettier (100 char printWidth, single quotes, Angular HTML parser)
+- Use standalone components/directives/pipes (no NgModules for app features).
+- Use signals (`signal`, `computed`, `input`, `output`) for local state.
+- Use Signal Forms (`@angular/forms/signals`), not Reactive Forms or Template-driven forms.
+- Use modern control flow (`@if`, `@for`, `@switch`).
+- Set `ChangeDetectionStrategy.OnPush` on components.
+- Keep strict typing; avoid `any`.
 
-## Project Structure
+## Project Structure (Respect This Layout)
 
-```
+- Keep app code under `src/app` with `core`, `shared`, `features`, and `app.*`.
+- `core`: app-wide singleton concerns only (auth, guards, interceptors, cross-app services).
+- `shared`: reusable UI/components/directives/pipes used by multiple features.
+- `features`: domain folders (for example `admin`, `user`, `products`) with local components/services/routes.
+- Add state logic under `src/app/features/state` (`actions`, `reducers`) when needed.
+- Keep `assets`, `environments`, `styles`, `main.ts`, and `index.html` at `src` root.
+- Prefer lazy loading for feature routes.
+- Keep files grouped by feature to reduce coupling and merge conflicts.
+
+### Target Tree
+
+```text
 src/
-├── app/              # Main application component (standalone)
-│   ├── app.ts       # Root component with signals & routing
-│   ├── app.routes.ts # Routing configuration
-│   ├── app.html     # Root template
-│   ├── app.css      # Root styles
-│   └── app.spec.ts  # Tests
-├── main.ts          # Bootstrap entry point
-└── styles.css       # Global styles
-
-public/              # Static assets
+	app/
+		core/
+			interceptors/
+			guards/
+			auth.service.ts
+			user.service.ts
+		shared/
+			components/
+				navbar/
+				sidebar/
+			directives/
+			pipes/
+			shared.module.ts
+		features/
+			admin/
+				components/
+				services/
+				admin.module.ts
+				admin-routing.module.ts
+			user/
+				components/
+				services/
+				user.module.ts
+				user-routing.module.ts
+			products/
+				components/
+				services/
+				products.module.ts
+				products-routing.module.ts
+			state/
+				reducers/
+				actions/
+		app.*
+	assets/
+	environments/
+	styles/
+	main.ts
+	index.html
 ```
 
-## Essential Commands
+## Styling and Theming (Material + Tailwind)
+
+- Use Angular Material for base UI primitives (buttons, inputs, dialogs, menus, tables, etc.).
+- Use Tailwind for layout, spacing, sizing, responsive rules, and utility-level polish.
+- Theme from Material first: define/extend tokens and palettes in `src/material-theme.scss`.
+- Keep shared app-level styles in `src/styles.css`; keep component-specific styles local.
+- Do not replace Material components with custom HTML unless there is a clear product reason.
+- Ensure custom Tailwind utilities respect Material density, typography, and color tokens.
+
+## Accessibility
+
+- Must pass AXE checks.
+- Must meet WCAG AA contrast and keyboard/focus requirements.
+- Prefer accessible Material components before building custom equivalents.
+
+## Commands
 
 ```bash
-# Development
-pnpm start           # Start dev server (http://localhost:4200)
-pnpm run build      # Production build → dist/
-pnpm run watch      # Watch mode for incremental builds
-
-# Testing
-pnpm test           # Run unit tests with Vitest
-
-# Code generation
-pnpm ng generate component component-name
-pnpm ng generate directive directive-name
-pnpm ng generate pipe pipe-name
-pnpm ng generate service service-name
+pnpm start
+pnpm run build
+pnpm run watch
+pnpm test
 ```
 
-## Naming & Conventions
+## File Guide
 
-| Item               | Convention                         | Example                            |
-| ------------------ | ---------------------------------- | ---------------------------------- |
-| Components         | PascalCase, match filename         | `MyComponent` in `my.component.ts` |
-| Component selector | Lowercase with dash, `app-` prefix | `<app-my-component>`               |
-| Files              | kebab-case                         | `my-component.ts`, `my.pipe.ts`    |
-| Services           | PascalCase ending with `Service`   | `UserService`                      |
-| Models/Interfaces  | PascalCase                         | `User`, `ApiResponse`              |
-
-## Code Style Requirements
-
-- **Standalone Components**: All new components must use standalone components with explicit `imports` array
-- **Signals**: Use `signal()` for reactive state instead of class properties
-- **Signal Forms**: Prefer Signal forms instead of Reactive or Template-driven ones
-- **Typing**: Always use TypeScript strict mode; type all function parameters and returns
-- **Formatting**: Prettier will auto-format; 100 char line width, single quotes
-- **Angular Templates**: Use modern control flow (`@if`, `@for`, `@switch`) instead of ngIf/ngFor directives
-
-### Component Template Example
-
-```typescript
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'app-example',
-  standalone: true,
-  imports: [],
-  template: `
-    <div>
-      <h1>{{ title() }}</h1>
-      @if (isVisible()) {
-        <p>Visible content</p>
-      }
-    </div>
-  `,
-  styles: [],
-})
-export class ExampleComponent {
-  protected readonly title = signal('Example');
-  protected readonly isVisible = signal(true);
-}
-```
-
-## Testing Approach
-
-- Use Vitest as the test runner
-- Test files: `*.spec.ts` colocated with source files
-- Utilize Angular testing utilities from `@angular/core/testing`
-- Aim for meaningful tests that verify behavior, not implementation details
-
-## Development Tips
-
-1. **Component Prefix**: Always use `app-` prefix for selectors (configured in `angular.json`)
-2. **Import Updates**: When adding dependencies, ensure they're listed in the component's `imports` array
-3. **Build Size**: Monitor bundle size—Angular budgets are set at 500kB initial, 1MB max
-4. **Hot Reload**: Dev server auto-reloads when source files change
-5. **pnpm Usage**: This project uses pnpm lock file; run `pnpm install` to install dependencies
-
-## When Requesting Code Generation or Analysis
-
-- **Specify component type**: Standalone components are the default
-- **Include templates**: Provide HTML template together with component logic
-- **Type everything**: Ask for full TypeScript typing, no `any` types
-- **Style scope**: Components use scoped styles by default; use `:host` for host styles
-- **Route changes**: Update `app.routes.ts` for any routing modifications
-
-## File Modification Guidelines
-
-- Angular config: [angular.json](angular.json)
-- Root component: [src/app](src/app)
-- Global styles: [src/styles.css](src/styles.css)
-- Dev environment: [src/main.ts](src/main.ts)
-- TypeScript config: [tsconfig.json](tsconfig.json), [tsconfig.app.json](tsconfig.app.json)
+- App entry: `src/main.ts`
+- Root app: `src/app/app.ts`
+- Routes: `src/app/app.routes.ts`
+- Global styles: `src/styles.css`
+- Material theme: `src/material-theme.scss`
+- Config: `angular.json`, `tsconfig.json`, `tsconfig.app.json`
 
 ## References
 
-- [Angular Documentation](https://angular.dev)
-- [Angular CLI](https://angular.dev/tools/cli)
-- [Vitest Documentation](https://vitest.dev)
-- [Tailwind CSS](https://tailwindcss.com)
-
-## Signal Forms
-
-Angular Signal Forms Implementation Directives
-
-1. Core API. Import form, Field, submit, apply, applyEach, and target validators from @angular/forms/signals.
-
-2. Form Initialization. Declare forms as protected readonly properties. Instantiate using the form<T>() function. Pass an initial value signal and a configuration callback. Syntax: protected readonly targetForm = form<Type>(this.initialSignal, (path) => { ... });.
-
-3. Validation Mapping. Assign validation rules inside the configuration callback using path targeting. Syntax: required(path.fieldName, { message: 'Required' });. Utilize applyEach for array fields and applyWhen for conditional logic.
-
-4. Template Binding. Discard formGroup and formControlName. Bind template inputs using the [field] directive. Syntax: <input [field]="targetForm.fieldName" />.
-
-5. Value Retrieval. Access form states and values directly via signal execution. Syntax: targetForm.fieldName.value().
-
-6. Submission Handling. Manage submission events via the submit() function.
-
-7. Legacy Obsolescence. Do not utilize RxJS Observables, FormGroup, FormControl, or FormBuilder. Restrict all logic to the signal-driven API architecture.
-
-## Best practices & Style guide
-
-Here are the best practices and the style guide information.
-
-### Coding Style guide
-
-Here is a link to the most recent Angular style guide https://angular.dev/style-guide
-
-### TypeScript Best Practices
-
-- Use strict type checking
-- Prefer type inference when the type is obvious
-- Avoid the `any` type; use `unknown` when type is uncertain
-
-### Angular Best Practices
-
-- Always use standalone components over `NgModules`
-- Do NOT set `standalone: true` inside the `@Component`, `@Directive` and `@Pipe` decorators
-- Use signals for state management
-- Implement lazy loading for feature routes
-- Do NOT use the `@HostBinding` and `@HostListener` decorators. Put host bindings inside the `host` object of the `@Component` or `@Directive` decorator instead
-- Use `NgOptimizedImage` for all static images.
-  - `NgOptimizedImage` does not work for inline base64 images.
-
-### Accessibility Requirements
-
-- It MUST pass all AXE checks.
-- It MUST follow all WCAG AA minimums, including focus management, color contrast, and ARIA attributes.
-
-### Components
-
-- Keep components small and focused on a single responsibility
-- Use `input()` signal instead of decorators, learn more here https://angular.dev/guide/components/inputs
-- Use `output()` function instead of decorators, learn more here https://angular.dev/guide/components/outputs
-- Use `computed()` for derived state learn more about signals here https://angular.dev/guide/signals.
-- Set `changeDetection: ChangeDetectionStrategy.OnPush` in `@Component` decorator
-- Prefer inline templates for small components
-- Prefer Signal forms instead of Reactive or Template-driven ones
-- Do NOT use `ngClass`, use `class` bindings instead, for context: https://angular.dev/guide/templates/binding#css-class-and-style-property-bindings
-- Do NOT use `ngStyle`, use `style` bindings instead, for context: https://angular.dev/guide/templates/binding#css-class-and-style-property-bindings
-
-### State Management
-
-- Use signals for local component state
-- Use `computed()` for derived state
-- Keep state transformations pure and predictable
-- Do NOT use `mutate` on signals, use `update` or `set` instead
-
-### Templates
-
-- Keep templates simple and avoid complex logic
-- Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`
-- Do not assume globals like (`new Date()`) are available.
-- Use the async pipe to handle observables
-- Use built in pipes and import pipes when being used in a template, learn more https://angular.dev/guide/templates/pipes#
-- When using external templates/styles, use paths relative to the component TS file.
-
-### Services
-
-- Design services around a single responsibility
-- Use the `providedIn: 'root'` option for singleton services
-- Use the `inject()` function instead of constructor injection
+- Angular docs: https://angular.dev
+- Angular style guide: https://angular.dev/style-guide
+- Angular Material docs: https://material.angular.dev
+- Tailwind docs: https://tailwindcss.com
+- Vitest docs: https://vitest.dev
