@@ -13,9 +13,11 @@
 - Use standalone components/directives/pipes (no NgModules for app features).
 - Use signals (`signal`, `computed`, `input`, `output`) for local state.
 - Use Signal Forms (`@angular/forms/signals`), not Reactive Forms or Template-driven forms.
+- Use inject() for DI, not constructor injection.
 - Use modern control flow (`@if`, `@for`, `@switch`).
 - Set `ChangeDetectionStrategy.OnPush` on components.
 - Keep strict typing; avoid `any`.
+- Do not add code explanation comments unless explicitly instructed to. If you do, make them in English, concise, and only for non-obvious code.
 
 ## Naming
 
@@ -38,6 +40,7 @@
 
 - Use Angular Material for base UI primitives (buttons, inputs, dialogs, menus, tables, etc.).
 - Use Tailwind for layout, spacing, sizing, responsive rules, and utility-level polish.
+- Always use Tailwind instead of custom CSS unless a specific style cannot be achieved with Tailwind or requires complex overrides.
 - Theme from Material first: define/extend tokens and palettes in `src/material-theme.scss`.
 - Keep shared app-level styles in `src/styles.css`; keep component-specific styles local.
 - Do not replace Material components with custom HTML unless there is a clear product reason.
