@@ -58,7 +58,8 @@
               "buildTarget": "wontu-frontend:build:production"
             },
             "development": {
-              "buildTarget": "wontu-frontend:build:development"
+              "buildTarget": "wontu-frontend:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
