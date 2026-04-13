@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+@media (max-width: 767.98px) {
+  :host {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+}

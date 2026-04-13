@@ -1,0 +1,16 @@
+.nav-icon {
+  font-variation-settings: 'FILL' 0;
+}
+
+.nav-icon-filled {
+  font-variation-settings: 'FILL' 1;
+}
+
+.nav-item-icon,
+.nav-item-label {
+  color: var(--mat-sys-on-surface) !important;
+}
+
+.nav-item-active {
+  color: var(--mat-sys-primary) !important;
+}
