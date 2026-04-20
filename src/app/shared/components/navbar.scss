@@ -1,0 +1,71 @@
+@use '@angular/material' as mat;
+
+:host {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: block;
+  background-color: var(--mat-sys-surface);
+  border-top: 1px solid color-mix(in srgb, var(--mat-sys-on-surface) 12%, transparent);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (min-width: 768px) {
+  :host {
+    display: none;
+  }
+}
+
+:host ::ng-deep .mat-mdc-tab-link .mdc-tab__ripple::before {
+  opacity: 0 !important;
+}
+
+:host ::ng-deep .mat-mdc-tab-link .mdc-tab__ripple::after {
+  opacity: 0 !important;
+}
+
+.navbar-tabs {
+  @include mat.tabs-overrides(
+    (
+      active-label-text-color: var(--mat-sys-primary),
+      active-focus-label-text-color: var(--mat-sys-primary),
+      active-hover-label-text-color: var(--mat-sys-primary),
+      active-indicator-color: var(--mat-sys-primary),
+      active-focus-indicator-color: var(--mat-sys-primary),
+      active-hover-indicator-color: var(--mat-sys-primary),
+      container-height: 64px,
+    )
+  );
+}
+
+.mat-mdc-tab-link:hover .mdc-tab__ripple::before {
+  opacity: 0 !important;
+}
+
+.mat-mdc-tab-link:focus .mdc-tab__ripple::before,
+.mat-mdc-tab-link:focus .mdc-tab__ripple::after,
+.mat-mdc-tab-link:focus-visible .mdc-tab__ripple::before,
+.mat-mdc-tab-link:focus-visible .mdc-tab__ripple::after {
+  opacity: 0 !important;
+}
+
+:host ::ng-deep .mat-mdc-tab-link .mdc-tab__text-label,
+:host ::ng-deep .mat-mdc-tab-link .mat-icon,
+.nav-icon {
+  transition-property: none !important;
+  transition-duration: 0ms !important;
+}
+
+.nav-icon {
+  font-variation-settings: 'FILL' 0;
+}
+
+.nav-icon-filled {
+  font-variation-settings: 'FILL' 1;
+}
+
+.nav-link-label {
+  letter-spacing: normal !important;
+}

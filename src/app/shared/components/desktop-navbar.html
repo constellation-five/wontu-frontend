@@ -1,0 +1,37 @@
+<nav
+  class="sticky top-0 h-dvh border-r border-[color-mix(in_srgb,var(--mat-sys-on-surface)_12%,transparent)] bg-(--mat-sys-surface) p-3"
+  aria-label="Desktop navigation"
+>
+  <div class="pt-4 mb-6 flex justify-center">
+    <img src="/assets/img/wontulogo.svg" alt="Logo" class="h-24 w-24 object-contain" />
+  </div>
+
+  <mat-nav-list class="p-0!">
+    @for (link of links; track link.path) {
+      <a
+        mat-list-item
+        [routerLink]="link.path"
+        routerLinkActive
+        #rla="routerLinkActive"
+        class="mb-1"
+      >
+        <mat-icon
+          fontSet="material-symbols-outlined"
+          matListItemIcon
+          class="nav-icon nav-item-icon"
+          [class.nav-icon-filled]="rla.isActive"
+          [class.nav-item-active]="rla.isActive"
+        >
+          {{ link.icon }}
+        </mat-icon>
+        <span
+          matListItemTitle
+          class="nav-item-label tracking-normal!"
+          [class.nav-item-active]="rla.isActive"
+        >
+          {{ link.label }}
+        </span>
+      </a>
+    }
+  </mat-nav-list>
+</nav>

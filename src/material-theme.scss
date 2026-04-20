@@ -5,6 +5,12 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
+$brand-primary: #204ece;
+$brand-primary-button: #1c3399;
+$brand-background: #f4f7ff;
+$brand-text-dark: #1c1b1f;
+$brand-text-light: #fdfdfd;
+
 html {
   height: 100%;
   @include mat.theme(
@@ -17,6 +23,29 @@ html {
       density: 0,
     )
   );
+
+  @include mat.theme-overrides(
+    (
+      primary: $brand-primary,
+      on-primary: $brand-text-light,
+      background: $brand-background,
+      surface: $brand-background,
+      on-background: $brand-text-dark,
+      on-surface: $brand-text-dark,
+    )
+  );
+
+  .mat-mdc-unelevated-button.mat-primary,
+  .mat-mdc-raised-button.mat-primary {
+    @include mat.button-overrides(
+      (
+        filled-container-color: $brand-primary-button,
+        filled-label-text-color: $brand-text-light,
+        protected-container-color: $brand-primary-button,
+        protected-label-text-color: $brand-text-light,
+      )
+    );
+  }
 }
 
 body {
