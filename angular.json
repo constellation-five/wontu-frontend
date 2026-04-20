@@ -34,6 +34,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -63,8 +69,7 @@
               "buildTarget": "wontu-frontend:build:production"
             },
             "development": {
-              "buildTarget": "wontu-frontend:build:development",
-              "proxyConfig": "proxy.conf.json"
+              "buildTarget": "wontu-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
