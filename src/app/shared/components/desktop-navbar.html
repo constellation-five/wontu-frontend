@@ -1,5 +1,5 @@
 <nav
-  class="sticky top-0 h-dvh border-r border-[color-mix(in_srgb,var(--mat-sys-on-surface)_12%,transparent)] bg-(--mat-sys-surface) p-3"
+  class="sticky top-0 h-dvh flex flex-col border-r border-[color-mix(in_srgb,var(--mat-sys-on-surface)_12%,transparent)] bg-(--mat-sys-surface) p-3"
   aria-label="Desktop navigation"
 >
   <div class="pt-4 mb-6 flex justify-center">
@@ -34,4 +34,29 @@
       </a>
     }
   </mat-nav-list>
+
+  <div class="mt-auto pb-4">
+    @if (!user()) {
+      <a mat-flat-button routerLink="/sign-in" class="w-full! h-12!"> Sign In </a>
+    } @else {
+      <div
+        class="flex items-center gap-3 px-4 py-2 border-t border-[color-mix(in_srgb,var(--mat-sys-on-surface)_12%,transparent)]"
+      >
+        @if (user()?.avatar) {
+          <img [src]="user()?.avatar" alt="Avatar" class="h-8 w-8 rounded-full" />
+        }
+        <div class="flex flex-col overflow-hidden">
+          <span class="text-sm font-medium text-(--mat-sys-on-surface) truncate">{{
+            user()?.name
+          }}</span>
+          <span class="text-xs text-(--mat-sys-on-surface-variant) truncate"
+            >@{{ user()?.username }}</span
+          >
+        </div>
+        <button mat-icon-button (click)="logout()" class="ml-auto!">
+          <mat-icon fontSet="material-symbols-outlined">logout</mat-icon>
+        </button>
+      </div>
+    }
+  </div>
 </nav>

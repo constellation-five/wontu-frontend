@@ -1,0 +1,11 @@
+<main class="flex min-h-screen flex-col items-center justify-center bg-(--mat-sys-surface) p-4">
+  <div class="flex flex-col items-center gap-4">
+    @if (error()) {
+      <p class="text-red-500">{{ error() }}</p>
+      <a mat-button href="/sign-in">Back to sign in</a>
+    } @else {
+      <mat-spinner diameter="48"></mat-spinner>
+      <p class="text-sm text-(--mat-sys-on-surface-variant)">Completing authentication...</p>
+    }
+  </div>
+</main>

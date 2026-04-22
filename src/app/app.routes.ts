@@ -7,6 +7,9 @@ import { NavbarLayout } from './shared/layouts/navbar-layout';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'offer' },
+  { path: 'sign-in', loadComponent: () => import('./features/auth/sign-in-page') },
+  { path: 'auth/callback', loadComponent: () => import('./features/auth/callback-page') },
+  { path: 'auth/register', loadComponent: () => import('./features/auth/register-page') },
   {
     path: '',
     component: NavbarLayout,
