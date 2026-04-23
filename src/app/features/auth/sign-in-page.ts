@@ -14,6 +14,8 @@ export default class SignInPage {
   private readonly auth = inject(Auth);
 
   signInWithGoogle() {
-    this.auth.googleRedirect();
+    this.auth.initializeCsrf().subscribe(() => {
+      this.auth.googleRedirect();
+    });
   }
 }
