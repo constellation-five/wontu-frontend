@@ -6,57 +6,72 @@
     <img src="/assets/img/wontulogo.svg" alt="Logo" class="h-24 w-24 object-contain" />
   </div>
 
-  <mat-nav-list class="p-0!">
+  <mat-nav-list class="h-full flex! flex-col">
     @for (link of links; track link.path) {
-      <a
-        mat-list-item
-        [routerLink]="link.path"
-        routerLinkActive
-        #rla="routerLinkActive"
-        class="mb-1"
-      >
+      @if (link.path !== '/profile' || user()) {
+        <a
+          mat-list-item
+          [routerLink]="link.path"
+          routerLinkActive
+          #rla="routerLinkActive"
+          class="mb-1"
+        >
+          @if (link.path === '/profile' && user()?.avatar && !avatarError()) {
+            <img
+              [src]="user()?.avatar"
+              alt="Avatar"
+              (error)="onAvatarError()"
+              matListItemIcon
+              class="h-6 w-6 rounded-full object-cover"
+              [class.ring-2]="rla.isActive"
+              [class.ring-offset-1]="rla.isActive"
+              [class.ring-[var(--mat-sys-primary)]]="rla.isActive"
+            />
+          } @else {
+            <mat-icon
+              fontSet="material-symbols-outlined"
+              matListItemIcon
+              [class.nav-icon-filled]="rla.isActive"
+              [class.nav-item-active]="rla.isActive"
+            >
+              {{ link.icon }}
+            </mat-icon>
+          }
+          <span
+            matListItemTitle
+            class="nav-item-label tracking-normal!"
+            [class.nav-item-active]="rla.isActive"
+          >
+            {{ link.label }}
+          </span>
+        </a>
+      }
+    }
+    <button mat-list-item [matMenuTriggerFor]="menu" class="text-left mt-auto mb-1">
+      <mat-icon fontSet="material-symbols-outlined" matListItemIcon> menu </mat-icon>
+      <span matListItemTitle class="nav-item-label tracking-normal!"> More </span>
+    </button>
+
+    @if (!user()) {
+      <a matButton="filled" routerLink="/signin" class="mb-1 text-left justify-start! h-12!">
         <mat-icon
           fontSet="material-symbols-outlined"
           matListItemIcon
-          class="nav-icon nav-item-icon"
-          [class.nav-icon-filled]="rla.isActive"
-          [class.nav-item-active]="rla.isActive"
+          class="w-6! h-6! text-[24px]! mr-4!"
         >
-          {{ link.icon }}
+          login
         </mat-icon>
-        <span
-          matListItemTitle
-          class="nav-item-label tracking-normal!"
-          [class.nav-item-active]="rla.isActive"
-        >
-          {{ link.label }}
-        </span>
+        <span class="text-[1rem]!">Sign In</span>
       </a>
     }
-  </mat-nav-list>
 
-  <div class="mt-auto pb-4">
-    @if (!user()) {
-      <a mat-flat-button routerLink="/signin" class="w-full! h-12!"> Sign In </a>
-    } @else {
-      <div
-        class="flex items-center gap-3 px-4 py-2 border-t border-[color-mix(in_srgb,var(--mat-sys-on-surface)_12%,transparent)]"
-      >
-        @if (user()?.avatar) {
-          <img [src]="user()?.avatar" alt="Avatar" class="h-8 w-8 rounded-full" />
-        }
-        <div class="flex flex-col overflow-hidden">
-          <span class="text-sm font-medium text-(--mat-sys-on-surface) truncate">{{
-            user()?.name
-          }}</span>
-          <span class="text-xs text-(--mat-sys-on-surface-variant) truncate"
-            >@{{ user()?.username }}</span
-          >
-        </div>
-        <button mat-icon-button (click)="logout()" class="ml-auto!">
-          <mat-icon fontSet="material-symbols-outlined">logout</mat-icon>
+    <mat-menu #menu="matMenu">
+      @if (user()) {
+        <button mat-menu-item (click)="logout()">
+          <mat-icon fontSet="material-symbols-outlined"> logout </mat-icon>
+          <span> Sign Out </span>
         </button>
-      </div>
-    }
-  </div>
+      }
+    </mat-menu>
+  </mat-nav-list>
 </nav>
