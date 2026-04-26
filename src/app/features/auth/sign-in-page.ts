@@ -3,11 +3,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Auth } from '../../core/auth';
 import { RouterLink } from '@angular/router';
+import AuthLayout from './auth-layout';
 
 @Component({
   selector: 'sign-in-page',
   templateUrl: './sign-in-page.html',
-  imports: [MatButtonModule, MatIconModule, RouterLink],
+  imports: [MatButtonModule, MatIconModule, RouterLink, AuthLayout],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class SignInPage {

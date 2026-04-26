@@ -4,7 +4,7 @@ import { DesktopNavbar } from './shared/components/desktop-navbar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, DesktopNavbar],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -6,10 +6,10 @@ import { Navbar } from '../components/navbar';
 @Component({
   selector: 'navbar-layout',
   template: `
-    <navbar class="md:hidden" [tabPanel]="tabPanel"></navbar>
-    <mat-tab-nav-panel #tabPanel>
+    <mat-tab-nav-panel #tabPanel class="flex-1">
       <router-outlet />
     </mat-tab-nav-panel>
+    <navbar class="md:hidden" [tabPanel]="tabPanel"></navbar>
   `,
   imports: [RouterOutlet, Navbar, MatTabsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
