@@ -47,13 +47,13 @@
         </a>
       }
     }
-    <button mat-list-item [matMenuTriggerFor]="menu" class="text-left mt-auto mb-1">
-      <mat-icon fontSet="material-symbols-outlined" matListItemIcon> menu </mat-icon>
-      <span matListItemTitle class="nav-item-label tracking-normal!"> More </span>
-    </button>
 
     @if (!user()) {
-      <a matButton="filled" routerLink="/signin" class="mb-1 text-left justify-start! h-12!">
+      <a
+        matButton="filled"
+        routerLink="/signin"
+        class="mt-auto mb-1 text-left justify-start! h-12!"
+      >
         <mat-icon
           fontSet="material-symbols-outlined"
           matListItemIcon
@@ -63,15 +63,21 @@
         </mat-icon>
         <span class="text-[1rem]!">Sign In</span>
       </a>
+    } @else {
+      <button
+        matButton
+        (click)="logout()"
+        class="mt-auto mb-1 text-left justify-start! h-12!"
+      >
+        <mat-icon
+          fontSet="material-symbols-outlined"
+          matListItemIcon
+          class="w-6! h-6! text-[24px]! mr-4!"
+        >
+          logout
+        </mat-icon>
+        <span class="text-[1rem]!">Sign Out</span>
+      </button>
     }
-
-    <mat-menu #menu="matMenu">
-      @if (user()) {
-        <button mat-menu-item (click)="logout()">
-          <mat-icon fontSet="material-symbols-outlined"> logout </mat-icon>
-          <span> Sign Out </span>
-        </button>
-      }
-    </mat-menu>
   </mat-nav-list>
 </nav>
