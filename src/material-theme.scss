@@ -5,21 +5,46 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
-$brand-primary: #204ece;
-$brand-primary-button: #1c3399;
-$brand-background: #f4f7ff;
-$brand-text-dark: #1c1b1f;
-$brand-text-light: #fdfdfd;
+// --- 1. BRAND COLORS ---
+$brand-on-color: #fdfdfd;
 
+$brand-primary: #204ece;
+$brand-primary-container: #dae1ff;
+$brand-on-primary-container: #1c3399;
+
+$brand-secondary: #ea9835;
+$brand-secondary-container: #ffd896;
+$brand-on-secondary-container: #ae6f22;
+
+$brand-tertiary: #f2674a;
+$brand-tertiary-container: #ffdfd9;
+$brand-on-tertiary-container: #bc3c22;
+
+$brand-error: #e00000;
+$brand-error-container: #ffded0;
+$brand-on-error-container: #a42525;
+
+$brand-surface: #fffbfb;
+$brand-surface-dim: #f0eff4;
+$brand-surface-container-lowest: #fdfdfd;
+$brand-surface-container: #f2f2f2;
+$brand-surface-container-high: #d9d9d9;
+$brand-surface-container-highest: #d1d1d6;
+$brand-on-surface: #1c1b1f;
+$brand-on-surface-variant: #828282;
+
+// --- 2. THEME SETUP ---
 html {
   height: 100%;
+
   @include mat.theme(
     (
       color: (
         primary: mat.$azure-palette,
+        //kata gpt ini diemin aja, karena mat.theme() itu butuh palette (warna skala 0–100), bukan cuma 1 warna hex.
         tertiary: mat.$blue-palette,
       ),
-      typography: Roboto,
+      typography: Inter,
       density: 0,
     )
   );
@@ -27,41 +52,136 @@ html {
   @include mat.theme-overrides(
     (
       primary: $brand-primary,
-      on-primary: $brand-text-light,
-      background: $brand-background,
-      surface: $brand-background,
-      on-background: $brand-text-dark,
-      on-surface: $brand-text-dark,
+      on-primary: $brand-on-color,
+      primary-container: $brand-primary-container,
+      on-primary-container: $brand-on-primary-container,
+
+      secondary: $brand-secondary,
+      on-secondary: $brand-on-color,
+      secondary-container: $brand-secondary-container,
+      on-secondary-container: $brand-on-secondary-container,
+
+      tertiary: $brand-tertiary,
+      on-tertiary: $brand-on-color,
+      tertiary-container: $brand-tertiary-container,
+      on-tertiary-container: $brand-on-tertiary-container,
+
+      error: $brand-error,
+      on-error: $brand-on-color,
+      error-container: $brand-error-container,
+      on-error-container: $brand-on-error-container,
+
+      surface: $brand-surface,
+      on-surface: $brand-on-surface,
+      on-surface-variant: $brand-on-surface-variant,
+      surface-dim: $brand-surface-dim,
+      surface-container-lowest: $brand-surface-container-lowest,
+      surface-container: $brand-surface-container,
+      surface-container-high: $brand-surface-container-high,
+      surface-container-highest: $brand-surface-container-highest,
     )
   );
-
-  .mat-mdc-unelevated-button.mat-primary,
-  .mat-mdc-raised-button.mat-primary {
-    @include mat.button-overrides(
-      (
-        filled-container-color: $brand-primary-button,
-        filled-label-text-color: $brand-text-light,
-        protected-container-color: $brand-primary-button,
-        protected-label-text-color: $brand-text-light,
-      )
-    );
-  }
 }
 
+// --- 3. BODY (GRADIENT BACKGROUND) ---
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
   color-scheme: light;
 
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
+  background: linear-gradient(to bottom, #f4f7ff, #f0eff4);
+
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
-
-  // Reset the user agent margin.
   margin: 0;
   height: 100%;
+}
+
+// --- 4. COMPONENT OVERRIDE ---
+.mat-mdc-unelevated-button.mat-primary,
+.mat-mdc-raised-button.mat-primary {
+  @include mat.button-overrides(
+    (
+      filled-container-color: $brand-on-primary-container,
+      filled-label-text-color: $brand-on-color,
+    )
+  );
+}
+
+// --- 5. UTILITY CLASSES (INI YANG DIPAKAI DI HTML) ---
+.text-primary {
+  color: var(--mat-sys-primary);
+}
+.text-on-primary {
+  color: var(--mat-sys-on-primary);
+}
+
+.text-on-surface {
+  color: var(--mat-sys-on-surface);
+}
+.text-on-surface-variant {
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.bg-primary {
+  background-color: var(--mat-sys-on-primary-container);
+}
+.bg-primary-container {
+  background-color: var(--mat-sys-primary-container);
+}
+.bg-surface {
+  background-color: var(--mat-sys-surface-container-lowest);
+}
+
+.text-error {
+  color: var(--mat-sys-error);
+}
+.bg-error {
+  background-color: var(--mat-sys-error);
+}
+
+/* 6. --- TYPOGRAPHY SYSTEM --- */
+/* HEADING */
+.text-h-large {
+  font-size: 20px;
+}
+.text-h-normal {
+  font-size: 16px;
+}
+.text-h-small {
+  font-size: 14px;
+}
+.text-h-xsmall {
+  font-size: 12px;
+}
+
+/* PARAGRAPH */
+.text-p-normal {
+  font-size: 12px;
+}
+.text-p-small {
+  font-size: 10px;
+}
+
+/* LABEL */
+.text-label-normal {
+  font-size: 12px;
+}
+.text-label-small {
+  font-size: 10px;
+}
+.text-label-xsmall {
+  font-size: 8px;
+}
+
+/* FONT WEIGHT */
+.font-regular {
+  font-weight: 400;
+}
+.font-medium {
+  font-weight: 500;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
 }
