@@ -4,6 +4,7 @@ import { MatTabNavPanel, MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { NAV_LINKS } from './nav-links';
 import { Auth } from '../../core/auth';
+import { isProtectedRoute } from '../../core/routes.config';
 
 @Component({
   selector: 'navbar',
@@ -19,6 +20,7 @@ export class Navbar {
   private readonly auth = inject(Auth);
   readonly user = this.auth.user;
   readonly avatarError = signal(false);
+  readonly isProtectedRoute = isProtectedRoute;
 
   onAvatarError() {
     this.avatarError.set(true);

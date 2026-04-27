@@ -83,7 +83,9 @@ export default class CompleteSignUpPage implements OnInit {
 
     this.auth.register(this.model()).subscribe({
       next: () => {
-        this.router.navigate(['/']);
+        const returnUrl = sessionStorage.getItem('authReturnUrl') || '/';
+        sessionStorage.removeItem('authReturnUrl');
+        this.router.navigateByUrl(returnUrl);
       },
       error: (err) => {
         this.error.set(err.error?.message || 'Registration failed');

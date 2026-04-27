@@ -5,6 +5,7 @@ import { ProfilePage } from './features/profile/profile-page';
 import { RequestPage } from './features/request/request-page';
 import { NavbarLayout } from './shared/layouts/navbar-layout';
 import { MainLayout } from './shared/layouts/main-layout';
+import { authGuard } from './core/auth.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'offer' },
@@ -20,8 +21,8 @@ export const routes: Routes = [
         children: [
           { path: 'offer', component: OfferPage },
           { path: 'request', component: RequestPage },
-          { path: 'history', component: HistoryPage },
-          { path: 'profile', component: ProfilePage },
+          { path: 'history', component: HistoryPage, canActivate: [authGuard] },
+          { path: 'profile', component: ProfilePage, canActivate: [authGuard] },
         ],
       },
     ],

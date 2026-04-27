@@ -3,12 +3,15 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { User } from './user';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { isProtectedRoute } from './routes.config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
   private readonly http = inject(HttpClient);
+  private readonly router = inject(Router);
 
   private readonly state = signal<{
     user: User | null;
@@ -67,6 +70,9 @@ export class Auth {
     return this.http.post(`${environment.api}/auth/logout`, {}).pipe(
       tap(() => {
         this.state.update((s) => ({ ...s, user: null }));
+        if (isProtectedRoute(this.router.url)) {
+          this.router.navigate(['/']);
+        }
       }),
     );
   }

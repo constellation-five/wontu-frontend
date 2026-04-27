@@ -1,6 +1,6 @@
 <nav mat-tab-nav-bar class="navbar-tabs" [tabPanel]="tabPanel()" animationDuration="0ms">
   @for (link of links; track link.path) {
-    @if (link.path !== '/profile' || user()) {
+    @if (!isProtectedRoute(link.path) || user()) {
       <a
         mat-tab-link
         [routerLink]="link.path"

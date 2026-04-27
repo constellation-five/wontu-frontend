@@ -8,7 +8,7 @@
 
   <mat-nav-list class="h-full flex! flex-col">
     @for (link of links; track link.path) {
-      @if (link.path !== '/profile' || user()) {
+      @if (!isProtectedRoute(link.path) || user()) {
         <a
           mat-list-item
           [routerLink]="link.path"
@@ -49,9 +49,9 @@
     }
 
     @if (!user()) {
-      <a
+      <button
         matButton="filled"
-        routerLink="/signin"
+        (click)="goToSignIn()"
         class="mt-auto mb-1 text-left justify-start! h-12!"
       >
         <mat-icon
@@ -62,13 +62,9 @@
           login
         </mat-icon>
         <span class="text-[1rem]!">Sign In</span>
-      </a>
+      </button>
     } @else {
-      <button
-        matButton
-        (click)="logout()"
-        class="mt-auto mb-1 text-left justify-start! h-12!"
-      >
+      <button matButton (click)="logout()" class="mt-auto mb-1 text-left justify-start! h-12!">
         <mat-icon
           fontSet="material-symbols-outlined"
           matListItemIcon
