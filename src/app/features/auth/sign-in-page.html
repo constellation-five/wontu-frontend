@@ -1,0 +1,19 @@
+<auth-layout>
+  <div class="mb-8 flex flex-col w-full">
+    <h1 class="text-4xl font-bold tracking-tight text-(--mat-sys-on-surface) text-center">
+      Sign In
+    </h1>
+  </div>
+
+  <button mat-flat-button class="w-full! h-12! text-base! mb-8" (click)="signInWithGoogle()">
+    <mat-icon fontSet="material-symbols-outlined">login</mat-icon>
+    Sign in with Google
+  </button>
+
+  <p class="mt-4 text-center w-full text-xs text-(--mat-sys-on-surface-variant)">
+    By signing in, you agree to our
+    <a routerLink="/terms" class="text-(--mat-sys-primary) hover:underline">Terms of Service</a>
+    and
+    <a routerLink="/privacy" class="text-(--mat-sys-primary) hover:underline">Privacy Policy</a>.
+  </p>
+</auth-layout>

@@ -1,22 +1,36 @@
 <nav mat-tab-nav-bar class="navbar-tabs" [tabPanel]="tabPanel()" animationDuration="0ms">
   @for (link of links; track link.path) {
-    <a
-      mat-tab-link
-      [routerLink]="link.path"
-      routerLinkActive
-      #rla="routerLinkActive"
-      [active]="rla.isActive"
-    >
-      <span class="flex flex-col items-center gap-0.5 py-1 leading-tight">
-        <mat-icon
-          fontSet="material-symbols-outlined"
-          class="nav-icon h-7.5 w-7.5 text-3xl leading-none"
-          [class.nav-icon-filled]="rla.isActive"
-        >
-          {{ link.icon }}
-        </mat-icon>
-        <span class="nav-link-label text-xs font-medium">{{ link.label }}</span>
-      </span>
-    </a>
+    @if (!isProtectedRoute(link.path) || user()) {
+      <a
+        mat-tab-link
+        [routerLink]="link.path"
+        routerLinkActive
+        #rla="routerLinkActive"
+        [active]="rla.isActive"
+      >
+        <span class="flex flex-col items-center gap-0.5 py-1 leading-tight">
+          @if (link.path === '/profile' && user()?.avatar && !avatarError()) {
+            <img
+              [src]="user()?.avatar"
+              alt="Avatar"
+              (error)="onAvatarError()"
+              class="h-6 w-6 rounded-full object-cover"
+              [class.ring-2]="rla.isActive"
+              [class.ring-offset-1]="rla.isActive"
+              [class.ring-[var(--mat-sys-primary)]]="rla.isActive"
+            />
+          } @else {
+            <mat-icon
+              fontSet="material-symbols-outlined"
+              class="nav-icon h-7.5 w-7.5 text-3xl leading-none"
+              [class.nav-icon-filled]="rla.isActive"
+            >
+              {{ link.icon }}
+            </mat-icon>
+          }
+          <span class="nav-link-label text-xs font-medium">{{ link.label }}</span>
+        </span>
+      </a>
+    }
   }
 </nav>

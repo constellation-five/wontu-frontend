@@ -1,0 +1,52 @@
+<auth-layout>
+  @if (fetchingUser()) {
+    <div class="flex flex-col items-center justify-center py-10 w-full">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <div class="mb-8 flex flex-col w-full text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-(--mat-sys-on-surface)">
+        Complete Sign Up
+      </h1>
+      <p class="mt-2 text-sm text-(--mat-sys-on-surface-variant)">
+        Welcome, <strong>{{ model().name || 'User' }}</strong
+        >!
+      </p>
+    </div>
+
+    @if (error()) {
+      <div class="p-3 mb-4 bg-red-100 text-red-700 rounded-md text-sm w-full">
+        {{ error() }}
+      </div>
+    }
+
+    <form (submit)="submit($event)" class="flex flex-col gap-4 w-full">
+      <mat-form-field appearance="outline" class="w-full!">
+        <mat-label>Email</mat-label>
+        <input matInput [formField]="form.email" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full!">
+        <mat-label>Name (optional)</mat-label>
+        <input matInput [formField]="form.name" placeholder="Your display name" />
+        @if (form.name().invalid() && form.name().touched()) {
+          <mat-error>{{ getFirstErrorMessage(form.name().errors()) }}</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full!">
+        <mat-label>Username</mat-label>
+        <input matInput [formField]="form.username" placeholder="Enter a unique username" />
+        @if (form.username().invalid() && form.username().touched()) {
+          <mat-error>{{ getFirstErrorMessage(form.username().errors()) }}</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="mt-4 flex justify-end">
+        <button mat-flat-button class="h-12! w-full!" type="submit" [disabled]="form().invalid()">
+          Finish
+        </button>
+      </div>
+    </form>
+  }
+</auth-layout>

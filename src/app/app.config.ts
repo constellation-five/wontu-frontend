@@ -1,11 +1,31 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  inject,
+  provideAppInitializer,
+} from '@angular/core';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+  withXsrfConfiguration,
+} from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { Auth } from './core/auth';
 
 import { routes } from './app.routes';
+import { credentialsInterceptor } from './core/credentials.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
-  ]
+    provideAnimationsAsync(),
+    provideRouter(routes, withComponentInputBinding()),
+    provideHttpClient(withInterceptors([credentialsInterceptor])),
+    provideAppInitializer(() => {
+      const auth = inject(Auth);
+      return auth.loadUser();
+    }),
+  ],
 };
