@@ -30,15 +30,23 @@ export class Auth {
 
   loadUser() {
     this.state.update((s) => ({ ...s, isLoading: true }));
-    return this.http.get<User>(`${environment.api}/user`).pipe(
-      tap((user) => {
-        this.state.update((s) => ({ ...s, user, isLoading: false }));
-      }),
-      catchError(() => {
-        this.state.update((s) => ({ ...s, user: null, isLoading: false }));
-        return of(null);
-      }),
-    );
+    return this.http
+      .get<User>(`${environment.api}/user`, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          Pragma: 'no-cache',
+          Expires: '0',
+        },
+      })
+      .pipe(
+        tap((user) => {
+          this.state.update((s) => ({ ...s, user, isLoading: false }));
+        }),
+        catchError(() => {
+          this.state.update((s) => ({ ...s, user: null, isLoading: false }));
+          return of(null);
+        }),
+      );
   }
 
   googleRedirect() {
