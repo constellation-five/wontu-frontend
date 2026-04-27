@@ -22,14 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideAnimationsAsync(),
     provideRouter(routes, withComponentInputBinding()),
-    provideHttpClient(
-      withFetch(),
-      withInterceptors([credentialsInterceptor]),
-      withXsrfConfiguration({
-        cookieName: 'XSRF-TOKEN',
-        headerName: 'X-XSRF-TOKEN',
-      }),
-    ),
+    provideHttpClient(withInterceptors([credentialsInterceptor])),
     provideAppInitializer(() => {
       const auth = inject(Auth);
       return auth.loadUser();

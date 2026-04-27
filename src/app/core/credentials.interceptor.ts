@@ -10,13 +10,13 @@ export const credentialsInterceptor: HttpInterceptorFn = (req, next) => {
     let cloned = req.clone({
       withCredentials: true,
       setHeaders: {
-        'Accept': 'application/json'
-      }
+        Accept: 'application/json',
+      },
     });
 
     if (token && req.method !== 'GET' && req.method !== 'HEAD') {
       cloned = cloned.clone({
-        setHeaders: { 'X-XSRF-TOKEN': token }
+        setHeaders: { 'X-XSRF-TOKEN': token },
       });
     }
 
