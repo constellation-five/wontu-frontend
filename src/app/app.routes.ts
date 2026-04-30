@@ -3,6 +3,7 @@ import { HistoryPage } from './features/history/history-page';
 import { OfferPage } from './features/offer/offer-page';
 import { ProfilePage } from './features/profile/profile-page';
 import { RequestPage } from './features/request/request-page';
+import { PaymentMethodPage } from './features/payment-method/payment-method-page';
 import { NavbarLayout } from './shared/layouts/navbar-layout';
 import { MainLayout } from './shared/layouts/main-layout';
 import { authGuard } from './core/auth.guard';
@@ -21,8 +22,16 @@ export const routes: Routes = [
         children: [
           { path: 'offer', component: OfferPage },
           { path: 'request', component: RequestPage },
+          // Halaman-halaman di bawah ini dilindungi oleh authGuard
           { path: 'history', component: HistoryPage, canActivate: [authGuard] },
-          { path: 'profile', component: ProfilePage, canActivate: [authGuard] },
+          { 
+            path: 'profile', 
+            canActivate: [authGuard],
+            children: [
+              { path: '', component: ProfilePage },
+              { path: 'payment-method', component: PaymentMethodPage }
+            ]
+          }
         ],
       },
     ],

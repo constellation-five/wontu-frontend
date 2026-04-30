@@ -130,6 +130,9 @@ body {
 .bg-surface {
   background-color: var(--mat-sys-surface-container-lowest);
 }
+.bg-surface-highest {
+  background-color: var(--mat-sys-surface-container-highest);
+}
 
 .text-error {
   color: var(--mat-sys-error);
