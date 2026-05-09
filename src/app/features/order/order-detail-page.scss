@@ -1,0 +1,72 @@
+section {
+  background-color: transparent;
+
+  .bg-error-container {
+    background-color: var(--mat-sys-error-container);
+  }
+
+  .bg-surface {
+    border: 1px solid var(--mat-sys-surface-container-highest);
+  }
+
+  // Divider Customization
+  mat-divider {
+    border-top-color: var(--mat-sys-surface-container-highest);
+    opacity: 0.5;
+  }
+
+  // Sticky Footer
+  .sticky.bottom-0 {
+    background-color: var(--mat-sys-surface-container-lowest); 
+    border-top: 1px solid var(--mat-sys-surface-container-highest);
+    
+    @media (max-width: 767px) {
+      &::after {
+        content: '';
+        position: absolute;
+        top: 100%; 
+        left: 0;
+        width: 100%;
+        height: 50px; 
+        background-color: var(--mat-sys-surface-container-lowest);
+        z-index: -1; 
+      }
+    }
+  }
+
+  // Image Popup Overlay
+  .backdrop-blur-sm {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+// Custom Status Badge (Perfect Pill Shape)
+  .status-ribbon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px; 
+    
+    padding: 0 16px; 
+    box-sizing: border-box;
+    
+    border-radius: 999px; 
+    
+    font-size: 14px; 
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    color: #ffffff; 
+    white-space: nowrap; 
+    
+    &.pending {
+      background-color: var(--mat-sys-secondary);
+    }
+    
+    &.confirmed {
+      background-color: #4BB34B;
+    }
+    
+    &.completed {
+      background-color: var(--mat-sys-primary);
+    }
+  }
