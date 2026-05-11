@@ -1,4 +1,4 @@
-<nav mat-tab-nav-bar class="navbar-tabs" [tabPanel]="tabPanel()" animationDuration="0ms">
+<nav mat-tab-nav-bar class="bottom-navbar-tabs" [tabPanel]="tabPanel()" animationDuration="0ms">
   @for (link of links; track link.path) {
     @if (!isProtectedRoute(link.path) || user()) {
       <a

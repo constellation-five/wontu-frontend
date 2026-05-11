@@ -7,13 +7,13 @@ import { Auth } from '../../core/auth';
 import { isProtectedRoute } from '../../core/routes.config';
 
 @Component({
-  selector: 'navbar',
-  templateUrl: './navbar.html',
-  styleUrl: './navbar.scss',
+  selector: 'bottom-navbar',
+  templateUrl: './bottom-navbar.html',
+  styleUrl: './bottom-navbar.scss',
   imports: [MatTabsModule, MatIconModule, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Navbar {
+export class BottomNavbar {
   readonly tabPanel = input.required<MatTabNavPanel>();
 
   readonly links = NAV_LINKS;

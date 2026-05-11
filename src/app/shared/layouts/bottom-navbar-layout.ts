@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
-import { Navbar } from '../components/navbar';
+import { BottomNavbar } from '../components/bottom-navbar';
 
 @Component({
-  selector: 'navbar-layout',
+  selector: 'bottom-navbar-layout',
   template: `
     <mat-tab-nav-panel #tabPanel class="flex-1">
       <router-outlet />
     </mat-tab-nav-panel>
-    <navbar class="md:hidden" [tabPanel]="tabPanel"></navbar>
+    <bottom-navbar class="md:hidden" [tabPanel]="tabPanel"></bottom-navbar>
   `,
-  imports: [RouterOutlet, Navbar, MatTabsModule],
+  imports: [RouterOutlet, BottomNavbar, MatTabsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavbarLayout {}
+export class BottomNavbarLayout {}

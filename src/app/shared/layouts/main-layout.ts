@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DesktopNavbar } from '../components/desktop-navbar';
+import { SideNavbar } from '../components/side-navbar';
 
 @Component({
   selector: 'main-layout',
   template: `
     <div class="min-h-dvh md:flex md:bg-(--mat-sys-background)">
       <aside class="hidden md:block md:w-56 md:shrink-0">
-        <desktop-navbar />
+        <side-navbar />
       </aside>
 
       <main class="min-w-0 flex-1 flex flex-col">
@@ -15,7 +15,7 @@ import { DesktopNavbar } from '../components/desktop-navbar';
       </main>
     </div>
   `,
-  imports: [RouterOutlet, DesktopNavbar],
+  imports: [RouterOutlet, SideNavbar],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayout {}

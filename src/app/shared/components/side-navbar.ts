@@ -9,9 +9,9 @@ import { Auth } from '../../core/auth';
 import { isProtectedRoute } from '../../core/routes.config';
 
 @Component({
-  selector: 'desktop-navbar',
-  templateUrl: './desktop-navbar.html',
-  styleUrl: './desktop-navbar.scss',
+  selector: 'side-navbar',
+  templateUrl: './side-navbar.html',
+  styleUrl: './side-navbar.scss',
   imports: [
     MatListModule,
     MatIconModule,
@@ -22,7 +22,7 @@ import { isProtectedRoute } from '../../core/routes.config';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DesktopNavbar {
+export class SideNavbar {
   readonly links = NAV_LINKS;
   private readonly auth = inject(Auth);
   protected readonly router = inject(Router);

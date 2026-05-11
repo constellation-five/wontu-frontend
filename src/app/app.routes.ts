@@ -7,7 +7,7 @@ import { OfferChatPage } from './features/offer/offer-chat/offer-chat';
 import { ProfilePage } from './features/profile/profile-page';
 import { RequestPage } from './features/request/request-page';
 import { PaymentMethodPage } from './features/payment-method/payment-method-page';
-import { NavbarLayout } from './shared/layouts/navbar-layout';
+import { BottomNavbarLayout } from './shared/layouts/bottom-navbar-layout';
 import { MainLayout } from './shared/layouts/main-layout';
 import { authGuard } from './core/auth.guard';
 
@@ -21,7 +21,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: NavbarLayout,
+        component: BottomNavbarLayout,
         children: [
           { path: 'offer', component: OfferPage },
           { path: 'offer/:id', component: OfferDetailPage },

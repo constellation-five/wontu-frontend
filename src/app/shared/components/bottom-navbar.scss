@@ -26,7 +26,7 @@
   opacity: 0 !important;
 }
 
-.navbar-tabs {
+.bottom-navbar-tabs {
   @include mat.tabs-overrides(
     (
       active-label-text-color: var(--mat-sys-primary),
