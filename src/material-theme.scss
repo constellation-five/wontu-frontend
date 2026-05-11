@@ -38,8 +38,129 @@ html {
         surface-container-highest: #cdcfd9,
 
         outline: #7c808c,
-        outline-variant: #b3b8c7
+        outline-variant: #b3b8c7,
+
+        inverse-surface: #383a3f,
+        inverse-on-surface: #fcfdff,
+        inverse-primary: #a8b7fa
       )
     )
   );
+
+  /* Spacing */
+  --spacing-3xs: 2px;
+  --spacing-2xs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 64px;
+
+  /* Rounding */
+  --rounding-xs: 4px;
+  --rounding-sm: 8px;
+  --rounding-md: 16px;
+  --rounding-lg: 32px;
+  --rounding-xl: 64px;
+  --rounding-full: 1000px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 4px 10px rgba(0, 0, 0, 0.5);
+
+  /* Page Margin */
+  --page-margin-sm: 16px;
+  --page-margin-lg: 24px;
+}
+
+/* Headings */
+.text-heading-xl {
+  font-size: 48px;
+  line-height: normal;
+  font-weight: 700;
+}
+.text-heading-lg {
+  font-size: 20px;
+  line-height: normal;
+  font-weight: 700;
+}
+.text-heading-normal {
+  font-size: 16px;
+  line-height: normal;
+  font-weight: 700;
+}
+.text-heading-sm {
+  font-size: 14px;
+  line-height: normal;
+  font-weight: 700;
+}
+
+/* Paragraphs */
+.text-paragraph-lg-regular {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+.text-paragraph-lg-medium {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+.text-paragraph-lg-bold {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+.text-paragraph-normal-regular {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+.text-paragraph-normal-medium {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.text-paragraph-normal-bold {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.text-paragraph-sm-regular {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
+.text-paragraph-sm-medium {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+.text-paragraph-sm-bold {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+}
+
+/* Labels */
+.text-label-lg {
+  font-size: 14px;
+  line-height: normal;
+  font-weight: 500;
+}
+.text-label-normal {
+  font-size: 12px;
+  line-height: normal;
+  font-weight: 500;
+}
+.text-label-sm {
+  font-size: 10px;
+  line-height: normal;
+  font-weight: 500;
 }
