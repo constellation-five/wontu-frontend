@@ -1,175 +1,45 @@
 @use '@angular/material' as mat;
-
-$brand-on-color: #fcfdff;
-
-$brand-primary: #204ece;
-$brand-primary-container: #dae1ff;
-$brand-on-primary-container: #1c3399;
-
-$brand-secondary: #ea9835;
-$brand-secondary-container: #ffd896;
-$brand-on-secondary-container: #ae6f22;
-
-$brand-error: #e00000;
-$brand-error-container: #ffded0;
-$brand-on-error-container: #a42525;
-
-$brand-on-surface: #1c1b1f;
-$brand-on-surface-variant: #828282;
-$brand-surface: #eaedf5;
-$brand-surface-container-lowest: #fbfcff;
-$brand-surface-container-highest: #cdcfd9;
-$brand-surface-container-high: #dde0e7;
-$brand-surface-container: #f0f3fb;
-
-$brand-surface-outline: #7c808c;
-$brand-surface-outline-variant: #b3b8c7;
+@use './_theme-colors' as theme;
 
 html {
-  height: 100%;
-  scrollbar-gutter: stable;
-
   @include mat.theme(
     (
       color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
+        primary: theme.$primary-palette,
+        tertiary: theme.$tertiary-palette,
       ),
       typography: Inter,
       density: 0,
+    ),
+    $overrides: (
+      (
+        primary: #204ece,
+        on-primary: #fcfdff,
+        primary-container: #dbe1f5,
+        on-primary-container: #1c3399,
+
+        secondary: #ea9835,
+        on-secondary: #fcfdff,
+        secondary-container: #ffd896,
+        on-secondary-container: #ae6f22,
+
+        error: #e00000,
+        on-error: #fcfdff,
+        error-container: #ffded0,
+        on-error-container: #a42525,
+
+        background: #eaedf5,
+        surface: #eaedf5,
+        on-surface: #1c1b1f,
+        on-surface-variant: #52555d,
+        surface-container-lowest: #fbfcff,
+        surface-container: #f0f3fb,
+        surface-container-high: #dde0e7,
+        surface-container-highest: #cdcfd9,
+
+        outline: #7c808c,
+        outline-variant: #b3b8c7
+      )
     )
   );
-
-  @include mat.theme-overrides(
-    (
-      primary: $brand-primary,
-      on-primary: $brand-on-color,
-      primary-container: $brand-primary-container,
-      on-primary-container: $brand-on-primary-container,
-
-      secondary: $brand-secondary,
-      on-secondary: $brand-on-color,
-      secondary-container: $brand-secondary-container,
-      on-secondary-container: $brand-on-secondary-container,
-
-      error: $brand-error,
-      on-error: $brand-on-color,
-      error-container: $brand-error-container,
-      on-error-container: $brand-on-error-container,
-
-      surface: $brand-surface,
-      on-surface: $brand-on-surface,
-      on-surface-variant: $brand-on-surface-variant,
-      surface-container-lowest: $brand-surface-container-lowest,
-      surface-container: $brand-surface-container,
-      surface-container-high: $brand-surface-container-high,
-      surface-container-highest: $brand-surface-container-highest,
-      outline-dark : $brand-surface-outline,
-      outline-variant: $brand-surface-outline-variant,
-    )
-  );
-}
-
-body {
-  color-scheme: light;
-
-  background: var(--mat-sys-surface);
-
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-  margin: 0;
-  height: 100%;
-}
-
-.mat-mdc-unelevated-button.mat-primary,
-.mat-mdc-raised-button.mat-primary {
-  @include mat.button-overrides(
-    (
-      filled-container-color: $brand-primary,
-      filled-label-text-color: $brand-on-color,
-    )
-  );
-}
-
-.text-primary {
-  color: var(--mat-sys-primary);
-}
-.text-on-primary {
-  color: var(--mat-sys-on-primary);
-}
-
-.bg-on-color {
-  background-color: var(--mat-sys-on-primary);
-}
-.bg-surface {
-  background-color: var(--mat-sys-surface);
-}
-.bg-surface-lowest {
-  background-color: var(--mat-sys-surface-container-lowest);
-}
-.text-on-surface {
-  color: var(--mat-sys-on-surface);
-}
-.text-on-surface-variant {
-  color: var(--mat-sys-on-surface-variant);
-}
-
-.bg-primary {
-  background-color: var(--mat-sys-on-primary-container);
-}
-.bg-primary-container {
-  background-color: var(--mat-sys-primary-container);
-}
-.bg-surface {
-  background-color: var(--mat-sys-surface);
-}
-
-.text-error {
-  color: var(--mat-sys-on-error);
-}
-.bg-error {
-  background-color: var(--mat-sys-error);
-}
-
-.text-h-large {
-  font-size: 20px;
-}
-.text-h-normal {
-  font-size: 16px;
-}
-.text-h-small {
-  font-size: 14px;
-}
-.text-h-xsmall {
-  font-size: 12px;
-}
-
-.text-p-normal {
-  font-size: 12px;
-}
-.text-p-small {
-  font-size: 10px;
-}
-
-.text-label-normal {
-  font-size: 12px;
-}
-.text-label-small {
-  font-size: 10px;
-}
-.text-label-xsmall {
-  font-size: 8px;
-}
-
-.font-regular {
-  font-weight: 400;
-}
-.font-medium {
-  font-weight: 450;
-}
-.font-semibold {
-  font-weight: 550;
-}
-.font-bold {
-  font-weight: 600;
 }
