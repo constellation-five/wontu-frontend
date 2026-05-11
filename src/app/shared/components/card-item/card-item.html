@@ -1,0 +1,66 @@
+<mat-card 
+  [class]="'card-item card-item--' + variant"
+  [class.card-item--out-of-stock]="isOutOfStock"
+  (click)="handleCardClick()">
+  
+  <mat-card-content>
+    <div class="card-item__image-container">
+      <img 
+        [src]="item.image_url" 
+        [alt]="item.item_name"
+        class="card-item__image">
+    </div>
+    
+    <ng-container *ngIf="variant === 'home'">
+      <div class="card-item__badge font-medium">{{ category }}</div>
+      <h3 class="card-item__title font-bold">{{ merchantName }}</h3>
+      <p class="card-item__time font-medium">{{ arrivalTime }}</p>
+      
+      <div class="card-item__footer-home">
+        <span class="card-item__price-range font-bold">{{ priceRange }}</span>
+        <button 
+          mat-icon-button 
+          class="card-item__arrow-btn"
+          (click)="handleCardClick(); $event.stopPropagation()">
+          <mat-icon fontSet="material-symbols-outlined">arrow_forward</mat-icon>
+        </button>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="variant === 'detail'">
+      <h3 class="card-item__title font-medium">{{ item.item_name }}</h3>
+      <span class="card-item__price font-bold">Rp {{ item.item_price | number:'1.0-0' }}</span>
+    
+      <div class="card-item__footer">
+        <div class="card-item__stock">
+          <span *ngIf="stockRemaining > 5">
+            Stock: <span class="card-item__stock-number font-medium">{{ stockRemaining }} left</span>
+          </span>
+          <span *ngIf="stockRemaining > 0 && stockRemaining <= 5" class="card-item__stock-low">
+            Stock: <span class="card-item__stock-number font-medium">{{ stockRemaining }} left</span>
+          </span>
+          <span *ngIf="stockRemaining === 0" class="card-item__stock-out font-medium">
+            Out of Stock
+          </span>
+        </div>
+        
+        <div *ngIf="!isInCart" class="card-item__add-wrapper">
+          <button 
+            mat-flat-button 
+            class="card-item__add-btn"
+            [disabled]="isOutOfStock"
+            (click)="handleAdd()">
+            <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+            Add
+          </button>
+        </div>
+
+        <div *ngIf="isInCart" class="card-item__add-wrapper">
+          <div class="card-item__item-count font-medium">
+            {{ quantity }} {{ quantity === 1 ? 'item' : 'items' }}
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

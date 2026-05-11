@@ -1,0 +1,92 @@
+<!-- SECTION 1: HEADER -->
+<header class="page-header">
+  <!-- Location -->
+  <div class="location-section">
+    <p class="location-label font-medium">Your Location Now</p>
+    <button class="location-btn font-semibold" (click)="onChangeLocation()" type="button">
+      <mat-icon fontSet="material-symbols-outlined">location_on</mat-icon>
+      <span>{{ userLocation }}</span>
+    </button>
+  </div>
+
+  <!-- Search Box -->
+  <div class="search-box">
+    <mat-icon class="search-icon" fontSet="material-symbols-outlined">search</mat-icon>
+    <input
+      type="text"
+      placeholder="Search"
+      [value]="searchQuery"
+      (input)="onSearchChange($event.target.value)"
+      class="search-input"
+    />
+  </div>
+
+  <!-- Notification Bell -->
+  <app-notification-bell
+    [notifications]="userNotifications"
+    (markAllAsRead)="onMarkAllNotificationsRead()"
+    (markAsRead)="onMarkNotificationAsRead($event)"
+  ></app-notification-bell>
+</header>
+
+<!-- SECTION 2: WELCOME -->
+<section class="welcome">
+  <div class="welcome-left">
+    <h1 class="welcome-text font-bold">
+      Welcome, <span class="name">{{ userName }}</span>
+    </h1>
+    <p class="subtitle font-regular">Find what you need, anytime</p>
+  </div>
+
+  <!-- Filter Dropdown -->
+  <div class="filter-select">
+    <button
+      mat-button
+      [matMenuTriggerFor]="filterMenu"
+      class="filter-button"
+      (menuOpened)="onFilterMenuOpened()"
+      (menuClosed)="onFilterMenuClosed()"
+    >
+      <span>{{ selectedFilterLabel }}</span>
+      <mat-icon fontSet="material-symbols-outlined">
+        {{ isFilterMenuOpen ? 'arrow_drop_up' : 'arrow_drop_down' }}
+      </mat-icon>
+    </button>
+    <mat-menu #filterMenu="matMenu" panelClass="filter-menu-panel">
+      <button mat-menu-item *ngFor="let opt of filterOptions" (click)="onFilterChange(opt.value)">
+        {{ opt.label }}
+      </button>
+    </mat-menu>
+  </div>
+</section>
+
+<!-- SECTION 3: OFFERS LIST -->
+<section class="offers-section">
+  <!-- Loading State -->
+  <div *ngIf="isLoading()" class="loading-container" style="text-align: center; padding: 40px;">
+    <p>Fetching offers...</p>
+  </div>
+
+  <ng-container *ngIf="!isLoading() && filteredOffers.length > 0; else noOffers">
+    <div class="cards-grid">
+      <card-item
+        *ngFor="let offer of filteredOffers"
+        variant="home"
+        [item]="offer.items[0]"
+        [merchantName]="offer.merchant_name || 'Unknown Merchant'"
+        [category]="offer.category"
+        [arrivalTime]="'Arrived at ' + (offer.arrival_time | date:'dd MMM yyyy \'at\' h a')"
+        [priceRange]="getPriceRange(offer)"
+        [offerId]="offer.offer_id"
+        (onCardClick)="onCardClick($event)">
+      </card-item>
+    </div>
+  </ng-container>
+
+  <ng-template #noOffers>
+    <div *ngIf="!isLoading()" class="empty-state">
+      <mat-icon fontSet="material-symbols-outlined">inbox</mat-icon>
+      <p>No Offer</p>
+    </div>
+  </ng-template>
+</section>

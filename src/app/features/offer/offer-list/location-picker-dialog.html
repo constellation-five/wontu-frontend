@@ -1,0 +1,61 @@
+<div class="location-picker-container">
+  <!-- Header -->
+  <div class="location-header">
+    <button mat-icon-button (click)="onCancel()" class="back-btn" type="button">
+      <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
+    </button>
+    <h2 class="header-title">Search Your Location</h2>
+  </div>
+
+  <!-- Content -->
+  <div class="location-content">
+    <!-- Use Current Location Button -->
+    <button
+      class="use-current-btn"
+      (click)="useCurrentLocation()"
+      [disabled]="!hasCoordinates"
+      type="button"
+    >
+      <span class="btn-text">Use my current location</span>
+      <mat-icon fontSet="material-symbols-outlined">send</mat-icon>
+    </button>
+
+    <!-- Location Input -->
+    <div class="input-wrapper">
+      <mat-icon class="search-icon" fontSet="material-symbols-outlined">search</mat-icon>
+      <input
+        type="text"
+        class="location-input"
+        [(ngModel)]="locationInput"
+        placeholder="Choose your location"
+        (input)="onLocationInputChange()"
+        (keyup.enter)="confirmLocation()"
+      />
+      <button *ngIf="locationInput" class="clear-btn" (click)="clearInput()" type="button">
+        <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+      </button>
+    </div>
+
+    <!-- History Location Section -->
+    <div class="history-section" *ngIf="!locationInput">
+      <h3 class="history-title">History Location</h3>
+      <div *ngIf="locationHistory.length > 0; else noHistory" class="history-list">
+        <div *ngFor="let location of locationHistory" class="history-item">
+          <button class="history-btn" (click)="selectHistoryLocation(location)" type="button">
+            {{ location }}
+          </button>
+          <button
+            class="history-remove-btn"
+            (click)="removeHistoryLocation(location)"
+            type="button"
+          >
+            <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+          </button>
+        </div>
+      </div>
+      <ng-template #noHistory>
+        <div class="no-history">You don't have history location</div>
+      </ng-template>
+    </div>
+  </div>
+</div>
