@@ -1,0 +1,129 @@
+<div *ngIf="isLoading()" class="loading-container">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!isLoading()" class="page-container">
+  
+  <app-page-header 
+    [title]="offer()?.merchant_name || ''"
+    [breadcrumbs]="breadcrumbs()"
+    [isLoading]="isLoading()">
+  </app-page-header>
+
+  <div class="main-layout">
+    <div class="menu-section">
+      <div class="menu-grid">
+        <card-item
+          *ngFor="let item of sortedItems()"
+          variant="detail"
+          [item]="item"
+          [isInCart]="isItemInCart(item.item_id)"
+          [quantity]="getItemQuantity(item.item_id)"
+          [isOutOfStock]="(item.slot - item.current_slot) === 0"
+          (onAdd)="addToCart($event)"
+          (onIncrease)="increaseQuantityFromCard($event)"
+          (onDecrease)="decreaseQuantityFromCard($event)">
+        </card-item>
+      </div>
+    </div>
+
+    <aside class="sidebar">
+      <frame-card title="Offer Information" [attr.title]="null">
+        <div class="flex flex-col gap-[5px]">
+          <div class="flex justify-between items-center">
+            <span class="time-label font-regular">Order closes at</span>
+            <span class="time-value font-medium">{{ offer()?.closing_time | date:'dd/MM/yyyy, h a' }}</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="time-label font-regular">Items arrive at</span>
+            <span class="time-value font-medium">{{ offer()?.arrival_time | date:'dd/MM/yyyy, h a' }}</span>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="flex items-center gap-3">
+          <img 
+            [src]="offer()?.seller?.avatar" 
+            [alt]="offer()?.seller?.name"
+            class="seller-avatar">
+          <div class="flex flex-col gap-1">
+            <div class="seller-name font-medium">{{ offer()?.seller?.name }}</div>
+            <div class="flex items-center gap-1">
+              <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
+              <span class="rating-value font-medium">4.9</span>
+              <span class="rating-count font-regular">(100+)</span>
+            </div>
+          </div>
+        </div>
+      </frame-card>
+
+      <frame-card title="Cart" [attr.title]="null">
+        <div *ngIf="cartItems().length > 0; else emptyCart" class="flex flex-col gap-3">
+          <div *ngFor="let cartItem of cartItems()" class="cart-item-card">
+            <img [src]="cartItem.item.image_url" [alt]="cartItem.item.item_name" class="cart-item-image">
+            <div class="cart-item-content">
+              <div class="cart-item-name font-regular">{{ cartItem.item.item_name }}</div>
+              <div *ngIf="cartItem.notes" class="cart-item-notes">Notes: {{ cartItem.notes }}</div>
+              <div class="flex justify-between items-center gap-2">
+                <div class="cart-item-price font-bold">Rp {{ cartItem.item.item_price | number:'1.0-0' }}</div>
+                <div class="flex items-center gap-2">
+                  <button 
+                    mat-icon-button 
+                    class="cart-item-edit-btn"
+                    (click)="editCartItemNotes(cartItem)">
+                    <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+                  </button>
+                  
+                  <div class="cart-item-quantity">
+                    <button 
+                      mat-icon-button 
+                      class="cart-item-qty-btn"
+                      (click)="decreaseQuantity(cartItem)">
+                      <mat-icon fontSet="material-symbols-outlined">remove</mat-icon>
+                    </button>
+                    <span class="cart-item-qty-number">{{ cartItem.quantity }}</span>
+                    <button 
+                      mat-icon-button 
+                      class="cart-item-qty-btn"
+                      [disabled]="isCartItemMaxQuantity(cartItem)"
+                      (click)="increaseQuantity(cartItem)">
+                      <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #emptyCart>
+          <div class="empty-cart">
+            <img src="assets/img/wontusad.svg" alt="Empty cart" class="empty-cart-image">
+            <p>Your cart is empty</p>
+            <span>Start adding some items!</span>
+          </div>
+        </ng-template>
+        
+        <div class="flex flex-col gap-4">
+          <div class="flex justify-between items-center">
+            <span class="total-label font-medium">Total</span>
+            <span class="total-amount font-bold">Rp {{ getCartTotal() | number }}</span>
+          </div>
+          <div class="w-full">
+            <button 
+              mat-flat-button 
+              class="place-order-btn"
+              [disabled]="cartItems().length === 0"
+              (click)="placeOrder()">
+              <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+              Place Order
+            </button>
+          </div>
+        </div>
+      </frame-card>
+
+    </aside>
+  </div>
+
+</div>

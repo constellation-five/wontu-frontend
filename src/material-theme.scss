@@ -1,12 +1,6 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
-// --- 1. BRAND COLORS ---
-$brand-on-color: #fdfdfd;
+$brand-on-color: #fcfdff;
 
 $brand-primary: #204ece;
 $brand-primary-container: #dae1ff;
@@ -16,32 +10,29 @@ $brand-secondary: #ea9835;
 $brand-secondary-container: #ffd896;
 $brand-on-secondary-container: #ae6f22;
 
-$brand-tertiary: #f2674a;
-$brand-tertiary-container: #ffdfd9;
-$brand-on-tertiary-container: #bc3c22;
-
 $brand-error: #e00000;
 $brand-error-container: #ffded0;
 $brand-on-error-container: #a42525;
 
-$brand-surface: #fffbfb;
-$brand-surface-dim: #f0eff4;
-$brand-surface-container-lowest: #fdfdfd;
-$brand-surface-container: #f2f2f2;
-$brand-surface-container-high: #d9d9d9;
-$brand-surface-container-highest: #d1d1d6;
 $brand-on-surface: #1c1b1f;
 $brand-on-surface-variant: #828282;
+$brand-surface: #eaedf5;
+$brand-surface-container-lowest: #fbfcff;
+$brand-surface-container-highest: #cdcfd9;
+$brand-surface-container-high: #dde0e7;
+$brand-surface-container: #f0f3fb;
 
-// --- 2. THEME SETUP ---
+$brand-surface-outline: #7c808c;
+$brand-surface-outline-variant: #b3b8c7;
+
 html {
   height: 100%;
+  scrollbar-gutter: stable;
 
   @include mat.theme(
     (
       color: (
         primary: mat.$azure-palette,
-        //kata gpt ini diemin aja, karena mat.theme() itu butuh palette (warna skala 0–100), bukan cuma 1 warna hex.
         tertiary: mat.$blue-palette,
       ),
       typography: Inter,
@@ -61,11 +52,6 @@ html {
       secondary-container: $brand-secondary-container,
       on-secondary-container: $brand-on-secondary-container,
 
-      tertiary: $brand-tertiary,
-      on-tertiary: $brand-on-color,
-      tertiary-container: $brand-tertiary-container,
-      on-tertiary-container: $brand-on-tertiary-container,
-
       error: $brand-error,
       on-error: $brand-on-color,
       error-container: $brand-error-container,
@@ -74,20 +60,20 @@ html {
       surface: $brand-surface,
       on-surface: $brand-on-surface,
       on-surface-variant: $brand-on-surface-variant,
-      surface-dim: $brand-surface-dim,
       surface-container-lowest: $brand-surface-container-lowest,
       surface-container: $brand-surface-container,
       surface-container-high: $brand-surface-container-high,
       surface-container-highest: $brand-surface-container-highest,
+      outline-dark : $brand-surface-outline,
+      outline-variant: $brand-surface-outline-variant,
     )
   );
 }
 
-// --- 3. BODY (GRADIENT BACKGROUND) ---
 body {
   color-scheme: light;
 
-  background: linear-gradient(to bottom, #f4f7ff, #f0eff4);
+  background: var(--mat-sys-surface);
 
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
@@ -95,18 +81,16 @@ body {
   height: 100%;
 }
 
-// --- 4. COMPONENT OVERRIDE ---
 .mat-mdc-unelevated-button.mat-primary,
 .mat-mdc-raised-button.mat-primary {
   @include mat.button-overrides(
     (
-      filled-container-color: $brand-on-primary-container,
+      filled-container-color: $brand-primary,
       filled-label-text-color: $brand-on-color,
     )
   );
 }
 
-// --- 5. UTILITY CLASSES (INI YANG DIPAKAI DI HTML) ---
 .text-primary {
   color: var(--mat-sys-primary);
 }
@@ -114,6 +98,9 @@ body {
   color: var(--mat-sys-on-primary);
 }
 
+.bg-surface {
+  background-color: var(--mat-sys-surface);
+}
 .text-on-surface {
   color: var(--mat-sys-on-surface);
 }
@@ -128,21 +115,16 @@ body {
   background-color: var(--mat-sys-primary-container);
 }
 .bg-surface {
-  background-color: var(--mat-sys-surface-container-lowest);
-}
-.bg-surface-highest {
-  background-color: var(--mat-sys-surface-container-highest);
+  background-color: var(--mat-sys-surface);
 }
 
 .text-error {
-  color: var(--mat-sys-error);
+  color: var(--mat-sys-on-error);
 }
 .bg-error {
   background-color: var(--mat-sys-error);
 }
 
-/* 6. --- TYPOGRAPHY SYSTEM --- */
-/* HEADING */
 .text-h-large {
   font-size: 20px;
 }
@@ -156,7 +138,6 @@ body {
   font-size: 12px;
 }
 
-/* PARAGRAPH */
 .text-p-normal {
   font-size: 12px;
 }
@@ -164,7 +145,6 @@ body {
   font-size: 10px;
 }
 
-/* LABEL */
 .text-label-normal {
   font-size: 12px;
 }
@@ -175,16 +155,15 @@ body {
   font-size: 8px;
 }
 
-/* FONT WEIGHT */
 .font-regular {
   font-weight: 400;
 }
 .font-medium {
-  font-weight: 500;
+  font-weight: 450;
 }
 .font-semibold {
-  font-weight: 600;
+  font-weight: 550;
 }
 .font-bold {
-  font-weight: 700;
+  font-weight: 600;
 }

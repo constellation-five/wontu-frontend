@@ -1,0 +1,18 @@
+<div class="progress-container">
+  <div class="progress-steps">
+    <ng-container *ngFor="let step of steps; let i = index; let isLast = last">
+      <!-- Step Circle -->
+      <div class="step-wrapper">
+        <div class="step-circle" [class.completed]="step.completed" [class.active]="i === currentStep">
+          <div class="circle-inner"></div>
+        </div>
+        <span class="step-label font-regular" [class.completed]="step.completed" [class.active]="i === currentStep">
+          {{ step.label }}
+        </span>
+      </div>
+      
+      <!-- Connector Line -->
+      <div *ngIf="!isLast" class="step-connector" [class.completed]="step.completed"></div>
+    </ng-container>
+  </div>
+</div>

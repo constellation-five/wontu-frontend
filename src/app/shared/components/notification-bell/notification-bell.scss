@@ -1,0 +1,192 @@
+// NOTIFICATION BELL COMPONENT STYLES
+// ============================================================================
+
+.notification-button {
+  position: relative;
+  color: var(--mat-sys-on-primary-container);
+  transition: all 0.2s ease-in-out;
+  padding: 0;
+  margin: 0;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  mat-icon {
+    font-size: 24px;
+    height: 24px;
+  }
+}
+
+// NOTIFICATION MENU
+// ============================================================================
+::ng-deep {
+  .notification-menu {
+    .mat-mdc-menu-content {
+      padding: 0 !important;
+      max-width: 400px;
+    }
+  }
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: var(--mat-sys-surface-container);
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--mat-sys-on-surface);
+  }
+
+  .mark-all-btn {
+    padding: 4px;
+    min-width: 32px;
+    min-height: 32px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      color: var(--mat-sys-primary);
+    }
+  }
+}
+
+// NOTIFICATION LIST
+// ============================================================================
+.notification-list {
+  max-height: 400px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--mat-sys-outline-variant);
+    border-radius: 3px;
+
+    &:hover {
+      background: var(--mat-sys-outline);
+    }
+  }
+}
+
+// NOTIFICATION ITEM
+// ============================================================================
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  padding: 12px 16px !important;
+  text-align: left;
+  border-radius: 0 !important;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+  gap: 12px;
+  transition: all 0.2s ease-in-out;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: var(--mat-sys-surface-container);
+  }
+
+  &.unread {
+    background-color: var(--mat-sys-surface-container-low);
+
+    &:hover {
+      background-color: var(--mat-sys-surface-container);
+    }
+  }
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+
+  .notification-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+
+    .notification-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--mat-sys-on-surface);
+    }
+
+    .notification-time {
+      font-size: 11px;
+      color: var(--mat-sys-on-surface-variant);
+      white-space: nowrap;
+    }
+  }
+
+  .notification-message {
+    font-size: 12px;
+    color: var(--mat-sys-on-surface-variant);
+    line-height: 1.4;
+  }
+}
+
+.unread-indicator {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--mat-sys-primary);
+}
+
+// EMPTY STATE
+// ============================================================================
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  color: var(--mat-sys-on-surface-variant);
+
+  mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 8px;
+    opacity: 0.5;
+  }
+
+  p {
+    margin: 0;
+    font-size: 13px;
+  }
+}
+
+// RESPONSIVE DESIGN
+// ============================================================================
+@media (max-width: 480px) {
+  ::ng-deep {
+    .notification-menu {
+      .mat-mdc-menu-content {
+        max-width: 100vw !important;
+      }
+    }
+  }
+
+  .notification-list {
+    max-height: 50vh;
+  }
+}

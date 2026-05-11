@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import { HistoryPage } from './features/history/history-page';
-import { OfferPage } from './features/offer/offer-page';
+import { OfferPage } from './features/offer/offer-list/offer-page';
+import { OfferDetailPage } from './features/offer/offer-detail/offer-detail-page';
+import { OfferCheckoutPage } from './features/offer/offer-checkout/offer-checkout';
+import { OfferChatPage } from './features/offer/offer-chat/offer-chat';
 import { ProfilePage } from './features/profile/profile-page';
 import { RequestPage } from './features/request/request-page';
 import { PaymentMethodPage } from './features/payment-method/payment-method-page';
@@ -21,6 +24,9 @@ export const routes: Routes = [
         component: NavbarLayout,
         children: [
           { path: 'offer', component: OfferPage },
+          { path: 'offer/:id', component: OfferDetailPage },
+          { path: 'offer/:id/checkout', component: OfferCheckoutPage },
+          { path: 'offer/:id/chat', component: OfferChatPage },
           { path: 'request', component: RequestPage },
           // Halaman-halaman di bawah ini dilindungi oleh authGuard
           { path: 'history', component: HistoryPage, canActivate: [authGuard] },
