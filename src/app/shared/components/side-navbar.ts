@@ -43,4 +43,8 @@ export class SideNavbar {
   onAvatarError() {
     this.avatarError.set(true);
   }
+
+  blurItem(event: Event) {
+    (event.currentTarget as HTMLElement)?.blur();
+  }
 }

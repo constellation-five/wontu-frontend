@@ -1,12 +1,9 @@
-<nav
-  class="sticky top-0 h-dvh flex flex-col border-r border-[color-mix(in_srgb,var(--mat-sys-on-surface)_12%,transparent)] bg-(--mat-sys-surface) p-3"
-  aria-label="Desktop navigation"
->
-  <div class="pt-4 mb-6 flex justify-center">
-    <img src="/assets/img/wontulogo.svg" alt="Logo" class="h-24 w-24 object-contain" />
+<nav class="side-nav-container" aria-label="Desktop navigation">
+  <div class="logo-container">
+    <img src="/assets/img/wontulogo.svg" alt="Logo" class="logo-image" />
   </div>
 
-  <mat-nav-list class="h-full flex! flex-col">
+  <mat-nav-list class="nav-list">
     @for (link of links; track link.path) {
       @if (!isProtectedRoute(link.path) || user()) {
         <a
@@ -14,7 +11,9 @@
           [routerLink]="link.path"
           routerLinkActive
           #rla="routerLinkActive"
-          class="mb-1"
+          class="nav-item"
+          [activated]="rla.isActive"
+          (click)="blurItem($event)"
         >
           @if (link.path === '/profile' && user()?.avatar && !avatarError()) {
             <img
@@ -22,58 +21,35 @@
               alt="Avatar"
               (error)="onAvatarError()"
               matListItemIcon
-              class="h-6 w-6 rounded-full object-cover"
-              [class.ring-2]="rla.isActive"
-              [class.ring-offset-1]="rla.isActive"
-              [class.ring-[var(--mat-sys-primary)]]="rla.isActive"
+              class="user-avatar"
+              [class.user-avatar-active]="rla.isActive"
             />
           } @else {
             <mat-icon
               fontSet="material-symbols-outlined"
               matListItemIcon
               [class.nav-icon-filled]="rla.isActive"
-              [class.nav-item-active]="rla.isActive"
             >
               {{ link.icon }}
             </mat-icon>
           }
-          <span
-            matListItemTitle
-            class="nav-item-label tracking-normal!"
-            [class.nav-item-active]="rla.isActive"
-          >
+          <span matListItemTitle class="nav-item-label">
             {{ link.label }}
           </span>
         </a>
       }
     }
-
-    @if (!user()) {
-      <button
-        matButton="filled"
-        (click)="goToSignIn()"
-        class="mt-auto mb-1 text-left justify-start! h-12!"
-      >
-        <mat-icon
-          fontSet="material-symbols-outlined"
-          matListItemIcon
-          class="w-6! h-6! text-[24px]! mr-4!"
-        >
-          login
-        </mat-icon>
-        <span class="text-[1rem]!">Sign In</span>
-      </button>
-    } @else {
-      <button matButton (click)="logout()" class="mt-auto mb-1 text-left justify-start! h-12!">
-        <mat-icon
-          fontSet="material-symbols-outlined"
-          matListItemIcon
-          class="w-6! h-6! text-[24px]! mr-4!"
-        >
-          logout
-        </mat-icon>
-        <span class="text-[1rem]!">Sign Out</span>
-      </button>
-    }
   </mat-nav-list>
+
+  @if (!user()) {
+    <button matButton="filled" (click)="goToSignIn()" class="auth-button">
+      <mat-icon fontSet="material-symbols-outlined" matListItemIcon> login </mat-icon>
+      <span class="auth-label">Sign in</span>
+    </button>
+  } @else {
+    <button matButton (click)="logout()" class="auth-button">
+      <mat-icon fontSet="material-symbols-outlined" matListItemIcon> logout </mat-icon>
+      Sign out
+    </button>
+  }
 </nav>

@@ -6,10 +6,8 @@ import { BottomNavbar } from '../components/bottom-navbar';
 @Component({
   selector: 'bottom-navbar-layout',
   template: `
-    <mat-tab-nav-panel #tabPanel class="flex-1">
-      <router-outlet />
-    </mat-tab-nav-panel>
-    <bottom-navbar class="md:hidden" [tabPanel]="tabPanel"></bottom-navbar>
+    <router-outlet />
+    <bottom-navbar />
   `,
   imports: [RouterOutlet, BottomNavbar, MatTabsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,4 +1,5 @@
 @use '@angular/material' as mat;
+@use '../../../variables' as *;
 
 :host {
   position: fixed;
@@ -6,66 +7,70 @@
   bottom: 0;
   left: 0;
   z-index: 1000;
-  display: block;
-  background-color: var(--mat-sys-surface);
-  border-top: 1px solid color-mix(in srgb, var(--mat-sys-on-surface) 12%, transparent);
-  padding-bottom: env(safe-area-inset-bottom);
-}
+  width: 100%;
+  background-color: var(--mat-sys-surface-container);
+  box-shadow: var(--mat-sys-level2);
+  padding: var(--spacing-sm) var(--spacing-sm);
 
-@media (min-width: 768px) {
-  :host {
+  @media (min-width: $breakpoint-sm) {
     display: none;
   }
 }
 
-:host ::ng-deep .mat-mdc-tab-link .mdc-tab__ripple::before {
-  opacity: 0 !important;
+.bottom-nav-container {
+  width: 100%;
 }
 
-:host ::ng-deep .mat-mdc-tab-link .mdc-tab__ripple::after {
-  opacity: 0 !important;
-}
+.nav-list {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 0;
+  gap: var(--spacing-2xs);
 
-.bottom-navbar-tabs {
-  @include mat.tabs-overrides(
+  @include mat.list-overrides(
     (
-      active-label-text-color: var(--mat-sys-primary),
-      active-focus-label-text-color: var(--mat-sys-primary),
-      active-hover-label-text-color: var(--mat-sys-primary),
-      active-indicator-color: var(--mat-sys-primary),
-      active-focus-indicator-color: var(--mat-sys-primary),
-      active-hover-indicator-color: var(--mat-sys-primary),
-      container-height: 64px,
+      active-indicator-color: var(--mat-sys-primary-container),
+      list-item-one-line-container-height: 60px,
+      list-item-leading-icon-size: 32px,
+      list-item-leading-icon-color: var(--mat-sys-on-surface),
+      list-item-label-text-size: var(--mat-sys-label-medium-size),
+      list-item-label-text-weight: var(--mat-sys-label-medium-weight),
+      list-item-label-text-line-height: var(--mat-sys-label-medium-line-height),
     )
   );
 }
 
-.mat-mdc-tab-link:hover .mdc-tab__ripple::before {
-  opacity: 0 !important;
+.nav-item-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  gap: var(--spacing-2xs);
 }
 
-.mat-mdc-tab-link:focus .mdc-tab__ripple::before,
-.mat-mdc-tab-link:focus .mdc-tab__ripple::after,
-.mat-mdc-tab-link:focus-visible .mdc-tab__ripple::before,
-.mat-mdc-tab-link:focus-visible .mdc-tab__ripple::after {
-  opacity: 0 !important;
+.user-avatar {
+  height: 24px;
+  width: 24px;
+  border-radius: var(--mat-corner-full);
+  object-fit: cover;
+  margin-bottom: 4px;
 }
 
-:host ::ng-deep .mat-mdc-tab-link .mdc-tab__text-label,
-:host ::ng-deep .mat-mdc-tab-link .mat-icon,
-.nav-icon {
-  transition-property: none !important;
-  transition-duration: 0ms !important;
+.user-avatar-active {
+  box-shadow:
+    0 0 0 2px var(--mat-sys-surface),
+    0 0 0 4px var(--mat-sys-primary);
 }
 
 .nav-icon {
   font-variation-settings: 'FILL' 0;
+  width: var(--mat-list-list-item-leading-icon-size, 24px);
+  height: var(--mat-list-list-item-leading-icon-size, 24px);
 }
 
 .nav-icon-filled {
   font-variation-settings: 'FILL' 1;
-}
-
-.nav-link-label {
-  letter-spacing: normal !important;
 }

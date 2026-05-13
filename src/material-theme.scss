@@ -42,7 +42,39 @@ html {
 
         inverse-surface: #383a3f,
         inverse-on-surface: #fcfdff,
-        inverse-primary: #a8b7fa
+        inverse-primary: #a8b7fa,
+
+        headline-large: 500 2.5rem / 3rem Inter,
+        headline-large-line-height: 3rem,
+        headline-large-size: 2.5rem,
+        headline-large-weight: 500,
+        headline-medium: 500 2rem / 2.5rem Inter,
+        headline-medium-line-height: 2.5rem,
+        headline-medium-size: 2rem,
+        headline-medium-weight: 500,
+        headline-small: 500 1.5rem / 2rem Inter,
+        headline-small-weight: 500,
+        body-large-tracking: 0,
+        body-medium-tracking: 0,
+        body-small-tracking: 0,
+        label-large-tracking: 0,
+        label-medium-tracking: 0,
+        label-small: 500 0.625rem / 0.75rem Inter,
+        label-small-line-height: 0.75rem,
+        label-small-size: 0.625rem,
+        label-small-tracking: 0,
+
+        corner-extra-large: 64px,
+        corner-extra-large-top: 64px 64px 0 0,
+        corner-extra-small: 4px,
+        corner-extra-small-top: 4px 4px 0 0,
+        corner-large: 32px,
+        corner-large-end: 0 32px 32px 0,
+        corner-large-start: 32px 0 0 32px,
+        corner-large-top: 32px 32px 0 0,
+        corner-medium: 16px,
+        corner-none: 0,
+        corner-small: 8px,
       )
     )
   );
@@ -59,108 +91,18 @@ html {
   --spacing-3xl: 48px;
   --spacing-4xl: 64px;
 
-  /* Rounding */
-  --rounding-xs: 4px;
-  --rounding-sm: 8px;
-  --rounding-md: 16px;
-  --rounding-lg: 32px;
-  --rounding-xl: 64px;
-  --rounding-full: 1000px;
-
-  /* Shadows */
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.15);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 4px 10px rgba(0, 0, 0, 0.5);
-
-  /* Page Margin */
-  --page-margin-sm: 16px;
-  --page-margin-lg: 24px;
+  /* Page Spacers */
+  --page-spacer-sm: 16px;
+  --page-spacer-lg: 24px;
 }
 
-/* Headings */
-.text-heading-xl {
-  font-size: 48px;
-  line-height: normal;
-  font-weight: 700;
-}
-.text-heading-lg {
-  font-size: 20px;
-  line-height: normal;
-  font-weight: 700;
-}
-.text-heading-normal {
-  font-size: 16px;
-  line-height: normal;
-  font-weight: 700;
-}
-.text-heading-sm {
-  font-size: 14px;
-  line-height: normal;
-  font-weight: 700;
-}
+/* -------------------------------------------------------------------------- */
+/* Layout System                                                              */
+/* -------------------------------------------------------------------------- */
 
-/* Paragraphs */
-.text-paragraph-lg-regular {
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-}
-.text-paragraph-lg-medium {
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 500;
-}
-.text-paragraph-lg-bold {
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 700;
-}
-
-.text-paragraph-normal-regular {
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 400;
-}
-.text-paragraph-normal-medium {
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 500;
-}
-.text-paragraph-normal-bold {
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 700;
-}
-
-.text-paragraph-sm-regular {
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 400;
-}
-.text-paragraph-sm-medium {
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 500;
-}
-.text-paragraph-sm-bold {
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 700;
-}
-
-/* Labels */
-.text-label-lg {
-  font-size: 14px;
-  line-height: normal;
-  font-weight: 500;
-}
-.text-label-normal {
-  font-size: 12px;
-  line-height: normal;
-  font-weight: 500;
-}
-.text-label-sm {
-  font-size: 10px;
-  line-height: normal;
-  font-weight: 500;
+/* Column Spanning Classes */
+@for $i from 1 through 12 {
+  .col-span-#{$i} {
+    grid-column: span #{$i} / span #{$i};
+  }
 }

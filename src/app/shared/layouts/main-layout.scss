@@ -1,0 +1,32 @@
+@use '../../../variables' as *;
+
+.layout-page {
+  display: flex;
+  min-height: 100dvh;
+  background-color: var(--mat-sys-background);
+}
+
+.layout-body {
+  min-width: 0;
+  flex: 1 1 0%;
+  display: grid;
+
+  /* Mobile: < 600px */
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--page-spacer-sm);
+  margin: var(--page-spacer-sm);
+
+  /* Tablet: 600px - 1023px */
+  @media (min-width: $breakpoint-sm) {
+    grid-template-columns: repeat(8, 1fr);
+    gap: var(--page-spacer-lg);
+    margin: var(--page-spacer-lg);
+  }
+
+  /* Desktop: >= 1024px */
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--page-spacer-lg);
+    margin: var(--page-spacer-lg);
+  }
+}

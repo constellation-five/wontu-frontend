@@ -5,16 +5,15 @@ import { SideNavbar } from '../components/side-navbar';
 @Component({
   selector: 'main-layout',
   template: `
-    <div class="min-h-dvh md:flex md:bg-(--mat-sys-background)">
-      <aside class="hidden md:block md:w-56 md:shrink-0">
-        <side-navbar />
-      </aside>
+    <div class="layout-page">
+      <side-navbar />
 
-      <main class="min-w-0 flex-1 flex flex-col">
+      <main class="layout-body">
         <router-outlet />
       </main>
     </div>
   `,
+  styleUrl: './main-layout.scss',
   imports: [RouterOutlet, SideNavbar],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
