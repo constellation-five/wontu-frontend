@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { DialogComponent } from '../../shared/components/dialog/dialog';
+import { PaymentMethodCardComponent } from '../../shared/components/payment-method-card/payment-method-card';
 
 export interface PaymentMethod {
   payment_method_id: number;
@@ -21,7 +23,8 @@ export interface PaymentMethod {
   standalone: true,
   imports: [
     MatButtonModule, CommonModule, MatDialogModule, MatSelectModule, 
-    MatInputModule, ReactiveFormsModule, MatIconModule
+    MatInputModule, ReactiveFormsModule, MatIconModule,
+    PaymentMethodCardComponent
   ],
   templateUrl: './payment-method-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,7 +35,6 @@ export class PaymentMethodPage implements OnInit {
   private fb = inject(FormBuilder);
 
   @ViewChild('methodDialog') methodDialog!: TemplateRef<any>;
-  @ViewChild('deleteConfirmDialog') deleteConfirmDialog!: TemplateRef<any>;
 
   paymentMethods = signal<PaymentMethod[]>([]);
   isLoading = signal(true);
@@ -59,7 +61,6 @@ export class PaymentMethodPage implements OnInit {
     });
   }
 
-  // Buka Modal Mode TAMBAH
   openAddModal() {
     this.isEditMode.set(false);
     this.selectedId.set(null);
@@ -67,7 +68,6 @@ export class PaymentMethodPage implements OnInit {
     this.dialog.open(this.methodDialog, { width: '450px' });
   }
 
-  // Buka Modal Mode EDIT (Saat Card di Daftar diklik)
   openEditModal(method: PaymentMethod) {
     this.isEditMode.set(true);
     this.selectedId.set(method.payment_method_id);
@@ -79,7 +79,6 @@ export class PaymentMethodPage implements OnInit {
     this.dialog.open(this.methodDialog, { width: '450px' });
   }
 
-  // Logic Simpan (POST jika Add, PUT jika Edit)
   save() {
     if (this.paymentForm.invalid) return;
     const data = this.paymentForm.value;
@@ -97,7 +96,34 @@ export class PaymentMethodPage implements OnInit {
 
   openDeleteConfirm() {
     this.dialog.closeAll();
-    this.dialog.open(this.deleteConfirmDialog, { width: '400px' });
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '540px',
+      data: {
+        title: 'Delete Payment Method',
+        content: 'Are you sure you want to delete this payment method?<br><i class="text-label-small">This action cannot be undone</i>',
+        buttons: [
+          {
+            label: 'Cancel',
+            type: 'outlined',
+            action: 'cancel'
+          },
+          {
+            label: 'Delete',
+            icon: 'delete',
+            type: 'filled',
+            action: 'delete',
+            bgColor: 'var(--mat-sys-error)',
+            textColor: 'var(--mat-sys-on-primary)'
+          }
+        ]
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'delete') {
+        this.confirmDelete();
+      }
+    });
   }
 
   confirmDelete() {

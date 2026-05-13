@@ -98,8 +98,14 @@ body {
   color: var(--mat-sys-on-primary);
 }
 
+.bg-on-color {
+  background-color: var(--mat-sys-on-primary);
+}
 .bg-surface {
   background-color: var(--mat-sys-surface);
+}
+.bg-surface-lowest {
+  background-color: var(--mat-sys-surface-container-lowest);
 }
 .text-on-surface {
   color: var(--mat-sys-on-surface);
