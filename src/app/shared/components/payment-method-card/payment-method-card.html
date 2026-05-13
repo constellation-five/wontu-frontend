@@ -1,0 +1,41 @@
+<div class="p-2 border border-gray-100 rounded-3xl bg-white flex items-center justify-between gap-4 shadow-sm">
+
+  <!-- Kiri: Logo dan Nama -->
+  <div class="flex items-center gap-4 flex-1 min-w-0">
+    <bank-logo [bankName]="method.bank_name" size="56px" />
+    <div class="overflow-hidden">
+      <p class="font-medium text-on-surface text-h-normal leading-tight truncate">
+        {{ method.bank_name }}
+      </p>
+      <p class="font-regular text-on-surface text-p-normal truncate">
+        {{ method.account_name }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Tengah: Account Number Box -->
+  <div class="hidden md:block relative shrink-0">
+    <label class="absolute -top-2 left-3 bg-white px-1 text-p-normal text-on-surface-variant font-regular tracking-wider z-10">
+      Account number
+    </label>
+    <div class="p-3 px-4 border border-[#7C808C] rounded-xl flex items-center justify-between gap-3 w-64 transition-all">
+      <span class="font-medium text-on-surface text-p-normal truncate">
+        {{ method.account_number }}
+      </span>
+      <span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors text-[20px]! shrink-0"
+            (click)="copyToClipboard(method.account_number); $event.stopPropagation()">
+        content_copy
+      </span>
+    </div>
+  </div>
+
+  <!-- Kanan: Tombol Edit (hanya jika showEdit = true) -->
+  @if (showEdit) {
+    <button mat-icon-button
+            class="text-on-surface-variant hover:text-primary transition-colors shrink-0"
+            (click)="edit.emit(method)">
+      <span class="material-symbols-outlined text-[24px]!">edit</span>
+    </button>
+  }
+
+</div>
