@@ -24,6 +24,10 @@ export const routes: Routes = [
         component: NavbarLayout,
         children: [
           { path: 'offer', component: OfferPage },
+          { 
+            path: 'offer/create', 
+            loadComponent: () => import('./features/offer/offer-create/offer-create')
+          },
           { path: 'offer/:id', component: OfferDetailPage },
           { path: 'offer/:id/checkout', component: OfferCheckoutPage },
           { path: 'offer/:id/chat', component: OfferChatPage },
