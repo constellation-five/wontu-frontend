@@ -242,4 +242,8 @@ export class OfferPage implements OnInit {
 
     return `Rp ${minPrice.toLocaleString('id-ID')} - Rp ${maxPrice.toLocaleString('id-ID')}`;
   }
+
+  openCreateOffer() {
+    this.router.navigate(['/offer/create']);
+  }
 }
