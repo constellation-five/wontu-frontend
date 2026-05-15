@@ -4,4 +4,140 @@
     [breadcrumbs]="breadcrumbs()"
     [isLoading]="isLoading()">
   </app-page-header>
+
+  <form [formGroup]="offerForm" (ngSubmit)="onSubmit()" class="grid gap-6 lg:grid-cols-12 items-start">
+    <div class="lg:col-span-6 flex flex-col gap-6">
+      <app-pane title="Offer Information">
+        <div class="space-y-4">
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option value="food">Food & Beverages</mat-option>
+              <mat-option value="electronics">Electronics</mat-option>
+              <mat-option value="fashion">Fashion</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Merchant</mat-label>
+              <input matInput formControlName="merchant_name" placeholder="Merchant name" />
+          </mat-form-field>
+
+          <div class="flex flex-col md:flex-row md:items-center gap-4">
+            <label class="text-base font-medium w-32">Offer close at</label>
+            <div class="flex-1 grid grid-cols-2 gap-3">
+              <mat-form-field appearance="outline" class="w-full custom-mat-field">
+                <input matInput [matDatepicker]="closePicker" formControlName="closing_date" placeholder="Date" />
+                <mat-datepicker-toggle matIconSuffix [for]="closePicker"></mat-datepicker-toggle>
+                <mat-datepicker #closePicker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full custom-mat-field">
+                <input matInput [matTimepicker]="closeTimePicker" formControlName="closing_time" placeholder="Time" />
+                <mat-timepicker-toggle matIconSuffix [for]="closeTimePicker">
+                  <mat-icon matTimepickerToggleIcon fontSet="material-symbols-outlined">schedule</mat-icon>
+                </mat-timepicker-toggle>
+                <mat-timepicker #closeTimePicker interval="15m"></mat-timepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="flex flex-col md:flex-row md:items-center gap-4">
+            <label class="text-base font-medium w-32">Item arrive at</label>
+            <div class="flex-1 grid grid-cols-2 gap-3">
+              <mat-form-field appearance="outline" class="w-full custom-mat-field">
+                <input matInput [matDatepicker]="arrivePicker" formControlName="arrival_date" placeholder="Date" />
+                <mat-datepicker-toggle matIconSuffix [for]="arrivePicker"></mat-datepicker-toggle>
+                <mat-datepicker #arrivePicker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="w-full custom-mat-field">
+                <input matInput [matTimepicker]="arriveTimePicker" formControlName="arrival_time" placeholder="Time" />
+                <mat-timepicker-toggle matIconSuffix [for]="arriveTimePicker">
+                  <mat-icon matTimepickerToggleIcon fontSet="material-symbols-outlined">schedule</mat-icon>
+                </mat-timepicker-toggle>
+                <mat-timepicker #arriveTimePicker interval="15m"></mat-timepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </div>
+      </app-pane>
+
+      <app-pane title="Payment Methods">
+        <div class="flex flex-col gap-3">
+          
+          <label class="flex items-center justify-between p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition">
+            <div class="flex items-center gap-4">
+              <div class="bg-[var(--mat-sys-primary-container)] text-[var(--mat-sys-on-primary-container)] font-bold text-xs px-2 py-1 rounded">
+                COD
+              </div>
+              <span class="font-medium text-sm text-gray-800">Cash on Delivery (COD)</span>
+            </div>
+            <input type="checkbox" formControlName="has_cod_payment" class="h-5 w-5 rounded border-gray-300 accent-[#204ece] cursor-pointer">
+          </label>
+
+          @for (method of paymentMethods(); track method.payment_method_id) {
+            <label class="flex items-center justify-between p-4 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition">
+              <div class="flex items-center gap-4">
+                <div class="text-[#f2674a] font-bold text-lg italic tracking-tighter leading-none w-10">
+                  {{ getBankInitials(method.bank_name) }}
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-medium text-sm text-gray-800">{{ method.bank_name }}</span>
+                  <span class="text-xs text-gray-500">{{ method.account_number }}</span>
+                </div>
+              </div>
+              <input type="checkbox" (change)="onBankToggle($event, method.payment_method_id)" class="h-5 w-5 rounded border-gray-300 accent-[#204ece] cursor-pointer">
+            </label>
+          }
+
+          <button type="button" (click)="openAddModal()" class="mt-2 w-full rounded-full bg-[#e8edfc] text-[#204ece] px-4 py-3 text-sm font-semibold hover:bg-[#dae1ff] transition flex items-center justify-center gap-2">
+            <mat-icon fontSet="material-symbols-outlined" style="font-size: 20px; width: 20px; height: 20px;">add</mat-icon> Add payment method
+          </button>
+
+        </div>
+      </app-pane>
+    </div>
+  </form>
 </section>
+
+<ng-template #methodDialog>
+  <div class="p-8 max-w-[450px] bg-white rounded-2xl">
+    <h2 class="text-xl font-bold mb-8 text-gray-900">Add Payment Method</h2>
+    
+    <form [formGroup]="paymentForm" class="flex flex-col gap-4">
+      <div class="flex flex-col gap-3">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Bank Name</mat-label>
+          <mat-select formControlName="bank_name">
+            <mat-option value="Bank Central Asia">Bank Central Asia</mat-option>
+            <mat-option value="Bank Negara Indonesia">Bank Negara Indonesia</mat-option>
+            <mat-option value="Bank Rakyat Indonesia">Bank Rakyat Indonesia</mat-option>
+            <mat-option value="Bank Mandiri">Bank Mandiri</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Account Name</mat-label>
+          <input matInput formControlName="account_name" placeholder="Enter Account Name">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Account Number</mat-label>
+          <input matInput formControlName="account_number" placeholder="Enter Account Number">
+        </mat-form-field>
+      </div>
+
+      <div class="mt-6 flex flex-row items-center gap-3 w-full">
+        <button type="button" mat-stroked-button class="flex-1 py-6 font-bold rounded-full text-gray-600" mat-dialog-close>
+          Cancel
+        </button>
+        <button type="button" mat-flat-button class="flex-1 py-6 bg-[#204ece] font-bold text-white rounded-full shadow-sm" (click)="saveNewPayment()">
+          <span class="flex items-center justify-center gap-2">
+            <mat-icon fontSet="material-symbols-outlined" style="font-size: 20px; width: 20px; height: 20px;">check</mat-icon> Add Method
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
