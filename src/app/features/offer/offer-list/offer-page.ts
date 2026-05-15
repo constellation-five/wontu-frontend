@@ -51,6 +51,7 @@ export class OfferPage implements OnInit {
   private readonly dialog = inject(MatDialog);
   private readonly router = inject(Router);
 
+  readonly user = this.auth.user;
   userName: string = 'Guest';
   userLocation: string = 'Choose your location';
   userLocationCoordinates: { lat: number; lng: number } | null = null;
