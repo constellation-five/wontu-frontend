@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { PageHeaderComponent, BreadcrumbItem } from '../../../shared/components/page-header';
-// import { PaneComponent } from '../../../shared/components/pane/pane';
+import { PaneComponent } from '../../../shared/components/pane/pane';
 
 @Component({
   selector: 'offer-create',
@@ -15,7 +15,7 @@ import { PageHeaderComponent, BreadcrumbItem } from '../../../shared/components/
     MatIconModule,
     MatButtonModule,
     PageHeaderComponent,
-    // PaneComponent
+    PaneComponent
   ],
   templateUrl: './offer-create.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
