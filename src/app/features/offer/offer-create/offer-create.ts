@@ -15,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './offer-create.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferCreate {
+export default class OfferCreate {
   private readonly router = inject(Router);
 
   goBack() {
