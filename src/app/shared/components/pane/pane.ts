@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './pane.html',
+  styleUrls: ['./pane.scss'],
   host: {'class': 'block w-full'},
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
