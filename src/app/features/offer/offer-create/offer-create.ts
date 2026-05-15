@@ -17,7 +17,6 @@ import { MatButtonModule } from '@angular/material/button';
 export class OfferCreate {
   private readonly router = inject(Router);
 
-  // Fungsi buat tombol back ke halaman utama
   goBack() {
     this.router.navigate(['/offer']);
   }
