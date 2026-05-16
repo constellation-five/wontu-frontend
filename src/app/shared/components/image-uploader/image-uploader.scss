@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.mat-icon {
+  &[fontSet="material-symbols-outlined"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: inherit;
+    width: inherit;
+    height: inherit;
+  }
+}
