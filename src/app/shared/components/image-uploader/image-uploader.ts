@@ -81,8 +81,10 @@ export class ImageUploaderComponent {
     event.stopPropagation(); 
 
     this.previewDialogRef = this.dialog.open(this.imagePreviewDialog, {
-      panelClass: 'bg-transparent',
-      backdropClass: 'bg-black/80', 
+      panelClass: ['!bg-transparent', '!shadow-none', '!p-0', '!overflow-hidden'], 
+      backdropClass: '!bg-black/95',
+      maxWidth: '100%',
+      maxHeight: '100%',
     });
   }
 }
