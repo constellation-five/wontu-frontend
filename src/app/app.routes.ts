@@ -26,13 +26,13 @@ export const routes: Routes = [
           { path: 'offer', component: OfferPage },
           { 
             path: 'offer/create', 
-            loadComponent: () => import('./features/offer/offer-create/offer-create')
+            loadComponent: () => import('./features/offer/offer-create/offer-create').then(m => m.OfferCreate),
+            canActivate: [authGuard] 
           },
           { path: 'offer/:id', component: OfferDetailPage },
           { path: 'offer/:id/checkout', component: OfferCheckoutPage },
           { path: 'offer/:id/chat', component: OfferChatPage },
           { path: 'request', component: RequestPage },
-          // Halaman-halaman di bawah ini dilindungi oleh authGuard
           { path: 'history', component: HistoryPage, canActivate: [authGuard] },
           { 
             path: 'profile', 

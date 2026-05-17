@@ -1,0 +1,294 @@
+<section class="page-container p-4 pb-28 sm:p-6">
+  <app-page-header 
+    [title]="'Create Offer'"
+    [breadcrumbs]="breadcrumbs()"
+    [isLoading]="isLoading()">
+  </app-page-header>
+
+  <form [formGroup]="offerForm" (ngSubmit)="onSubmit()" class="grid gap-3 lg:gap-6 lg:grid-cols-12 items-start">
+    <div class="lg:col-span-6 flex flex-col gap-3">
+      <app-pane title="Offer Information">
+        <div class="space-y-4">
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>Category</mat-label>
+            <mat-select formControlName="category">
+              <mat-option value="food">Food & Beverages</mat-option>
+              <mat-option value="other">Other</mat-option>
+            </mat-select>
+            @if (offerForm.get('category')?.hasError('required')) {
+              <mat-error>Please select a category</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline">
+              <mat-label>Merchant</mat-label>
+              <input matInput formControlName="merchant_name" placeholder="Merchant name" />
+              @if (offerForm.get('merchant_name')?.hasError('required')) {
+                <mat-error>Merchant name is required</mat-error>
+              }
+          </mat-form-field>
+
+          <div class="flex flex-col md:flex-row md:items-center gap-4">
+            <label class="text-base font-medium w-32 ">Offer close at</label>
+            <div class="flex-1 grid grid-cols-2 gap-3">
+              <mat-form-field appearance="outline" class="w-full custom-mat-field">
+                <input matInput [matDatepicker]="closePicker" formControlName="closing_date" placeholder="Date" [min]="minDate" />
+                <mat-datepicker-toggle matIconSuffix [for]="closePicker"></mat-datepicker-toggle>
+                <mat-datepicker #closePicker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="w-full custom-mat-field">
+                <input matInput [matTimepicker]="closeTimePicker" formControlName="closing_time" placeholder="Time" />
+                <mat-timepicker-toggle matIconSuffix [for]="closeTimePicker">
+                  <mat-icon matTimepickerToggleIcon fontSet="material-symbols-outlined">schedule</mat-icon>
+                </mat-timepicker-toggle>
+                <mat-timepicker #closeTimePicker interval="15m"></mat-timepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="flex flex-col md:flex-row md:items-center gap-4">
+            <label class="text-base font-medium w-32">Item arrive at</label>
+            <div class="flex-1 grid grid-cols-2 gap-3">
+              <mat-form-field appearance="outline" class="w-full custom-mat-field">
+                <input matInput [matDatepicker]="arrivePicker" formControlName="arrival_date" placeholder="Date" [min]="minDate" />
+                <mat-datepicker-toggle matIconSuffix [for]="arrivePicker"></mat-datepicker-toggle>
+                <mat-datepicker #arrivePicker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="w-full custom-mat-field">
+                <input matInput [matTimepicker]="arriveTimePicker" formControlName="arrival_time" placeholder="Time" />
+                <mat-timepicker-toggle matIconSuffix [for]="arriveTimePicker">
+                  <mat-icon matTimepickerToggleIcon fontSet="material-symbols-outlined">schedule</mat-icon>
+                </mat-timepicker-toggle>
+                <mat-timepicker #arriveTimePicker interval="15m"></mat-timepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </div>
+      </app-pane>
+
+      <app-pane title="Payment Methods">
+        <div class="flex flex-col gap-3">
+          
+          <label class="flex items-center justify-between p-4 rounded-xl cursor-pointer shadow-sm">
+            <div class="flex items-center gap-4">
+              <div class="text-[var(--mat-sys-on-primary-container)] font-bold text-[11px] px-2 py-2 rounded">
+                COD
+              </div>
+              <span class="font-medium text-base text-gray-800">Cash on Delivery</span>
+            </div>
+            <input type="checkbox" formControlName="has_cod_payment" class="h-5 w-5 rounded border-gray-300 accent-[#204ece] cursor-pointer">
+          </label>
+
+          @for (method of paymentMethods(); track method.payment_method_id) {
+            <label class="flex items-center justify-between p-4 rounded-xl cursor-pointer shadow-sm">
+              <div class="flex items-center gap-4">
+                <bank-logo [bankName]="method.bank_name" size="40px"></bank-logo>
+                <div class="flex flex-col">
+                  <span class="font-medium text-base text-gray-800">{{ method.bank_name }}</span>
+                  <!-- <span class="text-xs text-gray-500">{{ method.account_number }}</span> -->
+                </div>
+              </div>
+              <input type="checkbox" (change)="onBankToggle($event, method.payment_method_id)" class="h-5 w-5 rounded border-gray-300 accent-[#204ece] cursor-pointer">
+            </label>
+          }
+
+          <button mat-raised-button (click)="openAddModal()" class="mt-2 w-full rounded-full px-4 py-3 text-sm font-semibold flex items-center justify-center gap-2">
+            <mat-icon fontSet="material-symbols-outlined" style="font-size: 20px; width: 20px; height: 20px;">add</mat-icon> Add payment method
+          </button>
+
+        </div>
+      </app-pane>
+    </div>
+
+    <div class="lg:col-span-6 flex flex-col gap-6"> 
+      <div class="lg:sticky lg:top-24 flex flex-col gap-6">
+        <app-pane title="Item Summary">
+          
+          @if (itemList().length > 0) {
+            <div class="space-y-3 mb-6 max-h-[400px] overflow-y-auto pr-2 p-1">
+              @for (item of itemList(); track item.id) {
+                <div class="flex items-center gap-3 rounded-xl p-3 shadow-sm">
+                  
+                  <div class="h-16 w-16 flex-shrink-0 rounded-lg bg-gray-50 flex items-center justify-center text-gray-400 overflow-hidden border border-gray-100">
+                    <img [src]="item.imageUrl || 'https://placehold.co/100x100?text=No+Image'" class="w-full h-full object-cover">
+                  </div>
+
+                  <div class="flex-1">
+                    <h3 class="font-medium text-gray-900 line-clamp-1">{{ item.name }}</h3>
+                    <p class="text-sm font-bold text-gray-900 mt-1">Rp {{ item.price | number:'1.0-0' }}</p>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <button type="button" (click)="onEditItem(item.id)" class="border border-gray-300 rounded-full px-3 py-1 text-[12px] font-medium flex items-center gap-1 text-gray-700 hover:bg-gray-50 transition">
+                      <mat-icon fontSet="material-symbols-outlined" class="!text-[14px] !w-[14px] !h-[14px]">edit</mat-icon> Edit
+                    </button>
+
+                    <div class="border border-gray-300 rounded-full flex items-center h-7 overflow-hidden bg-white">
+                      <button type="button" (click)="onUpdateQuantity(item.id, -1)" class="px-2 text-gray-500 hover:bg-gray-100 h-full flex items-center transition">-</button>
+                      <span class="px-2 text-[12px] font-medium h-full flex items-center min-w-[24px] justify-center">{{ item.quantity }}</span>
+                      <button type="button" (click)="onUpdateQuantity(item.id, 1)" class="px-2 text-gray-500 hover:bg-gray-100 h-full flex items-center transition">+</button>
+                    </div>
+                  </div>
+
+                </div>
+              }
+            </div>
+          } 
+          @else {
+            <div class="flex flex-col items-center justify-center py-24 text-center md:mb-6">
+              <img src="assets/img/wontusad.svg" alt="No items" class="md:w-32 md:h-32 w-24 h-24 object-contain mb-4 opacity-70" onerror="this.src='https://placehold.co/100x100?text=Rabbit'">
+              <p class="text-sm text-gray-500">You have no items yet.</p>
+            </div>
+          }
+
+          <button mat-raised-button (click)="openAddItemModal()" class="mb-4 w-full">
+            <mat-icon fontSet="material-symbols-outlined" style="font-size: 20px; width: 20px; height: 20px;">add</mat-icon> Add item
+          </button>
+
+          <button mat-flat-button type="submit" 
+                  class="w-full !rounded-full" 
+                  [ngClass]="(!offerForm.valid || itemList().length === 0 || isSubmitting()) ? '!bg-[#e5e5e5] !text-[#a3a3a3]' : '!bg-[#204ece] !text-white hover:opacity-90'" 
+                  [disabled]="!offerForm.valid || itemList().length === 0 || isSubmitting()">
+            
+            <div class="flex items-center justify-center gap-2 w-full text-sm">
+              @if (isSubmitting()) {
+                <mat-icon fontSet="material-symbols-outlined" class="animate-spin" style="font-size: 20px; width: 20px; height: 20px;">autorenew</mat-icon> Creating...
+              } @else {
+                <mat-icon fontSet="material-symbols-outlined" style="font-size: 20px; width: 20px; height: 20px;">check</mat-icon> Create offer
+              }
+            </div>
+          </button>
+        </app-pane>
+      </div>
+
+    </div>
+  </form>
+</section>
+
+<ng-template #methodDialog>
+  <div class="p-8 max-w-[450px] bg-white rounded-2xl">
+    <h2 class="text-xl font-bold mb-8 text-gray-900">Add Payment Method</h2>
+    
+    <form [formGroup]="paymentForm" class="flex flex-col gap-4">
+      <div class="flex flex-col gap-3">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Bank Name</mat-label>
+          <mat-select formControlName="bank_name">
+            <mat-option value="Bank Central Asia">Bank Central Asia</mat-option>
+            <mat-option value="Bank Negara Indonesia">Bank Negara Indonesia</mat-option>
+            <mat-option value="Bank Rakyat Indonesia">Bank Rakyat Indonesia</mat-option>
+            <mat-option value="Bank Mandiri">Bank Mandiri</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Account Name</mat-label>
+          <input matInput formControlName="account_name" placeholder="Enter Account Name">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Account Number</mat-label>
+          <input matInput formControlName="account_number" placeholder="Enter Account Number">
+        </mat-form-field>
+      </div>
+
+      <div class="mt-6 flex flex-row items-center gap-3 w-full">
+        <button type="button" mat-stroked-button class="flex-1 py-6 font-bold rounded-full text-gray-600" mat-dialog-close>
+          Cancel
+        </button>
+        <button type="button" mat-flat-button class="flex-1 py-6 bg-[#204ece] font-bold text-white rounded-full shadow-sm" (click)="saveNewPayment()">
+          <span class="flex items-center justify-center gap-2">
+            <mat-icon fontSet="material-symbols-outlined" style="font-size: 20px; width: 20px; height: 20px;">check</mat-icon> Add Method
+          </span>
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #itemDialog>
+  <div class="p-8 bg-white rounded-3xl">
+    <h2 class="text-xl font-medium mb-6 text-gray-900">
+      {{ isEditItemMode() ? 'Edit Item' : 'Add Item' }}
+    </h2>
+    
+    <form [formGroup]="itemForm" class="flex flex-col gap-4">
+      
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Item link (optional)</mat-label>
+        <input matInput formControlName="link" placeholder="Paste link here">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Item name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter item name">
+        @if (itemForm.get('name')?.hasError('required')) {
+          <mat-error>Item name is required</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="grid grid-cols-3 gap-4 items-center">
+        <mat-form-field appearance="outline" class="col-span-2 w-full">
+          <mat-label>Item price</mat-label>
+          <span matTextPrefix class="text-gray-500 mr-2">Rp</span>
+          <input matInput type="number" formControlName="price" placeholder="0">
+          @if (itemForm.get('price')?.hasError('required')) {
+            <mat-error>Price is required</mat-error>
+          }
+          @if (itemForm.get('price')?.hasError('min')) {
+            <mat-error>Price cannot be negative</mat-error>
+          }
+        </mat-form-field>
+
+        <div class="col-span-1 flex flex-col h-[56px] justify-center mt-[-18px]">
+          <label class="text-[11px] text-gray-500 ml-2 mb-1">Quantity</label>
+          <div class="border border-gray-300 rounded-lg flex items-center h-full bg-white">
+            <button type="button" (click)="updateFormQuantity(-1)" class="px-3 text-gray-500 hover:bg-gray-100 h-full rounded-l-lg transition">-</button>
+            <span class="flex-1 text-center text-sm font-medium">{{ itemForm.get('quantity')?.value }}</span>
+            <button type="button" (click)="updateFormQuantity(1)" class="px-3 text-gray-500 hover:bg-gray-100 h-full rounded-r-lg transition">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-2">
+        <label class="text-base font-semibold text-gray-800 mb-2 block">Item image</label>
+        
+        <div class="w-full">
+          <app-image-uploader 
+            [imageUrl]="imagePreview()" 
+            [editable]="true" 
+            [height]="'160px'"
+            (imageChange)="onImageChange($event)">
+          </app-image-uploader>
+        </div>
+      </div>
+
+      <div class="mt-6 flex flex-row items-center justify-between w-full">
+        <div>
+          @if (isEditItemMode()) {
+            <button type="button" mat-flat-button (click)="deleteItemFromModal()" class="!bg-[var(--mat-sys-error)] !text-[var(--mat-sys-on-primary)] font-medium px-4 py-2 rounded-full flex items-center gap-1 transition">
+              <mat-icon fontSet="material-symbols-outlined" class="!text-[18px] !w-[18px] !h-[18px]">delete</mat-icon> Delete
+            </button>
+          }
+        </div>
+
+        <div class="flex flex-row items-center gap-3">
+          <button type="button" mat-stroked-button class="py-6 px-6 font-bold rounded-full text-gray-600 border-gray-300" mat-dialog-close>
+            Cancel
+          </button>
+          <button type="button" mat-flat-button class="py-6 px-8 bg-[#204ece] font-bold text-white rounded-full shadow-sm" (click)="saveItem()">
+            <span class="flex items-center justify-center gap-2">
+              <mat-icon fontSet="material-symbols-outlined" style="font-size: 20px; width: 20px; height: 20px;">
+                {{ isEditItemMode() ? 'check' : 'add' }}
+              </mat-icon> 
+              {{ isEditItemMode() ? 'Confirm' : 'Add item' }}
+            </span>
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</ng-template>
