@@ -20,6 +20,7 @@ import { PageHeaderComponent, BreadcrumbItem } from '../../../shared/components/
 import { PaneComponent } from '../../../shared/components/pane/pane';
 import { BankLogoComponent } from '../../../shared/components/bank-logo/bank-logo';
 import { DialogComponent, DialogData } from '../../../shared/components/dialog/dialog';
+import { ImageUploaderComponent } from '../../../shared/components/image-uploader/image-uploader';
 import { environment } from '../../../../environments/environment';
 
 export interface PaymentMethod {
@@ -46,13 +47,13 @@ export interface PaymentMethod {
     MatDialogModule, 
     PageHeaderComponent,
     PaneComponent,
-    BankLogoComponent
+    BankLogoComponent,
+    ImageUploaderComponent
   ],
   templateUrl: './offer-create.html',
-  styleUrls: ['./offer-create.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class OfferCreate implements OnInit {
+export class OfferCreate implements OnInit {
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
   private dialog = inject(MatDialog);
@@ -152,7 +153,6 @@ export default class OfferCreate implements OnInit {
   // --- STATE UNTUK GAMBAR ITEM ---
   imagePreview = signal<string | null>(null);
   selectedFile = signal<File | null>(null);
-  isDragOver = signal<boolean>(false);
 
   // --- STATE EDIT ITEM ---
   isEditItemMode = signal<boolean>(false);
@@ -177,59 +177,17 @@ export default class OfferCreate implements OnInit {
     this.dialog.open(this.itemDialog, { width: '500px', panelClass: 'rounded-3xl' });
   }
 
-  // --- LOGIC GAMBAR ---
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    this.processFile(file);
-  }
-
-  private processFile(file: File | null) {
-    if (!file) return;
-    if (!['image/png', 'image/jpeg', 'image/jpg'].includes(file.type)) {
-      alert('Invalid file type! Only .jpg, .jpeg, .png are allowed.');
-      return;
-    }
-    if (file.size > 3 * 1024 * 1024) {
-      alert('File is too large! Maximum size is 3MB.');
-      return;
-    }
-
-    this.selectedFile.set(file);
-    const reader = new FileReader();
-    reader.onload = () => this.imagePreview.set(reader.result as string);
-    reader.readAsDataURL(file);
-  }
-
-  onDragOver(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragOver.set(true);
-  }
-
-  onDragLeave(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragOver.set(false);
-  }
-
-  onDrop(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragOver.set(false);
-
-    const files = event.dataTransfer?.files;
-    if (files && files.length > 0) {
-      this.processFile(files[0]);
-    }
-  }
-
-  // Fungsi untuk tombol + dan - di dalam form Add Item
   updateFormQuantity(change: number) {
     const currentQty = this.itemForm.get('quantity')?.value || 1;
     const newQty = currentQty + change;
     if (newQty >= 1) {
       this.itemForm.patchValue({ quantity: newQty });
     }
+  }
+
+  onImageChange(event: { file: File | null; url: string | null }) {
+    this.selectedFile.set(event.file);
+    this.imagePreview.set(event.url);
   }
 
   saveNewItem() {
@@ -321,13 +279,6 @@ export default class OfferCreate implements OnInit {
       
       this.dialog.open(this.itemDialog, { width: '500px', panelClass: 'rounded-3xl' });
     }
-  }
-
-  // Menghapus gambar dari preview (Tombol X di foto)
-  removeImage(event: Event) {
-    event.stopPropagation();
-    this.selectedFile.set(null);
-    this.imagePreview.set(null);
   }
 
   // Gabungan fungsi Add dan Edit saat klik Save/Confirm
