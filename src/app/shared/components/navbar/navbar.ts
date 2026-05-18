@@ -4,9 +4,21 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { NAV_LINKS } from '../nav-links';
 import { Auth } from '../../../core/auth';
 import { isProtectedRoute } from '../../../core/routes.config';
+
+export type NavLink = {
+  label: string;
+  path: string;
+  icon: string;
+};
+
+export const NAV_LINKS: readonly NavLink[] = [
+  { label: 'Offers', path: '/offer', icon: 'shopping_bag' },
+  { label: 'Requests', path: '/request', icon: 'concierge' },
+  { label: 'History', path: '/history', icon: 'receipt_long' },
+  { label: 'Profile', path: '/profile', icon: 'account_circle' },
+];
 
 @Component({
   selector: 'navbar',
