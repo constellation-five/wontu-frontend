@@ -117,6 +117,15 @@ router-outlet {
   display: none;
 }
 
+a {
+  color: var(--mat-sys-primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 /* Column Spanning Classes */
 @for $i from 1 through 12 {
   .col-span-#{$i} {
