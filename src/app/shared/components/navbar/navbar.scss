@@ -121,7 +121,7 @@
 }
 
 .user-avatar {
-  border-radius: var(--mat-corner-full);
+  border-radius: var(--mat-sys-corner-full);
   object-fit: cover;
 
   /* Mobile */
@@ -137,8 +137,8 @@
 
 .user-avatar-active {
   box-shadow:
-    0 0 0 2px var(--mat-sys-surface),
-    0 0 0 4px var(--mat-sys-primary);
+    0 0 0 1px var(--mat-sys-surface),
+    0 0 0 3px var(--mat-sys-on-surface);
 }
 
 .nav-icon {
