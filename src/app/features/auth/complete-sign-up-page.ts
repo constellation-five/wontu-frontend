@@ -7,10 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import AuthLayout from './auth-layout';
+import { ButtonSizeDirective } from "../../shared/directives/button";
 
 @Component({
   selector: 'complete-sign-up-page',
   templateUrl: './complete-sign-up-page.html',
+  styleUrl: './complete-sign-up-page.scss',
   imports: [
     FormField,
     MatFormFieldModule,
@@ -18,7 +20,8 @@ import AuthLayout from './auth-layout';
     MatButtonModule,
     MatProgressSpinnerModule,
     AuthLayout,
-  ],
+    ButtonSizeDirective
+],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CompleteSignUpPage implements OnInit {

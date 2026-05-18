@@ -4,11 +4,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { Auth } from '../../core/auth';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import AuthLayout from './auth-layout';
+import { ButtonSizeDirective } from '../../shared/directives/button';
 
 @Component({
   selector: 'sign-in-page',
   templateUrl: './sign-in-page.html',
-  imports: [MatButtonModule, MatIconModule, RouterLink, AuthLayout],
+  styleUrl: './sign-in-page.scss',
+  imports: [MatButtonModule, MatIconModule, ButtonSizeDirective, RouterLink, AuthLayout],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class SignInPage {

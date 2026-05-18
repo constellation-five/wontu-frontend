@@ -1,0 +1,87 @@
+@use '../../../_variables' as *;
+
+.auth-layout-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.auth-layout-background {
+  position: absolute;
+  inset: 0;
+  background-color: var(--mat-sys-surface-container);
+}
+
+.auth-layout-bg-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  path {
+    fill: var(--mat-sys-primary);
+  }
+}
+
+.auth-layout-main {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+
+  /* Pane Margin */
+  padding: var(--spacing-md);
+
+  @media (min-width: $breakpoint-md) {
+    padding: var(--spacing-xl);
+  }
+}
+
+.pane.auth-pane {
+  width: 100%;
+  max-width: 400px;
+  padding: var(--spacing-2xl);
+
+  @media (min-width: $breakpoint-md) {
+    max-width: 960px;
+    padding: var(--spacing-4xl);
+  }
+}
+
+.auth-pane-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2xl);
+
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    gap: var(--spacing-4xl);
+  }
+}
+
+.auth-logo-section,
+.auth-content-section {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-content-section {
+  gap: var(--spacing-2xl);
+}
+
+.auth-logo {
+  object-fit: contain;
+  width: 100%;
+  max-width: 192px;
+
+  @media (min-width: $breakpoint-md) {
+    max-width: 384px;
+  }
+}
