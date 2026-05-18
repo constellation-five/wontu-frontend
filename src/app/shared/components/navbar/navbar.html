@@ -1,4 +1,4 @@
-<nav class="side-nav-container" aria-label="Desktop navigation">
+<nav class="navbar-container" aria-label="Navigation">
   <div class="logo-container">
     <img src="/assets/img/wontulogo.svg" alt="Logo" class="logo-image" />
   </div>
@@ -26,30 +26,31 @@
             />
           } @else {
             <mat-icon
-              fontSet="material-symbols-outlined"
               matListItemIcon
+              fontSet="material-symbols-outlined"
+              class="nav-icon"
               [class.nav-icon-filled]="rla.isActive"
             >
               {{ link.icon }}
             </mat-icon>
           }
-          <span matListItemTitle class="nav-item-label">
-            {{ link.label }}
-          </span>
+          {{ link.label }}
         </a>
       }
     }
   </mat-nav-list>
 
-  @if (!user()) {
-    <button matButton="filled" (click)="goToSignIn()" class="auth-button">
-      <mat-icon fontSet="material-symbols-outlined" matListItemIcon> login </mat-icon>
-      <span class="auth-label">Sign in</span>
-    </button>
-  } @else {
-    <button matButton (click)="logout()" class="auth-button">
-      <mat-icon fontSet="material-symbols-outlined" matListItemIcon> logout </mat-icon>
-      Sign out
-    </button>
-  }
+  <div class="auth-button-container">
+    @if (!user()) {
+      <button matButton="filled" (click)="goToSignIn()" class="auth-button">
+        <mat-icon fontSet="material-symbols-outlined" matListItemIcon> login </mat-icon>
+        <span class="auth-label">Sign in</span>
+      </button>
+    } @else {
+      <button matButton (click)="logout()" class="auth-button">
+        <mat-icon fontSet="material-symbols-outlined" matListItemIcon> logout </mat-icon>
+        <span class="auth-label">Sign out</span>
+      </button>
+    }
+  </div>
 </nav>

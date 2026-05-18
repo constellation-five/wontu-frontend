@@ -74,7 +74,7 @@ html {
         corner-large-top: 32px 32px 0 0,
         corner-medium: 16px,
         corner-none: 0,
-        corner-small: 8px,
+        corner-small: 8px
       )
     )
   );
@@ -94,11 +94,28 @@ html {
   /* Page Spacers */
   --page-spacer-sm: 16px;
   --page-spacer-lg: 24px;
+
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  line-height: 1.5;
+  font-family: 'Inter', 'Roboto', sans-serif;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Layout System                                                              */
-/* -------------------------------------------------------------------------- */
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+
+router-outlet {
+  display: none;
+}
 
 /* Column Spanning Classes */
 @for $i from 1 through 12 {

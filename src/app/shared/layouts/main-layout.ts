@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SideNavbar } from '../components/side-navbar';
+import { Navbar } from '../components/navbar/navbar';
 
 @Component({
   selector: 'main-layout',
   template: `
     <div class="layout-page">
-      <side-navbar />
+      <navbar />
 
       <main class="layout-body">
         <router-outlet />
@@ -14,7 +14,7 @@ import { SideNavbar } from '../components/side-navbar';
     </div>
   `,
   styleUrl: './main-layout.scss',
-  imports: [RouterOutlet, SideNavbar],
+  imports: [RouterOutlet, Navbar],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayout {}

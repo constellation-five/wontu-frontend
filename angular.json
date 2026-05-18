@@ -30,7 +30,7 @@
                 "output": "/assets"
               }
             ],
-            "styles": ["src/material-theme.scss", "src/styles.css"]
+            "styles": ["src/material-theme.scss"]
           },
           "configurations": {
             "production": {

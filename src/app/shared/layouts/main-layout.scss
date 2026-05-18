@@ -15,12 +15,14 @@
   grid-template-columns: repeat(4, 1fr);
   gap: var(--page-spacer-sm);
   margin: var(--page-spacer-sm);
+  padding-bottom: 80px;
 
   /* Tablet: 600px - 1023px */
   @media (min-width: $breakpoint-sm) {
     grid-template-columns: repeat(8, 1fr);
     gap: var(--page-spacer-lg);
     margin: var(--page-spacer-lg);
+    padding-bottom: 0;
   }
 
   /* Desktop: >= 1024px */
