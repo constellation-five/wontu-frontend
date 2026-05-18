@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 @use './_theme-colors' as theme;
+@use './app/shared/directives/button/button-size.scss';
 
 html {
   @include mat.theme(
@@ -100,6 +101,31 @@ html {
   tab-size: 4;
   line-height: 1.5;
   font-family: 'Inter', 'Roboto', sans-serif;
+
+  @include mat.button-overrides(
+    (
+      text-icon-offset: 0px,
+      filled-icon-offset: 0px,
+      protected-icon-offset: 0px,
+      outlined-icon-offset: 0px,
+      tonal-icon-offset: 0px,
+
+      text-label-text-color: var(--mat-sys-on-surface-variant),
+      text-state-layer-color: var(--mat-sys-on-surface-variant),
+      text-ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-on-surface-variant) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
+      outlined-label-text-color: var(--mat-sys-on-surface-variant),
+      outlined-state-layer-color: var(--mat-sys-on-surface-variant),
+      outlined-ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-on-surface-variant) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
+    )
+  );
 }
 
 *,

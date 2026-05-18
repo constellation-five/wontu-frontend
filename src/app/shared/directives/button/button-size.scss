@@ -1,0 +1,89 @@
+@use '@angular/material' as mat;
+
+@mixin apply-button-size($height, $padding, $gap, $font-size, $icon-size) {
+  // Apply overrides for all standard button variants
+  @include mat.button-overrides(
+    (
+      text-container-height: $height,
+      text-horizontal-padding: $padding,
+      text-label-text-size: $font-size,
+      text-icon-spacing: $gap,
+
+      filled-container-height: $height,
+      filled-horizontal-padding: $padding,
+      filled-label-text-size: $font-size,
+      filled-icon-spacing: $gap,
+
+      protected-container-height: $height,
+      protected-horizontal-padding: $padding,
+      protected-label-text-size: $font-size,
+      protected-icon-spacing: $gap,
+
+      outlined-container-height: $height,
+      outlined-horizontal-padding: $padding,
+      outlined-label-text-size: $font-size,
+      outlined-icon-spacing: $gap,
+
+      tonal-container-height: $height,
+      tonal-horizontal-padding: $padding,
+      tonal-label-text-size: $font-size,
+      tonal-icon-spacing: $gap,
+    )
+  );
+
+  // Override icon size manually since we might not have a direct generic token for the icon
+  // Material 3 usually adjusts icon size via typography or inline SVGs.
+  .mat-icon {
+    width: $icon-size !important;
+    height: $icon-size !important;
+    font-size: $icon-size !important;
+    line-height: $icon-size !important;
+  }
+}
+
+// Icon Button specific mixin
+@mixin apply-icon-button-size($size, $icon-size) {
+  @include mat.icon-button-overrides(
+    (
+      touch-target-size: $size,
+      icon-size: $icon-size,
+    )
+  );
+
+  width: $size !important;
+  height: $size !important;
+  padding: 0 !important;
+
+  .mat-icon {
+    width: $icon-size !important;
+    height: $icon-size !important;
+    font-size: $icon-size !important;
+    line-height: $icon-size !important;
+  }
+}
+
+// Regular buttons
+button:not([matIconButton]).btn-size-xs {
+  @include apply-button-size(32px, 12px, 4px, 14px, 16px);
+}
+
+button:not([matIconButton]).btn-size-sm {
+  @include apply-button-size(40px, 16px, 8px, 14px, 18px);
+}
+
+button:not([matIconButton]).btn-size-md {
+  @include apply-button-size(56px, 24px, 8px, 16px, 20px);
+}
+
+// Icon buttons
+button[matIconButton].btn-size-xs {
+  @include apply-icon-button-size(32px, 16px);
+}
+
+button[matIconButton].btn-size-sm {
+  @include apply-icon-button-size(40px, 20px);
+}
+
+button[matIconButton].btn-size-md {
+  @include apply-icon-button-size(56px, 24px);
+}
