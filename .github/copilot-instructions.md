@@ -5,8 +5,7 @@
 - Angular 21 (standalone APIs)
 - pnpm
 - Vitest
-- Tailwind CSS 4
-- Angular Material (required for UI components and theming)
+- Angular Material (required for UI components, theming, and system variables)
 
 ## Core Rules
 
@@ -37,15 +36,16 @@
 - Prefer lazy loading for feature routes.
 - Keep files grouped by feature to reduce coupling and merge conflicts.
 
-## Styling and Theming (Material + Tailwind)
+## Styling and Theming (Angular Material & Custom Grid)
 
 - Use Angular Material for base UI primitives (buttons, inputs, dialogs, menus, tables, etc.).
-- Use Tailwind for layout, spacing, sizing, responsive rules, and utility-level polish.
-- Always use Tailwind instead of custom CSS unless a specific style cannot be achieved with Tailwind or requires complex overrides.
-- Theme from Material first: define/extend tokens and palettes in `src/material-theme.scss`.
+- Prioritize Angular Material's built-in system tokens (e.g., `var(--mat-sys-...)`) and custom overrides (e.g. `@include mat....-overrides((...));`) for styling (see [Theming your components](https://material.angular.dev/guide/theming-your-components) and [Theming guide](https://material.angular.dev/guide/theming)).
+- Use the global variables defined in `src/material-theme.scss` for consistent app-wide styling.
+- Do **not** use Tailwind CSS. Rely on pure SCSS/CSS and Material's design system tokens.
+- **Layouting:** Use the custom grid system with `.col-span.#` classes (per user directives on the span of each element).
+- **Containers:** Use the `<app-pane>` (or `pane` component) elements as the main containers for each part of the screen.
 - Keep shared app-level styles in `src/styles.css`; keep component-specific styles local.
 - Do not replace Material components with custom HTML unless there is a clear product reason.
-- Ensure custom Tailwind utilities respect Material density, typography, and color tokens.
 
 ## Accessibility
 
@@ -76,5 +76,4 @@ pnpm test
 - Angular docs: https://angular.dev
 - Angular style guide: https://angular.dev/style-guide
 - Angular Material docs: https://material.angular.dev
-- Tailwind docs: https://tailwindcss.com
 - Vitest docs: https://vitest.dev
