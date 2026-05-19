@@ -8,26 +8,31 @@
       text-horizontal-padding: $padding,
       text-label-text-size: $font-size,
       text-icon-spacing: $gap,
+      text-touch-target-size: $height + 8px,
 
       filled-container-height: $height,
       filled-horizontal-padding: $padding,
       filled-label-text-size: $font-size,
       filled-icon-spacing: $gap,
+      filled-touch-target-size: $height + 8px,
 
       protected-container-height: $height,
       protected-horizontal-padding: $padding,
       protected-label-text-size: $font-size,
       protected-icon-spacing: $gap,
+      protected-touch-target-size: $height + 8px,
 
       outlined-container-height: $height,
       outlined-horizontal-padding: $padding,
       outlined-label-text-size: $font-size,
       outlined-icon-spacing: $gap,
+      outlined-touch-target-size: $height + 8px,
 
       tonal-container-height: $height,
       tonal-horizontal-padding: $padding,
       tonal-label-text-size: $font-size,
       tonal-icon-spacing: $gap,
+      tonal-touch-target-size: $height + 8px,
     )
   );
 
@@ -45,14 +50,11 @@
 @mixin apply-icon-button-size($size, $icon-size) {
   @include mat.icon-button-overrides(
     (
-      touch-target-size: $size,
+      touch-target-size: $size + 8px,
       icon-size: $icon-size,
+      state-layer-size: $size,
     )
   );
-
-  width: $size !important;
-  height: $size !important;
-  padding: 0 !important;
 
   .mat-icon {
     width: $icon-size !important;
