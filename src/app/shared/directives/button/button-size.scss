@@ -87,3 +87,11 @@ button[matIconButton].btn-size-sm {
 button[matIconButton].btn-size-md {
   @include apply-icon-button-size(56px, 24px);
 }
+
+button[matIconButton].btn-size-compact {
+  @include apply-icon-button-size(32px, 24px);
+}
+
+button[matIconButton].btn-size-x-compact {
+  @include apply-icon-button-size(24px, 20px);
+}

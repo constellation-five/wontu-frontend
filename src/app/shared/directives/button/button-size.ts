@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Renderer2, OnInit, inject, input } from '@angular/core';
 
-export type ButtonSize = 'xs' | 'sm' | 'md';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'compact' | 'x-compact';
 
 @Directive({
   selector: '[appButtonSize]',
