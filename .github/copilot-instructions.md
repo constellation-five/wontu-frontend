@@ -48,6 +48,105 @@
 - Keep shared app-level styles in `src/styles.css`; keep component-specific styles local.
 - Do not replace Material components with custom HTML unless there is a clear product reason.
 
+## Material Design Tokens & Utilities Reference
+
+Use CSS variables (`var(--mat-sys-*)`) in styles or utility classes (`.mat-*`) in templates. All support light/dark mode automatically.
+
+### Color Tokens
+
+**Background Colors**
+
+- `.mat-bg-primary` / `--mat-sys-primary` — Key components
+- `.mat-bg-primary-container` / `--mat-sys-primary-container` — Prominent containers
+- `.mat-bg-secondary` / `--mat-sys-secondary` — Secondary components
+- `.mat-bg-secondary-container` / `--mat-sys-secondary-container` — Secondary emphasis
+- `.mat-bg-error` / `--mat-sys-error` — Error states
+- `.mat-bg-error-container` / `--mat-sys-error-container` — Error emphasis
+- `.mat-bg-surface` / `--mat-sys-surface` — General surfaces
+- `.mat-bg-surface-variant` / `--mat-sys-surface-variant` — Surface distinction
+- `.mat-bg-surface-container-lowest` / `--mat-sys-surface-container-lowest` — Lowest emphasis
+- `.mat-bg-surface-container-low` / `--mat-sys-surface-container-low` — Low emphasis
+- `.mat-bg-surface-container` / `--mat-sys-surface-container` — Medium emphasis
+- `.mat-bg-surface-container-high` / `--mat-sys-surface-container-high` — High emphasis
+- `.mat-bg-surface-container-highest` / `--mat-sys-surface-container-highest` — Highest emphasis
+- `.mat-bg-inverse-surface` / `--mat-sys-inverse-surface` — Notifications/tooltips
+- `.mat-bg-disabled` / `--mat-sys-on-surface 12%` — Disabled components
+
+**Text Colors**
+
+- `.mat-text-primary` / `--mat-sys-primary` — Prominent text
+- `.mat-text-secondary` / `--mat-sys-secondary` — Secondary text
+- `.mat-text-error` / `--mat-sys-error` — Error messages
+- `.mat-text-on-primary` / `--mat-sys-on-primary` — Text on primary backgrounds
+- `.mat-text-on-primary-container` / `--mat-sys-on-primary-container` — Text on primary-container
+- `.mat-text-on-secondary` / `--mat-sys-on-secondary` — Text on secondary backgrounds
+- `.mat-text-on-secondary-container` / `--mat-sys-on-secondary-container` — Text on secondary-container
+- `.mat-text-on-error` / `--mat-sys-on-error` — Text on error backgrounds
+- `.mat-text-on-error-container` / `--mat-sys-on-error-container` — Text on error-container
+- `.mat-text-on-surface` / `--mat-sys-on-surface` — Text on surfaces
+- `.mat-text-on-surface-variant` / `--mat-sys-on-surface-variant` — Subheadings, captions, hints
+- `.mat-text-inverse-on-surface` / `--mat-sys-inverse-on-surface` — Text on inverse surfaces
+- `.mat-text-disabled` / `--mat-sys-on-surface 38%` — Disabled text
+
+### Typography Tokens
+
+**Font Classes** (combine `.mat-font-*` with either CSS or template utility)
+
+- `.mat-font-display-lg/md/sm` — Large headings, hero sections
+- `.mat-font-headline-lg/md/sm` — Page/section titles
+- `.mat-font-title-lg/md/sm` — Card/section headers
+- `.mat-font-body-lg/md/sm` — Body text, lists, table data
+- `.mat-font-label-lg/md/sm` — Button labels, badges, chips
+
+**CSS Variables for Typography**
+
+- `--mat-sys-display-*`, `--mat-sys-headline-*`, `--mat-sys-title-*`, `--mat-sys-body-*`, `--mat-sys-label-*`
+- Each includes `-tracking` variant for letter-spacing
+
+### Shape Tokens
+
+- `.mat-corner-full` / `--mat-sys-corner-full` — Circular (badges, avatars)
+- `.mat-corner-xl` / `--mat-sys-corner-extra-large` — Buttons, dialogs
+- `.mat-corner-lg` / `--mat-sys-corner-large` — Cards, FABs
+- `.mat-corner-md` / `--mat-sys-corner-medium` — Medium rounding (buttons, cards)
+- `.mat-corner-sm` / `--mat-sys-corner-small` — Input fields, chips
+- `.mat-corner-xs` / `--mat-sys-corner-extra-small` — Snackbars, tooltips
+
+### Elevation Tokens
+
+**Borders**
+
+- `.mat-border` / `--mat-sys-outline` — Visible border
+- `.mat-border-subtle` / `--mat-sys-outline-variant` — Subtle dividers
+
+**Shadows**
+
+- `.mat-shadow-1` / `--mat-sys-level1` — Slightly raised
+- `.mat-shadow-2` / `--mat-sys-level2` — Raised (menus, selects)
+- `.mat-shadow-3` / `--mat-sys-level3` — More raised (FABs)
+- `.mat-shadow-4` / `--mat-sys-level4` — Interaction states (hover/focus)
+- `.mat-shadow-5` / `--mat-sys-level5` — Maximum elevation
+
+### Usage Examples
+
+**In templates** (one-off styling):
+
+```html
+<div class="mat-bg-surface mat-text-on-surface mat-corner-md mat-shadow-1"></div>
+<h2 class="mat-font-headline-md"></h2>
+```
+
+**In component styles** (component-specific):
+
+```scss
+.custom-card {
+  background-color: var(--mat-sys-surface-container);
+  color: var(--mat-sys-on-surface);
+  border-radius: var(--mat-sys-corner-large);
+  box-shadow: var(--mat-sys-level2);
+}
+```
+
 ## Accessibility
 
 - Must pass AXE checks.
