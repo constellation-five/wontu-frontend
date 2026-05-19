@@ -136,6 +136,21 @@ html {
         ),
     )
   );
+
+  @include mat.fab-overrides(
+    (
+      extended-container-shape: var(--mat-sys-corner-medium),
+      extended-label-text-size: 1rem,
+      container-color: var(--mat-sys-primary),
+      foreground-color: var(--mat-sys-on-primary),
+      state-layer-color: var(--mat-sys-on-primary),
+      ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-on-primary) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
+    )
+  );
 }
 
 *,
@@ -174,6 +189,12 @@ button[mat-button],
 a[matButton='tonal'],
 a[mat-button] {
   box-shadow: var(--mat-sys-level1) !important;
+}
+
+button[matFab][extended] > .mat-icon,
+a[matFab][extended] > .mat-icon {
+  margin-left: 0;
+  margin-right: var(--spacing-xs);
 }
 
 /* Column Spanning Classes */
