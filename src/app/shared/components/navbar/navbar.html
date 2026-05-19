@@ -47,7 +47,7 @@
         <span class="auth-label">Sign in</span>
       </button>
     } @else {
-      <button matButton (click)="logout()" class="auth-button">
+      <button matButton="outlined" appButtonColor="error" (click)="logout()" class="auth-button">
         <mat-icon fontSet="material-symbols-outlined" matListItemIcon> logout </mat-icon>
         <span class="auth-label">Sign out</span>
       </button>

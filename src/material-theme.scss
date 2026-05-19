@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @use './_theme-colors' as theme;
 @use './app/shared/directives/button/button-size.scss';
+@use './app/shared/directives/button/button-color.scss';
 
 html {
   @include mat.theme(
@@ -124,6 +125,15 @@ html {
           var(--mat-sys-on-surface-variant) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
           transparent
         ),
+      tonal-container-color: var(--mat-sys-primary-container),
+      tonal-label-text-color: var(--mat-sys-on-primary-container),
+      tonal-state-layer-color: var(--mat-sys-on-primary-container),
+      tonal-ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-on-primary-container)
+            calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
     )
   );
 }
@@ -150,6 +160,20 @@ a {
   &:hover {
     text-decoration: underline;
   }
+}
+
+button[matButton='filled'],
+button[mat-flat-button],
+a[matButton='filled'],
+a[mat-flat-button] {
+  box-shadow: var(--mat-sys-level2) !important;
+}
+
+button[matButton='tonal'],
+button[mat-button],
+a[matButton='tonal'],
+a[mat-button] {
+  box-shadow: var(--mat-sys-level1) !important;
 }
 
 /* Column Spanning Classes */
