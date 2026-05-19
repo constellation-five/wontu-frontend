@@ -151,6 +151,15 @@ html {
         ),
     )
   );
+
+  @include mat.dialog-overrides(
+    (
+      container-shape: var(--mat-sys-corner-large),
+      headline-padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-md),
+      actions-padding: var(--spacing-xl),
+      container-elevation-shadow: var(--mat-sys-level4),
+    )
+  );
 }
 
 *,
