@@ -167,6 +167,13 @@ html {
       container-elevation-shadow: var(--mat-sys-level3),
     )
   );
+
+  @include mat.form-field-overrides(
+    (
+      filled-container-shape: var(--mat-sys-corner-small),
+      outlined-container-shape: var(--mat-sys-corner-small),
+    )
+  );
 }
 
 *,
