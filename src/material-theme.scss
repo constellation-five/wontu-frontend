@@ -160,6 +160,13 @@ html {
       container-elevation-shadow: var(--mat-sys-level4),
     )
   );
+
+  @include mat.menu-overrides(
+    (
+      container-shape: var(--mat-sys-corner-medium),
+      container-elevation-shadow: var(--mat-sys-level3),
+    )
+  );
 }
 
 *,
@@ -204,6 +211,11 @@ button[matFab][extended] > .mat-icon,
 a[matFab][extended] > .mat-icon {
   margin-left: 0;
   margin-right: var(--spacing-xs);
+}
+
+.mat-mdc-menu-panel > .mat-mdc-menu-content {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 /* Column Spanning Classes */
