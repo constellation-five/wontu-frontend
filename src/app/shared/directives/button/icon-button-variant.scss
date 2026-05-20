@@ -1,0 +1,156 @@
+@use '@angular/material' as mat;
+
+// Default Icon Button Variant Styles (assuming 'primary' is the default color if no appButtonColor is specified)
+
+.mat-mdc-icon-button.btn-variant-filled {
+  background-color: var(--mat-sys-primary);
+
+  @include mat.icon-button-overrides(
+    (
+      icon-color: var(--mat-sys-on-primary),
+      state-layer-color: var(--mat-sys-on-primary),
+      ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-on-primary) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
+    )
+  );
+
+  &.btn-color-error {
+    background-color: var(--mat-sys-error);
+    @include mat.icon-button-overrides(
+      (
+        icon-color: var(--mat-sys-on-error),
+        state-layer-color: var(--mat-sys-on-error),
+        ripple-color: color-mix(
+            in srgb,
+            var(--mat-sys-on-error) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+            transparent
+          ),
+      )
+    );
+  }
+}
+
+.mat-mdc-icon-button.btn-variant-tonal {
+  background-color: var(--mat-sys-primary-container);
+
+  @include mat.icon-button-overrides(
+    (
+      icon-color: var(--mat-sys-on-primary-container),
+      state-layer-color: var(--mat-sys-on-primary-container),
+      ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-on-primary-container)
+            calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
+    )
+  );
+
+  // Tonal Level 1 Elevation
+  box-shadow: var(--mat-sys-level1) !important;
+
+  &.btn-color-error {
+    background-color: var(--mat-sys-error-container);
+    @include mat.icon-button-overrides(
+      (
+        icon-color: var(--mat-sys-on-error-container),
+        state-layer-color: var(--mat-sys-on-error-container),
+        ripple-color: color-mix(
+            in srgb,
+            var(--mat-sys-on-error-container)
+              calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+            transparent
+          ),
+      )
+    );
+  }
+}
+
+.mat-mdc-icon-button.btn-variant-outlined {
+  background-color: transparent;
+  border: 1px solid var(--mat-sys-outline);
+
+  @include mat.icon-button-overrides(
+    (
+      icon-color: var(--mat-sys-on-surface-variant),
+      state-layer-color: var(--mat-sys-on-surface-variant),
+      ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-on-surface-variant) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
+    )
+  );
+
+  &.btn-color-error {
+    border-color: color-mix(in srgb, var(--mat-sys-error) 24%, transparent);
+    @include mat.icon-button-overrides(
+      (
+        icon-color: var(--mat-sys-error),
+        state-layer-color: var(--mat-sys-error),
+        ripple-color: color-mix(
+            in srgb,
+            var(--mat-sys-error) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+            transparent
+          ),
+      )
+    );
+  }
+}
+
+.mat-mdc-icon-button.btn-variant-elevated {
+  background-color: var(--mat-sys-surface-container-low);
+  box-shadow: var(--mat-sys-level1) !important;
+
+  @include mat.icon-button-overrides(
+    (
+      icon-color: var(--mat-sys-primary),
+      state-layer-color: var(--mat-sys-primary),
+      ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-primary) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
+    )
+  );
+
+  &.btn-color-error {
+    @include mat.icon-button-overrides(
+      (
+        icon-color: var(--mat-sys-error),
+        state-layer-color: var(--mat-sys-error),
+        ripple-color: color-mix(
+            in srgb,
+            var(--mat-sys-error) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+            transparent
+          ),
+      )
+    );
+  }
+}
+
+// Ensure the shadow correctly overrides any default shadows (or lack thereof)
+.mat-mdc-icon-button.btn-variant-filled {
+  // Same rules as the filled text button
+  box-shadow: var(--mat-sys-level2) !important;
+}
+
+// Text variant inherits from standard (transparent background, standard icons)
+// and handles default color errors through the button-color.scss already,
+// though we can explicitly redefine here if needed.
+.mat-mdc-icon-button.btn-variant-text.btn-color-error {
+  @include mat.icon-button-overrides(
+    (
+      icon-color: var(--mat-sys-error),
+      state-layer-color: var(--mat-sys-error),
+      ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-error) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
+    )
+  );
+}

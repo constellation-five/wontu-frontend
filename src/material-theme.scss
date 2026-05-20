@@ -2,6 +2,7 @@
 @use './_theme-colors' as theme;
 @use './app/shared/directives/button/button-size.scss';
 @use './app/shared/directives/button/button-color.scss';
+@use './app/shared/directives/button/icon-button-variant.scss';
 
 html {
   @include mat.theme(
