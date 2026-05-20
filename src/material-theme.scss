@@ -191,6 +191,10 @@ router-outlet {
   display: none;
 }
 
+body {
+  background-color: var(--mat-sys-surface);
+}
+
 a {
   color: var(--mat-sys-primary);
   text-decoration: none;
@@ -223,11 +227,4 @@ a[matFab][extended] > .mat-icon {
 .mat-mdc-menu-panel > .mat-mdc-menu-content {
   padding-top: 0;
   padding-bottom: 0;
-}
-
-/* Column Spanning Classes */
-@for $i from 1 through 12 {
-  .col-span-#{$i} {
-    grid-column: span #{$i} / span #{$i};
-  }
 }

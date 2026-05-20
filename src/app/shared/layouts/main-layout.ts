@@ -7,16 +7,14 @@ import { PageHeaderService } from '../../core/page-header.service';
 @Component({
   selector: 'main-layout',
   template: `
-    <div class="layout-page">
-      <navbar />
+    <navbar />
 
-      <main class="layout-body">
-        @if (pageHeaderService.showHeader()) {
-          <app-page-header />
-        }
-        <router-outlet />
-      </main>
-    </div>
+    <main class="layout-body">
+      @if (pageHeaderService.showHeader()) {
+        <app-page-header />
+      }
+      <router-outlet />
+    </main>
   `,
   styleUrl: './main-layout.scss',
   imports: [RouterOutlet, Navbar, PageHeaderComponent],

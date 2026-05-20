@@ -1,34 +1,13 @@
 @use '../../../variables' as *;
 
-.layout-page {
-  display: flex;
-  min-height: 100dvh;
+:host {
   background-color: var(--mat-sys-background);
+  display: flex;
+  align-items: start;
 }
 
 .layout-body {
   min-width: 0;
+  width: 100%;
   flex: 1 1 0%;
-  display: grid;
-
-  /* Mobile: < 600px */
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--page-spacer-sm);
-  margin: var(--page-spacer-sm);
-  padding-bottom: 80px;
-
-  /* Tablet: 600px - 1023px */
-  @media (min-width: $breakpoint-sm) {
-    grid-template-columns: repeat(8, 1fr);
-    gap: var(--page-spacer-lg);
-    margin: var(--page-spacer-lg);
-    padding-bottom: 0;
-  }
-
-  /* Desktop: >= 1024px */
-  @media (min-width: $breakpoint-md) {
-    grid-template-columns: repeat(12, 1fr);
-    gap: var(--page-spacer-lg);
-    margin: var(--page-spacer-lg);
-  }
 }
