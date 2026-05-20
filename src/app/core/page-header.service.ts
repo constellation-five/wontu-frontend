@@ -20,7 +20,6 @@ export class PageHeaderService {
 
   constructor() {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-      console.log(this.activatedRoute);
       const routeData = this.buildRouteData(this.activatedRoute.root);
 
       if (routeData.hideHeader) {
@@ -87,7 +86,6 @@ export class PageHeaderService {
       currentRoute = currentRoute.firstChild;
     }
 
-    console.log('Route data extracted:', { title, breadcrumbs, hideHeader });
     return { title, breadcrumbs, hideHeader };
   }
 }
