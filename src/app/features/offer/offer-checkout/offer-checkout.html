@@ -3,21 +3,11 @@
 </div>
 
 <div *ngIf="!isLoading()" class="page-container">
-  
-  <app-page-header 
-    [title]="'Your Order'"
-    [breadcrumbs]="breadcrumbs()"
-    [isLoading]="isLoading()">
-  </app-page-header>
-
   <div class="main-layout">
     <div class="content-section">
       <!-- Progress Bar -->
       <frame-card [attr.title]="null">
-        <offer-progress 
-          [role]="userRole()" 
-          [currentStep]="currentStep()">
-        </offer-progress>
+        <offer-progress [role]="userRole()" [currentStep]="currentStep()"> </offer-progress>
       </frame-card>
 
       <!-- Payment Card -->
@@ -31,21 +21,26 @@
         <div class="flex flex-col gap-[5px]">
           <div class="flex justify-between items-center">
             <span class="time-label font-regular">Order closes at</span>
-            <span class="time-value font-medium">{{ offer()?.closing_time | date:'dd/MM/yyyy, h a' }}</span>
+            <span class="time-value font-medium">{{
+              offer()?.closing_time | date: 'dd/MM/yyyy, h a'
+            }}</span>
           </div>
           <div class="flex justify-between items-center">
             <span class="time-label font-regular">Items arrive at</span>
-            <span class="time-value font-medium">{{ offer()?.arrival_time | date:'dd/MM/yyyy, h a' }}</span>
+            <span class="time-value font-medium">{{
+              offer()?.arrival_time | date: 'dd/MM/yyyy, h a'
+            }}</span>
           </div>
         </div>
 
         <mat-divider></mat-divider>
 
         <div class="flex items-center gap-3">
-          <img 
-            [src]="offer()?.seller?.avatar" 
+          <img
+            [src]="offer()?.seller?.avatar"
             [alt]="offer()?.seller?.name"
-            class="seller-avatar">
+            class="seller-avatar"
+          />
           <div class="flex flex-col gap-1 flex-1">
             <div class="seller-name font-medium">{{ offer()?.seller?.name }}</div>
             <div class="flex items-center gap-1">
@@ -54,12 +49,18 @@
               <span class="rating-count font-regular">(100+)</span>
             </div>
           </div>
-          <button 
-            mat-flat-button 
+          <button
+            mat-flat-button
             (click)="goToChat()"
             class="bg-primary-container !rounded-full !px-5 !h-10 !gap-2"
-            style="background-color: var(--mat-sys-primary-container) !important; color: var(--mat-sys-on-primary-container) !important;">
-            <mat-icon fontSet="material-symbols-outlined" class="!text-[20px] !w-5 !h-5">chat</mat-icon>
+            style="
+              background-color: var(--mat-sys-primary-container) !important;
+              color: var(--mat-sys-on-primary-container) !important;
+            "
+          >
+            <mat-icon fontSet="material-symbols-outlined" class="!text-[20px] !w-5 !h-5"
+              >chat</mat-icon
+            >
             Chat
           </button>
         </div>
@@ -68,35 +69,43 @@
       <frame-card title="Cart" [attr.title]="null">
         <div class="flex flex-col gap-3">
           <div *ngFor="let cartItem of cartItems()" class="cart-item-card">
-            <img [src]="cartItem.item.image_url" [alt]="cartItem.item.item_name" class="cart-item-image">
+            <img
+              [src]="cartItem.item.image_url"
+              [alt]="cartItem.item.item_name"
+              class="cart-item-image"
+            />
             <div class="cart-item-content">
               <div class="cart-item-name font-semibold">{{ cartItem.item.item_name }}</div>
-              <div *ngIf="cartItem.notes" class="cart-item-notes font-regular">{{ cartItem.notes }}</div>
-              <div class="cart-item-price font-bold">Rp {{ cartItem.item.item_price | number:'1.0-0' }}</div>
+              <div *ngIf="cartItem.notes" class="cart-item-notes font-regular">
+                {{ cartItem.notes }}
+              </div>
+              <div class="cart-item-price font-bold">
+                Rp {{ cartItem.item.item_price | number: '1.0-0' }}
+              </div>
             </div>
             <div class="cart-item-qty font-bold">{{ cartItem.quantity }}</div>
           </div>
         </div>
-        
+
         <div class="flex flex-col gap-4">
           <div class="flex justify-between items-center">
             <span class="total-label font-medium">Total</span>
             <span class="total-amount font-bold">Rp {{ getCartTotal() | number }}</span>
           </div>
-          
+
           <!-- Action Buttons -->
           <div class="flex gap-3 w-full" *ngIf="!isOfferClosed">
-            <button 
-              mat-stroked-button 
+            <button
+              mat-stroked-button
               class="cancel-order-btn !rounded-full !h-12 !px-4 !gap-2 !border-[#E00000] !text-[#E00000] font-medium flex-1"
-              (click)="cancelOrder()">
-              <mat-icon fontSet="material-symbols-outlined" class="!text-[20px] !w-5 !h-5">close</mat-icon>
+              (click)="cancelOrder()"
+            >
+              <mat-icon fontSet="material-symbols-outlined" class="!text-[20px] !w-5 !h-5"
+                >close</mat-icon
+              >
               Cancel Order
             </button>
-            <button 
-              mat-flat-button 
-              class="edit-order-btn flex-1"
-              (click)="editOrder()">
+            <button mat-flat-button class="edit-order-btn flex-1" (click)="editOrder()">
               <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
               Edit Order
             </button>
@@ -104,14 +113,12 @@
 
           <!-- No actions when offer is closed -->
           <div *ngIf="isOfferClosed" class="offer-closed-message">
-            <span class="font-regular text-sm" style="color: var(--mat-sys-outline);">
+            <span class="font-regular text-sm" style="color: var(--mat-sys-outline)">
               Offer has been closed. No further changes allowed.
             </span>
           </div>
         </div>
       </frame-card>
-
     </aside>
   </div>
-
 </div>

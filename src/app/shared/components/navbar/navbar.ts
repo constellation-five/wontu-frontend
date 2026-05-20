@@ -6,7 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { Auth } from '../../../core/auth';
 import { isProtectedRoute } from '../../../core/routes.config';
-import { ButtonColorDirective } from "../../directives/button";
+import { ButtonColorDirective } from '../../directives/button';
 
 export type NavLink = {
   label: string;
@@ -15,8 +15,8 @@ export type NavLink = {
 };
 
 export const NAV_LINKS: readonly NavLink[] = [
-  { label: 'Offers', path: '/offer', icon: 'shopping_bag' },
-  { label: 'Requests', path: '/request', icon: 'concierge' },
+  { label: 'Offers', path: '/offers', icon: 'shopping_bag' },
+  { label: 'Requests', path: '/requests', icon: 'concierge' },
   { label: 'History', path: '/history', icon: 'receipt_long' },
   { label: 'Profile', path: '/profile', icon: 'account_circle' },
 ];
@@ -32,8 +32,8 @@ export const NAV_LINKS: readonly NavLink[] = [
     MatMenuModule,
     RouterLink,
     RouterLinkActive,
-    ButtonColorDirective
-],
+    ButtonColorDirective,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Navbar {

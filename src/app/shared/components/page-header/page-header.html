@@ -1,17 +1,22 @@
 <div class="page-header">
-  <nav class="breadcrumb" *ngIf="breadcrumbs.length > 0">
-    <ng-container *ngFor="let item of breadcrumbs; let last = last">
-      <a 
-        *ngIf="item.route && !last" 
-        [routerLink]="item.route" 
-        class="breadcrumb-link">
-        {{ item.label }}
-      </a>
-      <span *ngIf="last" class="breadcrumb-current">{{ item.label }}</span>
-      <span *ngIf="!last" class="breadcrumb-separator">/</span>
-    </ng-container>
-  </nav>
+  @if (pageHeaderService.breadcrumbs().length > 0) {
+    <nav class="breadcrumb">
+      @for (item of pageHeaderService.breadcrumbs(); track item.label; let last = $last) {
+        @if (item.route && !last) {
+          <a [routerLink]="item.route" class="breadcrumb-link">{{ item.label }}</a>
+        } @else {
+          <span class="breadcrumb-current">{{ item.label }}</span>
+        }
+        @if (!last) {
+          <span class="breadcrumb-separator">></span>
+        }
+      }
+    </nav>
+  }
 
-  <h1 class="page-title" *ngIf="!isLoading">{{ title }}</h1>
-  <div class="title-skeleton" *ngIf="isLoading"></div>
+  @if (pageHeaderService.title()) {
+    <h1 class="page-title">
+      {{ pageHeaderService.title() }}
+    </h1>
+  }
 </div>
