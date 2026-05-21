@@ -9,7 +9,7 @@ import { ButtonSizeDirective } from '../../directives/button';
 @Component({
   selector: 'app-top-bar',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, ButtonSizeDirective],
+  imports: [CommonModule, MatIconModule, MatButtonModule],
   template: `
     <div class="top-bar" [class.scrolled]="scrolled()">
       <button matIconButton class="back-btn" (click)="onBack()">
