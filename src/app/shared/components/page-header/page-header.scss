@@ -36,7 +36,7 @@
 }
 
 /* Mobile adjustments */
-@media (max-width: $breakpoint-sm) {
+@media (max-width: $breakpoint-md) {
   .page-header {
     padding-top: var(--spacing-3xl);
   }

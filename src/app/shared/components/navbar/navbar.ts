@@ -25,6 +25,9 @@ export const NAV_LINKS: readonly NavLink[] = [
   selector: 'navbar',
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
+  host: {
+    '[class.mobile-top-level-page]': 'isTopLevelPage()',
+  },
   imports: [
     MatListModule,
     MatIconModule,
@@ -60,5 +63,10 @@ export class Navbar {
 
   blurItem(event: Event) {
     (event.currentTarget as HTMLElement)?.blur();
+  }
+
+  isTopLevelPage(): boolean {
+    const path = this.router.url.split('?')[0].split('#')[0];
+    return this.links.some((link) => link.path === path);
   }
 }

@@ -3,19 +3,12 @@
 
 :host {
   /* Default: Mobile styles (from bottom-navbar) */
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  width: 100%;
-  background-color: var(--mat-sys-surface-container);
-  box-shadow: var(--mat-sys-level2);
-  padding: var(--spacing-sm) var(--spacing-sm);
+  display: none;
 
   /* Desktop: Tablet & above (from side-navbar) */
-  @media (min-width: $breakpoint-sm) {
+  @media (min-width: $breakpoint-md) {
     display: block;
+    position: fixed;
     width: 168px;
     flex-shrink: 0;
     height: 100dvh;
@@ -23,8 +16,25 @@
     bottom: auto;
     right: auto;
     left: auto;
-    position: sticky;
+    z-index: 1000;
+    background-color: var(--mat-sys-surface-container);
+    box-shadow: var(--mat-sys-level2);
     padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    &.mobile-top-level-page {
+      display: block;
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      width: 100%;
+      background-color: var(--mat-sys-surface-container);
+      box-shadow: var(--mat-sys-level2);
+      padding: var(--spacing-sm) var(--spacing-sm);
+    }
   }
 }
 
@@ -33,7 +43,7 @@
   width: 100%;
 
   /* Desktop */
-  @media (min-width: $breakpoint-sm) {
+  @media (min-width: $breakpoint-md) {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -43,7 +53,7 @@
 .logo-container {
   display: none; /* Hidden on mobile */
 
-  @media (min-width: $breakpoint-sm) {
+  @media (min-width: $breakpoint-md) {
     margin-bottom: var(--spacing-xl);
     display: flex;
     justify-content: center;
@@ -76,7 +86,7 @@
     )
   );
 
-  @media (min-width: $breakpoint-sm) {
+  @media (min-width: $breakpoint-md) {
     flex-direction: column;
     justify-content: flex-start;
     gap: var(--spacing-sm);
@@ -107,7 +117,7 @@
   gap: var(--spacing-2xs);
 
   /* Desktop */
-  @media (min-width: $breakpoint-sm) {
+  @media (min-width: $breakpoint-md) {
     flex-direction: row;
     justify-content: flex-start;
     padding-left: 0;
@@ -130,7 +140,7 @@
   margin-bottom: 4px;
 
   /* Desktop */
-  @media (min-width: $breakpoint-sm) {
+  @media (min-width: $breakpoint-md) {
     margin-bottom: 0;
   }
 }
@@ -156,7 +166,7 @@
 .auth-button-container {
   display: none; /* Hidden on mobile */
 
-  @media (min-width: $breakpoint-sm) {
+  @media (min-width: $breakpoint-md) {
     display: flex;
     flex-direction: column;
     margin-top: auto;
@@ -164,7 +174,7 @@
 }
 
 .auth-button {
-  @media (min-width: $breakpoint-sm) {
+  @media (min-width: $breakpoint-md) {
     width: 100%;
     display: flex;
     justify-content: center;
