@@ -7,6 +7,11 @@ export interface BreadcrumbItem {
   route?: string;
 }
 
+export interface MenuItem {
+  label: string;
+  action: () => void;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -14,6 +19,7 @@ export class PageHeaderService {
   title = signal<string>('');
   breadcrumbs = signal<BreadcrumbItem[]>([]);
   showHeader = signal<boolean>(true);
+  menuItems = signal<MenuItem[]>([]);
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);

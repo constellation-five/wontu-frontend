@@ -1,3 +1,5 @@
+@use '../../../../variables' as *;
+
 .page-header {
   padding: var(--spacing-sm) var(--spacing-xl);
   margin-bottom: var(--spacing-xl);
@@ -34,9 +36,9 @@
 }
 
 /* Mobile adjustments */
-@media (max-width: 1024px) {
+@media (max-width: $breakpoint-sm) {
   .page-header {
-    padding-top: var(--spacing-2xl);
+    padding-top: var(--spacing-3xl);
   }
   .breadcrumb {
     display: none;

@@ -4,18 +4,28 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { PageHeaderService } from '../../../core/page-header.service';
-import { ButtonSizeDirective } from '../../directives/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-top-bar',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatMenuModule],
   template: `
     <div class="top-bar" [class.scrolled]="scrolled()">
       <button matIconButton class="back-btn" (click)="onBack()">
         <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
       </button>
-      <div class="title" *ngIf="showCollapsedTitle()">{{ collapsedTitle() }}</div>
+      <div class="title">{{ pageHeader.title() }}</div>
+      @if (pageHeader.menuItems().length > 0) {
+        <button matIconButton class="menu-btn" [matMenuTriggerFor]="menu">
+          <mat-icon fontSet="material-symbols-outlined">more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          @for (item of pageHeader.menuItems(); track item.label) {
+            <button mat-menu-item (click)="item.action()">{{ item.label }}</button>
+          }
+        </mat-menu>
+      }
     </div>
   `,
   styleUrls: ['./top-bar.scss'],
@@ -26,23 +36,9 @@ export class TopBarComponent {
 
   scrolled = signal(false);
 
-  collapsedTitle = signal('');
-
-  constructor() {
-    // derive collapsed title from breadcrumbs
-    const crumbs = this.pageHeader.breadcrumbs();
-    if (crumbs.length > 0) {
-      this.collapsedTitle.set(crumbs[crumbs.length - 1].label);
-    }
-  }
-
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.scrolled.set(window.scrollY > 56);
-  }
-
-  showCollapsedTitle() {
-    return this.scrolled() && !!this.collapsedTitle();
+    this.scrolled.set(window.scrollY > 80);
   }
 
   onBack() {
@@ -53,5 +49,9 @@ export class TopBarComponent {
     } else {
       this.router.navigateByUrl('/');
     }
+  }
+
+  onMenu() {
+    // Handle menu button click
   }
 }
