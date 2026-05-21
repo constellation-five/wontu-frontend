@@ -43,6 +43,11 @@ export const routes: Routes = [
             component: OfferChatPage,
             title: 'Chat',
           },
+          { 
+            path: 'create', 
+            loadComponent: () => import('./features/offer/offer-create/offer-create'),
+            title: 'Create Offer',
+          },
         ],
       },
 
