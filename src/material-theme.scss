@@ -5,6 +5,8 @@
 @use './app/shared/directives/button/icon-button-variant.scss';
 
 html {
+  @include mat.system-classes();
+
   @include mat.theme(
     (
       color: (
@@ -225,7 +227,16 @@ a[matFab][extended] > .mat-icon {
   margin-right: var(--spacing-xs);
 }
 
+mat-card.mat-mdc-card {
+  background-color: var(--mat-sys-surface-container-lowest);
+  border-radius: var(--mat-sys-corner-small);
+}
+
 .mat-mdc-menu-panel > .mat-mdc-menu-content {
   padding-top: 0;
   padding-bottom: 0;
+}
+
+.text-bold {
+  font-weight: 700 !important;
 }

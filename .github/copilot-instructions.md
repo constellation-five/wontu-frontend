@@ -41,16 +41,15 @@
 - Use Angular Material for base UI primitives (buttons, inputs, dialogs, menus, tables, etc.).
 - Prioritize Angular Material's built-in system tokens (e.g., `var(--mat-sys-...)`) and custom overrides (e.g. `@include mat....-overrides((...));`) for styling (see [Theming your components](https://material.angular.dev/guide/theming-your-components) and [Theming guide](https://material.angular.dev/guide/theming)).
 - Use the global variables defined in `src/material-theme.scss` for consistent app-wide styling.
-- **Buttons:** Always use Angular Material 3's new button API format (e.g., `matButton="filled"`, `matButton="outlined"`, `matButton="tonal"`). For button sizing and coloring, use our custom directives: `appButtonSize="xs | sm | md"` (defaults to 'sm') and `appButtonColor="primary | error"` (defaults to 'primary').
+- **Buttons:** Always use Angular Material 3's new button API format (e.g., `matButton="filled | outlined | tonal | text | elevated"`). For button sizing and coloring, use our custom directives: `appButtonSize="xs | sm | md"` (defaults to 'sm') and `appButtonColor="primary | error"` (defaults to 'primary'). For icon button variants, use `matIconButton` with `appIconButtonVariant="filled | outlined | tonal | text | elevated"` directive.
 - Do **not** use Tailwind CSS. Rely on pure SCSS/CSS and Material's design system tokens.
-- **Layouting:** Use the custom grid system with `.col-span.#` classes (per user directives on the span of each element).
-- **Containers:** Use the `<app-pane>` (or `pane` component) elements as the main containers for each part of the screen.
-- Keep shared app-level styles in `src/styles.css`; keep component-specific styles local.
+- **Containers:** Use `<app-pane>` elements as the main containers for each part of the screen.
+- Keep shared app-level styles in `src/material-theme.scss`; keep component-specific styles local.
 - Do not replace Material components with custom HTML unless there is a clear product reason.
 
 ## Material Design Tokens & Utilities Reference
 
-Use CSS variables (`var(--mat-sys-*)`) in styles or utility classes (`.mat-*`) in templates. All support light/dark mode automatically.
+Use CSS variables (`var(--mat-sys-*)`) in styles or utility classes (`.mat-*`) in templates. Custom styles should be used for interactive or complex elements. Utility classes should be used for simple or one-off styling tasks. All support light/dark mode automatically.
 
 ### Color Tokens
 

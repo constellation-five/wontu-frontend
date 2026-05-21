@@ -1,7 +1,7 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
-  selector: 'pane',
+  selector: 'app-pane',
   templateUrl: './pane.html',
   styleUrls: ['./pane.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
