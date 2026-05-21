@@ -10,4 +10,9 @@
   min-width: 0;
   width: 100%;
   flex: 1 1 0%;
+  margin: var(--page-spacer-sm) var(--page-spacer-sm) 84px;
+
+  @media (min-width: $breakpoint-sm) {
+    margin: var(--page-spacer-lg);
+  }
 }
