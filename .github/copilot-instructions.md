@@ -18,6 +18,7 @@
 - Keep strict typing; avoid `any`.
 - Do not add code explanation comments unless explicitly instructed to. If you do, make them in English, concise, and only for non-obvious code.
 - Always use the defined API environment variable (e.g., from `environment.ts`) as a prefix to all API routes.
+- Use the PageHeaderService to set page titles, breadcrumbs, and optional mobile "more" menu items in each route component, and the BottomBarService to add custom action buttons to the bottom bar.
 
 ## Naming
 
