@@ -7,7 +7,7 @@
   border: 0;
   border-radius: var(--mat-sys-corner-medium);
   padding: var(--spacing-md);
-  box-shadow: var(--mat-sys-level2);
+  box-shadow: var(--mat-sys-level1);
   color: var(--mat-sys-on-surface);
 
   @media (min-width: $breakpoint-md) {
@@ -17,8 +17,6 @@
 }
 
 :host.pane-large {
-  padding: var(--spacing-md);
-
   @media (min-width: $breakpoint-md) {
     padding: var(--spacing-2xl);
   }
