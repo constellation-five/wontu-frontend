@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs';
@@ -55,17 +55,25 @@ export class OfferService {
     return this.http.get<Offer>(`${environment.api}/offers/${id}`);
   }
 
-  loadOffers() {
+  loadOffers(search?: string) {
     this.state.update((s) => ({ ...s, isLoading: true }));
-    return this.http.get<Offer[]>(`${environment.api}/offers`).pipe(
-      tap((data) => {
-        this.state.update((s) => ({
-          ...s,
-          offers: data,
-          isLoading: false,
-        }));
-      }),
-    );
+
+    let params = new HttpParams();
+    if (search) {
+      params = params.set('search', search);
+    }
+
+    return this.http
+      .get<{ status: string; data: Offer[] }>(`${environment.api}/offers`, { params })
+      .pipe(
+        tap((response) => {
+          this.state.update((s) => ({
+            ...s,
+            offers: response.data,
+            isLoading: false,
+          }));
+        }),
+      );
   }
 
   placeOrder(offerId: number, items: { item_id: number; quantity: number }[]) {
