@@ -21,8 +21,7 @@
 
 ## Naming
 
-- Do not use type suffixes in file names (no `.component`, `.service`, `.pipe`, `.directive`, `.guard`, `.interceptor`, `.module`, `.routing`).
-- Do not use type suffixes in class names (no `Component`, `Service`, `Pipe`, `Directive`, `Guard`, `Interceptor`, `Module`).
+- Components should not be suffixed with "Component" in both the file name and class name (e.g., `user-profile.ts`, not `user-profile-component.ts`, and `UserProfile`, not `UserProfileComponent`).
 - Prefer concise domain names: `user-profile.ts`, `auth.ts`, `currency-format.ts`; classes like `UserProfile`, `Auth`, `CurrencyFormat`.
 
 ## Project Structure (Respect This Layout)
