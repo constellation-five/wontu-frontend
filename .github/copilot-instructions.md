@@ -23,7 +23,7 @@
 ## Naming
 
 - Components should not be suffixed with "Component" in both the file name and class name (e.g., `user-profile.ts`, not `user-profile-component.ts`, and `UserProfile`, not `UserProfileComponent`).
-- Prefer concise domain names: `user-profile.ts`, `auth.ts`, `currency-format.ts`; classes like `UserProfile`, `Auth`, `CurrencyFormat`.
+- Prefer concise domain names: `user-profile.ts`, `auth-service.ts`, `currency-format.ts`; classes like `UserProfile`, `AuthService`, `CurrencyFormat`.
 
 ## Project Structure (Respect This Layout)
 
