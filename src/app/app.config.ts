@@ -12,7 +12,7 @@ import {
   withXsrfConfiguration,
 } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { Auth } from './core/auth';
+import { AuthService } from './core/auth.service';
 
 import { routes } from './app.routes';
 import { credentialsInterceptor } from './core/credentials.interceptor';
@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([credentialsInterceptor])),
     provideAppInitializer(() => {
-      const auth = inject(Auth);
+      const auth = inject(AuthService);
       return auth.loadUser();
     }),
   ],

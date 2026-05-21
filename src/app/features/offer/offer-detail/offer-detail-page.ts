@@ -20,7 +20,7 @@ import { DialogComponent, DialogData } from '../../../shared/components/dialog';
 import { OfferService } from '../../../core/offer.service';
 import { CartService, CartItem } from '../../../core/cart.service';
 import { PageHeaderService } from '../../../core/page-header.service';
-import { Offer, OfferItem } from '../../../core/offer';
+import { Offer, OfferItem } from '../../../core/offer.service';
 
 @Component({
   selector: 'offer-detail-page',

@@ -5,8 +5,8 @@ import {
   inject,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Auth } from '../../../core/auth';
-import { OfferService, Offer } from '../../../core/offer'; // Tambahkan import Offer
+import { AuthService } from '../../../core/auth.service';
+import { Offer, OfferService } from '../../../core/offer.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';

@@ -6,7 +6,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { PageHeaderService } from '../../../core/page-header.service';
 import { OfferService } from '../../../core/offer.service';
-import { Offer } from '../../../core/offer';
+import { Offer } from '../../../core/offer.service';
 
 @Component({
   selector: 'offer-chat-page',

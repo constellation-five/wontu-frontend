@@ -18,7 +18,7 @@ import { OfferProgressComponent } from '../../../shared/components/offer-progres
 
 import { OfferService } from '../../../core/offer.service';
 import { CartService, CartItem } from '../../../core/cart.service';
-import { Offer, OfferItem } from '../../../core/offer';
+import { Offer, OfferItem } from '../../../core/offer.service';
 import { PageHeaderService } from '../../../core/page-header.service';
 
 @Component({
