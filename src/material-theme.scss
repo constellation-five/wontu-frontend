@@ -4,6 +4,121 @@
 @use './app/shared/directives/button/button-color.scss';
 @use './app/shared/directives/button/icon-button-variant.scss';
 
+$spacing-scale: (
+  3xs: var(--spacing-3xs),
+  2xs: var(--spacing-2xs),
+  xs: var(--spacing-xs),
+  sm: var(--spacing-sm),
+  md: var(--spacing-md),
+  lg: var(--spacing-lg),
+  xl: var(--spacing-xl),
+  2xl: var(--spacing-2xl),
+  3xl: var(--spacing-3xl),
+  4xl: var(--spacing-4xl),
+);
+
+@mixin emit-spacing-utility($class-name, $properties) {
+  .#{$class-name} {
+    @each $property, $value in $properties {
+      #{$property}: #{$value} !important;
+    }
+  }
+}
+
+@mixin emit-spacing-utilities() {
+  @each $size, $value in $spacing-scale {
+    @include emit-spacing-utility(
+      m-#{$size},
+      (
+        margin: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      mt-#{$size},
+      (
+        margin-top: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      mr-#{$size},
+      (
+        margin-right: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      mb-#{$size},
+      (
+        margin-bottom: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      ml-#{$size},
+      (
+        margin-left: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      mx-#{$size},
+      (
+        margin-left: $value,
+        margin-right: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      my-#{$size},
+      (
+        margin-top: $value,
+        margin-bottom: $value,
+      )
+    );
+
+    @include emit-spacing-utility(
+      p-#{$size},
+      (
+        padding: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      pt-#{$size},
+      (
+        padding-top: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      pr-#{$size},
+      (
+        padding-right: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      pb-#{$size},
+      (
+        padding-bottom: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      pl-#{$size},
+      (
+        padding-left: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      px-#{$size},
+      (
+        padding-left: $value,
+        padding-right: $value,
+      )
+    );
+    @include emit-spacing-utility(
+      py-#{$size},
+      (
+        padding-top: $value,
+        padding-bottom: $value,
+      )
+    );
+  }
+}
+
 html {
   @include mat.system-classes();
 
@@ -240,3 +355,5 @@ mat-card.mat-mdc-card {
 .text-bold {
   font-weight: 700 !important;
 }
+
+@include emit-spacing-utilities();
