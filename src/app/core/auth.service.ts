@@ -1,15 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { User } from './user';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { isProtectedRoute } from './routes.config';
 
+export interface User {
+  user_id: string;
+  name: string;
+  email: string;
+  username: string;
+  google_id: string;
+  avatar: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
-export class Auth {
+export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
 

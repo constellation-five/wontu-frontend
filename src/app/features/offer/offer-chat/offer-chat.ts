@@ -4,18 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { PageHeaderComponent, BreadcrumbItem } from '../../../shared/components/page-header';
+import { PageHeaderService } from '../../../core/page-header.service';
 import { OfferService } from '../../../core/offer.service';
-import { Offer } from '../../../core/offer';
+import { Offer } from '../../../core/offer.service';
 
 @Component({
   selector: 'offer-chat-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatProgressSpinnerModule,
-    PageHeaderComponent
-  ],
+  imports: [CommonModule, MatProgressSpinnerModule],
   templateUrl: './offer-chat.html',
   styleUrls: ['./offer-chat.scss'],
 })
@@ -23,13 +19,10 @@ export class OfferChatPage implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly offerService = inject(OfferService);
+  private readonly pageHeaderService = inject(PageHeaderService);
 
   offer = signal<Offer | null>(null);
   isLoading = signal<boolean>(true);
-  breadcrumbs = signal<BreadcrumbItem[]>([
-    { label: 'Offers', route: '/offer' },
-    { label: 'Loading...' }
-  ]);
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -45,10 +38,10 @@ export class OfferChatPage implements OnInit {
     this.offerService.getOfferById(id).subscribe({
       next: (data) => {
         this.offer.set(data);
-        this.breadcrumbs.set([
+        this.pageHeaderService.setBreadcrumbs([
           { label: 'Offers', route: '/offer' },
           { label: data.merchant_name, route: `/offer/${data.offer_id}` },
-          { label: 'Chat' }
+          { label: 'Chat' },
         ]);
         this.isLoading.set(false);
       },
@@ -56,7 +49,7 @@ export class OfferChatPage implements OnInit {
         console.error('Failed to load offer:', err);
         this.isLoading.set(false);
         this.router.navigate(['/offer']);
-      }
+      },
     });
   }
 }

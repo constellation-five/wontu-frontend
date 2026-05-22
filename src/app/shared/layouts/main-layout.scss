@@ -1,0 +1,19 @@
+@use '../../../variables' as *;
+
+:host {
+  background-color: var(--mat-sys-background);
+  display: flex;
+  align-items: start;
+}
+
+.layout-body {
+  min-width: 0;
+  width: 100%;
+  flex: 1 1 0%;
+  margin: var(--page-spacer-sm) var(--page-spacer-sm) 84px;
+
+  @media (min-width: $breakpoint-md) {
+    margin: var(--page-spacer-lg) var(--page-spacer-lg) var(--page-spacer-lg)
+      calc(var(--page-spacer-lg) + 168px);
+  }
+}

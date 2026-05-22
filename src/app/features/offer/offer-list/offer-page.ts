@@ -5,8 +5,8 @@ import {
   inject,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Auth } from '../../../core/auth';
-import { OfferService, Offer } from '../../../core/offer'; // Tambahkan import Offer
+import { AuthService } from '../../../core/auth.service';
+import { Offer, OfferService } from '../../../core/offer.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -45,7 +45,7 @@ import { LocationPickerDialog } from './location-picker-dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OfferPage implements OnInit {
-  private readonly auth = inject(Auth);
+  private readonly auth = inject(AuthService);
   private readonly offerService = inject(OfferService); // Inject OfferService
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly dialog = inject(MatDialog);
@@ -104,13 +104,13 @@ export class OfferPage implements OnInit {
   // Mengubah filteredOffers agar mengambil data dari Signal this.offers()
   get filteredOffers() {
     const currentOffers = this.offers(); // Data ini sudah hasil filter dari Backend
-    
+
     // Filter offers yang memiliki items
     let offersWithItems = currentOffers.filter(o => o.items && o.items.length > 0);
-    
+
     // Jika kamu masih butuh filter kategori (Food/Other) secara instan di FE:
     if (this.selectedFilter !== 'all') {
-      offersWithItems = offersWithItems.filter(o => 
+      offersWithItems = offersWithItems.filter(o =>
         o.category.toLowerCase() === this.selectedFilter.toLowerCase()
       );
     }

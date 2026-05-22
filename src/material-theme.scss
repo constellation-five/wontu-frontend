@@ -1,175 +1,242 @@
 @use '@angular/material' as mat;
-
-$brand-on-color: #fcfdff;
-
-$brand-primary: #204ece;
-$brand-primary-container: #dae1ff;
-$brand-on-primary-container: #1c3399;
-
-$brand-secondary: #ea9835;
-$brand-secondary-container: #ffd896;
-$brand-on-secondary-container: #ae6f22;
-
-$brand-error: #e00000;
-$brand-error-container: #ffded0;
-$brand-on-error-container: #a42525;
-
-$brand-on-surface: #1c1b1f;
-$brand-on-surface-variant: #828282;
-$brand-surface: #eaedf5;
-$brand-surface-container-lowest: #fbfcff;
-$brand-surface-container-highest: #cdcfd9;
-$brand-surface-container-high: #dde0e7;
-$brand-surface-container: #f0f3fb;
-
-$brand-surface-outline: #7c808c;
-$brand-surface-outline-variant: #b3b8c7;
+@use './_theme-colors' as theme;
+@use './app/shared/directives/button/button-size.scss';
+@use './app/shared/directives/button/button-color.scss';
+@use './app/shared/directives/button/icon-button-variant.scss';
 
 html {
-  height: 100%;
-  scrollbar-gutter: stable;
+  @include mat.system-classes();
 
   @include mat.theme(
     (
       color: (
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
+        primary: theme.$primary-palette,
+        tertiary: theme.$tertiary-palette,
       ),
       typography: Inter,
       density: 0,
+    ),
+    $overrides: (
+      (
+        primary: #204ece,
+        on-primary: #fcfdff,
+        primary-container: #dbe1f5,
+        on-primary-container: #1c3399,
+
+        secondary: #ea9835,
+        on-secondary: #fcfdff,
+        secondary-container: #ffd896,
+        on-secondary-container: #ae6f22,
+
+        error: #e00000,
+        on-error: #fcfdff,
+        error-container: #ffded0,
+        on-error-container: #a42525,
+
+        background: #eaedf5,
+        surface: #eaedf5,
+        on-surface: #1c1b1f,
+        on-surface-variant: #52555d,
+        surface-container-lowest: #fbfcff,
+        surface-container: #f0f3fb,
+        surface-container-high: #dde0e7,
+        surface-container-highest: #cdcfd9,
+
+        outline: #7c808c,
+        outline-variant: #b3b8c7,
+
+        inverse-surface: #383a3f,
+        inverse-on-surface: #fcfdff,
+        inverse-primary: #a8b7fa,
+
+        headline-large: 500 2.5rem / 3rem Inter,
+        headline-large-line-height: 3rem,
+        headline-large-size: 2.5rem,
+        headline-large-weight: 500,
+        headline-medium: 500 2rem / 2.5rem Inter,
+        headline-medium-line-height: 2.5rem,
+        headline-medium-size: 2rem,
+        headline-medium-weight: 500,
+        headline-small: 500 1.5rem / 2rem Inter,
+        headline-small-weight: 500,
+        body-large-tracking: 0,
+        body-medium-tracking: 0,
+        body-small-tracking: 0,
+        label-large-tracking: 0,
+        label-medium-tracking: 0,
+        label-small: 500 0.625rem / 0.75rem Inter,
+        label-small-line-height: 0.75rem,
+        label-small-size: 0.625rem,
+        label-small-tracking: 0,
+
+        corner-extra-large: 64px,
+        corner-extra-large-top: 64px 64px 0 0,
+        corner-extra-small: 4px,
+        corner-extra-small-top: 4px 4px 0 0,
+        corner-large: 32px,
+        corner-large-end: 0 32px 32px 0,
+        corner-large-start: 32px 0 0 32px,
+        corner-large-top: 32px 32px 0 0,
+        corner-medium: 16px,
+        corner-none: 0,
+        corner-small: 8px
+      )
     )
   );
 
-  @include mat.theme-overrides(
+  /* Spacing */
+  --spacing-3xs: 2px;
+  --spacing-2xs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+  --spacing-4xl: 64px;
+
+  /* Page Spacers */
+  --page-spacer-sm: 16px;
+  --page-spacer-lg: 24px;
+
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  line-height: 1.5;
+  font-family: 'Inter', 'Roboto', sans-serif;
+
+  @include mat.button-overrides(
     (
-      primary: $brand-primary,
-      on-primary: $brand-on-color,
-      primary-container: $brand-primary-container,
-      on-primary-container: $brand-on-primary-container,
+      text-icon-offset: 0px,
+      filled-icon-offset: 0px,
+      protected-icon-offset: 0px,
+      outlined-icon-offset: 0px,
+      tonal-icon-offset: 0px,
 
-      secondary: $brand-secondary,
-      on-secondary: $brand-on-color,
-      secondary-container: $brand-secondary-container,
-      on-secondary-container: $brand-on-secondary-container,
-
-      error: $brand-error,
-      on-error: $brand-on-color,
-      error-container: $brand-error-container,
-      on-error-container: $brand-on-error-container,
-
-      surface: $brand-surface,
-      on-surface: $brand-on-surface,
-      on-surface-variant: $brand-on-surface-variant,
-      surface-container-lowest: $brand-surface-container-lowest,
-      surface-container: $brand-surface-container,
-      surface-container-high: $brand-surface-container-high,
-      surface-container-highest: $brand-surface-container-highest,
-      outline-dark : $brand-surface-outline,
-      outline-variant: $brand-surface-outline-variant,
+      text-label-text-color: var(--mat-sys-on-surface-variant),
+      text-state-layer-color: var(--mat-sys-on-surface-variant),
+      text-ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-on-surface-variant) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
+      outlined-label-text-color: var(--mat-sys-on-surface-variant),
+      outlined-state-layer-color: var(--mat-sys-on-surface-variant),
+      outlined-ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-on-surface-variant) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
+      tonal-container-color: var(--mat-sys-primary-container),
+      tonal-label-text-color: var(--mat-sys-on-primary-container),
+      tonal-state-layer-color: var(--mat-sys-on-primary-container),
+      tonal-ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-on-primary-container)
+            calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
     )
   );
+
+  @include mat.fab-overrides(
+    (
+      extended-container-shape: var(--mat-sys-corner-medium),
+      extended-label-text-size: 1rem,
+      container-color: var(--mat-sys-primary),
+      foreground-color: var(--mat-sys-on-primary),
+      state-layer-color: var(--mat-sys-on-primary),
+      ripple-color: color-mix(
+          in srgb,
+          var(--mat-sys-on-primary) calc(var(--mat-sys-pressed-state-layer-opacity) * 100%),
+          transparent
+        ),
+    )
+  );
+
+  @include mat.dialog-overrides(
+    (
+      container-shape: var(--mat-sys-corner-large),
+      headline-padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-md),
+      actions-padding: var(--spacing-xl),
+      container-elevation-shadow: var(--mat-sys-level4),
+    )
+  );
+
+  @include mat.menu-overrides(
+    (
+      container-shape: var(--mat-sys-corner-medium),
+      container-elevation-shadow: var(--mat-sys-level3),
+    )
+  );
+
+  @include mat.form-field-overrides(
+    (
+      filled-container-shape: var(--mat-sys-corner-small),
+      outlined-container-shape: var(--mat-sys-corner-small),
+    )
+  );
+}
+
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+
+router-outlet {
+  display: none;
 }
 
 body {
-  color-scheme: light;
-
-  background: var(--mat-sys-surface);
-
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
-  margin: 0;
-  height: 100%;
+  background-color: var(--mat-sys-surface);
 }
 
-.mat-mdc-unelevated-button.mat-primary,
-.mat-mdc-raised-button.mat-primary {
-  @include mat.button-overrides(
-    (
-      filled-container-color: $brand-primary,
-      filled-label-text-color: $brand-on-color,
-    )
-  );
-}
-
-.text-primary {
+a {
   color: var(--mat-sys-primary);
-}
-.text-on-primary {
-  color: var(--mat-sys-on-primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-.bg-on-color {
-  background-color: var(--mat-sys-on-primary);
+button[matButton='filled'],
+button[mat-flat-button],
+a[matButton='filled'],
+a[mat-flat-button] {
+  box-shadow: var(--mat-sys-level2) !important;
 }
-.bg-surface {
-  background-color: var(--mat-sys-surface);
+
+button[matButton='tonal'],
+button[mat-button],
+a[matButton='tonal'],
+a[mat-button] {
+  box-shadow: var(--mat-sys-level1) !important;
 }
-.bg-surface-lowest {
+
+button[matFab][extended] > .mat-icon,
+a[matFab][extended] > .mat-icon {
+  margin-left: 0;
+  margin-right: var(--spacing-xs);
+}
+
+mat-card.mat-mdc-card {
   background-color: var(--mat-sys-surface-container-lowest);
-}
-.text-on-surface {
-  color: var(--mat-sys-on-surface);
-}
-.text-on-surface-variant {
-  color: var(--mat-sys-on-surface-variant);
+  border-radius: var(--mat-sys-corner-small);
 }
 
-.bg-primary {
-  background-color: var(--mat-sys-on-primary-container);
-}
-.bg-primary-container {
-  background-color: var(--mat-sys-primary-container);
-}
-.bg-surface {
-  background-color: var(--mat-sys-surface);
+.mat-mdc-menu-panel > .mat-mdc-menu-content {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-.text-error {
-  color: var(--mat-sys-on-error);
-}
-.bg-error {
-  background-color: var(--mat-sys-error);
-}
-
-.text-h-large {
-  font-size: 20px;
-}
-.text-h-normal {
-  font-size: 16px;
-}
-.text-h-small {
-  font-size: 14px;
-}
-.text-h-xsmall {
-  font-size: 12px;
-}
-
-.text-p-normal {
-  font-size: 12px;
-}
-.text-p-small {
-  font-size: 10px;
-}
-
-.text-label-normal {
-  font-size: 12px;
-}
-.text-label-small {
-  font-size: 10px;
-}
-.text-label-xsmall {
-  font-size: 8px;
-}
-
-.font-regular {
-  font-weight: 400;
-}
-.font-medium {
-  font-weight: 450;
-}
-.font-semibold {
-  font-weight: 550;
-}
-.font-bold {
-  font-weight: 600;
+.text-bold {
+  font-weight: 700 !important;
 }

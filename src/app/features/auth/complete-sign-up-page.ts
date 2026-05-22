@@ -1,16 +1,18 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth } from '../../core/auth';
+import { AuthService } from '../../core/auth.service';
 import { form, FormField, required, readonly, maxLength, pattern } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import AuthLayout from './auth-layout';
+import { ButtonSizeDirective } from '../../shared/directives/button';
 
 @Component({
   selector: 'complete-sign-up-page',
   templateUrl: './complete-sign-up-page.html',
+  styleUrl: './complete-sign-up-page.scss',
   imports: [
     FormField,
     MatFormFieldModule,
@@ -18,13 +20,14 @@ import AuthLayout from './auth-layout';
     MatButtonModule,
     MatProgressSpinnerModule,
     AuthLayout,
+    ButtonSizeDirective,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CompleteSignUpPage implements OnInit {
   protected readonly Object = Object;
   private readonly router = inject(Router);
-  private readonly auth = inject(Auth);
+  private readonly auth = inject(AuthService);
 
   readonly error = signal<string | null>(null);
   readonly fetchingUser = signal(true);

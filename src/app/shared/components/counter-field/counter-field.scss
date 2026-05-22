@@ -1,0 +1,57 @@
+@use '@angular/material' as mat;
+
+:host {
+  display: block;
+  width: 128px;
+
+  ::ng-deep .mdc-text-field--outlined {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  &.is-compact {
+    width: 80px;
+
+    @include mat.form-field-overrides(
+      (
+        container-text-size: var(--mat-sys-body-medium-size),
+      )
+    );
+
+    ::ng-deep {
+      // Force smaller height for compact variant
+      .mat-mdc-text-field-wrapper {
+        min-height: 32px;
+        height: 32px;
+      }
+      .mat-mdc-form-field-infix {
+        min-height: 32px;
+        padding-top: 0;
+        padding-bottom: 0;
+        display: flex;
+        align-items: center;
+      }
+      .mdc-text-field--outlined {
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+    }
+  }
+}
+
+.counter-field {
+  width: 100%;
+}
+
+input {
+  text-align: center;
+
+  // Hide arrows for number input
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

@@ -1,0 +1,56 @@
+<nav class="navbar-container" aria-label="Navigation">
+  <div class="logo-container">
+    <img src="/assets/img/wontulogo.svg" alt="Logo" class="logo-image" />
+  </div>
+
+  <mat-nav-list class="nav-list">
+    @for (link of links; track link.path) {
+      @if (!isProtectedRoute(link.path) || user()) {
+        <a
+          mat-list-item
+          [routerLink]="link.path"
+          routerLinkActive
+          #rla="routerLinkActive"
+          class="nav-item"
+          [activated]="rla.isActive"
+          (click)="blurItem($event)"
+        >
+          @if (link.path === '/profile' && user()?.avatar && !avatarError()) {
+            <img
+              [src]="user()?.avatar"
+              alt="Avatar"
+              (error)="onAvatarError()"
+              matListItemIcon
+              class="user-avatar"
+              [class.user-avatar-active]="rla.isActive"
+            />
+          } @else {
+            <mat-icon
+              matListItemIcon
+              fontSet="material-symbols-outlined"
+              class="nav-icon"
+              [class.nav-icon-filled]="rla.isActive"
+            >
+              {{ link.icon }}
+            </mat-icon>
+          }
+          {{ link.label }}
+        </a>
+      }
+    }
+  </mat-nav-list>
+
+  <div class="auth-button-container">
+    @if (!user()) {
+      <button matButton="filled" (click)="goToSignIn()" class="auth-button">
+        <mat-icon fontSet="material-symbols-outlined" matListItemIcon> login </mat-icon>
+        <span class="auth-label">Sign in</span>
+      </button>
+    } @else {
+      <button matButton="outlined" appButtonColor="error" (click)="logout()" class="auth-button">
+        <mat-icon fontSet="material-symbols-outlined" matListItemIcon> logout </mat-icon>
+        <span class="auth-label">Sign out</span>
+      </button>
+    }
+  </div>
+</nav>

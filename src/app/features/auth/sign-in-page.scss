@@ -1,0 +1,12 @@
+@use '../../../_variables' as *;
+
+.terms-text {
+  text-align: center;
+  width: 100%;
+  font: var(--mat-sys-body-small);
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.sign-in-btn {
+  width: 100%;
+}

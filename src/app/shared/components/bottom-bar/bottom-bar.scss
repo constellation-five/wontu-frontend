@@ -1,0 +1,14 @@
+.bottom-app-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  gap: var(--spacing-sm);
+  z-index: 1200;
+  background: var(--mat-sys-surface-container);
+  box-shadow: var(--mat-sys-level2);
+}
