@@ -1,0 +1,47 @@
+@use '../../../../variables' as *;
+
+.top-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-md);
+  z-index: 1200;
+  transition: all 0.2s ease-in-out;
+  background: transparent;
+
+  .title {
+    font: var(--mat-sys-title-medium);
+    color: var(--mat-sys-on-surface);
+    display: none;
+  }
+
+  &.scrolled {
+    background: var(--mat-sys-surface-container);
+    box-shadow: var(--mat-sys-level2);
+
+    .title {
+      display: block;
+    }
+  }
+
+  .back-btn {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+  }
+
+  .menu-btn {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+  }
+
+  @media (min-width: $breakpoint-md) {
+    display: none;
+  }
+}

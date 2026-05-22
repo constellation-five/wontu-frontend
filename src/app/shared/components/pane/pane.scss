@@ -1,36 +1,33 @@
-:host {
+@use '../../../../_variables' as *;
+
+:host.pane {
   display: block;
   width: 100%;
+  background-color: var(--mat-sys-surface-container-lowest);
+  border: 0;
+  border-radius: var(--mat-sys-corner-medium);
+  padding: var(--spacing-md);
+  box-shadow: var(--mat-sys-level1);
+  color: var(--mat-sys-on-surface);
+
+  @media (min-width: $breakpoint-md) {
+    border-radius: var(--mat-sys-corner-large);
+    padding: var(--spacing-xl);
+  }
 }
 
-.pane-container {
-  width: 100%;
-  background-color: var(--mat-sys-surface-container-lowest);
-  border-radius: 32px;
-  padding: 2rem; 
-  margin-bottom: 2rem; 
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out,
-    border-radius 0.2s ease-in-out;
-
-  @media (max-width: 768px) {
-    padding: 1.5rem;
-  }
-
-  @media (max-width: 480px) {
-    border-radius: 1rem; 
-    padding: 1rem;
-    margin-bottom: 1rem; 
+:host.pane-large {
+  @media (min-width: $breakpoint-md) {
+    padding: var(--spacing-2xl);
   }
 }
 
 .pane-title {
-  font-weight: 500;
-  color: var(--mat-sys-on-surface);
-  font-size: 22px;
-  margin-bottom: 20px;
+  font: var(--mat-sys-title-medium);
+  margin-bottom: var(--spacing-sm);
 
-  @media (max-width: 480px) {
-    font-size: 16px;
+  @media (min-width: $breakpoint-md) {
+    font: var(--mat-sys-title-large);
+    margin-bottom: var(--spacing-lg);
   }
 }

@@ -1,21 +1,30 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DesktopNavbar } from '../components/desktop-navbar';
+import { Navbar } from '../components/navbar/navbar';
+import { PageHeaderComponent } from '../components/page-header/page-header';
+import { TopBarComponent } from '../components/top-bar/top-bar';
+import { PageHeaderService } from '../../core/page-header.service';
 
 @Component({
   selector: 'main-layout',
   template: `
-    <div class="min-h-dvh md:flex md:bg-(--mat-sys-background)">
-      <aside class="hidden md:block md:w-56 md:shrink-0">
-        <desktop-navbar />
-      </aside>
+    <navbar />
 
-      <main class="min-w-0 flex-1 flex flex-col">
-        <router-outlet />
-      </main>
-    </div>
+    @if (pageHeaderService.showHeader()) {
+      <app-top-bar />
+    }
+
+    <main class="layout-body">
+      @if (pageHeaderService.showHeader()) {
+        <app-page-header />
+      }
+      <router-outlet />
+    </main>
   `,
-  imports: [RouterOutlet, DesktopNavbar],
+  styleUrl: './main-layout.scss',
+  imports: [RouterOutlet, Navbar, PageHeaderComponent, TopBarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainLayout {}
+export class MainLayout {
+  pageHeaderService = inject(PageHeaderService);
+}

@@ -12,24 +12,31 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
-import { PageHeaderComponent, BreadcrumbItem } from '../../../shared/components/page-header';
 import { CustomCardComponent } from '../../../shared/components/frame-card';
 import { EditNotesDialog } from '../offer-detail/edit-notes-dialog';
 import { OfferProgressComponent } from '../../../shared/components/offer-progress';
 
 import { OfferService } from '../../../core/offer.service';
 import { CartService, CartItem } from '../../../core/cart.service';
-import { Offer, OfferItem } from '../../../core/offer';
+import { Offer, OfferItem } from '../../../core/offer.service';
+import { PageHeaderService } from '../../../core/page-header.service';
 
 @Component({
   selector: 'offer-checkout-page',
   standalone: true,
   imports: [
-    CommonModule, FormsModule,
-    MatIconModule, MatButtonModule, MatCardModule, 
-    MatDividerModule, MatProgressSpinnerModule, MatDialogModule,
-    MatFormFieldModule, MatInputModule,
-    PageHeaderComponent, CustomCardComponent, OfferProgressComponent
+    CommonModule,
+    FormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    CustomCardComponent,
+    OfferProgressComponent,
   ],
   templateUrl: './offer-checkout.html',
   styleUrls: ['./offer-checkout.scss'],
@@ -40,14 +47,11 @@ export class OfferCheckoutPage implements OnInit {
   private readonly offerService = inject(OfferService);
   private readonly cartService = inject(CartService);
   private readonly dialog = inject(MatDialog);
+  private readonly pageHeaderService = inject(PageHeaderService);
 
   offer = signal<Offer | null>(null);
   isLoading = signal<boolean>(true);
   cartItems = signal<CartItem[]>([]);
-  breadcrumbs = signal<BreadcrumbItem[]>([
-    { label: 'Offers', route: '/offer' },
-    { label: 'Loading...' }
-  ]);
 
   // Progress tracking
   currentStep = signal<number>(0); // 0 = offer joined
@@ -80,10 +84,10 @@ export class OfferCheckoutPage implements OnInit {
     this.offerService.getOfferById(id).subscribe({
       next: (data) => {
         this.offer.set(data);
-        this.breadcrumbs.set([
+        this.pageHeaderService.setBreadcrumbs([
           { label: 'Offers', route: '/offer' },
           { label: data.merchant_name, route: `/offer/${data.offer_id}` },
-          { label: 'Your Order' }
+          { label: 'Your Order' },
         ]);
         this.isLoading.set(false);
       },
@@ -91,49 +95,57 @@ export class OfferCheckoutPage implements OnInit {
         console.error('Failed to load offer:', err);
         this.isLoading.set(false);
         this.router.navigate(['/offer']);
-      }
+      },
     });
   }
 
   increaseQuantity(cartItem: CartItem) {
-    this.cartItems.update(cart => cart.map(ci => 
-      ci.item.item_id === cartItem.item.item_id ? { ...ci, quantity: ci.quantity + 1 } : ci
-    ));
+    this.cartItems.update((cart) =>
+      cart.map((ci) =>
+        ci.item.item_id === cartItem.item.item_id ? { ...ci, quantity: ci.quantity + 1 } : ci,
+      ),
+    );
     // Sync with cart service
     this.cartService.setCartItems(this.cartItems());
   }
 
   decreaseQuantity(cartItem: CartItem) {
     if (cartItem.quantity === 1) {
-      this.cartItems.update(cart => cart.filter(ci => ci.item.item_id !== cartItem.item.item_id));
+      this.cartItems.update((cart) =>
+        cart.filter((ci) => ci.item.item_id !== cartItem.item.item_id),
+      );
     } else {
-      this.cartItems.update(cart => cart.map(ci => 
-        ci.item.item_id === cartItem.item.item_id ? { ...ci, quantity: ci.quantity - 1 } : ci
-      ));
+      this.cartItems.update((cart) =>
+        cart.map((ci) =>
+          ci.item.item_id === cartItem.item.item_id ? { ...ci, quantity: ci.quantity - 1 } : ci,
+        ),
+      );
     }
     // Sync with cart service
     this.cartService.setCartItems(this.cartItems());
   }
 
   getCartTotal(): number {
-    return this.cartItems().reduce((total, ci) => total + (+ci.item.item_price * ci.quantity), 0);
+    return this.cartItems().reduce((total, ci) => total + +ci.item.item_price * ci.quantity, 0);
   }
 
   isCartItemMaxQuantity(cartItem: CartItem): boolean {
-    return cartItem.quantity >= (cartItem.item.slot - cartItem.item.current_slot);
+    return cartItem.quantity >= cartItem.item.slot - cartItem.item.current_slot;
   }
 
   editCartItemNotes(cartItem: CartItem) {
     const dialogRef = this.dialog.open(EditNotesDialog, {
       width: '400px',
-      data: { notes: cartItem.notes || '' }
+      data: { notes: cartItem.notes || '' },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined) {
-        this.cartItems.update(cart => cart.map(ci => 
-          ci.item.item_id === cartItem.item.item_id ? { ...ci, notes: result } : ci
-        ));
+        this.cartItems.update((cart) =>
+          cart.map((ci) =>
+            ci.item.item_id === cartItem.item.item_id ? { ...ci, notes: result } : ci,
+          ),
+        );
         // Sync with cart service
         this.cartService.setCartItems(this.cartItems());
       }
@@ -143,12 +155,12 @@ export class OfferCheckoutPage implements OnInit {
   editOrder() {
     const currentOffer = this.offer();
     const currentCart = this.cartItems();
-    
+
     if (!currentOffer) return;
 
     // Save current cart state
     this.cartService.setCartItems([...currentCart]);
-    
+
     // Navigate back to offer detail
     this.router.navigate(['/offer', currentOffer.offer_id]);
   }
@@ -156,20 +168,20 @@ export class OfferCheckoutPage implements OnInit {
   goToChat() {
     const currentOffer = this.offer();
     if (!currentOffer) return;
-    
+
     this.router.navigate(['/offer', currentOffer.offer_id, 'chat']);
   }
 
   cancelOrder() {
     const currentOffer = this.offer();
     const currentCart = this.cartItems();
-    
+
     if (!currentOffer || currentCart.length === 0) return;
 
     // Prepare items data for cancel
-    const items = currentCart.map(ci => ({
+    const items = currentCart.map((ci) => ({
       item_id: ci.item.item_id,
-      quantity: ci.quantity
+      quantity: ci.quantity,
     }));
 
     console.log('Canceling order:', items);
@@ -177,17 +189,17 @@ export class OfferCheckoutPage implements OnInit {
     this.offerService.cancelOrder(currentOffer.offer_id, items).subscribe({
       next: (response: any) => {
         console.log('Cancel order response:', response);
-        
+
         // Clear cart and placed order
         this.cartService.clearCart();
-        
+
         // Navigate back to offer detail
         this.router.navigate(['/offer', currentOffer.offer_id]);
       },
       error: (err) => {
         console.error('Failed to cancel order:', err);
         alert(err.error?.message || 'Failed to cancel order. Please try again.');
-      }
+      },
     });
   }
 }

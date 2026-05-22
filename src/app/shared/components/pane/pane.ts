@@ -1,15 +1,16 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-pane',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './pane.html',
   styleUrls: ['./pane.scss'],
-  host: {'class': 'block w-full'},
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class.pane]': 'true',
+    '[class.pane-large]': 'isLarge()',
+  },
 })
 export class PaneComponent {
-  @Input() title: string = '';
+  title = input<string>('');
+  isLarge = input(false, { transform: booleanAttribute });
 }
