@@ -41,6 +41,7 @@
 - Use Angular Material for base UI primitives (buttons, inputs, dialogs, menus, tables, etc.).
 - Prioritize Angular Material's built-in system tokens (e.g., `var(--mat-sys-...)`) and custom overrides (e.g. `@include mat....-overrides((...));`) for styling (see [Theming your components](https://material.angular.dev/guide/theming-your-components) and [Theming guide](https://material.angular.dev/guide/theming)).
 - Use the global variables defined in `src/material-theme.scss` for consistent app-wide styling.
+- Use the generated spacing utilities from `src/material-theme.scss` for simple margin and padding needs, such as `.mb-lg`, `.px-2xs`, `.mx-md`, and `.py-sm`.
 - **Buttons:** Always use Angular Material 3's new button API format (e.g., `matButton="filled | outlined | tonal | text | elevated"`). For button sizing and coloring, use our custom directives: `appButtonSize="xs | sm | md"` (defaults to 'sm') and `appButtonColor="primary | error"` (defaults to 'primary'). For icon button variants, use `matIconButton` with `appIconButtonVariant="filled | outlined | tonal | text | elevated"` directive.
 - Do **not** use Tailwind CSS. Rely on pure SCSS/CSS and Material's design system tokens.
 - **Containers:** Use `<app-pane>` elements as the main containers for each part of the screen.
