@@ -1,112 +1,99 @@
-<section class="p-6">
+<app-pane title="Payment Methods" class="payment-methods-pane">
   @if (isLoading()) {
-    <div class="text-center p-10 text-on-surface-variant font-medium">Loading data...</div>
-  } 
-  
-  @else {
-    <div class="bg-surface-lowest border border-gray-200 rounded-4xl shadow-sm p-8 md:p-12 flex flex-col w-full h-auto">
-      
-      <h1 class="text-h-large font-bold text-on-surface mb-8 text-left">
-        Payment Methods
-      </h1>
-
-      <div class="flex-1 flex flex-col items-center justify-center w-full">
-        @if (paymentMethods().length > 0) {
-          <div class="flex flex-col gap-2 mb-4 w-full text-left">
-            @for (method of paymentMethods(); track method.payment_method_id) {
-              <payment-method-card
-                [method]="method"
-                [showEdit]="true"
-                (edit)="openEditModal($event)" />
-            }
+    <div class="loading-state">Loading data...</div>
+  } @else {
+    <div class="payment-methods-content">
+      @if (paymentMethods().length > 0) {
+        <div class="methods-list">
+          @for (method of paymentMethods(); track method.payment_method_id) {
+            <payment-method-card
+              [method]="method"
+              [showEdit]="true"
+              (edit)="openEditModal($event)" />
+          }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <img src="assets/img/wontusad.svg" alt="No Data" class="empty-image">
+          <div class="empty-text">
+            <p>No payment methods yet.</p>
+            <p>Add some!</p>
           </div>
-        } 
-        @else {
-          <div class="flex flex-col items-center text-center">
-            <img src="assets/img/wontusad.svg" alt="No Data" class="w-24 h-24 object-contain mb-2">
-            <div class="space-y-1">
-              <p class="text-on-surface-variant text-h-small font-regular">No payment methods yet.</p>
-              <p class="text-on-surface-variant text-h-small font-regular">Add some!</p>
-            </div>
-          </div>
-        }
-      </div>
+        </div>
+      }
 
-        <button 
-          mat-flat-button color="primary" class="w-full py-7 bg-primary text-on-primary font-bold rounded-full flex items-center justify-center gap-2 shadow-sm mt-8" (click)="openAddModal()">
-          <span class="material-symbols-outlined text-[20px] align-middle">add</span>
-          <span class="text-h-normal">Add payment method</span>
-        </button>
+      <button 
+        matButton="filled"
+        appButtonSize="md"
+        appButtonColor="primary"
+        class="add-button"
+        (click)="openAddModal()">
+        <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+        <span>Add payment method</span>
+      </button>
     </div>
   }
-</section>
+</app-pane>
 
 <ng-template #methodDialog>
-  <div class="p-8 max-w-150 bg-surface-lowest">
-    <h2 class="text-h-large font-bold mb-8 text-on-surface">
+  <div class="method-dialog">
+    <h2 class="dialog-title">
       {{ isEditMode() ? 'Edit Payment Method' : 'Add Payment Method' }}
     </h2>
     
-    <form [formGroup]="paymentForm" class="flex flex-col gap-4">
-      <div class="flex flex-col gap-2">
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label class="font-regular text-p-large">Bank Name</mat-label>
-          <mat-select formControlName="bank_name">
-            <mat-option value="Bank Central Asia">Bank Central Asia</mat-option>
-            <mat-option value="Bank Negara Indonesia">Bank Negara Indonesia</mat-option>
-            <mat-option value="Bank Rakyat Indonesia">Bank Rakyat Indonesia</mat-option>
-            <mat-option value="Bank Mandiri">Bank Mandiri</mat-option>
-          </mat-select>
-        </mat-form-field>
+    <form [formGroup]="paymentForm" class="method-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Bank Name</mat-label>
+        <mat-select formControlName="bank_name">
+          <mat-option value="Bank Central Asia">Bank Central Asia</mat-option>
+          <mat-option value="Bank Negara Indonesia">Bank Negara Indonesia</mat-option>
+          <mat-option value="Bank Rakyat Indonesia">Bank Rakyat Indonesia</mat-option>
+          <mat-option value="Bank Mandiri">Bank Mandiri</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label class="font-regular text-p-large">Account Name</mat-label>
-          <input matInput formControlName="account_name" placeholder="Enter Account Name">
-        </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Account Name</mat-label>
+        <input matInput formControlName="account_name" placeholder="Enter Account Name">
+      </mat-form-field>
 
-        <mat-form-field appearance="outline" class="w-full">
-          <mat-label class="font-regular text-p-large">Account Number</mat-label>
-          <input matInput formControlName="account_number" placeholder="Enter Account Number">
-        </mat-form-field>
-      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Account Number</mat-label>
+        <input matInput formControlName="account_number" placeholder="Enter Account Number">
+      </mat-form-field>
 
-
-      <div class="mt-8 flex flex-col w-full gap-3">
-
-        <!-- ATAS: Cancel & Confirm (bagi dua) -->
-        <div class="flex flex-row items-center gap-3 w-full">
-          <button type="button" 
-                  mat-stroked-button
-                  class="flex-1 py-6 font-bold text-p-normal rounded-full leading-none"
-                  style="color: var(--mat-sys-on-surface-variant) !important;"
-                  mat-dialog-close>
+      <div class="form-actions">
+        <div class="primary-actions">
+          <button 
+            type="button"
+            matButton="outlined"
+            appButtonSize="md"
+            mat-dialog-close>
             Cancel
           </button>
 
-          <button mat-flat-button 
-                  color="primary" 
-                  class="flex-1 py-6 bg-primary font-bold text-on-primary text-p-normal rounded-full shadow-sm" 
-                  (click)="save()">
-            <span class="flex items-center justify-center gap-2 leading-none">
-              <span class="material-symbols-outlined text-[20px] leading-none">check</span>
-              <span class="leading-none">{{ isEditMode() ? 'Confirm' : 'Add Method' }}</span>
-            </span>
+          <button 
+            matButton="filled"
+            appButtonSize="md"
+            appButtonColor="primary"
+            (click)="save()">
+            <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+            <span>{{ isEditMode() ? 'Confirm' : 'Add Method' }}</span>
           </button>
         </div>
 
-        <!-- BAWAH: Delete (full width, hanya di edit mode) -->
         @if (isEditMode()) {
-          <button type="button" 
-                  mat-stroked-button 
-                  class="w-full py-6 border-(--mat-sys-error)! text-(--mat-sys-error)! font-bold rounded-full hover:bg-error-container transition-all" 
-                  (click)="openDeleteConfirm()">
-            <span class="flex items-center justify-center gap-2 leading-none">
-              <span class="material-symbols-outlined text-[20px] leading-none">delete</span>
-              <span class="leading-none">Delete</span>
-            </span>
+          <button 
+            type="button"
+            matButton="outlined"
+            appButtonSize="md"
+            appButtonColor="error"
+            class="delete-button"
+            (click)="openDeleteConfirm()">
+            <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+            <span>Delete</span>
           </button>
         }
-
       </div>
     </form>
   </div>

@@ -1,7 +1,6 @@
-import { Component, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// Map nama bank (dari BE) ke nama file logo di assets/img/
 const BANK_LOGO_MAP: Record<string, string> = {
   'Bank Central Asia': 'bca.svg',
   'Bank Negara Indonesia': 'bni.svg',
@@ -14,30 +13,30 @@ const BANK_LOGO_MAP: Record<string, string> = {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './bank-logo.html',
+  styleUrl: './bank-logo.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BankLogoComponent {
-  @Input({ required: true }) bankName!: string;
-
-  /** Ukuran kotak logo, default 56px */
-  @Input() size: string = '56px';
+export class BankLogo {
+  bankName = input.required<string>();
+  size = input<string>('56px');
 
   imgFailed = signal(false);
 
-  get logoPath(): string | null {
-    const file = BANK_LOGO_MAP[this.bankName];
+  logoPath = computed(() => {
+    const file = BANK_LOGO_MAP[this.bankName()];
     return file ? `assets/img/${file}` : null;
-  }
+  });
 
-  get initials(): string {
-    if (!this.bankName) return '';
-    return this.bankName
+  initials = computed(() => {
+    const name = this.bankName();
+    if (!name) return '';
+    return name
       .split(' ')
       .map(w => w[0])
       .join('')
       .toUpperCase();
-  }
+  });
 
-  // Kalau file gambar gagal load, fallback ke inisial
   onImgError() {
     this.imgFailed.set(true);
   }

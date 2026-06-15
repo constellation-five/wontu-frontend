@@ -1,18 +1,11 @@
-<div
-  class="rounded-2xl flex items-center justify-center shrink-0 overflow-hidden"
-  [style.width]="size"
-  [style.height]="size">
-
-  @if (logoPath && !imgFailed()) {
+<div class="bank-logo" [style.width]="size()" [style.height]="size()">
+  @if (logoPath() && !imgFailed()) {
     <img
-      [src]="logoPath"
-      [alt]="bankName"
-      class="w-full h-full object-contain p-1"
+      [src]="logoPath()"
+      [alt]="bankName()"
+      class="logo-image"
       (error)="onImgError()" />
   } @else {
-    <span class="font-bold text-primary text-h-normal uppercase">
-      {{ initials }}
-    </span>
+    <span class="logo-initials">{{ initials() }}</span>
   }
-
 </div>
