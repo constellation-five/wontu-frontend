@@ -1,0 +1,22 @@
+.bank-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: var(--mat-sys-corner-medium);
+}
+
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: var(--spacing-3xs);
+}
+
+.logo-initials {
+  font: var(--mat-sys-title-medium);
+  font-weight: 600;
+  color: var(--mat-sys-primary);
+  text-transform: uppercase;
+}

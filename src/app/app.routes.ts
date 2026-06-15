@@ -6,7 +6,7 @@ import { OfferCheckoutPage } from './features/offer/offer-checkout/offer-checkou
 import { OfferChatPage } from './features/offer/offer-chat/offer-chat';
 import { ProfilePage } from './features/profile/profile-page';
 import { RequestPage } from './features/request/request-page';
-import { PaymentMethodPage } from './features/payment-method/payment-method-page';
+import { PaymentMethod } from './features/payment-method/payment-method-page';
 import { MainLayout } from './shared/layouts/main-layout';
 import { authGuard } from './core/auth.guard';
 
@@ -73,8 +73,8 @@ export const routes: Routes = [
           { path: '', component: ProfilePage },
           {
             path: 'payment-method',
-            component: PaymentMethodPage,
-            title: 'Payment Method',
+            component: PaymentMethod,
+            title: 'Payment Methods',
           },
         ],
       },

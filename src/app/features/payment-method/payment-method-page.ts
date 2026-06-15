@@ -5,13 +5,17 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { MatSelectModule } from '@angular/material/select'; 
 import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { DialogComponent } from '../../shared/components/dialog/dialog';
-import { PaymentMethodCardComponent } from '../../shared/components/payment-method-card/payment-method-card';
+import { PaymentMethodCard } from '../../shared/components/payment-method-card/payment-method-card';
+import { PaneComponent } from '../../shared/components/pane/pane';
+import { PageHeaderService } from '../../core/page-header.service';
+import { ButtonSizeDirective, ButtonColorDirective } from '../../shared/directives/button';
 
-export interface PaymentMethod {
+export interface PaymentMethodData {
   payment_method_id: number;
   bank_name: string;
   account_name: string;
@@ -22,24 +26,34 @@ export interface PaymentMethod {
   selector: 'payment-method-page',
   standalone: true,
   imports: [
-    MatButtonModule, CommonModule, MatDialogModule, MatSelectModule, 
-    MatInputModule, ReactiveFormsModule, MatIconModule,
-    PaymentMethodCardComponent
+    ReactiveFormsModule,
+    MatButtonModule,
+    CommonModule,
+    MatDialogModule,
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
+    PaymentMethodCard,
+    PaneComponent,
+    ButtonSizeDirective,
+    ButtonColorDirective,
   ],
   templateUrl: './payment-method-page.html',
+  styleUrl: './payment-method-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PaymentMethodPage implements OnInit {
+export class PaymentMethod implements OnInit {
   private http = inject(HttpClient);
   private dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
+  private pageHeader = inject(PageHeaderService);
 
   @ViewChild('methodDialog') methodDialog!: TemplateRef<any>;
 
-  paymentMethods = signal<PaymentMethod[]>([]);
+  paymentMethods = signal<PaymentMethodData[]>([]);
   isLoading = signal(true);
   
-  // State untuk kontrol Modal
   isEditMode = signal(false);
   selectedId = signal<number | null>(null);
 
@@ -49,7 +63,10 @@ export class PaymentMethodPage implements OnInit {
     account_number: ['', [Validators.required]],
   });
 
-  ngOnInit() { this.fetchPaymentMethods(); }
+  ngOnInit() {
+    this.pageHeader.setTitle('Payment Methods');
+    this.fetchPaymentMethods();
+  }
 
   fetchPaymentMethods() {
     this.http.get<any>(`${environment.api}/payment-methods`, { withCredentials: true }).subscribe({
@@ -65,10 +82,10 @@ export class PaymentMethodPage implements OnInit {
     this.isEditMode.set(false);
     this.selectedId.set(null);
     this.paymentForm.reset();
-    this.dialog.open(this.methodDialog, { width: '450px' });
+    this.dialog.open(this.methodDialog, { width: '540px' });
   }
 
-  openEditModal(method: PaymentMethod) {
+  openEditModal(method: PaymentMethodData) {
     this.isEditMode.set(true);
     this.selectedId.set(method.payment_method_id);
     this.paymentForm.patchValue({
@@ -76,7 +93,7 @@ export class PaymentMethodPage implements OnInit {
       account_name: method.account_name,
       account_number: method.account_number
     });
-    this.dialog.open(this.methodDialog, { width: '450px' });
+    this.dialog.open(this.methodDialog, { width: '540px' });
   }
 
   save() {
@@ -100,7 +117,7 @@ export class PaymentMethodPage implements OnInit {
       width: '540px',
       data: {
         title: 'Delete Payment Method',
-        content: 'Are you sure you want to delete this payment method?<br><i class="text-label-small">This action cannot be undone</i>',
+        content: 'Are you sure you want to delete this payment method?<br><i>This action cannot be undone</i>',
         buttons: [
           {
             label: 'Cancel',
@@ -129,20 +146,6 @@ export class PaymentMethodPage implements OnInit {
   confirmDelete() {
     this.http.delete(`${environment.api}/payment-methods/${this.selectedId()}`, { withCredentials: true }).subscribe({
       next: () => { this.fetchPaymentMethods(); this.dialog.closeAll(); }
-    });
-  }
-
-  getInitials(name: string): string {
-    if (!name) return '';
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
-  }
-  copyToClipboard(text: string) {
-    navigator.clipboard.writeText(text).then(() => {
-      // Kamu bisa tambahkan snackbar atau alert kecil di sini
-      console.log('Nomor rekening berhasil disalin!');
-      alert('Copied to clipboard!'); 
-    }).catch(err => {
-      console.error('Gagal menyalin: ', err);
     });
   }
 }
