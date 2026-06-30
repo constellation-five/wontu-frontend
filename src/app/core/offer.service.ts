@@ -34,6 +34,18 @@ export interface Offer {
   };
 }
 
+export interface CheckoutItem {
+  item: OfferItem;
+  quantity: number;
+  notes?: string;
+}
+
+export interface CheckoutState {
+  offerId: number;
+  items: CheckoutItem[];
+  timestamp: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -47,6 +59,10 @@ export class OfferService {
     offers: [],
     isLoading: false,
   });
+
+  // Checkout state management
+  private readonly checkoutState = signal<CheckoutState | null>(null);
+  readonly currentCheckout = computed(() => this.checkoutState());
 
   readonly allOffers = computed(() => this.state().offers);
   readonly isLoading = computed(() => this.state().isLoading);
@@ -103,5 +119,34 @@ export class OfferService {
     return this.http.post(`${environment.api}/offers/${offerId}/cancel-order`, {
       items: items,
     });
+  }
+
+  // Checkout state methods
+  setCheckoutState(offerId: number, items: CheckoutItem[]) {
+    this.checkoutState.set({
+      offerId,
+      items,
+      timestamp: Date.now(),
+    });
+  }
+
+  getCheckoutState(offerId: number): CheckoutItem[] | null {
+    const state = this.checkoutState();
+    if (!state || state.offerId !== offerId) {
+      return null;
+    }
+    
+    // Check if state is not too old (e.g., 1 hour)
+    const oneHour = 60 * 60 * 1000;
+    if (Date.now() - state.timestamp > oneHour) {
+      this.clearCheckoutState();
+      return null;
+    }
+    
+    return state.items;
+  }
+
+  clearCheckoutState() {
+    this.checkoutState.set(null);
   }
 }

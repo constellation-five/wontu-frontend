@@ -35,6 +35,10 @@
       box-shadow: var(--mat-sys-level2);
       padding: var(--spacing-sm) var(--spacing-sm);
     }
+
+    &.hidden {
+      display: none !important;
+    }
   }
 }
 

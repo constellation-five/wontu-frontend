@@ -1,18 +1,41 @@
-<div class="progress-container">
+<div 
+  class="progress-container" 
+  [class.progress-horizontal]="style() === 'horizontal'"
+  [class.progress-vertical]="style() === 'vertical'"
+>
   <div class="progress-steps">
-    <ng-container *ngFor="let step of steps; let i = index; let isLast = last">
-      <!-- Step Circle -->
+    @for (step of steps(); track $index; let isLast = $last) {
       <div class="step-wrapper">
-        <div class="step-circle" [class.completed]="step.completed" [class.active]="i === currentStep">
+        <div 
+          class="step-circle" 
+          [class.completed]="step.completed" 
+          [class.active]="$index === currentStep()"
+        >
           <div class="circle-inner"></div>
         </div>
-        <span class="step-label font-regular" [class.completed]="step.completed" [class.active]="i === currentStep">
-          {{ step.label }}
-        </span>
+
+        <div class="step-label">
+          <span 
+            class="step-label-text mat-font-label-md" 
+            [class.completed]="step.completed" 
+            [class.active]="$index === currentStep()"
+          >
+            {{ step.label }}
+          </span>
+        </div>
+
+        <div class="step-time">
+          @if (step.timeInfo) {
+            <span class="step-time-info mat-font-body-sm mat-text-on-surface-variant">
+              {{ step.timeInfo }}
+            </span>
+          }
+        </div>
       </div>
       
-      <!-- Connector Line -->
-      <div *ngIf="!isLast" class="step-connector" [class.completed]="step.completed"></div>
-    </ng-container>
+      @if (!isLast) {
+        <div class="step-connector" [class.completed]="step.completed"></div>
+      }
+    }
   </div>
 </div>

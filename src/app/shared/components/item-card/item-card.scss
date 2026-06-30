@@ -1,0 +1,106 @@
+@use '../../../../_variables' as *;
+
+.item-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 253.33px;
+  border-radius: var(--mat-sys-corner-medium);
+  overflow: hidden;
+  box-shadow: var(--mat-sys-level2);
+  background-color: var(--mat-sys-surface-container-lowest);
+
+  &--out-of-stock {
+    opacity: 0.6;
+
+    .item-card__image img {
+      filter: grayscale(100%);
+    }
+  }
+}
+
+.item-card__image {
+  position: relative;
+  width: 100%;
+  height: 156px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.item-card__badge {
+  position: absolute;
+  top: var(--spacing-xs);
+  right: var(--spacing-xs);
+  background-color: var(--mat-sys-secondary);
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border-radius: var(--mat-sys-corner-full);
+}
+
+.item-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background-color: var(--mat-sys-surface-container-lowest);
+  
+  h3 {
+    margin: 0;
+    line-height: 1.5;
+    min-height: 48px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.item-card__stock {
+  flex-shrink: 0;
+}
+
+.item-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-2xs);
+}
+
+.item-card__add-button {
+  height: 28px;
+  padding: 0 var(--spacing-sm);
+  gap: var(--spacing-2xs);
+  border-radius: var(--mat-sys-corner-full);
+  box-shadow: var(--mat-sys-level1);
+  flex-shrink: 0;
+  font-size: 13px;
+
+  mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.item-card__quantity {
+  height: 28px;
+  padding: 0 var(--spacing-sm);
+  background: var(--mat-sys-primary-container);
+  border-radius: var(--mat-sys-corner-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 2px solid var(--mat-sys-outline-variant);
+  font-size: 13px;
+}

@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { HistoryPage } from './features/history/history-page';
-import { OfferPage } from './features/offer/offer-list/offer-page';
+import { OfferShowPage } from './features/offer/offer-show/offer-show';
 import { OfferDetailPage } from './features/offer/offer-detail/offer-detail-page';
+import { OfferMobileCart } from './features/offer/offer-detail/offer-mobile-cart';
 import { OfferCheckoutPage } from './features/offer/offer-checkout/offer-checkout';
 import { OfferChatPage } from './features/offer/offer-chat/offer-chat';
 import { ProfilePage } from './features/profile/profile-page';
@@ -23,30 +24,36 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            component: OfferPage,
+            component: OfferShowPage,
             title: 'Offers',
             data: { hideHeader: true },
-          },
-          {
-            path: ':id',
-            component: OfferDetailPage,
-            title: 'Offer Details',
-          },
-          {
-            path: ':id/checkout',
-            component: OfferCheckoutPage,
-            title: 'Your Order',
-            data: { breadcrumb: 'Checkout' },
-          },
-          {
-            path: ':id/chat',
-            component: OfferChatPage,
-            title: 'Chat',
           },
           { 
             path: 'create', 
             loadComponent: () => import('./features/offer/offer-create/offer-create'),
             title: 'Create Offer',
+          },
+          {
+            path: ':id',
+            component: OfferDetailPage,
+            title: 'Offer Detail',
+            data: { hideBottomBar: true },
+          },
+          {
+            path: ':id/mobile-cart',
+            component: OfferMobileCart,
+            title: 'Cart',
+            data: { hideBottomBar: true },
+          },
+          {
+            path: ':id/checkout',
+            component: OfferCheckoutPage,
+            title: 'Checkout',
+          },
+          {
+            path: ':id/chat',
+            component: OfferChatPage,
+            title: 'Chat',
           },
         ],
       },
@@ -59,9 +66,9 @@ export const routes: Routes = [
       },
       {
         path: 'history',
-        component: HistoryPage,
+        loadComponent: () => import('./features/offer/offer-history/offer-history').then(m => m.OfferHistoryPage),
         canActivate: [authGuard],
-        title: 'History',
+        title: 'Order History',
         data: { hideHeader: true },
       },
       {

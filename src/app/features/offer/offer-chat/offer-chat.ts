@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -14,8 +14,9 @@ import { Offer } from '../../../core/offer.service';
   imports: [CommonModule, MatProgressSpinnerModule],
   templateUrl: './offer-chat.html',
   styleUrls: ['./offer-chat.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferChatPage implements OnInit {
+export class OfferChatPage {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly offerService = inject(OfferService);
@@ -24,7 +25,7 @@ export class OfferChatPage implements OnInit {
   offer = signal<Offer | null>(null);
   isLoading = signal<boolean>(true);
 
-  ngOnInit() {
+  constructor() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.loadOffer(id);
@@ -38,17 +39,36 @@ export class OfferChatPage implements OnInit {
     this.offerService.getOfferById(id).subscribe({
       next: (data) => {
         this.offer.set(data);
-        this.pageHeaderService.setBreadcrumbs([
-          { label: 'Offers', route: '/offer' },
-          { label: data.merchant_name, route: `/offer/${data.offer_id}` },
-          { label: 'Chat' },
-        ]);
+        
+        // Check if user came from checkout by looking at navigation history
+        const navigation = this.router.getCurrentNavigation();
+        const state = history.state;
+        
+        // If coming from checkout or has checkout in history, add checkout to breadcrumb
+        const fromCheckout = state?.fromCheckout || document.referrer.includes('/checkout');
+        
+        if (fromCheckout) {
+          this.pageHeaderService.setBreadcrumbs([
+            { label: 'Offers', route: '/offers' },
+            { label: data.merchant_name, route: `/offers/${data.offer_id}` },
+            { label: 'Checkout', route: `/offers/${data.offer_id}/checkout` },
+            { label: 'Chat' },
+          ]);
+        } else {
+          // Direct navigation to chat
+          this.pageHeaderService.setBreadcrumbs([
+            { label: 'Offers', route: '/offers' },
+            { label: data.merchant_name, route: `/offers/${data.offer_id}` },
+            { label: 'Chat' },
+          ]);
+        }
+        
         this.isLoading.set(false);
       },
       error: (err) => {
         console.error('Failed to load offer:', err);
         this.isLoading.set(false);
-        this.router.navigate(['/offer']);
+        this.router.navigate(['/offers']);
       },
     });
   }

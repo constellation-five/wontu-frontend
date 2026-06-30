@@ -1,0 +1,67 @@
+<div class="history-page">
+  <app-pane>
+    @if (orders().length === 0) {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">receipt_long</mat-icon>
+        <h3>No Order History</h3>
+        <p class="mat-body-medium">You haven't placed any orders yet.</p>
+        <button mat-flat-button appBtnSize="large" [routerLink]="['/offers']">
+          Browse Offers
+        </button>
+      </div>
+    } @else {
+      <div class="history-header">
+        <h2 class="mat-title-large">Your Orders</h2>
+        <button 
+          mat-stroked-button 
+          appBtnSize="medium"
+          (click)="clearAllHistory()"
+          class="clear-btn">
+          <mat-icon>delete_sweep</mat-icon>
+          Clear All (Testing)
+        </button>
+      </div>
+      
+      <div class="orders-list">
+        @for (order of orders(); track order.offerId) {
+          <div class="order-card" (click)="viewOrderDetail(order)">
+            <div class="order-header">
+              <div class="order-info">
+                <h3 class="mat-title-medium">{{ order.merchantName }}</h3>
+                <p class="mat-body-small order-date">
+                  {{ order.orderDate | date: 'dd/MM/yyyy, hh:mm a' }}
+                </p>
+              </div>
+              <div class="order-status" [style.color]="getStatusColor(order.status)">
+                <mat-icon>check_circle</mat-icon>
+                <span class="mat-label-medium">{{ getStatusLabel(order.status) }}</span>
+              </div>
+            </div>
+
+            <div class="order-items">
+              @for (item of order.items; track item.itemName) {
+                <div class="order-item">
+                  <span class="mat-body-medium">{{ item.quantity }}x {{ item.itemName }}</span>
+                  <span class="mat-body-medium item-price">Rp {{ item.price | number: '1.0-0' }}</span>
+                </div>
+              }
+            </div>
+
+            <div class="order-footer">
+              <div class="order-summary">
+                <span class="mat-body-medium">{{ order.totalItems }} items</span>
+                <span class="mat-title-medium total-price">Rp {{ order.totalPrice | number: '1.0-0' }}</span>
+              </div>
+              <button 
+                mat-flat-button 
+                appBtnSize="medium"
+                (click)="viewOrderDetail(order); $event.stopPropagation()">
+                View Details
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </app-pane>
+</div>

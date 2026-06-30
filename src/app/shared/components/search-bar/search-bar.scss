@@ -1,0 +1,60 @@
+@use '../../../../_variables' as *;
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: var(--mat-sys-surface-container);
+  border-radius: var(--mat-sys-corner-full);
+  transition: all 0.2s ease;
+  cursor: text;
+
+  &:hover {
+    background-color: color-mix(
+      in srgb,
+      var(--mat-sys-surface-container) 90%,
+      var(--mat-sys-on-surface) 10%
+    );
+  }
+
+  &:focus-within {
+    background-color: color-mix(
+      in srgb,
+      var(--mat-sys-surface-container) 85%,
+      var(--mat-sys-on-surface) 15%
+    );
+    box-shadow: 0 0 0 2px var(--mat-sys-primary);
+  }
+
+  &.search-bar-filled {
+    background-color: var(--mat-sys-surface-container-high);
+  }
+}
+
+.search-icon {
+  color: var(--mat-sys-on-surface);
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-body-medium);
+  padding: 0;
+
+  &::placeholder {
+    color: var(--mat-sys-on-surface-variant);
+    opacity: 0.7;
+  }
+
+  &:focus {
+    color: var(--mat-sys-on-surface);
+  }
+}

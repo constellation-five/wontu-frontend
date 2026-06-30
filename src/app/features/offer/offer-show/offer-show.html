@@ -1,0 +1,133 @@
+<!-- Location and Notification Section (Mobile only) -->
+<div class="location-notification-section">
+  <div class="location-bar" (click)="onChangeLocation()">
+    <mat-icon fontSet="material-symbols-outlined" class="mat-text-on-surface">
+      location_on
+    </mat-icon>
+    <span class="mat-font-body-md mat-text-on-surface-variant">
+      {{ userLocation() }}
+    </span>
+  </div>
+
+  <app-notification-bell
+    [notifications]="userNotifications()"
+    (markAllAsRead)="onMarkAllNotificationsRead()"
+    (markAsRead)="onMarkNotificationAsRead($event)"
+  />
+</div>
+
+<!-- Welcome Section -->
+<div class="welcome-section">
+  <div class="welcome-text-container">
+    <h1 class="welcome-heading">
+      <span class="mat-font-headline-md mat-text-on-surface">Welcome, </span>
+      <span class="mat-font-headline-md mat-text-primary">{{ user()?.name || 'Guest' }}</span>
+    </h1>
+    <p class="mat-font-body-md mat-text-on-surface-variant">Find what you need, anytime</p>
+  </div>
+
+  <!-- Notification Bell (Desktop only) -->
+  <app-notification-bell
+    class="desktop-notification"
+    [notifications]="userNotifications()"
+    (markAllAsRead)="onMarkAllNotificationsRead()"
+    (markAsRead)="onMarkNotificationAsRead($event)"
+  />
+</div>
+
+<!-- Search Bar with Filter -->
+<div class="search-filter-section">
+  <!-- Location Bar (Desktop only) -->
+  <div class="location-bar desktop-location" (click)="onChangeLocation()">
+    <mat-icon fontSet="material-symbols-outlined" class="mat-text-on-surface">
+      location_on
+    </mat-icon>
+    <span class="mat-font-body-md mat-text-on-surface-variant">
+      {{ userLocation() }}
+    </span>
+  </div>
+
+  <div class="search-filter-group">
+    <app-search-bar
+      placeholder="Search offers"
+      [value]="searchQuery()"
+      (searchChange)="onSearchChange($event)"
+    />
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="filterMenu"
+      class="filter-button"
+    >
+      <mat-icon fontSet="material-symbols-outlined">filter_list</mat-icon>
+    </button>
+  </div>
+
+  <mat-menu #filterMenu="matMenu">
+    <div class="filter-menu-content" (click)="$event.stopPropagation()">
+      <mat-checkbox
+        [checked]="filterFood()"
+        (change)="filterFood.set($event.checked)"
+        class="filter-checkbox"
+      >
+        Food
+      </mat-checkbox>
+      <mat-checkbox
+        [checked]="filterOther()"
+        (change)="filterOther.set($event.checked)"
+        class="filter-checkbox"
+      >
+        Other
+      </mat-checkbox>
+    </div>
+  </mat-menu>
+</div>
+
+<!-- Offers Grid -->
+@if (isLoading()) {
+  <div class="loading-container">
+    <p class="mat-font-body-lg mat-text-on-surface-variant">Loading offers...</p>
+  </div>
+} @else if (filteredOffers().length > 0) {
+  <div class="offers-grid">
+    @for (offer of filteredOffers(); track offer.offer_id) {
+      <app-merchant-card
+        [merchantName]="offer.merchant_name || 'Unknown Merchant'"
+        [category]="offer.category"
+        [arrivalTime]="getArrivalTime(offer)"
+        [priceRange]="getPriceRange(offer)"
+        [stockLeft]="getStockLeft(offer)"
+        [imageUrl]="offer.items[0]?.image_url || ''"
+        [offerId]="offer.offer_id"
+        (cardClick)="onCardClick($event)"
+      />
+    }
+  </div>
+} @else {
+  <div class="empty-state">
+    <mat-icon fontSet="material-symbols-outlined" class="empty-icon">inbox</mat-icon>
+    <p class="mat-font-body-lg mat-text-on-surface-variant">No offers available</p>
+  </div>
+}
+
+<!-- Floating Create Offer Button (Mobile only) -->
+<button
+  matFab
+  (click)="openCreateOffer()"
+  class="create-offer-fab"
+  aria-label="Create Offer"
+>
+  <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+</button>
+
+<!-- Extended FAB for Desktop -->
+<button
+  matFab
+  extended
+  (click)="openCreateOffer()"
+  class="create-offer-fab-desktop"
+  aria-label="Create Offer"
+>
+  <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+  Create Offer
+</button>

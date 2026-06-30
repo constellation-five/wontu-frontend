@@ -1,0 +1,10 @@
+<div class="search-bar" [class.search-bar-filled]="isFilled">
+  <mat-icon fontSet="material-symbols-outlined" class="search-icon">search</mat-icon>
+  <input
+    type="text"
+    class="search-input"
+    [placeholder]="placeholder()"
+    [value]="searchValue()"
+    (input)="onInputChange($event)"
+  />
+</div>

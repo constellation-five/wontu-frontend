@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -21,19 +21,20 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
   ],
   templateUrl: './location-picker-dialog.html',
   styleUrls: ['./location-picker-dialog.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LocationPickerDialog {
+  private readonly dialogRef = inject(MatDialogRef<LocationPickerDialog>);
+  private readonly data = inject<{ coords?: GeolocationCoordinates }>(MAT_DIALOG_DATA);
+
   locationInput: string = '';
   hasCoordinates: boolean = false;
   locationHistory: string[] = [];
   private readonly STORAGE_KEY = 'wontu_location_history';
   private readonly MAX_HISTORY = 5;
 
-  constructor(
-    private dialogRef: MatDialogRef<LocationPickerDialog>,
-    @Inject(MAT_DIALOG_DATA) private data: { coords?: GeolocationCoordinates },
-  ) {
-    this.hasCoordinates = !!data.coords;
+  constructor() {
+    this.hasCoordinates = !!this.data.coords;
     this.loadLocationHistory();
   }
 

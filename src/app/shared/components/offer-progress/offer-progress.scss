@@ -1,82 +1,158 @@
+@use '../../../../_variables' as *;
+
 .progress-container {
   width: 100%;
-  padding: 24px 0;
+  padding: var(--spacing-md) 0;
   position: relative;
 }
 
-.progress-steps {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  
-  // Background gray line
-  &::before {
-    content: '';
-    position: absolute;
-    top: 16px;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--mat-sys-outline-variant);
-    z-index: 0;
+/* Horizontal Style (Default - Desktop) */
+.progress-horizontal {
+  .progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: var(--spacing-md);
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--mat-sys-outline-variant);
+      z-index: 0;
+    }
+  }
+
+  .step-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex: 1 1 0;
+    min-width: 0;
+    z-index: 1;
+    position: relative;
+    width: 100%;
+    max-width: none;
+  }
+
+  .step-label {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .step-time {
+    display: none;
+  }
+
+  .step-connector {
+    display: none;
   }
 }
 
-.step-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  flex: 0 0 auto;
-  z-index: 1;
-  position: relative;
+/* Vertical Style (Mobile) */
+.progress-vertical {
+  .progress-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: var(--mat-sys-outline-variant);
+      z-index: 0;
+    }
+  }
+
+  .step-wrapper {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--spacing-md);
+    position: relative;
+    z-index: 1;
+    padding-bottom: var(--spacing-md);
+  }
+
+  .step-label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .step-time {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 .step-circle {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: var(--mat-sys-corner-full);
   background: var(--mat-sys-outline-variant);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  flex-shrink: 0;
   
   &.completed,
   &.active {
     background: var(--mat-sys-secondary);
   }
-}
 
-.circle-inner {
-  display: none; // Hide inner circle for solid look
-}
-
-.step-label {
-  font-size: 14px;
-  color: var(--mat-sys-outline);
-  text-align: center;
-  white-space: nowrap;
-  transition: color 0.3s ease;
-  
-  &.completed,
-  &.active {
-    color: var(--mat-sys-secondary);
-  }
-}
-
-.step-connector {
-  display: none; // Hide individual connectors, use background line instead
-}
-
-@media (max-width: 768px) {
-  .step-label {
-    font-size: 12px;
-  }
-  
-  .step-circle {
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
     width: 24px;
     height: 24px;
   }
 }
+
+.circle-inner {
+  display: none;
+}
+
+.step-label {
+  color: var(--mat-sys-outline);
+  transition: color 0.3s ease;
+  width: 100%;
+  min-width: 0;
+
+  &.completed,
+  &.active {
+    color: var(--mat-sys-secondary);
+  }
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    font: var(--mat-sys-label-small);
+  }
+}
+
+.step-time {
+  display: none;
+}
+
+.progress-vertical .step-time {
+  display: flex;
+}
+
+.step-time-info {
+  white-space: nowrap;
+  color: var(--mat-sys-on-surface-variant);
+  justify-self: end;
+}
+

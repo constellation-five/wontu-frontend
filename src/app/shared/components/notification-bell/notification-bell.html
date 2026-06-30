@@ -8,7 +8,7 @@
     fontSet="material-symbols-outlined"
     [matBadge]="getUnreadBadgeContent()"
     matBadgeColor="warn"
-    [matBadgeHidden]="!hasNotifications"
+    [matBadgeHidden]="!hasNotifications()"
   >
     notifications
   </mat-icon>
@@ -18,44 +18,46 @@
   <!-- HEADER -->
   <div class="notification-header">
     <h3>Notifications</h3>
-    <button
-      mat-icon-button
-      *ngIf="hasNotifications"
-      (click)="onMarkAllAsRead()"
-      class="mark-all-btn"
-    >
-      <mat-icon fontSet="material-symbols-outlined">done_all</mat-icon>
-    </button>
+    @if (hasNotifications()) {
+      <button
+        mat-icon-button
+        (click)="onMarkAllAsRead()"
+        class="mark-all-btn"
+      >
+        <mat-icon fontSet="material-symbols-outlined">done_all</mat-icon>
+      </button>
+    }
   </div>
 
   <mat-divider></mat-divider>
 
   <!-- NOTIFICATIONS LIST -->
   <div class="notification-list">
-    <ng-container *ngIf="notifications.length > 0; else emptyNotifications">
-      <button
-        mat-menu-item
-        *ngFor="let notification of notifications"
-        class="notification-item"
-        [class.unread]="!notification.read"
-        (click)="onMarkAsRead(notification.id)"
-      >
-        <div class="notification-content">
-          <div class="notification-title-row">
-            <span class="notification-title">{{ notification.title }}</span>
-            <span class="notification-time">{{ notification.timestamp }}</span>
+    @if (notifications().length > 0) {
+      @for (notification of notifications(); track notification.id) {
+        <button
+          mat-menu-item
+          class="notification-item"
+          [class.unread]="!notification.read"
+          (click)="onMarkAsRead(notification.id)"
+        >
+          <div class="notification-content">
+            <div class="notification-title-row">
+              <span class="notification-title">{{ notification.title }}</span>
+              <span class="notification-time">{{ notification.timestamp }}</span>
+            </div>
+            <span class="notification-message">{{ notification.message }}</span>
           </div>
-          <span class="notification-message">{{ notification.message }}</span>
-        </div>
-        <span class="unread-indicator" *ngIf="!notification.read"></span>
-      </button>
-    </ng-container>
-
-    <ng-template #emptyNotifications>
+          @if (!notification.read) {
+            <span class="unread-indicator"></span>
+          }
+        </button>
+      }
+    } @else {
       <div class="empty-state">
         <mat-icon fontSet="material-symbols-outlined">notifications_none</mat-icon>
         <p>No notifications</p>
       </div>
-    </ng-template>
+    }
   </div>
 </mat-menu>
