@@ -98,12 +98,6 @@ export class OfferService {
     });
   }
 
-  updateOrder(offerId: number, items: { item_id: number; quantity_diff: number }[]) {
-    return this.http.post(`${environment.api}/offers/${offerId}/update-order`, {
-      items: items,
-    });
-  }
-
   replaceOrder(
     offerId: number,
     oldItems: { item_id: number; quantity: number }[],

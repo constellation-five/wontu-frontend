@@ -6,7 +6,7 @@ import { DecimalPipe, DatePipe } from '@angular/common';
 import { PaneComponent } from '../../../shared/components/pane/pane';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { OfferService } from '../../../core/offer.service';
-import { ButtonSizeDirective } from '../../../shared/directives/button';
+// import { ButtonSizeDirective } from '../../../shared/directives/button';
 
 interface HistoryOrder {
   offerId: number;
@@ -31,7 +31,7 @@ interface HistoryOrder {
     MatIconModule,
     MatButtonModule,
     PaneComponent,
-    ButtonSizeDirective,
+    // ButtonSizeDirective,
     DecimalPipe,
     DatePipe,
     RouterLink,
