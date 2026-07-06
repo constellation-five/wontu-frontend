@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog';
 import { PageHeaderService } from '../../../core/page-header.service';
@@ -7,7 +7,7 @@ import { PageHeaderService } from '../../../core/page-header.service';
 @Component({
   selector: 'app-page-header',
   standalone: true,
-  imports: [RouterLink, MatDialogModule],
+  imports: [MatDialogModule],
   templateUrl: './page-header.html',
   styleUrls: ['./page-header.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
