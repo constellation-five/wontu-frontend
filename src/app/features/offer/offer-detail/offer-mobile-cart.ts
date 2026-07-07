@@ -1,7 +1,8 @@
 import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { PaneComponent } from '../../../shared/components/pane/pane';
 import { PageHeaderService } from '../../../core/page-header.service';
@@ -18,6 +19,7 @@ import { DecimalPipe } from '@angular/common';
   imports: [
     MatIconModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     PaneComponent,
     ButtonSizeDirective,
     IconButtonVariantDirective,
@@ -28,6 +30,7 @@ import { DecimalPipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OfferMobileCart {
+  private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly pageHeader = inject(PageHeaderService);
@@ -35,6 +38,7 @@ export class OfferMobileCart {
 
   offer = signal<Offer | null>(null);
   cart = signal<Map<number, CheckoutItem>>(new Map());
+  isLoading = signal(true);
 
   cartItems = computed(() => Array.from(this.cart().values()));
   totalItems = computed(() => 
@@ -49,11 +53,21 @@ export class OfferMobileCart {
   private selectedItemForRemoval = signal<CheckoutItem | null>(null);
 
   constructor() {
+    const offerId = this.route.snapshot.paramMap.get('id');
     const state = history.state;
+
     if (state && state['offer'] && state['cart']) {
       this.offer.set(state['offer']);
       const cartMap = new Map<number, CheckoutItem>(state['cart']);
       this.cart.set(cartMap);
+      this.isLoading.set(false);
+    } else if (offerId) {
+      // Direct navigation, refresh, or back/forward: no history.state to restore from.
+      this.loadCartFromLocalStorage(offerId);
+      this.loadOffer(offerId);
+    } else {
+      this.router.navigate(['/offers']);
+      return;
     }
 
     this.pageHeader.setTitle('Cart');
@@ -67,6 +81,39 @@ export class OfferMobileCart {
     if (typeof window !== 'undefined') {
       window.addEventListener('resize', this.handleResize.bind(this));
       this.checkScreenSize();
+    }
+  }
+
+  private loadOffer(id: string) {
+    this.isLoading.set(true);
+    this.offerService.getOfferById(id).subscribe({
+      next: (offer) => {
+        this.offer.set(offer);
+        this.pageHeader.setTitle(offer.merchant_name);
+        this.pageHeader.setBreadcrumbs([
+          { label: 'Offers', route: '/offers' },
+          { label: offer.merchant_name, route: `/offers/${offer.offer_id}` },
+          { label: 'Cart' },
+        ]);
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        console.error('Failed to load offer:', err);
+        this.isLoading.set(false);
+        this.router.navigate(['/offers']);
+      },
+    });
+  }
+
+  private loadCartFromLocalStorage(offerId: string) {
+    const saved = localStorage.getItem(`cart_${offerId}`);
+    if (saved) {
+      try {
+        const cartData = JSON.parse(saved);
+        this.cart.set(new Map<number, CheckoutItem>(cartData));
+      } catch (e) {
+        console.error('Error loading cart from localStorage:', e);
+      }
     }
   }
 

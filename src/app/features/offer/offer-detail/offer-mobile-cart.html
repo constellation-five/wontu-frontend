@@ -1,3 +1,8 @@
+@if (isLoading() || !offer()) {
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+} @else {
 <div class="mobile-cart-container">
   <!-- Offer Information Pane -->
   <app-pane title="Offer Information">
@@ -123,3 +128,4 @@
     </button>
   </div>
 </div>
+}
