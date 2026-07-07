@@ -18,11 +18,22 @@ export class PageHeaderComponent {
   private readonly dialog = inject(MatDialog);
 
   onBreadcrumbClick(event: MouseEvent, item: { label: string; route?: string }) {
-    if (!item.route || !this.shouldConfirmStoreNavigation(item)) {
+    if (!item.route) {
+      return;
+    }
+
+    // Let the browser handle modifier-key clicks (open in new tab, etc.) natively.
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.button !== 0) {
       return;
     }
 
     event.preventDefault();
+
+    if (!this.shouldConfirmStoreNavigation(item)) {
+      this.router.navigateByUrl(item.route);
+      return;
+    }
+
     this.dialog.closeAll();
 
     const dialogRef = this.dialog.open(DialogComponent, {
