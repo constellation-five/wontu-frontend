@@ -30,7 +30,7 @@ export class OfferChatPage {
     if (id) {
       this.loadOffer(id);
     } else {
-      this.router.navigate(['/offer']);
+      this.router.navigate(['/offers']);
     }
   }
 

@@ -19,6 +19,6 @@ export default class OfferCreate {
   private readonly router = inject(Router);
 
   goBack() {
-    this.router.navigate(['/offer']);
+    this.router.navigate(['/offers']);
   }
 }
