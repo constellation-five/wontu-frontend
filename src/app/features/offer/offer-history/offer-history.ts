@@ -145,14 +145,9 @@ export class OfferHistoryPage {
     // Use raw CheckoutItem data if available (includes full item data with images)
     const checkoutItems = order.rawItems || [];
 
-    // Save to service state so checkout can load it
+    // Save to service state so the offer detail page shows the checkout view
     this.offerService.setCheckoutState(order.offerId, checkoutItems);
 
-    this.router.navigate(['/offers', order.offerId, 'checkout'], {
-      state: {
-        checkoutItems: checkoutItems,
-        fromHistory: true,
-      }
-    });
+    this.router.navigate(['/offers', order.offerId]);
   }
 }

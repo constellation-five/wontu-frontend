@@ -39,30 +39,13 @@ export class OfferChatPage {
     this.offerService.getOfferById(id).subscribe({
       next: (data) => {
         this.offer.set(data);
-        
-        // Check if user came from checkout by looking at navigation history
-        const navigation = this.router.getCurrentNavigation();
-        const state = history.state;
-        
-        // If coming from checkout or has checkout in history, add checkout to breadcrumb
-        const fromCheckout = state?.fromCheckout || document.referrer.includes('/checkout');
-        
-        if (fromCheckout) {
-          this.pageHeaderService.setBreadcrumbs([
-            { label: 'Offers', route: '/offers' },
-            { label: data.merchant_name, route: `/offers/${data.offer_id}` },
-            { label: 'Checkout', route: `/offers/${data.offer_id}/checkout` },
-            { label: 'Chat' },
-          ]);
-        } else {
-          // Direct navigation to chat
-          this.pageHeaderService.setBreadcrumbs([
-            { label: 'Offers', route: '/offers' },
-            { label: data.merchant_name, route: `/offers/${data.offer_id}` },
-            { label: 'Chat' },
-          ]);
-        }
-        
+
+        this.pageHeaderService.setBreadcrumbs([
+          { label: 'Offers', route: '/offers' },
+          { label: data.merchant_name, route: `/offers/${data.offer_id}` },
+          { label: 'Chat' },
+        ]);
+
         this.isLoading.set(false);
       },
       error: (err) => {

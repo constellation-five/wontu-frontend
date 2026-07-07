@@ -3,7 +3,6 @@ import { HistoryPage } from './features/history/history-page';
 import { OfferShowPage } from './features/offer/offer-show/offer-show';
 import { OfferDetailPage } from './features/offer/offer-detail/offer-detail-page';
 import { OfferMobileCart } from './features/offer/offer-detail/offer-mobile-cart';
-import { OfferCheckoutPage } from './features/offer/offer-checkout/offer-checkout';
 import { OfferChatPage } from './features/offer/offer-chat/offer-chat';
 import { ProfilePage } from './features/profile/profile-page';
 import { RequestPage } from './features/request/request-page';
@@ -44,11 +43,6 @@ export const routes: Routes = [
             component: OfferMobileCart,
             title: 'Cart',
             data: { hideBottomBar: true },
-          },
-          {
-            path: ':id/checkout',
-            component: OfferCheckoutPage,
-            title: 'Checkout',
           },
           {
             path: ':id/chat',

@@ -258,30 +258,21 @@ export class OfferMobileCart {
       quantity: cartItem.quantity,
     }));
 
-    // Check if this is edit mode
-    const state = history.state;
-    const isEditMode = state && state['editMode'] && state['currentItems'];
+    const placedItems = this.offerService.getCheckoutState(offer.offer_id);
 
-    if (isEditMode) {
-      // Use replaceOrder API for edit mode
-      const oldItems = state['currentItems'].map((item: any) => ({
+    if (placedItems && placedItems.length > 0) {
+      // An order already exists for this offer: replace it with the edited items.
+      const oldItems = placedItems.map((item) => ({
         item_id: item.item.item_id,
         quantity: item.quantity,
       }));
 
-      console.log('Edit mode: replacing order', { oldItems, newItems: items });
-
       this.offerService.replaceOrder(offer.offer_id, oldItems, items).subscribe({
         next: () => {
-          // Update existing history (not create new)
           this.updateOrderHistory(offer.offer_id, offer.merchant_name);
           this.clearCartFromLocalStorage(offer.offer_id);
-
-          this.router.navigate(['/offers', offer.offer_id, 'checkout'], {
-            state: {
-              checkoutItems: this.cartItems(),
-            },
-          });
+          this.offerService.setCheckoutState(offer.offer_id, this.cartItems());
+          this.router.navigate(['/offers', offer.offer_id]);
         },
         error: (err) => {
           console.error('Failed to replace order:', err);
@@ -289,18 +280,12 @@ export class OfferMobileCart {
         },
       });
     } else {
-      // Normal place order
       this.offerService.placeOrder(offer.offer_id, items).subscribe({
         next: () => {
-          // Save to history and clear cart
           this.saveOrderToHistory(offer.offer_id, offer.merchant_name);
           this.clearCartFromLocalStorage(offer.offer_id);
-
-          this.router.navigate(['/offers', offer.offer_id, 'checkout'], {
-            state: {
-              checkoutItems: this.cartItems(),
-            },
-          });
+          this.offerService.setCheckoutState(offer.offer_id, this.cartItems());
+          this.router.navigate(['/offers', offer.offer_id]);
         },
         error: (err) => {
           console.error('Failed to place order:', err);
