@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "wontu-frontend-dev",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["exec", "ng", "serve", "--port", "4201"],
+      "port": 4201
+    }
+  ]
+}

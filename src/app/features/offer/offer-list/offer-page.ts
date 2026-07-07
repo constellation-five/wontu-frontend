@@ -23,6 +23,7 @@ import {
   Notification,
 } from '../../../shared/components/notification-bell/notification-bell';
 import { LocationPickerDialog } from './location-picker-dialog';
+import { LocationLookupService } from '../../../core/location-lookup.service';
 
 @Component({
   selector: 'offer-page',
@@ -50,6 +51,7 @@ export class OfferPage implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly dialog = inject(MatDialog);
   private readonly router = inject(Router);
+  private readonly locationLookup = inject(LocationLookupService);
 
   userName: string = 'Guest';
   userLocation: string = 'Choose your location';
@@ -77,6 +79,7 @@ export class OfferPage implements OnInit {
     this.initializeNotifications();
     this.loadUserData();
     this.fetchOffers(); // Ambil data dari BE saat init
+    this.detectCurrentLocation();
   }
 
   loadUserData() {
@@ -179,30 +182,12 @@ export class OfferPage implements OnInit {
   }
 
   onChangeLocation() {
-    this.requestGeolocationPermission();
-  }
-
-  private requestGeolocationPermission() {
-    if (!navigator.geolocation) {
-      this.showLocationPickerDialog();
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.showLocationPickerDialog(position.coords);
-      },
-      (error) => {
-        console.log('Geolocation error:', error);
-        this.showLocationPickerDialog();
-      },
-    );
-  }
-
-  private showLocationPickerDialog(coords?: GeolocationCoordinates) {
     const dialogRef = this.dialog.open(LocationPickerDialog, {
       width: '500px',
-      data: { coords },
+      data: {
+        coords: this.userLocationCoordinates ?? undefined,
+        label: this.userLocation !== 'Choose your location' ? this.userLocation : undefined,
+      },
       disableClose: false,
     });
 
@@ -213,6 +198,39 @@ export class OfferPage implements OnInit {
         this.cdr.markForCheck();
       }
     });
+  }
+
+  private detectCurrentLocation(retriesLeft = 2) {
+    if (!navigator.geolocation) return;
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const coords = { lat: position.coords.latitude, lng: position.coords.longitude };
+        this.applyDetectedLocation(coords);
+      },
+      (error) => {
+        console.log('Geolocation error:', error);
+        // POSITION_UNAVAILABLE (macOS CoreLocation's kCLErrorLocationUnknown) is usually
+        // a transient hiccup right after permission is granted — retry a couple times.
+        if (error.code === error.POSITION_UNAVAILABLE && retriesLeft > 0) {
+          setTimeout(() => this.detectCurrentLocation(retriesLeft - 1), 2000);
+        }
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+    );
+  }
+
+  private async applyDetectedLocation(coords: { lat: number; lng: number }) {
+    this.userLocationCoordinates = coords;
+
+    try {
+      this.userLocation = await this.locationLookup.resolvePlaceName(coords);
+    } catch (err) {
+      console.log('Location lookup error:', err);
+      this.userLocation = `${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`;
+    }
+
+    this.cdr.markForCheck();
   }
 
   openLocationInMaps(location: string) {

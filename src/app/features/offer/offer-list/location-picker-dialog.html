@@ -1,61 +1,69 @@
-<div class="location-picker-container">
-  <!-- Header -->
-  <div class="location-header">
-    <button mat-icon-button (click)="onCancel()" class="back-btn" type="button">
-      <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
-    </button>
-    <h2 class="header-title">Search Your Location</h2>
-  </div>
+<h2 mat-dialog-title>Choose Your Location</h2>
 
-  <!-- Content -->
-  <div class="location-content">
-    <!-- Use Current Location Button -->
-    <button
-      class="use-current-btn"
-      (click)="useCurrentLocation()"
-      [disabled]="!hasCoordinates"
-      type="button"
-    >
-      <span class="btn-text">Use my current location</span>
-      <mat-icon fontSet="material-symbols-outlined">send</mat-icon>
-    </button>
-
-    <!-- Location Input -->
-    <div class="input-wrapper">
-      <mat-icon class="search-icon" fontSet="material-symbols-outlined">search</mat-icon>
-      <input
-        type="text"
-        class="location-input"
-        [(ngModel)]="locationInput"
-        placeholder="Choose your location"
-        (input)="onLocationInputChange()"
-        (keyup.enter)="confirmLocation()"
-      />
-      <button *ngIf="locationInput" class="clear-btn" (click)="clearInput()" type="button">
+<mat-dialog-content>
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search for a building or address</mat-label>
+    <mat-icon matPrefix fontSet="material-symbols-outlined">search</mat-icon>
+    <input
+      matInput
+      [formControl]="searchControl"
+      [matAutocomplete]="auto"
+      (keyup.enter)="confirmLocation()"
+    />
+    @if (locationInput) {
+      <button matIconButton matSuffix appButtonSize="compact" type="button" (click)="clearInput()">
         <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
       </button>
-    </div>
+    }
+  </mat-form-field>
 
-    <!-- History Location Section -->
-    <div class="history-section" *ngIf="!locationInput">
-      <h3 class="history-title">History Location</h3>
-      <div *ngIf="locationHistory.length > 0; else noHistory" class="history-list">
-        <div *ngFor="let location of locationHistory" class="history-item">
-          <button class="history-btn" (click)="selectHistoryLocation(location)" type="button">
-            {{ location }}
-          </button>
-          <button
-            class="history-remove-btn"
-            (click)="removeHistoryLocation(location)"
-            type="button"
-          >
-            <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-          </button>
-        </div>
-      </div>
-      <ng-template #noHistory>
-        <div class="no-history">You don't have history location</div>
-      </ng-template>
-    </div>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+    @for (option of suggestions; track option.prediction.placeId) {
+      <mat-option [value]="option.label">{{ option.label }}</mat-option>
+    }
+  </mat-autocomplete>
+
+  @if (verificationError) {
+    <p class="verification-error">{{ verificationError }}</p>
+  }
+
+  <div class="map-wrapper">
+    @if (mapsLoading) {
+      <div class="map-status">Loading map...</div>
+    }
+    @if (mapsError) {
+      <div class="map-status map-error">{{ mapsError }}</div>
+    }
+    @if (!mapsLoading && !mapsError) {
+      <google-map
+        height="240px"
+        width="100%"
+        [center]="center"
+        [zoom]="zoom"
+        [options]="mapOptions"
+        (mapInitialized)="onMapReady($event)"
+        (mapClick)="onMapClick($event)"
+      >
+        <map-advanced-marker
+          [position]="markerPosition"
+          [gmpDraggable]="true"
+          (mapDragend)="onMarkerDragEnd($event)"
+        ></map-advanced-marker>
+      </google-map>
+    }
   </div>
-</div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button matButton="outlined" appButtonSize="sm" type="button" mat-dialog-close>Cancel</button>
+  <button
+    matButton="filled"
+    appButtonSize="sm"
+    appButtonColor="primary"
+    type="button"
+    [disabled]="!locationInput.trim() || isVerifying"
+    (click)="confirmLocation()"
+  >
+    {{ isVerifying ? 'Verifying...' : 'Confirm Location' }}
+  </button>
+</mat-dialog-actions>

@@ -42,3 +42,9 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Runtime secrets (generated locally / injected by CI, never committed)
+/src/assets/env-config.js
+
+# Claude Code session lock files
+.claude/*.lock
