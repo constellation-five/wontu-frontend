@@ -268,12 +268,7 @@ export class OfferMobileCart {
       }));
 
       this.offerService.replaceOrder(offer.offer_id, oldItems, items).subscribe({
-        next: () => {
-          this.updateOrderHistory(offer.offer_id, offer.merchant_name);
-          this.clearCartFromLocalStorage(offer.offer_id);
-          this.offerService.setCheckoutState(offer.offer_id, this.cartItems());
-          this.router.navigate(['/offers', offer.offer_id]);
-        },
+        next: () => this.finishPlacingOrder(offer),
         error: (err) => {
           console.error('Failed to replace order:', err);
           alert('Failed to update order. Please try again.');
@@ -281,18 +276,24 @@ export class OfferMobileCart {
       });
     } else {
       this.offerService.placeOrder(offer.offer_id, items).subscribe({
-        next: () => {
-          this.saveOrderToHistory(offer.offer_id, offer.merchant_name);
-          this.clearCartFromLocalStorage(offer.offer_id);
-          this.offerService.setCheckoutState(offer.offer_id, this.cartItems());
-          this.router.navigate(['/offers', offer.offer_id]);
-        },
+        next: () => this.finishPlacingOrder(offer),
         error: (err) => {
           console.error('Failed to place order:', err);
           alert('Failed to place order. Please try again.');
         },
       });
     }
+  }
+
+  private finishPlacingOrder(offer: Offer) {
+    // Self-healing: updates the existing history entry for this offer if one
+    // exists, otherwise creates a new one. Always runs so a history entry is
+    // guaranteed regardless of whether this was a fresh order or an edit.
+    this.updateOrderHistory(offer.offer_id, offer.merchant_name);
+
+    this.clearCartFromLocalStorage(offer.offer_id);
+    this.offerService.setCheckoutState(offer.offer_id, this.cartItems());
+    this.router.navigate(['/offers', offer.offer_id]);
   }
 
   private saveOrderToHistory(offerId: number, merchantName: string) {

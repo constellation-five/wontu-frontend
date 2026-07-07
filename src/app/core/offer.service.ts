@@ -60,10 +60,6 @@ export class OfferService {
     isLoading: false,
   });
 
-  // Checkout state management
-  private readonly checkoutState = signal<CheckoutState | null>(null);
-  readonly currentCheckout = computed(() => this.checkoutState());
-
   readonly allOffers = computed(() => this.state().offers);
   readonly isLoading = computed(() => this.state().isLoading);
 
@@ -116,31 +112,29 @@ export class OfferService {
   }
 
   // Checkout state methods
+  // Persisted per-offer in localStorage (not just in-memory) so that a placed
+  // order for an offer survives a page refresh, and so that placed orders on
+  // different offers don't clobber each other's state (a person may have at
+  // most one active order per offer, but can have orders on several offers).
   setCheckoutState(offerId: number, items: CheckoutItem[]) {
-    this.checkoutState.set({
-      offerId,
-      items,
-      timestamp: Date.now(),
-    });
+    const state: CheckoutState = { offerId, items, timestamp: Date.now() };
+    localStorage.setItem(`checkout_${offerId}`, JSON.stringify(state));
   }
 
   getCheckoutState(offerId: number): CheckoutItem[] | null {
-    const state = this.checkoutState();
-    if (!state || state.offerId !== offerId) {
+    const raw = localStorage.getItem(`checkout_${offerId}`);
+    if (!raw) return null;
+
+    try {
+      const state: CheckoutState = JSON.parse(raw);
+      return state.items;
+    } catch (e) {
+      console.error('Error parsing checkout state:', e);
       return null;
     }
-    
-    // Check if state is not too old (e.g., 1 hour)
-    const oneHour = 60 * 60 * 1000;
-    if (Date.now() - state.timestamp > oneHour) {
-      this.clearCheckoutState();
-      return null;
-    }
-    
-    return state.items;
   }
 
-  clearCheckoutState() {
-    this.checkoutState.set(null);
+  clearCheckoutState(offerId: number) {
+    localStorage.removeItem(`checkout_${offerId}`);
   }
 }

@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DecimalPipe } from '@angular/common';
 import { ItemCardComponent } from '../../../shared/components/item-card/item-card';
 import { PaneComponent } from '../../../shared/components/pane/pane';
-import { CounterField } from '../../../shared/components/counter-field/counter-field';
+import { CartItemCard } from './cart-item-card/cart-item-card';
 import { OfferProgressComponent } from '../../../shared/components/offer-progress/offer-progress';
 import {
   PaymentMethodCard,
@@ -19,7 +19,6 @@ import { DialogComponent } from '../../../shared/components/dialog/dialog';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { OfferService, Offer, OfferItem, CheckoutItem } from '../../../core/offer.service';
 import { ButtonSizeDirective, ButtonColorDirective } from '../../../shared/directives/button';
-import { IconButtonVariantDirective } from '../../../shared/directives/button/icon-button-variant';
 import { EditNotesDialog } from './edit-notes-dialog';
 import { environment } from '../../../../environments/environment';
 
@@ -35,12 +34,11 @@ type OfferDetailView = 'menu' | 'checkout';
     MatCardModule,
     ItemCardComponent,
     PaneComponent,
-    CounterField,
+    CartItemCard,
     OfferProgressComponent,
     PaymentMethodCard,
     ButtonSizeDirective,
     ButtonColorDirective,
-    IconButtonVariantDirective,
     DecimalPipe,
   ],
   templateUrl: './offer-detail-page.html',
@@ -281,21 +279,6 @@ export class OfferDetailPage {
     }
   }
 
-  onCartCounterChange(cartItem: CheckoutItem, newValue: number, field: CounterField) {
-    const itemId = cartItem.item.item_id;
-
-    if (newValue > cartItem.quantity) {
-      this.onIncreaseQuantity(itemId);
-    } else if (newValue < cartItem.quantity) {
-      if (cartItem.quantity === 1) {
-        // Decreasing past 1 opens a remove-confirmation dialog rather than
-        // actually changing the quantity, so snap the field back visually.
-        field.value.set(1);
-      }
-      this.onDecreaseQuantity(itemId);
-    }
-  }
-
   isItemInCart(itemId: number): boolean {
     return this.cart().has(itemId);
   }
@@ -327,10 +310,7 @@ export class OfferDetailPage {
       }));
 
       this.offerService.replaceOrder(offer.offer_id, oldItems, items).subscribe({
-        next: () => {
-          this.updateOrderHistory(offer.offer_id, offer.merchant_name);
-          this.finishPlacingOrder(offer.offer_id);
-        },
+        next: () => this.finishPlacingOrder(offer),
         error: (err) => {
           console.error('Failed to replace order:', err);
           alert('Failed to update order. Please try again.');
@@ -338,10 +318,7 @@ export class OfferDetailPage {
       });
     } else {
       this.offerService.placeOrder(offer.offer_id, items).subscribe({
-        next: () => {
-          this.saveOrderToHistory(offer.offer_id, offer.merchant_name);
-          this.finishPlacingOrder(offer.offer_id);
-        },
+        next: () => this.finishPlacingOrder(offer),
         error: (err) => {
           console.error('Failed to place order:', err);
           alert('Failed to place order. Please try again.');
@@ -350,16 +327,16 @@ export class OfferDetailPage {
     }
   }
 
-  private finishPlacingOrder(offerId: number) {
-    this.clearCartFromLocalStorage(String(offerId));
-    this.offerService.setCheckoutState(offerId, this.cartItems());
+  private finishPlacingOrder(offer: Offer) {
+    // Self-healing: updates the existing history entry for this offer if one
+    // exists, otherwise creates a new one. Always runs so a history entry is
+    // guaranteed regardless of whether this was a fresh order or an edit.
+    this.updateOrderHistory(offer.offer_id, offer.merchant_name);
+
+    this.clearCartFromLocalStorage(String(offer.offer_id));
+    this.offerService.setCheckoutState(offer.offer_id, this.cartItems());
     this.view.set('checkout');
-
-    const offer = this.offer();
-    if (offer) {
-      this.setBreadcrumbs(offer);
-    }
-
+    this.setBreadcrumbs(offer);
     this.loadPaymentMethods();
   }
 
@@ -427,7 +404,7 @@ export class OfferDetailPage {
         }
         keysToRemove.forEach((key) => localStorage.removeItem(key));
 
-        this.offerService.clearCheckoutState();
+        this.offerService.clearCheckoutState(offer.offer_id);
         this.router.navigate(['/offers']);
       },
       error: (err) => {

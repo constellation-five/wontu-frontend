@@ -39,29 +39,7 @@
         @if (cartItems().length > 0) {
           <div class="cart-items-container">
             @for (item of cartItems(); track item.item.item_id) {
-              <div class="checkout-cart-item">
-                <img
-                  [src]="item.item.image_url"
-                  [alt]="item.item.item_name"
-                  class="checkout-item-image"
-                />
-                <div class="checkout-item-details">
-                  <div class="checkout-item-name mat-font-body-md mat-text-on-surface">
-                    {{ item.item.item_name }}
-                  </div>
-                  @if (item.notes) {
-                    <div class="checkout-item-notes mat-font-body-sm mat-text-on-surface-variant">
-                      {{ item.notes }}
-                    </div>
-                  }
-                  <div class="checkout-item-price mat-font-body-md mat-text-on-surface text-bold">
-                    Rp {{ +item.item.item_price | number: '1.0-0' }}
-                  </div>
-                </div>
-                <div class="checkout-item-qty mat-font-body-lg mat-text-on-surface text-bold">
-                  {{ item.quantity }}
-                </div>
-              </div>
+              <app-cart-item-card [item]="item" />
             }
           </div>
         } @else {
@@ -178,7 +156,7 @@
 
     <!-- Desktop Layout (Two Column) -->
     <div class="desktop-layout">
-      <div class="checkout-content-layout">
+      <div class="content-layout">
         <!-- Left: Progress and Payment -->
         <div class="left-section">
           <!-- Offer Progress Pane (Horizontal Style) -->
@@ -345,33 +323,7 @@
             @if (cartItems().length > 0) {
               <div class="cart-items-container">
                 @for (item of cartItems(); track item.item.item_id) {
-                  <div class="checkout-cart-item">
-                    <img
-                      [src]="item.item.image_url"
-                      [alt]="item.item.item_name"
-                      class="checkout-item-image"
-                    />
-                    <div class="checkout-item-details">
-                      <div class="checkout-item-name mat-font-body-md mat-text-on-surface">
-                        {{ item.item.item_name }}
-                      </div>
-                      @if (item.notes) {
-                        <div
-                          class="checkout-item-notes mat-font-body-sm mat-text-on-surface-variant"
-                        >
-                          {{ item.notes }}
-                        </div>
-                      }
-                      <div
-                        class="checkout-item-price mat-font-body-md mat-text-on-surface text-bold"
-                      >
-                        Rp {{ +item.item.item_price | number: '1.0-0' }}
-                      </div>
-                    </div>
-                    <div class="checkout-item-qty mat-font-body-lg mat-text-on-surface text-bold">
-                      {{ item.quantity }}
-                    </div>
-                  </div>
+                  <app-cart-item-card [item]="item" />
                 }
               </div>
             } @else {
@@ -506,6 +458,10 @@
                 <span class="mat-font-body-sm mat-text-on-surface-variant">(100+)</span>
               </div>
             </div>
+            <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat()">
+              <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
+              <span>Chat</span>
+            </button>
           </div>
         </app-pane>
 
@@ -514,46 +470,13 @@
           @if (cartItems().length > 0) {
             <div class="cart-items-container">
               @for (cartItem of cartItems(); track cartItem.item.item_id) {
-                <div class="cart-item-card mat-bg-surface-container-lowest">
-                  <img
-                    [src]="cartItem.item.image_url"
-                    [alt]="cartItem.item.item_name"
-                    class="cart-item-image"
-                  />
-                  <div class="cart-item-content">
-                    <div class="cart-item-name mat-font-title-sm mat-text-on-surface">
-                      {{ cartItem.item.item_name }}
-                    </div>
-                    @if (cartItem.notes) {
-                      <div class="cart-item-notes mat-font-label-md mat-text-on-surface-variant">
-                        {{ cartItem.notes }}
-                      </div>
-                    }
-                    <div class="cart-item-footer">
-                      <div class="cart-item-price mat-font-body-lg mat-text-on-surface text-bold">
-                        Rp {{ +cartItem.item.item_price | number: '1.0-0' }}
-                      </div>
-                      <div class="cart-item-controls">
-                        <button
-                          matIconButton
-                          appButtonSize="xs"
-                          appIconButtonVariant="outlined"
-                          class="cart-notes-btn"
-                          (click)="editCartItemNotes(cartItem)"
-                        >
-                          <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-                        </button>
-                        <app-counter-field
-                          #qtyField
-                          compact
-                          [value]="cartItem.quantity"
-                          [max]="cartItem.item.slot - cartItem.item.current_slot"
-                          (valueChange)="onCartCounterChange(cartItem, $event, qtyField)"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <app-cart-item-card
+                  [item]="cartItem"
+                  [editable]="true"
+                  (increase)="onIncreaseQuantity($event)"
+                  (decrease)="onDecreaseQuantity($event)"
+                  (notesEdit)="editCartItemNotes($event)"
+                />
               }
             </div>
           } @else {
