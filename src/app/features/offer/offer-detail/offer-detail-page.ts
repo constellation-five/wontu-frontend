@@ -201,11 +201,11 @@ export class OfferDetailPage {
   onIncreaseQuantity(itemId: number) {
     const currentCart = new Map(this.cart());
     const item = currentCart.get(itemId);
-    
+
     if (item) {
       const stockRemaining = item.item.slot - item.item.current_slot;
       if (item.quantity < stockRemaining) {
-        item.quantity += 1;
+        currentCart.set(itemId, { ...item, quantity: item.quantity + 1 });
         this.cart.set(currentCart);
         const offerId = this.route.snapshot.paramMap.get('id');
         if (offerId) {
@@ -218,10 +218,10 @@ export class OfferDetailPage {
   onDecreaseQuantity(itemId: number) {
     const currentCart = new Map(this.cart());
     const item = currentCart.get(itemId);
-    
+
     if (item) {
       if (item.quantity > 1) {
-        item.quantity -= 1;
+        currentCart.set(itemId, { ...item, quantity: item.quantity - 1 });
         this.cart.set(currentCart);
         const offerId = this.route.snapshot.paramMap.get('id');
         if (offerId) {
@@ -410,7 +410,7 @@ export class OfferDetailPage {
         const currentCart = new Map(this.cart());
         const item = currentCart.get(cartItem.item.item_id);
         if (item) {
-          item.notes = result;
+          currentCart.set(item.item.item_id, { ...item, notes: result });
           this.cart.set(currentCart);
           const offerId = this.route.snapshot.paramMap.get('id');
           if (offerId) {
