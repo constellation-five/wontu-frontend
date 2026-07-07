@@ -31,7 +31,7 @@
       @if (!isInCart()) {
         <button
           matButton="tonal"
-          class="item-card__add-button"
+          appButtonSize="xs"
           [disabled]="isOutOfStock()"
           (click)="handleAdd()"
         >
@@ -39,9 +39,14 @@
           Add
         </button>
       } @else {
-        <div class="item-card__quantity mat-font-label-md text-bold mat-text-on-primary-container">
-          {{ quantity() }} {{ quantity() === 1 ? 'item' : 'items' }}
-        </div>
+        <app-counter-field
+          #qtyField
+          [compact]="true"
+          class="item-card__quantity"
+          [value]="quantity()"
+          [max]="item().slot - item().current_slot"
+          (valueChange)="onCounterChange($event, qtyField)"
+        />
       }
     </div>
   </div>

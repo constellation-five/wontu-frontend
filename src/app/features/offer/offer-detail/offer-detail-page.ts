@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DecimalPipe } from '@angular/common';
 import { ItemCardComponent } from '../../../shared/components/item-card/item-card';
 import { PaneComponent } from '../../../shared/components/pane/pane';
+import { CounterField } from '../../../shared/components/counter-field/counter-field';
 import { DialogComponent } from '../../../shared/components/dialog/dialog';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { OfferService, Offer, OfferItem, CheckoutItem } from '../../../core/offer.service';
@@ -25,6 +26,7 @@ import { EditNotesDialog } from './edit-notes-dialog';
     MatCardModule,
     ItemCardComponent,
     PaneComponent,
+    CounterField,
     ButtonSizeDirective,
     IconButtonVariantDirective,
     DecimalPipe,
@@ -234,6 +236,21 @@ export class OfferDetailPage {
     }
   }
 
+  onCartCounterChange(cartItem: CheckoutItem, newValue: number, field: CounterField) {
+    const itemId = cartItem.item.item_id;
+
+    if (newValue > cartItem.quantity) {
+      this.onIncreaseQuantity(itemId);
+    } else if (newValue < cartItem.quantity) {
+      if (cartItem.quantity === 1) {
+        // Decreasing past 1 opens a remove-confirmation dialog rather than
+        // actually changing the quantity, so snap the field back visually.
+        field.value.set(1);
+      }
+      this.onDecreaseQuantity(itemId);
+    }
+  }
+
   isItemInCart(itemId: number): boolean {
     return this.cart().has(itemId);
   }
@@ -419,11 +436,6 @@ export class OfferDetailPage {
         }
       }
     });
-  }
-
-  isCartItemMaxQuantity(cartItem: CheckoutItem): boolean {
-    const stockRemaining = cartItem.item.slot - cartItem.item.current_slot;
-    return cartItem.quantity >= stockRemaining;
   }
 
   openRemoveConfirm(cartItem: CheckoutItem) {

@@ -4,6 +4,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { OfferItem } from '../../../core/offer.service';
+import { CounterField } from '../counter-field/counter-field';
+import { ButtonSizeDirective } from "../../directives/button";
 
 @Component({
   selector: 'app-item-card',
@@ -15,7 +17,9 @@ import { OfferItem } from '../../../core/offer.service';
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-  ],
+    CounterField,
+    ButtonSizeDirective
+],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemCardComponent {
@@ -27,6 +31,21 @@ export class ItemCardComponent {
   onAdd = output<OfferItem>();
   onIncrease = output<number>();
   onDecrease = output<number>();
+
+  onCounterChange(newValue: number, field: CounterField) {
+    const current = this.quantity();
+
+    if (newValue > current) {
+      this.handleIncrease();
+    } else if (newValue < current) {
+      if (current === 1) {
+        // Decreasing past 1 triggers a remove-confirmation flow upstream
+        // rather than actually changing the quantity, so snap back visually.
+        field.value.set(1);
+      }
+      this.handleDecrease();
+    }
+  }
 
   private static readonly NEW_ITEM_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
 

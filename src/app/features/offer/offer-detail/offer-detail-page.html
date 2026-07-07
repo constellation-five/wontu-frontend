@@ -88,30 +88,20 @@
                       <div class="cart-item-controls">
                         <button
                           matIconButton
+                          appButtonSize="xs"
                           appIconButtonVariant="outlined"
                           class="cart-notes-btn"
                           (click)="editCartItemNotes(cartItem)"
                         >
                           <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
                         </button>
-                        <div class="cart-quantity-control">
-                          <button
-                            matIconButton
-                            class="cart-qty-btn"
-                            (click)="onDecreaseQuantity(cartItem.item.item_id)"
-                          >
-                            <mat-icon fontSet="material-symbols-outlined">remove</mat-icon>
-                          </button>
-                          <span class="cart-qty-value mat-font-body-md mat-text-on-surface">{{ cartItem.quantity }}</span>
-                          <button
-                            matIconButton
-                            class="cart-qty-btn"
-                            [disabled]="isCartItemMaxQuantity(cartItem)"
-                            (click)="onIncreaseQuantity(cartItem.item.item_id)"
-                          >
-                            <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-                          </button>
-                        </div>
+                        <app-counter-field
+                          #qtyField
+                          compact
+                          [value]="cartItem.quantity"
+                          [max]="cartItem.item.slot - cartItem.item.current_slot"
+                          (valueChange)="onCartCounterChange(cartItem, $event, qtyField)"
+                        />
                       </div>
                     </div>
                   </div>

@@ -93,14 +93,5 @@
 }
 
 .item-card__quantity {
-  height: 28px;
-  padding: 0 var(--spacing-sm);
-  background: var(--mat-sys-primary-container);
-  border-radius: var(--mat-sys-corner-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-shrink: 0;
-  border: 2px solid var(--mat-sys-outline-variant);
-  font-size: 13px;
 }

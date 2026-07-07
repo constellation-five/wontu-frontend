@@ -12,6 +12,7 @@ import { IconButtonVariantDirective } from '../../../shared/directives/button/ic
 import { EditNotesDialog } from './edit-notes-dialog';
 import { DialogComponent } from '../../../shared/components/dialog/dialog';
 import { DecimalPipe } from '@angular/common';
+import { CounterField } from '../../../shared/components/counter-field/counter-field';
 
 @Component({
   selector: 'app-offer-mobile-cart',
@@ -24,6 +25,7 @@ import { DecimalPipe } from '@angular/common';
     ButtonSizeDirective,
     IconButtonVariantDirective,
     DecimalPipe,
+    CounterField,
   ],
   templateUrl: './offer-mobile-cart.html',
   styleUrls: ['./offer-mobile-cart.scss'],
@@ -41,13 +43,9 @@ export class OfferMobileCart {
   isLoading = signal(true);
 
   cartItems = computed(() => Array.from(this.cart().values()));
-  totalItems = computed(() => 
-    this.cartItems().reduce((sum, item) => sum + item.quantity, 0)
-  );
-  totalPrice = computed(() => 
-    this.cartItems().reduce((sum, item) => 
-      sum + (+item.item.item_price * item.quantity), 0
-    )
+  totalItems = computed(() => this.cartItems().reduce((sum, item) => sum + item.quantity, 0));
+  totalPrice = computed(() =>
+    this.cartItems().reduce((sum, item) => sum + +item.item.item_price * item.quantity, 0),
   );
 
   private selectedItemForRemoval = signal<CheckoutItem | null>(null);
@@ -128,8 +126,8 @@ export class OfferMobileCart {
       if (offer) {
         this.router.navigate(['/offers', offer.offer_id], {
           state: {
-            cart: Array.from(this.cart().entries())
-          }
+            cart: Array.from(this.cart().entries()),
+          },
         });
       }
     }
@@ -153,15 +151,15 @@ export class OfferMobileCart {
 
     this.router.navigate(['/offers', offer.offer_id], {
       state: {
-        cart: Array.from(this.cart().entries())
-      }
+        cart: Array.from(this.cart().entries()),
+      },
     });
   }
 
   onIncreaseQuantity(itemId: number) {
     const currentCart = new Map(this.cart());
     const item = currentCart.get(itemId);
-    
+
     if (item) {
       const stockRemaining = item.item.slot - item.item.current_slot;
       if (item.quantity < stockRemaining) {
@@ -178,7 +176,7 @@ export class OfferMobileCart {
   onDecreaseQuantity(itemId: number) {
     const currentCart = new Map(this.cart());
     const item = currentCart.get(itemId);
-    
+
     if (item) {
       if (item.quantity > 1) {
         item.quantity -= 1;
@@ -216,9 +214,19 @@ export class OfferMobileCart {
     });
   }
 
-  isCartItemMaxQuantity(cartItem: CheckoutItem): boolean {
-    const stockRemaining = cartItem.item.slot - cartItem.item.current_slot;
-    return cartItem.quantity >= stockRemaining;
+  onCartCounterChange(cartItem: CheckoutItem, newValue: number, field: CounterField) {
+    const itemId = cartItem.item.item_id;
+
+    if (newValue > cartItem.quantity) {
+      this.onIncreaseQuantity(itemId);
+    } else if (newValue < cartItem.quantity) {
+      if (cartItem.quantity === 1) {
+        // Decreasing past 1 opens a remove-confirmation dialog rather than
+        // actually changing the quantity, so snap the field back visually.
+        field.value.set(1);
+      }
+      this.onDecreaseQuantity(itemId);
+    }
   }
 
   formatDate(dateString: string): string {
@@ -245,7 +253,7 @@ export class OfferMobileCart {
     const offer = this.offer();
     if (!offer || this.totalItems() === 0) return;
 
-    const items = this.cartItems().map(cartItem => ({
+    const items = this.cartItems().map((cartItem) => ({
       item_id: cartItem.item.item_id,
       quantity: cartItem.quantity,
     }));
@@ -268,11 +276,11 @@ export class OfferMobileCart {
           // Update existing history (not create new)
           this.updateOrderHistory(offer.offer_id, offer.merchant_name);
           this.clearCartFromLocalStorage(offer.offer_id);
-          
+
           this.router.navigate(['/offers', offer.offer_id, 'checkout'], {
             state: {
-              checkoutItems: this.cartItems()
-            }
+              checkoutItems: this.cartItems(),
+            },
           });
         },
         error: (err) => {
@@ -287,11 +295,11 @@ export class OfferMobileCart {
           // Save to history and clear cart
           this.saveOrderToHistory(offer.offer_id, offer.merchant_name);
           this.clearCartFromLocalStorage(offer.offer_id);
-          
+
           this.router.navigate(['/offers', offer.offer_id, 'checkout'], {
             state: {
-              checkoutItems: this.cartItems()
-            }
+              checkoutItems: this.cartItems(),
+            },
           });
         },
         error: (err) => {
@@ -318,7 +326,7 @@ export class OfferMobileCart {
   private updateOrderHistory(offerId: number, merchantName: string) {
     // Find existing history entry for this offer
     let existingHistoryKey: string | null = null;
-    
+
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key && key.startsWith(`history_${offerId}_`)) {
@@ -355,12 +363,13 @@ export class OfferMobileCart {
       width: '540px',
       data: {
         title: 'Remove Item',
-        content: 'Setting the quantity to zero will remove this item from your cart.<br>Please confirm if you wish to proceed',
+        content:
+          'Setting the quantity to zero will remove this item from your cart.<br>Please confirm if you wish to proceed',
         buttons: [
           {
             label: 'Cancel',
             type: 'outlined',
-            action: 'cancel'
+            action: 'cancel',
           },
           {
             label: 'Delete',
@@ -368,13 +377,13 @@ export class OfferMobileCart {
             type: 'filled',
             action: 'delete',
             bgColor: 'var(--mat-sys-error)',
-            textColor: 'var(--mat-sys-on-error)'
-          }
-        ]
-      }
+            textColor: 'var(--mat-sys-on-error)',
+          },
+        ],
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
         this.confirmRemoveItem();
       }

@@ -83,7 +83,7 @@
 
   app-item-card {
     width: 100%;
-    
+
     ::ng-deep .item-card {
       max-width: none;
       width: 100%;
@@ -100,7 +100,6 @@
     flex-direction: column;
     gap: var(--spacing-lg);
     position: sticky;
-    top: var(--spacing-lg);
     align-self: flex-start;
     max-height: calc(100vh - var(--spacing-xl) * 2);
   }
@@ -165,7 +164,11 @@
     width: 16px;
     height: 16px;
     color: var(--mat-sys-secondary);
-    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 20;
   }
 }
 
@@ -263,94 +266,6 @@
 }
 
 .cart-notes-btn {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--mat-sys-on-surface-variant);
-  border: 1px solid var(--mat-sys-outline-variant);
-  border-radius: var(--mat-sys-corner-full);
-
-  mat-icon {
-    width: 18px;
-    height: 18px;
-    font-size: 18px;
-    color: var(--mat-sys-on-surface-variant);
-  }
-
-  @media (max-width: 480px) {
-    width: 24px;
-    height: 24px;
-
-    mat-icon {
-      width: 14px;
-      height: 14px;
-      font-size: 14px;
-    }
-  }
-}
-
-.cart-quantity-control {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2xs);
-  padding: var(--spacing-3xs) var(--spacing-2xs);
-  border: 1px solid var(--mat-sys-outline-variant);
-  border-radius: var(--mat-sys-corner-full);
-  flex-shrink: 0;
-
-  @media (max-width: 480px) {
-    padding: 2px 6px;
-    gap: 2px;
-  }
-}
-
-.cart-qty-btn {
-  width: 28px;
-  height: 28px;
-  min-width: auto;
-  padding: 0;
-  border: none;
-  background: transparent;
-  color: var(--mat-sys-on-surface-variant);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &::before {
-    display: none;
-  }
-
-  mat-icon {
-    width: 16px;
-    height: 16px;
-    font-size: 16px;
-    color: var(--mat-sys-on-surface-variant);
-  }
-
-  @media (max-width: 480px) {
-    width: 20px;
-    height: 20px;
-
-    mat-icon {
-      width: 12px;
-      height: 12px;
-      font-size: 12px;
-    }
-  }
-}
-
-.cart-qty-value {
-  min-width: 20px;
-  text-align: center;
-  font-size: 14px;
-
-  @media (max-width: 480px) {
-    min-width: 14px;
-    font-size: 12px;
-  }
 }
 
 // Empty Cart
