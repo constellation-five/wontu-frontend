@@ -2,7 +2,7 @@
   <!-- Image Section -->
   <div class="item-card__image">
     <img [src]="item().image_url" [alt]="item().item_name" />
-    @if (item().item_url) {
+    @if (isNew) {
       <div class="item-card__badge">
         <span class="mat-font-label-lg text-bold mat-text-on-secondary">New!</span>
       </div>
