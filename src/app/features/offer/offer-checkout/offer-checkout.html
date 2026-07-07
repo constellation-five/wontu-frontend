@@ -393,27 +393,33 @@
                   Rp {{ totalPrice() | number: '1.0-0' }}
                 </span>
               </div>
-              <div class="cart-actions">
-                <button
-                  matButton="outlined"
-                  appButtonSize="xs"
-                  appButtonColor="error"
-                  class="cancel-order-btn"
-                  (click)="openCancelOrderDialog()"
-                >
-                  <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-                  <span>Cancel Order</span>
-                </button>
-                <button
-                  matButton="tonal"
-                  appButtonSize="xs"
-                  class="edit-order-btn"
-                  (click)="editOrder()"
-                >
-                  <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-                  <span>Edit Order</span>
-                </button>
-              </div>
+              @if (!isOfferClosed()) {
+                <div class="cart-actions">
+                  <button
+                    matButton="outlined"
+                    appButtonSize="xs"
+                    appButtonColor="error"
+                    class="cancel-order-btn"
+                    (click)="openCancelOrderDialog()"
+                  >
+                    <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+                    <span>Cancel Order</span>
+                  </button>
+                  <button
+                    matButton="tonal"
+                    appButtonSize="xs"
+                    class="edit-order-btn"
+                    (click)="editOrder()"
+                  >
+                    <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+                    <span>Edit Order</span>
+                  </button>
+                </div>
+              } @else {
+                <div class="offer-closed-message mat-font-body-sm mat-text-on-surface-variant">
+                  Offer has been closed. No further changes allowed.
+                </div>
+              }
             </div>
           </app-pane>
         </aside>
@@ -431,27 +437,33 @@
         <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
         <span>Chat</span>
       </button>
-      <div class="bottom-actions-row">
-        <button
-          matButton="outlined"
-          appButtonSize="md"
-          appButtonColor="error"
-          class="cancel-action-btn"
-          (click)="openCancelOrderDialog()"
-        >
-          <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-          <span>Cancel order</span>
-        </button>
-        <button
-          matButton="tonal"
-          appButtonSize="md"
-          class="edit-action-btn"
-          (click)="editOrder()"
-        >
-          <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-          <span>Edit order</span>
-        </button>
-      </div>
+      @if (!isOfferClosed()) {
+        <div class="bottom-actions-row">
+          <button
+            matButton="outlined"
+            appButtonSize="md"
+            appButtonColor="error"
+            class="cancel-action-btn"
+            (click)="openCancelOrderDialog()"
+          >
+            <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+            <span>Cancel order</span>
+          </button>
+          <button
+            matButton="tonal"
+            appButtonSize="md"
+            class="edit-action-btn"
+            (click)="editOrder()"
+          >
+            <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+            <span>Edit order</span>
+          </button>
+        </div>
+      } @else {
+        <div class="offer-closed-message mat-font-body-sm mat-text-on-surface-variant">
+          Offer has been closed. No further changes allowed.
+        </div>
+      }
     </div>
   </div>
 }

@@ -53,11 +53,13 @@ export class OfferCheckoutPage {
     this.checkoutItems().reduce((sum, item) => sum + item.quantity, 0)
   );
   
-  totalPrice = computed(() => 
-    this.checkoutItems().reduce((sum, item) => 
+  totalPrice = computed(() =>
+    this.checkoutItems().reduce((sum, item) =>
       sum + (+item.item.item_price * item.quantity), 0
     )
   );
+
+  isOfferClosed = computed(() => this.offer()?.is_completed ?? false);
 
   constructor() {
     const offerId = this.route.snapshot.paramMap.get('id');
