@@ -5,7 +5,7 @@
         <mat-icon class="empty-icon">receipt_long</mat-icon>
         <h3>No Order History</h3>
         <p class="mat-body-medium">You haven't placed any orders yet.</p>
-        <button mat-flat-button appBtnSize="large" [routerLink]="['/offers']">
+        <button mat-flat-button appButtonSize="md" [routerLink]="['/offers']">
           Browse Offers
         </button>
       </div>
@@ -13,8 +13,8 @@
       <div class="history-header">
         <h2 class="mat-title-large">Your Orders</h2>
         <button 
-          mat-stroked-button 
-          appBtnSize="medium"
+          mat-stroked-button
+          appButtonSize="sm"
           (click)="clearAllHistory()"
           class="clear-btn">
           <mat-icon>delete_sweep</mat-icon>
@@ -53,8 +53,8 @@
                 <span class="mat-title-medium total-price">Rp {{ order.totalPrice | number: '1.0-0' }}</span>
               </div>
               <button 
-                mat-flat-button 
-                appBtnSize="medium"
+                mat-flat-button
+                appButtonSize="sm"
                 (click)="viewOrderDetail(order); $event.stopPropagation()">
                 View Details
               </button>
