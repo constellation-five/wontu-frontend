@@ -410,15 +410,36 @@
       <div class="items-section">
         <div class="items-grid">
           @for (item of sortedItems(); track item.item_id) {
-            <app-item-card
-              [item]="item"
-              [isInCart]="isItemInCart(item.item_id)"
-              [quantity]="getItemQuantity(item.item_id)"
-              [isOutOfStock]="isItemOutOfStock(item)"
-              (onAdd)="onAddToCart($event)"
-              (onIncrease)="onIncreaseQuantity($event)"
-              (onDecrease)="onDecreaseQuantity($event)"
-            />
+            <app-product-card
+              [imageUrl]="item.image_url"
+              [title]="item.item_name"
+              [price]="formatItemPrice(item)"
+              [stockText]="getItemStockText(item)"
+              [stockVariant]="getItemStockVariant(item)"
+              [disabled]="isItemOutOfStock(item)"
+            >
+              @if (!isItemInCart(item.item_id)) {
+                <button
+                  cardAction
+                  matButton="tonal"
+                  appButtonSize="xs"
+                  [disabled]="isItemOutOfStock(item)"
+                  (click)="onAddToCart(item)"
+                >
+                  <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+                  Add
+                </button>
+              } @else {
+                <app-counter-field
+                  cardAction
+                  #qtyField
+                  [compact]="true"
+                  [value]="getItemQuantity(item.item_id)"
+                  [max]="item.slot - item.current_slot"
+                  (valueChange)="onItemCounterChange(item, $event, qtyField)"
+                />
+              }
+            </app-product-card>
           }
         </div>
       </div>

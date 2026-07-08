@@ -15,9 +15,11 @@ import { AuthService } from '../../../core/auth.service';
 import { OfferService, Offer } from '../../../core/offer.service';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar';
-import { MerchantCardComponent } from '../../../shared/components/merchant-card/merchant-card';
+import { ProductCardComponent } from '../../../shared/components/product-card/product-card';
+import { NaturalDateTimePipe } from '../../../shared/pipes/natural-date-time.pipe';
 import { NotificationBellComponent, Notification } from '../../../shared/components/notification-bell/notification-bell';
 import { LocationPickerDialog } from '../../../shared/components/location-picker-dialog/location-picker-dialog';
+import { IconButtonVariantDirective } from '../../../shared/directives/button';
 
 @Component({
   selector: 'offer-show',
@@ -29,8 +31,10 @@ import { LocationPickerDialog } from '../../../shared/components/location-picker
     MatMenuModule,
     MatCheckboxModule,
     SearchBarComponent,
-    MerchantCardComponent,
+    ProductCardComponent,
+    NaturalDateTimePipe,
     NotificationBellComponent,
+    IconButtonVariantDirective
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

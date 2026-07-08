@@ -54,11 +54,7 @@
       (searchChange)="onSearchChange($event)"
     />
 
-    <button
-      mat-icon-button
-      [matMenuTriggerFor]="filterMenu"
-      class="filter-button"
-    >
+    <button mat-icon-button [matMenuTriggerFor]="filterMenu" class="filter-button">
       <mat-icon fontSet="material-symbols-outlined">filter_list</mat-icon>
     </button>
   </div>
@@ -91,16 +87,27 @@
 } @else if (filteredOffers().length > 0) {
   <div class="offers-grid">
     @for (offer of filteredOffers(); track offer.offer_id) {
-      <app-merchant-card
-        [merchantName]="offer.merchant_name || 'Unknown Merchant'"
-        [category]="offer.category"
-        [arrivalTime]="offer.arrival_time"
-        [priceRange]="getPriceRange(offer)"
-        [stockLeft]="getStockLeft(offer)"
+      <app-product-card
         [imageUrl]="offer.items[0]?.image_url || ''"
-        [offerId]="offer.offer_id"
-        (cardClick)="onCardClick($event)"
-      />
+        [title]="offer.merchant_name || 'Unknown Merchant'"
+        [category]="offer.category"
+        [subtitle]="'Arrives ' + (offer.arrival_time | naturalDateTime)"
+        [price]="getPriceRange(offer)"
+        [stockText]="'Stock: ' + getStockLeft(offer) + ' left'"
+        [clickable]="true"
+        (cardClick)="onCardClick(offer.offer_id)"
+      >
+        <!-- Arrow Icon Button -->
+        <button
+          matIconButton
+          appIconButtonVariant="tonal"
+          cardAction
+          (click)="onCardClick(offer.offer_id)"
+          aria-label="View Offer"
+        >
+          <mat-icon fontSet="material-symbols-outlined">arrow_forward</mat-icon>
+        </button>
+      </app-product-card>
     }
   </div>
 } @else {
@@ -111,12 +118,7 @@
 }
 
 <!-- Floating Create Offer Button (Mobile only) -->
-<button
-  matFab
-  (click)="openCreateOffer()"
-  class="create-offer-fab"
-  aria-label="Create Offer"
->
+<button matFab (click)="openCreateOffer()" class="create-offer-fab" aria-label="Create Offer">
   <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
 </button>
 

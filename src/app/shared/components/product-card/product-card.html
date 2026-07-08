@@ -1,0 +1,44 @@
+<mat-card
+  class="product-card"
+  [class.product-card--clickable]="clickable()"
+  [class.product-card--disabled]="disabled()"
+  (click)="onCardClick()"
+>
+  @if (imageUrl()) {
+    <div class="product-card-image">
+      <img [src]="imageUrl()" [alt]="title()" />
+    </div>
+  }
+
+  <div class="product-card-content">
+    @if (category()) {
+      <app-category-label [category]="category()" />
+    }
+
+    <h3 class="product-name mat-font-title-md mat-text-on-surface">
+      {{ title() }}
+    </h3>
+
+    @if (subtitle()) {
+      <p class="product-subtitle mat-font-label-md mat-text-on-surface-variant">
+        {{ subtitle() }}
+      </p>
+    }
+
+    <p class="product-price mat-font-body-lg text-bold mat-text-on-surface">
+      {{ price() }}
+    </p>
+
+    <div class="stock-action-row">
+      <p
+        class="stock mat-font-label-lg"
+        [class.mat-text-on-surface-variant]="stockVariant() === 'default'"
+        [class.mat-text-error]="stockVariant() === 'low'"
+      >
+        {{ stockText() }}
+      </p>
+
+      <ng-content select="[cardAction]" />
+    </div>
+  </div>
+</mat-card>

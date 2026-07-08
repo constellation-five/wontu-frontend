@@ -7,7 +7,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { DecimalPipe } from '@angular/common';
-import { ItemCardComponent } from '../../../shared/components/item-card/item-card';
+import { ProductCardComponent } from '../../../shared/components/product-card/product-card';
+import { CounterField } from '../../../shared/components/counter-field/counter-field';
 import { PaneComponent } from '../../../shared/components/pane/pane';
 import { CartItemCard } from './cart-item-card/cart-item-card';
 import { OfferProgressComponent } from '../../../shared/components/offer-progress/offer-progress';
@@ -32,7 +33,8 @@ type OfferDetailView = 'menu' | 'checkout';
     MatButtonModule,
     MatProgressSpinnerModule,
     MatCardModule,
-    ItemCardComponent,
+    ProductCardComponent,
+    CounterField,
     PaneComponent,
     CartItemCard,
     OfferProgressComponent,
@@ -309,6 +311,34 @@ export class OfferDetailPage {
 
   isItemOutOfStock(item: OfferItem): boolean {
     return item.current_slot >= item.slot;
+  }
+
+  formatItemPrice(item: OfferItem): string {
+    return 'Rp ' + (+item.item_price).toLocaleString('id-ID');
+  }
+
+  getItemStockText(item: OfferItem): string {
+    const remaining = item.slot - item.current_slot;
+    return remaining > 0 ? `Stock: ${remaining} left` : 'Out of Stock';
+  }
+
+  getItemStockVariant(item: OfferItem): 'default' | 'low' {
+    return item.slot - item.current_slot > 5 ? 'default' : 'low';
+  }
+
+  onItemCounterChange(item: OfferItem, newValue: number, field: CounterField) {
+    const current = this.getItemQuantity(item.item_id);
+
+    if (newValue > current) {
+      this.onIncreaseQuantity(item.item_id);
+    } else if (newValue < current) {
+      if (current === 1) {
+        // Decreasing past 1 opens a remove-confirmation dialog rather than
+        // actually changing the quantity, so snap the field back visually.
+        field.value.set(1);
+      }
+      this.onDecreaseQuantity(item.item_id);
+    }
   }
 
   onPlaceOrder() {

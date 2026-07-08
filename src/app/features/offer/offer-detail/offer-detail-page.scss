@@ -80,15 +80,6 @@
   @media (min-width: $breakpoint-md) {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
-
-  app-item-card {
-    width: 100%;
-
-    ::ng-deep .item-card {
-      max-width: none;
-      width: 100%;
-    }
-  }
 }
 
 // Sidebar (Right) - Hidden on mobile/tablet
