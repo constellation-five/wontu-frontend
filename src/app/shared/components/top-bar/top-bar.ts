@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-top-bar',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatMenuModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatMenuModule, MatDialogModule],
   template: `
     <div class="top-bar" [class.scrolled]="scrolled()">
       <button matIconButton class="back-btn" (click)="onBack()">
@@ -32,6 +33,7 @@ import { MatMenuModule } from '@angular/material/menu';
 })
 export class TopBarComponent {
   private router = inject(Router);
+  private dialog = inject(MatDialog);
   pageHeader = inject(PageHeaderService);
 
   scrolled = signal(false);
@@ -42,6 +44,8 @@ export class TopBarComponent {
   }
 
   onBack() {
+    const currentUrl = this.router.url;
+
     const crumbs = this.pageHeader.breadcrumbs();
     if (crumbs.length > 1) {
       const prev = crumbs[crumbs.length - 2].route || '/';

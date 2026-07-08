@@ -199,6 +199,26 @@ html {
     )
   );
 
+  /* Elevation */
+  --mat-sys-level0:
+    0px 0px 0px 0px rgba(0, 0, 0, 0.1), 0px 0px 0px 0px rgba(0, 0, 0, 0.07),
+    0px 0px 0px 0px rgba(0, 0, 0, 0.05);
+  --mat-sys-level1:
+    0px 3px 4px -2px rgba(0, 0, 0, 0.1), 0px 2px 4px 0px rgba(0, 0, 0, 0.07),
+    0px 1px 6px 0px rgba(0, 0, 0, 0.05);
+  --mat-sys-level2:
+    0px 4px 6px -3px rgba(0, 0, 0, 0.1), 0px 4px 8px 0px rgba(0, 0, 0, 0.07),
+    0px 2px 12px 1px rgba(0, 0, 0, 0.05);
+  --mat-sys-level3:
+    0px 6px 10px -4px rgba(0, 0, 0, 0.1), 0px 8px 14px 1px rgba(0, 0, 0, 0.07),
+    0px 3px 22px 3px rgba(0, 0, 0, 0.05);
+  --mat-sys-level4:
+    0px 8px 14px -5px rgba(0, 0, 0, 0.1), 0px 12px 20px 2px rgba(0, 0, 0, 0.07),
+    0px 4px 28px 4px rgba(0, 0, 0, 0.05);
+  --mat-sys-level5:
+    0px 12px 20px -6px rgba(0, 0, 0, 0.1), 0px 18px 28px 3px rgba(0, 0, 0, 0.07),
+    0px 6px 36px 6px rgba(0, 0, 0, 0.05);
+
   /* Spacing */
   --spacing-3xs: 2px;
   --spacing-2xs: 4px;

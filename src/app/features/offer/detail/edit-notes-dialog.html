@@ -1,0 +1,12 @@
+<app-dialog title="Add Notes" [buttons]="buttons">
+  <mat-form-field class="notes-field">
+    <mat-label>Notes</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="notes"
+      rows="4"
+      maxlength="200"
+      placeholder="Add your notes here..."></textarea>
+    <mat-hint align="end">{{ notes.length }}/200</mat-hint>
+  </mat-form-field>
+</app-dialog>

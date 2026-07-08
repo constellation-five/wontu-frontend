@@ -23,6 +23,10 @@ export interface Offer {
   merchant_name: string;
   closing_time: string;
   arrival_time: string;
+  // Set once the seller actually closes the offer / marks items arrived —
+  // distinct from closing_time/arrival_time, which are just the plan.
+  closed_at: string | null;
+  arrived_at: string | null;
   has_cod_payment: boolean;
   is_completed: boolean;
   created_at: string;
@@ -32,6 +36,28 @@ export interface Offer {
     name: string;
     avatar: string;
   };
+}
+
+export interface CheckoutItem {
+  item: OfferItem;
+  quantity: number;
+  notes?: string;
+}
+
+export interface MyOrder {
+  status: 'pending' | 'confirmed' | 'completed';
+  is_verified: boolean;
+  payment_proof_url: string | null;
+  joined_at: string;
+  payment_submitted_at: string | null;
+  verified_at: string | null;
+  items: CheckoutItem[];
+}
+
+export interface MyOrderSummary extends MyOrder {
+  offer_id: number;
+  merchant_name: string;
+  created_at: string;
 }
 
 @Injectable({
@@ -76,32 +102,35 @@ export class OfferService {
       );
   }
 
-  placeOrder(offerId: number, items: { item_id: number; quantity: number }[]) {
+  placeOrder(offerId: number, items: { item_id: number; quantity: number; notes?: string }[]) {
     return this.http.post(`${environment.api}/offers/${offerId}/place-order`, {
       items: items,
     });
   }
 
-  updateOrder(offerId: number, items: { item_id: number; quantity_diff: number }[]) {
-    return this.http.post(`${environment.api}/offers/${offerId}/update-order`, {
-      items: items,
-    });
-  }
-
-  replaceOrder(
-    offerId: number,
-    oldItems: { item_id: number; quantity: number }[],
-    newItems: { item_id: number; quantity: number }[],
-  ) {
+  replaceOrder(offerId: number, items: { item_id: number; quantity: number; notes?: string }[]) {
     return this.http.post(`${environment.api}/offers/${offerId}/replace-order`, {
-      old_items: oldItems,
-      new_items: newItems,
+      items: items,
     });
   }
 
-  cancelOrder(offerId: number, items: { item_id: number; quantity: number }[]) {
-    return this.http.post(`${environment.api}/offers/${offerId}/cancel-order`, {
-      items: items,
-    });
+  cancelOrder(offerId: number) {
+    return this.http.post(`${environment.api}/offers/${offerId}/cancel-order`, {});
+  }
+
+  // The buyer's order for a single offer, if any — the backend is the only
+  // source of truth for this (no client-side caching), since an order is a
+  // real, persisted record there.
+  getMyOrder(offerId: number) {
+    return this.http.get<{ status: string; data: MyOrder | null }>(
+      `${environment.api}/offers/${offerId}/my-order`,
+    );
+  }
+
+  // All of the buyer's orders, across every offer — backs the order history page.
+  getMyOrders() {
+    return this.http.get<{ status: string; data: MyOrderSummary[] }>(
+      `${environment.api}/my-orders`,
+    );
   }
 }

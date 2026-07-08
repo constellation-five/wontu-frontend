@@ -1,0 +1,22 @@
+<div class="search-container">
+  <input
+    type="text"
+    class="search-field"
+    [placeholder]="placeholder()"
+    [value]="value()"
+    (input)="onInput($event)"
+  />
+  <mat-icon fontSet="material-symbols-outlined" class="search-icon">search</mat-icon>
+  @if (value()) {
+    <button
+      matIconButton
+      appIconButtonVariant="text"
+      appButtonSize="xs"
+      class="clear-button"
+      (click)="onClear()"
+      aria-label="Clear search"
+    >
+      <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+    </button>
+  }
+</div>

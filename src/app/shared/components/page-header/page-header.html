@@ -3,7 +3,13 @@
     <nav class="breadcrumb">
       @for (item of pageHeaderService.breadcrumbs(); track item.label; let last = $last) {
         @if (item.route && !last) {
-          <a [routerLink]="item.route" class="breadcrumb-link">{{ item.label }}</a>
+          <a
+            class="breadcrumb-link"
+            [attr.href]="item.route"
+            (click)="onBreadcrumbClick($event, item)"
+          >
+            {{ item.label }}
+          </a>
         } @else {
           <span class="breadcrumb-current">{{ item.label }}</span>
         }

@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, computed, effect } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { AuthService } from '../../../core/auth.service';
 import { isProtectedRoute } from '../../../core/routes.config';
 import { ButtonColorDirective } from '../../directives/button';
@@ -26,7 +27,8 @@ export const NAV_LINKS: readonly NavLink[] = [
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
   host: {
-    '[class.mobile-top-level-page]': 'isTopLevelPage()',
+    '[class.mobile-top-level-page]': 'isTopLevelPage() && !shouldHideBottomBar()',
+    '[class.hidden]': 'shouldHideBottomBar()',
   },
   imports: [
     MatListModule,
@@ -46,6 +48,21 @@ export class Navbar {
   readonly user = this.auth.user;
   readonly avatarError = signal(false);
   readonly isProtectedRoute = isProtectedRoute;
+  readonly hideBottomBar = signal(false);
+
+  constructor() {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const route = this.router.routerState.root;
+        let child = route;
+        while (child.firstChild) {
+          child = child.firstChild;
+        }
+        const hideBottomBar = child.snapshot.data['hideBottomBar'] === true;
+        this.hideBottomBar.set(hideBottomBar);
+      });
+  }
 
   logout() {
     this.auth.logout().subscribe();
@@ -68,5 +85,9 @@ export class Navbar {
   isTopLevelPage(): boolean {
     const path = this.router.url.split('?')[0].split('#')[0];
     return this.links.some((link) => link.path === path);
+  }
+
+  shouldHideBottomBar(): boolean {
+    return this.hideBottomBar();
   }
 }

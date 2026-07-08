@@ -25,6 +25,10 @@
 .pane-title {
   font: var(--mat-sys-title-medium);
   margin-bottom: var(--spacing-sm);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 
   @media (min-width: $breakpoint-md) {
     font: var(--mat-sys-title-large);

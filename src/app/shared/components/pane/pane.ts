@@ -8,6 +8,7 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@an
   host: {
     '[class.pane]': 'true',
     '[class.pane-large]': 'isLarge()',
+    '[attr.title]': 'null',
   },
 })
 export class PaneComponent {
