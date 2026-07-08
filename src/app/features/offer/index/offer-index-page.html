@@ -49,9 +49,9 @@
 
   <div class="search-filter-group">
     <app-search-bar
-      placeholder="Search offers"
       [value]="searchQuery()"
-      (searchChange)="onSearchChange($event)"
+      (valueChange)="onSearchChange($event)"
+      [placeholder]="'Search offers'"
     />
 
     <button mat-icon-button [matMenuTriggerFor]="filterMenu" class="filter-button">

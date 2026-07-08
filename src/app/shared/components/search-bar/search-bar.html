@@ -1,10 +1,22 @@
-<div class="search-bar" [class.search-bar-filled]="isFilled">
-  <mat-icon fontSet="material-symbols-outlined" class="search-icon">search</mat-icon>
+<div class="search-container">
   <input
     type="text"
-    class="search-input"
+    class="search-field"
     [placeholder]="placeholder()"
-    [value]="searchValue()"
-    (input)="onInputChange($event)"
+    [value]="value()"
+    (input)="onInput($event)"
   />
+  <mat-icon fontSet="material-symbols-outlined" class="search-icon">search</mat-icon>
+  @if (value()) {
+    <button
+      matIconButton
+      appIconButtonVariant="text"
+      appButtonSize="xs"
+      class="clear-button"
+      (click)="onClear()"
+      aria-label="Clear search"
+    >
+      <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+    </button>
+  }
 </div>

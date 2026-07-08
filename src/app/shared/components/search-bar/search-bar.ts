@@ -1,42 +1,28 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  output,
-  signal,
-  effect,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-search-bar',
-  templateUrl: './search-bar.html',
-  styleUrls: ['./search-bar.scss'],
   standalone: true,
-  imports: [MatIconModule, FormsModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule, FormsModule],
+  templateUrl: './search-bar.html',
+  styleUrl: './search-bar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBarComponent {
-  placeholder = input<string>('Search');
-  value = input<string>('');
-  searchChange = output<string>();
+  value = input('');
+  valueChange = output<string>();
+  placeholder = input('Search');
 
-  searchValue = signal<string>('');
-
-  constructor() {
-    effect(() => {
-      this.searchValue.set(this.value());
-    });
+  onInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.valueChange.emit(input.value);
   }
 
-  onInputChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.searchValue.set(target.value);
-    this.searchChange.emit(target.value);
-  }
-
-  get isFilled(): boolean {
-    return this.searchValue().length > 0;
+  onClear() {
+    this.valueChange.emit('');
   }
 }
