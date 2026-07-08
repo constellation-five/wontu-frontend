@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { HistoryPage } from './features/history/history-page';
 import { OfferShowPage } from './features/offer/offer-show/offer-show';
 import { OfferDetailPage } from './features/offer/offer-detail/offer-detail-page';
 import { OfferMobileCart } from './features/offer/offer-detail/offer-mobile-cart';
@@ -60,7 +59,7 @@ export const routes: Routes = [
       },
       {
         path: 'history',
-        loadComponent: () => import('./features/offer/offer-history/offer-history').then(m => m.OfferHistoryPage),
+        loadComponent: () => import('./features/history/history-page').then(m => m.HistoryPage),
         canActivate: [authGuard],
         title: 'Order History',
         data: { hideHeader: true },

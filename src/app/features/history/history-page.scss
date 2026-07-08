@@ -1,8 +1,8 @@
-@use '../../../../_variables' as *;
+@use '../../../_variables' as *;
 
 .history-page {
   padding: var(--spacing-md);
-  
+
   @media (min-width: $breakpoint-md) {
     padding: var(--spacing-lg);
   }
@@ -23,7 +23,7 @@
     height: 80px;
     color: var(--mat-sys-on-surface-variant);
     opacity: 0.5;
-    
+
     @media (min-width: $breakpoint-md) {
       font-size: 120px;
       width: 120px;
@@ -48,7 +48,7 @@
   align-items: center;
   margin-bottom: var(--spacing-md);
   gap: var(--spacing-md);
-  
+
   @media (min-width: $breakpoint-md) {
     margin-bottom: var(--spacing-lg);
   }
@@ -71,7 +71,7 @@
   border: 1px solid var(--mat-sys-outline-variant);
   cursor: pointer;
   transition: all 0.2s ease;
-  
+
   @media (min-width: $breakpoint-md) {
     padding: var(--spacing-lg);
   }
