@@ -56,21 +56,6 @@
   h2 {
     margin: 0;
   }
-
-  .clear-btn {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-2xs);
-    color: var(--mat-sys-error);
-    border-color: var(--mat-sys-error);
-    flex-shrink: 0;
-
-    mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-    }
-  }
 }
 
 .orders-list {

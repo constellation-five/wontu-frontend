@@ -58,6 +58,11 @@ export class OfferDetailPage {
   isLoading = signal(true);
   view = signal<OfferDetailView>('menu');
 
+  // Whether the backend already has a placed order for this offer. Backed by
+  // the server (fetched on load, updated after place/replace/cancel) rather
+  // than any local cache, since the order itself only really exists there.
+  private hasPlacedOrder = signal(false);
+
   // Checkout view state
   paymentMethods = signal<PaymentMethodData[]>([]);
   proofOfPayment = signal<File | null>(null);
@@ -91,24 +96,37 @@ export class OfferDetailPage {
       return;
     }
 
-    const state = history.state;
-    const placedItems = this.offerService.getCheckoutState(+offerId);
+    this.offerService.getMyOrder(+offerId).subscribe({
+      next: (res) => {
+        const order = res.data;
+        if (order && order.items.length > 0) {
+          const cartMap = new Map<number, CheckoutItem>();
+          order.items.forEach((item) => cartMap.set(item.item.item_id, item));
+          this.cart.set(cartMap);
+          this.view.set('checkout');
+          this.hasPlacedOrder.set(true);
+        } else {
+          this.loadDraftCart(offerId);
+        }
+        this.loadOffer(offerId);
+      },
+      error: (err) => {
+        console.error('Failed to load order status:', err);
+        this.loadDraftCart(offerId);
+        this.loadOffer(offerId);
+      },
+    });
+  }
 
-    if (placedItems && placedItems.length > 0) {
-      // An order has already been placed for this offer: show the checkout view.
-      const cartMap = new Map<number, CheckoutItem>();
-      placedItems.forEach((item) => cartMap.set(item.item.item_id, item));
-      this.cart.set(cartMap);
-      this.view.set('checkout');
-    } else if (state && state['cart']) {
+  private loadDraftCart(offerId: string) {
+    const state = history.state;
+    if (state && state['cart']) {
       const cartMap = new Map<number, CheckoutItem>(state['cart']);
       this.cart.set(cartMap);
       this.saveCartToLocalStorage(offerId);
     } else {
       this.loadCartFromLocalStorage(offerId);
     }
-
-    this.loadOffer(offerId);
   }
 
   private saveCartToLocalStorage(offerId: string) {
@@ -205,10 +223,12 @@ export class OfferDetailPage {
 
     this.cart.set(updatedCart);
 
-    // Save updated cart to localStorage
-    const offerId = this.route.snapshot.paramMap.get('id');
-    if (offerId) {
-      this.saveCartToLocalStorage(offerId);
+    // Save updated cart to localStorage (only meaningful for a draft, pre-order cart)
+    if (!this.hasPlacedOrder()) {
+      const offerId = this.route.snapshot.paramMap.get('id');
+      if (offerId) {
+        this.saveCartToLocalStorage(offerId);
+      }
     }
   }
 
@@ -298,18 +318,11 @@ export class OfferDetailPage {
     const items = this.cartItems().map((cartItem) => ({
       item_id: cartItem.item.item_id,
       quantity: cartItem.quantity,
+      notes: cartItem.notes,
     }));
 
-    const placedItems = this.offerService.getCheckoutState(offer.offer_id);
-
-    if (placedItems && placedItems.length > 0) {
-      // An order already exists for this offer: replace it with the edited items.
-      const oldItems = placedItems.map((item) => ({
-        item_id: item.item.item_id,
-        quantity: item.quantity,
-      }));
-
-      this.offerService.replaceOrder(offer.offer_id, oldItems, items).subscribe({
+    if (this.hasPlacedOrder()) {
+      this.offerService.replaceOrder(offer.offer_id, items).subscribe({
         next: () => this.finishPlacingOrder(offer),
         error: (err) => {
           console.error('Failed to replace order:', err);
@@ -328,26 +341,15 @@ export class OfferDetailPage {
   }
 
   private finishPlacingOrder(offer: Offer) {
-    // Self-healing: updates the existing history entry for this offer if one
-    // exists, otherwise creates a new one. Always runs so a history entry is
-    // guaranteed regardless of whether this was a fresh order or an edit.
-    this.updateOrderHistory(offer.offer_id, offer.merchant_name);
-
     this.clearCartFromLocalStorage(String(offer.offer_id));
-    this.offerService.setCheckoutState(offer.offer_id, this.cartItems());
+    this.hasPlacedOrder.set(true);
     this.view.set('checkout');
-    this.setBreadcrumbs(offer);
     this.loadPaymentMethods();
   }
 
   editOrder() {
     if (!this.offer()) return;
     this.view.set('menu');
-
-    const offer = this.offer();
-    if (offer) {
-      this.setBreadcrumbs(offer);
-    }
   }
 
   openCancelOrderDialog() {
@@ -386,25 +388,9 @@ export class OfferDetailPage {
     const offer = this.offer();
     if (!offer) return;
 
-    const items = this.cartItems().map((item) => ({
-      item_id: item.item.item_id,
-      quantity: item.quantity,
-    }));
-
-    this.offerService.cancelOrder(offer.offer_id, items).subscribe({
+    this.offerService.cancelOrder(offer.offer_id).subscribe({
       next: () => {
-        localStorage.removeItem(`cart_${offer.offer_id}`);
-
-        const keysToRemove: string[] = [];
-        for (let i = 0; i < localStorage.length; i++) {
-          const key = localStorage.key(i);
-          if (key && key.startsWith(`history_${offer.offer_id}_`)) {
-            keysToRemove.push(key);
-          }
-        }
-        keysToRemove.forEach((key) => localStorage.removeItem(key));
-
-        this.offerService.clearCheckoutState(offer.offer_id);
+        this.clearCartFromLocalStorage(String(offer.offer_id));
         this.router.navigate(['/offers']);
       },
       error: (err) => {
@@ -461,53 +447,6 @@ export class OfferDetailPage {
   completePayment() {
     // TODO: Implement payment completion with file upload
     console.log('Complete payment', this.proofOfPayment());
-  }
-
-  private saveOrderToHistory(offerId: number, merchantName: string) {
-    const historyKey = `history_${offerId}_${Date.now()}`;
-    const orderData = {
-      offerId,
-      merchantName,
-      items: this.cartItems(), // This already includes full item data
-      orderDate: new Date().toISOString(),
-      status: 'placed',
-    };
-    localStorage.setItem(historyKey, JSON.stringify(orderData));
-    console.log('Order saved to history:', historyKey);
-  }
-
-  private updateOrderHistory(offerId: number, merchantName: string) {
-    // Find existing history entry for this offer
-    let existingHistoryKey: string | null = null;
-
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key && key.startsWith(`history_${offerId}_`)) {
-        existingHistoryKey = key;
-        break;
-      }
-    }
-
-    if (existingHistoryKey) {
-      // Update existing history
-      const existingData = localStorage.getItem(existingHistoryKey);
-      if (existingData) {
-        try {
-          const orderData = JSON.parse(existingData);
-          // Keep original orderDate and timestamp, only update items
-          orderData.items = this.cartItems(); // Full item data with images
-          orderData.merchantName = merchantName; // Update merchant name too
-          localStorage.setItem(existingHistoryKey, JSON.stringify(orderData));
-          console.log('Order history updated:', existingHistoryKey);
-        } catch (e) {
-          console.error('Error updating history:', e);
-        }
-      }
-    } else {
-      // No existing history found, create new one (fallback)
-      console.warn('No existing history found for edit mode, creating new entry');
-      this.saveOrderToHistory(offerId, merchantName);
-    }
   }
 
   navigateToMobileCart() {

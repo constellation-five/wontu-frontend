@@ -47,19 +47,11 @@ export class ItemCardComponent {
     }
   }
 
-  private static readonly NEW_ITEM_WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
-
   get stockRemaining(): number {
     const currentItem = this.item();
     return currentItem.slot - currentItem.current_slot;
   }
-
-  get isNew(): boolean {
-    const createdAt = new Date(this.item().created_at).getTime();
-    if (isNaN(createdAt)) return false;
-    return Date.now() - createdAt < ItemCardComponent.NEW_ITEM_WINDOW_MS;
-  }
-
+  
   get isMaxQuantity(): boolean {
     return this.quantity() >= this.stockRemaining;
   }

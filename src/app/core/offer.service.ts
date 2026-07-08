@@ -40,10 +40,17 @@ export interface CheckoutItem {
   notes?: string;
 }
 
-export interface CheckoutState {
-  offerId: number;
+export interface MyOrder {
+  status: 'pending' | 'confirmed' | 'completed';
+  is_verified: boolean;
+  payment_proof_url: string | null;
   items: CheckoutItem[];
-  timestamp: number;
+}
+
+export interface MyOrderSummary extends MyOrder {
+  offer_id: number;
+  merchant_name: string;
+  created_at: string;
 }
 
 @Injectable({
@@ -88,53 +95,35 @@ export class OfferService {
       );
   }
 
-  placeOrder(offerId: number, items: { item_id: number; quantity: number }[]) {
+  placeOrder(offerId: number, items: { item_id: number; quantity: number; notes?: string }[]) {
     return this.http.post(`${environment.api}/offers/${offerId}/place-order`, {
       items: items,
     });
   }
 
-  replaceOrder(
-    offerId: number,
-    oldItems: { item_id: number; quantity: number }[],
-    newItems: { item_id: number; quantity: number }[],
-  ) {
+  replaceOrder(offerId: number, items: { item_id: number; quantity: number; notes?: string }[]) {
     return this.http.post(`${environment.api}/offers/${offerId}/replace-order`, {
-      old_items: oldItems,
-      new_items: newItems,
-    });
-  }
-
-  cancelOrder(offerId: number, items: { item_id: number; quantity: number }[]) {
-    return this.http.post(`${environment.api}/offers/${offerId}/cancel-order`, {
       items: items,
     });
   }
 
-  // Checkout state methods
-  // Persisted per-offer in localStorage (not just in-memory) so that a placed
-  // order for an offer survives a page refresh, and so that placed orders on
-  // different offers don't clobber each other's state (a person may have at
-  // most one active order per offer, but can have orders on several offers).
-  setCheckoutState(offerId: number, items: CheckoutItem[]) {
-    const state: CheckoutState = { offerId, items, timestamp: Date.now() };
-    localStorage.setItem(`checkout_${offerId}`, JSON.stringify(state));
+  cancelOrder(offerId: number) {
+    return this.http.post(`${environment.api}/offers/${offerId}/cancel-order`, {});
   }
 
-  getCheckoutState(offerId: number): CheckoutItem[] | null {
-    const raw = localStorage.getItem(`checkout_${offerId}`);
-    if (!raw) return null;
-
-    try {
-      const state: CheckoutState = JSON.parse(raw);
-      return state.items;
-    } catch (e) {
-      console.error('Error parsing checkout state:', e);
-      return null;
-    }
+  // The buyer's order for a single offer, if any — the backend is the only
+  // source of truth for this (no client-side caching), since an order is a
+  // real, persisted record there.
+  getMyOrder(offerId: number) {
+    return this.http.get<{ status: string; data: MyOrder | null }>(
+      `${environment.api}/offers/${offerId}/my-order`,
+    );
   }
 
-  clearCheckoutState(offerId: number) {
-    localStorage.removeItem(`checkout_${offerId}`);
+  // All of the buyer's orders, across every offer — backs the order history page.
+  getMyOrders() {
+    return this.http.get<{ status: string; data: MyOrderSummary[] }>(
+      `${environment.api}/my-orders`,
+    );
   }
 }
