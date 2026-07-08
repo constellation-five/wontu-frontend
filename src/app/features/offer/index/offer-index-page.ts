@@ -22,9 +22,9 @@ import { LocationPickerDialog } from '../../../shared/components/location-picker
 import { IconButtonVariantDirective } from '../../../shared/directives/button';
 
 @Component({
-  selector: 'offer-show',
-  templateUrl: './offer-show.html',
-  styleUrls: ['./offer-show.scss'],
+  selector: 'offer-index',
+  templateUrl: './offer-index-page.html',
+  styleUrls: ['./offer-index-page.scss'],
   imports: [
     MatIconModule,
     MatButtonModule,
