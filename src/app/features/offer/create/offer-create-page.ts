@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatButtonModule
   ],
-  templateUrl: './offer-create.html',
+  templateUrl: './offer-create-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class OfferCreate {

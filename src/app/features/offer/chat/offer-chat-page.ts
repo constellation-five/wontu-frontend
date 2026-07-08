@@ -12,8 +12,8 @@ import { Offer } from '../../../core/offer.service';
   selector: 'offer-chat-page',
   standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule],
-  templateUrl: './offer-chat.html',
-  styleUrls: ['./offer-chat.scss'],
+  templateUrl: './offer-chat-page.html',
+  styleUrls: ['./offer-chat-page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OfferChatPage {
