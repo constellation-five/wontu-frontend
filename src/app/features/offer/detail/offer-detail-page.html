@@ -65,26 +65,7 @@
           </div>
         } @else {
           <div class="payment-methods-list">
-            <div class="dummy-payment-card">
-              <div class="dummy-bank-info">
-                <div class="dummy-bank-logo">
-                  <span class="mat-font-title-lg mat-text-primary">BNI</span>
-                </div>
-                <div class="dummy-bank-details">
-                  <p class="mat-font-body-md mat-text-on-surface">Bank Negara Indonesia</p>
-                  <p class="mat-font-body-sm mat-text-on-surface-variant">Ujang Yusuf</p>
-                </div>
-              </div>
-              <div class="dummy-account-number">
-                <label class="mat-font-label-sm mat-text-on-surface-variant">Account number</label>
-                <div class="dummy-account-content">
-                  <span class="mat-font-body-md mat-text-on-surface">1020-3782832-283982382</span>
-                  <button mat-icon-button>
-                    <mat-icon fontSet="material-symbols-outlined">content_copy</mat-icon>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <payment-method-card [method]="dummyPaymentMethod" [showEdit]="false" />
           </div>
         }
 
@@ -177,30 +158,7 @@
               </div>
             } @else {
               <div class="payment-methods-list">
-                <div class="dummy-payment-card">
-                  <div class="dummy-bank-info">
-                    <div class="dummy-bank-logo">
-                      <span class="mat-font-title-lg mat-text-primary">BNI</span>
-                    </div>
-                    <div class="dummy-bank-details">
-                      <p class="mat-font-body-md mat-text-on-surface">Bank Negara Indonesia</p>
-                      <p class="mat-font-body-sm mat-text-on-surface-variant">Ujang Yusuf</p>
-                    </div>
-                  </div>
-                  <div class="dummy-account-number">
-                    <label class="mat-font-label-sm mat-text-on-surface-variant"
-                      >Account number</label
-                    >
-                    <div class="dummy-account-content">
-                      <span class="mat-font-body-md mat-text-on-surface"
-                        >1020-3782832-283982382</span
-                      >
-                      <button mat-icon-button>
-                        <mat-icon fontSet="material-symbols-outlined">content_copy</mat-icon>
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                <payment-method-card [method]="dummyPaymentMethod" [showEdit]="false" />
               </div>
             }
 

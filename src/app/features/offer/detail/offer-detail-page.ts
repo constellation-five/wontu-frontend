@@ -71,6 +71,13 @@ export class OfferDetailPage {
 
   // Checkout view state
   paymentMethods = signal<PaymentMethodData[]>([]);
+  // Shown in place of a real payment method when the seller hasn't set one up yet.
+  readonly dummyPaymentMethod: PaymentMethodData = {
+    payment_method_id: 0,
+    bank_name: 'Bank Negara Indonesia',
+    account_name: 'Ujang Yusuf',
+    account_number: '1020-3782832-283982382',
+  };
   proofOfPayment = signal<File | null>(null);
   currentProgressStep = signal(0); // 0 = Offer joined
   isOfferClosed = computed(() => this.offer()?.is_completed ?? false);
