@@ -44,6 +44,12 @@
   white-space: nowrap;
 }
 
+.cart-item-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+}
+
 .cart-item-footer {
   display: flex;
   align-items: center;
