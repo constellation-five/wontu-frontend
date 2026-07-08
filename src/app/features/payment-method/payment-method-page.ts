@@ -1,9 +1,17 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal, ViewChild, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+  signal,
+  ViewChild,
+  TemplateRef,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { MatSelectModule } from '@angular/material/select'; 
+import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -53,7 +61,7 @@ export class PaymentMethod implements OnInit {
 
   paymentMethods = signal<PaymentMethodData[]>([]);
   isLoading = signal(true);
-  
+
   isEditMode = signal(false);
   selectedId = signal<number | null>(null);
 
@@ -70,11 +78,11 @@ export class PaymentMethod implements OnInit {
 
   fetchPaymentMethods() {
     this.http.get<any>(`${environment.api}/payment-methods`, { withCredentials: true }).subscribe({
-      next: (res) => { 
-        this.paymentMethods.set(res.data); 
-        this.isLoading.set(false); 
+      next: (res) => {
+        this.paymentMethods.set(res.data);
+        this.isLoading.set(false);
       },
-      error: () => this.isLoading.set(false)
+      error: () => this.isLoading.set(false),
     });
   }
 
@@ -91,7 +99,7 @@ export class PaymentMethod implements OnInit {
     this.paymentForm.patchValue({
       bank_name: method.bank_name,
       account_name: method.account_name,
-      account_number: method.account_number
+      account_number: method.account_number,
     });
     this.dialog.open(this.methodDialog, { width: '540px' });
   }
@@ -101,13 +109,25 @@ export class PaymentMethod implements OnInit {
     const data = this.paymentForm.value;
 
     if (this.isEditMode()) {
-      this.http.put(`${environment.api}/payment-methods/${this.selectedId()}`, data, { withCredentials: true }).subscribe({
-        next: () => { this.fetchPaymentMethods(); this.dialog.closeAll(); }
-      });
+      this.http
+        .put(`${environment.api}/payment-methods/${this.selectedId()}`, data, {
+          withCredentials: true,
+        })
+        .subscribe({
+          next: () => {
+            this.fetchPaymentMethods();
+            this.dialog.closeAll();
+          },
+        });
     } else {
-      this.http.post(`${environment.api}/payment-methods`, data, { withCredentials: true }).subscribe({
-        next: () => { this.fetchPaymentMethods(); this.dialog.closeAll(); }
-      });
+      this.http
+        .post(`${environment.api}/payment-methods`, data, { withCredentials: true })
+        .subscribe({
+          next: () => {
+            this.fetchPaymentMethods();
+            this.dialog.closeAll();
+          },
+        });
     }
   }
 
@@ -117,26 +137,26 @@ export class PaymentMethod implements OnInit {
       width: '540px',
       data: {
         title: 'Delete Payment Method',
-        content: 'Are you sure you want to delete this payment method?<br><i>This action cannot be undone</i>',
+        content:
+          'Are you sure you want to delete this payment method?<br>This action cannot be undone.',
         buttons: [
           {
             label: 'Cancel',
             type: 'outlined',
-            action: 'cancel'
+            focus: true,
           },
           {
             label: 'Delete',
             icon: 'delete',
             type: 'filled',
             action: 'delete',
-            bgColor: 'var(--mat-sys-error)',
-            textColor: 'var(--mat-sys-on-primary)'
-          }
-        ]
-      }
+            color: 'error',
+          },
+        ],
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 'delete') {
         this.confirmDelete();
       }
@@ -144,8 +164,13 @@ export class PaymentMethod implements OnInit {
   }
 
   confirmDelete() {
-    this.http.delete(`${environment.api}/payment-methods/${this.selectedId()}`, { withCredentials: true }).subscribe({
-      next: () => { this.fetchPaymentMethods(); this.dialog.closeAll(); }
-    });
+    this.http
+      .delete(`${environment.api}/payment-methods/${this.selectedId()}`, { withCredentials: true })
+      .subscribe({
+        next: () => {
+          this.fetchPaymentMethods();
+          this.dialog.closeAll();
+        },
+      });
   }
 }

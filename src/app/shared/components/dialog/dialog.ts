@@ -1,18 +1,16 @@
 import { Component, Inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { ButtonColorDirective } from '../../directives/button/button-color';
 
 export interface DialogButton {
   label: string;
   icon?: string;
-  type: 'filled' | 'outlined' | 'tonal'; // Material button types
-  action: string; // identifier untuk button action
-  // Color customization
-  bgColor?: string; // background color for filled/tonal
-  textColor?: string; // text color
-  borderColor?: string; // border color for outlined
+  type: 'filled' | 'outlined' | 'tonal'; // Material button appearance
+  action?: string;
+  color?: 'primary' | 'error';
+  focus?: boolean; // gets initial focus via cdkFocusInitial
 }
 
 export interface DialogData {
@@ -24,22 +22,9 @@ export interface DialogData {
 @Component({
   selector: 'app-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatIconModule
-  ],
+  imports: [MatDialogModule, MatButtonModule, MatIconModule, ButtonColorDirective],
   templateUrl: './dialog.html',
-  styleUrls: ['./dialog.scss']
 })
 export class DialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {}
-
-  onButtonClick(action: string) {
-    this.dialogRef.close(action);
-  }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 }

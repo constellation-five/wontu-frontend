@@ -418,21 +418,19 @@ export class OfferDetailPage {
       width: '540px',
       data: {
         title: 'Cancel Order',
-        content:
-          'Are you sure you want to cancel this order?<br>This action cannot be undone and all items will be removed from your cart.',
+        content: 'Are you sure you want to cancel this order?<br>This action cannot be undone.',
         buttons: [
           {
-            label: 'No, Keep Order',
+            label: 'Keep order',
             type: 'outlined',
-            action: 'cancel',
+            focus: true,
           },
           {
-            label: 'Yes, Cancel Order',
+            label: 'Cancel order',
             icon: 'close',
             type: 'filled',
             action: 'confirm',
-            bgColor: 'var(--mat-sys-error)',
-            textColor: 'var(--mat-sys-on-error)',
+            color: 'error',
           },
         ],
       },
@@ -571,21 +569,19 @@ export class OfferDetailPage {
       width: '540px',
       data: {
         title: 'Remove Item',
-        content:
-          'Setting the quantity to zero will remove this item from your cart.<br>Please confirm if you wish to proceed',
+        content: 'Are you sure you want to remove this item from your cart?',
         buttons: [
           {
             label: 'Cancel',
             type: 'outlined',
-            action: 'cancel',
+            focus: true,
           },
           {
-            label: 'Delete',
+            label: 'Remove',
             icon: 'delete',
             type: 'filled',
             action: 'delete',
-            bgColor: 'var(--mat-sys-error)',
-            textColor: 'var(--mat-sys-on-error)',
+            color: 'error',
           },
         ],
       },

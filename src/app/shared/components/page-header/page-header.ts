@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog';
 import { PageHeaderService } from '../../../core/page-header.service';
 
 @Component({
@@ -29,49 +28,6 @@ export class PageHeaderComponent {
 
     event.preventDefault();
 
-    if (!this.shouldConfirmStoreNavigation(item)) {
-      this.router.navigateByUrl(item.route);
-      return;
-    }
-
-    this.dialog.closeAll();
-
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '520px',
-      data: {
-        title: 'Leave This Order?',
-        content:
-          'Your current order will be saved to the History page. You can continue it there anytime.',
-        buttons: [
-          {
-            label: 'Stay',
-            type: 'outlined',
-            action: 'cancel',
-          },
-          {
-            label: 'Go to History',
-            type: 'filled',
-            action: 'confirm',
-          },
-        ],
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'confirm') {
-        this.router.navigate(['/history']);
-      }
-    });
-  }
-
-  private shouldConfirmStoreNavigation(item: { label: string; route?: string }) {
-    // Only show confirmation dialog if currently on checkout page
-    const currentUrl = this.router.url;
-    const isOnCheckoutPage = currentUrl.includes('/checkout');
-    const isNavigatingToStore = item.route?.startsWith('/offers/') && 
-                                 !item.route?.includes('/checkout') && 
-                                 item.label !== 'Offers';
-    
-    return isOnCheckoutPage && isNavigatingToStore;
+    this.router.navigateByUrl(item.route);
   }
 }
