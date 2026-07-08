@@ -123,21 +123,6 @@ export class OfferShowPage {
     return offer.items.reduce((total, item) => total + (item.slot - item.current_slot), 0);
   }
 
-  getArrivalTime(offer: Offer): string {
-    const date = new Date(offer.arrival_time);
-    const today = new Date();
-    const isToday = date.toDateString() === today.toDateString();
-
-    if (isToday) {
-      const hours = date.getHours();
-      const period = hours >= 12 ? 'PM' : 'AM';
-      const displayHours = hours % 12 || 12;
-      return `For today at ${displayHours} ${period}`;
-    }
-
-    return `Arrived at ${date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })} at ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
-  }
-
   initializeNotifications() {
     this.userNotifications.set([
       {

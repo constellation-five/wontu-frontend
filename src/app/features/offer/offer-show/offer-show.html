@@ -94,7 +94,7 @@
       <app-merchant-card
         [merchantName]="offer.merchant_name || 'Unknown Merchant'"
         [category]="offer.category"
-        [arrivalTime]="getArrivalTime(offer)"
+        [arrivalTime]="offer.arrival_time"
         [priceRange]="getPriceRange(offer)"
         [stockLeft]="getStockLeft(offer)"
         [imageUrl]="offer.items[0]?.image_url || ''"

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { CategoryLabelComponent } from '../category-label/category-label';
+import { NaturalDateTimePipe } from '../../pipes/natural-date-time.pipe';
 
 @Component({
   selector: 'app-merchant-card',
@@ -12,13 +13,14 @@ import { CategoryLabelComponent } from '../category-label/category-label';
     MatIconModule,
     MatCardModule,
     CategoryLabelComponent,
+    NaturalDateTimePipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MerchantCardComponent {
   merchantName = input.required<string>();
   category = input.required<string>();
-  arrivalTime = input.required<string>();
+  arrivalTime = input.required<string | Date>();
   priceRange = input.required<string>();
   stockLeft = input.required<number>();
   imageUrl = input<string>('');
