@@ -18,7 +18,7 @@ import {
 } from '../../../shared/components/payment-method-card/payment-method-card';
 import { DialogComponent } from '../../../shared/components/dialog/dialog';
 import { PageHeaderService } from '../../../core/page-header.service';
-import { OfferService, Offer, OfferItem, CheckoutItem } from '../../../core/offer.service';
+import { OfferService, Offer, OfferItem, CheckoutItem, MyOrder } from '../../../core/offer.service';
 import { ButtonSizeDirective, ButtonColorDirective } from '../../../shared/directives/button';
 import { EditNotesDialog } from './edit-notes-dialog';
 import { environment } from '../../../../environments/environment';
@@ -65,6 +65,10 @@ export class OfferDetailPage {
   // than any local cache, since the order itself only really exists there.
   private hasPlacedOrder = signal(false);
 
+  // The buyer's order metadata (status/timestamps) for this offer, if any.
+  // Separate from `cart`, which only tracks the item quantities/notes.
+  myOrder = signal<MyOrder | null>(null);
+
   // Checkout view state
   paymentMethods = signal<PaymentMethodData[]>([]);
   proofOfPayment = signal<File | null>(null);
@@ -73,12 +77,15 @@ export class OfferDetailPage {
 
   progressItems = computed<TimelineItem[]>(() => {
     const offer = this.offer();
+    const order = this.myOrder();
     return [
-      { label: 'Offer joined' },
-      { label: 'Offer closes', time: offer?.closing_time },
-      { label: 'Payment made' },
-      { label: 'Payment confirmed' },
-      { label: 'Items arrive', time: offer?.arrival_time },
+      { label: 'Offer joined', time: order?.joined_at },
+      // closed_at/arrived_at are the actual event times, set once the
+      // seller acts; fall back to the seller's planned schedule until then.
+      { label: 'Offer closes', time: offer?.closed_at ?? offer?.closing_time },
+      { label: 'Payment made', time: order?.payment_submitted_at ?? undefined },
+      { label: 'Payment confirmed', time: order?.verified_at ?? undefined },
+      { label: 'Items arrive', time: offer?.arrived_at ?? offer?.arrival_time },
     ];
   });
 
@@ -118,6 +125,7 @@ export class OfferDetailPage {
           this.cart.set(cartMap);
           this.view.set('checkout');
           this.hasPlacedOrder.set(true);
+          this.myOrder.set(order);
         } else {
           this.loadDraftCart(offerId);
         }
@@ -386,6 +394,11 @@ export class OfferDetailPage {
     this.hasPlacedOrder.set(true);
     this.view.set('checkout');
     this.loadPaymentMethods();
+
+    this.offerService.getMyOrder(offer.offer_id).subscribe({
+      next: (res) => this.myOrder.set(res.data),
+      error: (err) => console.error('Failed to refresh order status:', err),
+    });
   }
 
   editOrder() {

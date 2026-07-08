@@ -23,6 +23,10 @@ export interface Offer {
   merchant_name: string;
   closing_time: string;
   arrival_time: string;
+  // Set once the seller actually closes the offer / marks items arrived —
+  // distinct from closing_time/arrival_time, which are just the plan.
+  closed_at: string | null;
+  arrived_at: string | null;
   has_cod_payment: boolean;
   is_completed: boolean;
   created_at: string;
@@ -44,6 +48,9 @@ export interface MyOrder {
   status: 'pending' | 'confirmed' | 'completed';
   is_verified: boolean;
   payment_proof_url: string | null;
+  joined_at: string;
+  payment_submitted_at: string | null;
+  verified_at: string | null;
   items: CheckoutItem[];
 }
 

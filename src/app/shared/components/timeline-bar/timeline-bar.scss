@@ -76,9 +76,9 @@ $timeline-gap: var(--spacing-md);
   white-space: nowrap;
 }
 
-.timeline-content.completed .timeline-label,
-.timeline-content.active .timeline-label {
-  color: var(--mat-sys-secondary);
+.timeline-content.completed *,
+.timeline-content.active * {
+  color: var(--mat-sys-on-secondary-container);
 }
 
 // Connector segments

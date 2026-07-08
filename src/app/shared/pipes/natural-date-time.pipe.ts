@@ -8,6 +8,7 @@ export class NaturalDateTimePipe implements PipeTransform {
   transform(
     date: Date | string | number,
     locale: string = typeof navigator !== 'undefined' ? navigator.language : 'en-US',
+    showTodayLabel: boolean = true,
   ): string {
     const d = new Date(date);
     if (isNaN(d.getTime())) {
@@ -26,7 +27,7 @@ export class NaturalDateTimePipe implements PipeTransform {
     let dateStr = '';
 
     if (diffDays === 0) {
-      dateStr = 'Today';
+      dateStr = showTodayLabel ? 'Today' : '';
     } else if (diffDays === 1) {
       dateStr = 'Tomorrow';
     } else if (diffDays > 1 && diffDays < 7) {
@@ -73,6 +74,6 @@ export class NaturalDateTimePipe implements PipeTransform {
       }).format(d);
     }
 
-    return `${dateStr} ${timeStr}`;
+    return dateStr ? `${dateStr} ${timeStr}` : timeStr;
   }
 }
