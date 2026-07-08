@@ -11,7 +11,7 @@ import { ProductCardComponent } from '../../../shared/components/product-card/pr
 import { CounterField } from '../../../shared/components/counter-field/counter-field';
 import { PaneComponent } from '../../../shared/components/pane/pane';
 import { CartItemCard } from './cart-item-card/cart-item-card';
-import { OfferProgressComponent } from '../offer-progress/offer-progress';
+import { TimelineBar, TimelineItem } from '../../../shared/components/timeline-bar/timeline-bar';
 import {
   PaymentMethodCard,
   PaymentMethodData,
@@ -37,7 +37,7 @@ type OfferDetailView = 'menu' | 'checkout';
     CounterField,
     PaneComponent,
     CartItemCard,
-    OfferProgressComponent,
+    TimelineBar,
     PaymentMethodCard,
     ButtonSizeDirective,
     ButtonColorDirective,
@@ -70,6 +70,17 @@ export class OfferDetailPage {
   proofOfPayment = signal<File | null>(null);
   currentProgressStep = signal(0); // 0 = Offer joined
   isOfferClosed = computed(() => this.offer()?.is_completed ?? false);
+
+  progressItems = computed<TimelineItem[]>(() => {
+    const offer = this.offer();
+    return [
+      { label: 'Offer joined' },
+      { label: 'Offer closes', time: offer?.closing_time },
+      { label: 'Payment made' },
+      { label: 'Payment confirmed' },
+      { label: 'Items arrive', time: offer?.arrival_time },
+    ];
+  });
 
   cartItems = computed(() => Array.from(this.cart().values()));
   totalItems = computed(() => this.cartItems().reduce((sum, item) => sum + item.quantity, 0));

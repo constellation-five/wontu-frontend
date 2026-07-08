@@ -25,12 +25,10 @@
 
       <!-- 2. Progress (Vertical Style) -->
       <app-pane title="">
-        <offer-progress
-          [role]="'buyer'"
+        <app-timeline-bar
+          [items]="progressItems()"
           [currentStep]="currentProgressStep()"
           [style]="'vertical'"
-          [closingTime]="offer()!.closing_time"
-          [arrivalTime]="offer()!.arrival_time"
         />
       </app-pane>
 
@@ -161,8 +159,8 @@
         <div class="left-section">
           <!-- Offer Progress Pane (Horizontal Style) -->
           <app-pane title="">
-            <offer-progress
-              [role]="'buyer'"
+            <app-timeline-bar
+              [items]="progressItems()"
               [currentStep]="currentProgressStep()"
               [style]="'horizontal'"
             />
