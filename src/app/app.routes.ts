@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { OfferShowPage } from './features/offer/offer-show/offer-show';
-import { OfferDetailPage } from './features/offer/offer-detail/offer-detail-page';
-import { OfferMobileCart } from './features/offer/offer-detail/offer-mobile-cart';
-import { OfferChatPage } from './features/offer/offer-chat/offer-chat';
+import { OfferShowPage } from './features/offer/index/offer-show';
+import { OfferDetailPage } from './features/offer/detail/offer-detail-page';
+import { OfferMobileCart } from './features/offer/detail/offer-mobile-cart';
+import { OfferChatPage } from './features/offer/chat/offer-chat';
 import { ProfilePage } from './features/profile/profile-page';
 import { RequestPage } from './features/request/request-page';
 import { PaymentMethod } from './features/payment-method/payment-method-page';
@@ -28,7 +28,7 @@ export const routes: Routes = [
           },
           { 
             path: 'create', 
-            loadComponent: () => import('./features/offer/offer-create/offer-create'),
+            loadComponent: () => import('./features/offer/create/offer-create'),
             title: 'Create Offer',
           },
           {

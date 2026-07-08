@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, booleanAttribute, input, output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { CategoryLabelComponent } from '../category-label/category-label';
+import { CategoryLabelComponent } from './../category-label/category-label';
 
 export type ProductCardStockVariant = 'default' | 'low';
 

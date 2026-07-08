@@ -11,7 +11,7 @@ import { ProductCardComponent } from '../../../shared/components/product-card/pr
 import { CounterField } from '../../../shared/components/counter-field/counter-field';
 import { PaneComponent } from '../../../shared/components/pane/pane';
 import { CartItemCard } from './cart-item-card/cart-item-card';
-import { OfferProgressComponent } from '../../../shared/components/offer-progress/offer-progress';
+import { OfferProgressComponent } from '../offer-progress/offer-progress';
 import {
   PaymentMethodCard,
   PaymentMethodData,
