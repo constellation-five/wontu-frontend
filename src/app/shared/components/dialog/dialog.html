@@ -1,19 +1,39 @@
-<h2 mat-dialog-title>{{ data.title }}</h2>
+<h2 mat-dialog-title>{{ resolvedTitle }}</h2>
 
-<mat-dialog-content [innerHTML]="data.content"></mat-dialog-content>
+@if (content) {
+  <mat-dialog-content [innerHTML]="content"></mat-dialog-content>
+} @else {
+  <mat-dialog-content>
+    <ng-content></ng-content>
+  </mat-dialog-content>
+}
 
 <mat-dialog-actions align="end">
-  @for (button of data.buttons; track button.label) {
-    <button
-      [matButton]="button.type"
-      [appButtonColor]="button.color ?? 'primary'"
-      [mat-dialog-close]="button.action ?? ''"
-      [attr.cdkFocusInitial]="button.focus ? '' : null"
-    >
-      @if (button.icon) {
-        <mat-icon fontSet="material-symbols-outlined">{{ button.icon }}</mat-icon>
-      }
-      {{ button.label }}
-    </button>
+  @for (button of resolvedButtons; track button.label) {
+    @if (isCallback(button.action)) {
+      <button
+        [matButton]="button.type"
+        [appButtonColor]="button.color ?? 'primary'"
+        (click)="invoke(button.action)"
+        [attr.cdkFocusInitial]="button.focus ? '' : null"
+      >
+        @if (button.icon) {
+          <mat-icon fontSet="material-symbols-outlined">{{ button.icon }}</mat-icon>
+        }
+        {{ button.label }}
+      </button>
+    } @else {
+      <button
+        [matButton]="button.type"
+        [appButtonColor]="button.color ?? 'primary'"
+        [mat-dialog-close]="button.action ?? ''"
+        [attr.cdkFocusInitial]="button.focus ? '' : null"
+      >
+        @if (button.icon) {
+          <mat-icon fontSet="material-symbols-outlined">{{ button.icon }}</mat-icon>
+        }
+        {{ button.label }}
+      </button>
+    }
   }
 </mat-dialog-actions>
