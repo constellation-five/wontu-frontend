@@ -16,4 +16,10 @@
     margin: var(--page-spacer-lg) var(--page-spacer-lg) var(--page-spacer-lg)
       calc(var(--page-spacer-lg) + 168px);
   }
+
+  &.no-bottom-margin {
+    @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+      margin-bottom: var(--page-spacer-sm);
+    }
+  }
 }

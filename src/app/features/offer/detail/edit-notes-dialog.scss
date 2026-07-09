@@ -1,0 +1,12 @@
+.notes-field {
+  width: 100%;
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+    text-align: justify;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+  }
+}

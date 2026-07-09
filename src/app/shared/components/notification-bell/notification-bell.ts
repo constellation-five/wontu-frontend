@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, computed, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -29,21 +29,18 @@ export interface Notification {
   ],
   templateUrl: './notification-bell.html',
   styleUrls: ['./notification-bell.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationBellComponent {
-  @Input() notifications: Notification[] = [];
-  @Output() markAllAsRead = new EventEmitter<void>();
-  @Output() markAsRead = new EventEmitter<string>();
+  notifications = input<Notification[]>([]);
+  markAllAsRead = output<void>();
+  markAsRead = output<string>();
 
-  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
+  menuTrigger = viewChild<MatMenuTrigger>(MatMenuTrigger);
 
-  get unreadCount(): number {
-    return this.notifications.filter((n) => !n.read).length;
-  }
+  unreadCount = computed(() => this.notifications().filter((n) => !n.read).length);
 
-  get hasNotifications(): boolean {
-    return this.unreadCount > 0;
-  }
+  hasNotifications = computed(() => this.unreadCount() > 0);
 
   onMarkAllAsRead() {
     this.markAllAsRead.emit();
@@ -54,7 +51,7 @@ export class NotificationBellComponent {
   }
 
   getUnreadBadgeContent(): string {
-    const count = this.unreadCount;
+    const count = this.unreadCount();
     return count > 9 ? '9+' : count.toString();
   }
 }

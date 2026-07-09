@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { Navbar } from '../components/navbar/navbar';
 import { PageHeaderComponent } from '../components/page-header/page-header';
 import { TopBarComponent } from '../components/top-bar/top-bar';
@@ -14,7 +15,7 @@ import { PageHeaderService } from '../../core/page-header.service';
       <app-top-bar />
     }
 
-    <main class="layout-body">
+    <main class="layout-body" [class.no-bottom-margin]="shouldHideBottomBar()">
       @if (pageHeaderService.showHeader()) {
         <app-page-header />
       }
@@ -27,4 +28,24 @@ import { PageHeaderService } from '../../core/page-header.service';
 })
 export class MainLayout {
   pageHeaderService = inject(PageHeaderService);
+  private readonly router = inject(Router);
+  private hideBottomBar = signal(false);
+
+  constructor() {
+    this.router.events
+      .pipe(filter((event: any) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const route = this.router.routerState.root;
+        let child = route;
+        while (child.firstChild) {
+          child = child.firstChild;
+        }
+        const hideBottomBar = child.snapshot.data['hideBottomBar'] === true;
+        this.hideBottomBar.set(hideBottomBar);
+      });
+  }
+
+  shouldHideBottomBar(): boolean {
+    return this.hideBottomBar();
+  }
 }

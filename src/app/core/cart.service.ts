@@ -18,6 +18,25 @@ export interface PlacedOrder {
 export class CartService {
   private readonly cartItems = signal<CartItem[]>([]);
   private readonly placedOrder = signal<PlacedOrder | null>(null);
+  private readonly currentOfferId = signal<number | null>(null);
+
+  // Initialize cart for specific offer (clear if different offer)
+  initializeCartForOffer(offerId: number) {
+    const current = this.currentOfferId();
+    
+    // If switching to different offer, clear cart
+    if (current !== null && current !== offerId) {
+      console.log(`Switching from offer ${current} to ${offerId}, clearing cart`);
+      this.clearCart();
+    }
+    
+    this.currentOfferId.set(offerId);
+  }
+
+  // Get current offer ID
+  getCurrentOfferId() {
+    return this.currentOfferId();
+  }
 
   // Get all cart items
   getCartItems() {

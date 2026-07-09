@@ -1,42 +1,39 @@
-<div class="dialog-container">
-  <!-- Title -->
-  <h2 class="dialog-title font-bold">{{ data.title }}</h2>
+<h2 mat-dialog-title>{{ resolvedTitle }}</h2>
 
-  <!-- Content Slot -->
-  <div class="dialog-content font-regular" [innerHTML]="data.content"></div>
+@if (content) {
+  <mat-dialog-content [innerHTML]="content"></mat-dialog-content>
+} @else {
+  <mat-dialog-content>
+    <ng-content></ng-content>
+  </mat-dialog-content>
+}
 
-  <!-- Actions - All buttons aligned to the right -->
-  <div class="dialog-actions">
-    <ng-container *ngFor="let button of data.buttons">
-      
-      <!-- Filled or Tonal Button -->
-      <button 
-        *ngIf="button.type === 'filled' || button.type === 'tonal'"
-        mat-flat-button
-        (click)="onButtonClick(button.action)"
-        class="dialog-btn !rounded-full !h-10 !px-4 !gap-2 font-medium"
-        [ngStyle]="{
-          'background-color': button.type === 'filled' ? (button.bgColor || '#204ECE') : (button.bgColor || 'var(--mat-sys-primary-container)'),
-          'color': button.type === 'filled' ? (button.textColor || '#FCFDFF') : (button.textColor || 'var(--mat-sys-on-primary-container)')
-        }">
-        <mat-icon *ngIf="button.icon" fontSet="material-symbols-outlined" class="!text-[20px] !w-5 !h-5">{{ button.icon }}</mat-icon>
+<mat-dialog-actions align="end">
+  @for (button of resolvedButtons; track button.label) {
+    @if (isCallback(button.action)) {
+      <button
+        [matButton]="button.type"
+        [appButtonColor]="button.color ?? 'primary'"
+        (click)="invoke(button.action)"
+        [attr.cdkFocusInitial]="button.focus ? '' : null"
+      >
+        @if (button.icon) {
+          <mat-icon fontSet="material-symbols-outlined">{{ button.icon }}</mat-icon>
+        }
         {{ button.label }}
       </button>
-
-      <!-- Outlined Button -->
-      <button 
-        *ngIf="button.type === 'outlined'"
-        mat-stroked-button
-        (click)="onButtonClick(button.action)"
-        class="dialog-btn !rounded-full !h-10 !px-4 !gap-2 font-medium"
-        [ngStyle]="{
-          'border-color': button.borderColor || '#B3B8C7',
-          'color': button.textColor || '#52555D'
-        }">
-        <mat-icon *ngIf="button.icon" fontSet="material-symbols-outlined" class="!text-[20px] !w-5 !h-5">{{ button.icon }}</mat-icon>
+    } @else {
+      <button
+        [matButton]="button.type"
+        [appButtonColor]="button.color ?? 'primary'"
+        [mat-dialog-close]="button.action ?? ''"
+        [attr.cdkFocusInitial]="button.focus ? '' : null"
+      >
+        @if (button.icon) {
+          <mat-icon fontSet="material-symbols-outlined">{{ button.icon }}</mat-icon>
+        }
         {{ button.label }}
       </button>
-
-    </ng-container>
-  </div>
-</div>
+    }
+  }
+</mat-dialog-actions>

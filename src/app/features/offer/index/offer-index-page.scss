@@ -1,0 +1,223 @@
+@use '../../../../_variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.location-notification-section {
+  display: none;
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+}
+
+.welcome-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  margin-bottom: var(--spacing-xl);
+
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+}
+
+.welcome-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.welcome-heading {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2xs);
+}
+
+.desktop-notification {
+  display: none;
+
+  @media (min-width: $breakpoint-md) {
+    display: block;
+  }
+}
+
+.search-filter-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+
+  @media (min-width: $breakpoint-md) {
+    gap: var(--spacing-md);
+    justify-content: space-between;
+  }
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    gap: var(--spacing-xs);
+  }
+}
+
+.search-filter-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    flex: 1;
+  }
+}
+
+.location-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: var(--mat-sys-surface-container);
+  border-radius: var(--mat-sys-corner-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: color-mix(
+      in srgb,
+      var(--mat-sys-surface-container) 90%,
+      var(--mat-sys-on-surface) 10%
+    );
+  }
+
+  &:active {
+    background-color: color-mix(
+      in srgb,
+      var(--mat-sys-surface-container) 85%,
+      var(--mat-sys-on-surface) 15%
+    );
+  }
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+.desktop-location {
+  display: none;
+
+  @media (min-width: $breakpoint-md) {
+    display: flex;
+    flex-shrink: 0;
+    min-width: 200px;
+  }
+}
+
+app-search-bar {
+  flex: 1;
+  min-width: 0;
+
+  @media (min-width: $breakpoint-md) {
+    max-width: 500px;
+  }
+}
+
+.filter-button {
+  flex-shrink: 0;
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    --mdc-icon-button-state-layer-size: 40px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.filter-menu-content {
+  padding: var(--spacing-xs) var(--spacing-md);
+  min-width: 150px;
+
+  .filter-checkbox {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.offers-grid {
+  display: grid;
+  gap: var(--spacing-md);
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 481px) and (max-width: calc(#{$breakpoint-md} - 1px)) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+  }
+}
+
+.loading-container,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4xl) var(--spacing-md);
+  gap: var(--spacing-md);
+}
+
+.empty-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: var(--mat-sys-on-surface-variant);
+  opacity: 0.5;
+}
+
+.create-offer-fab {
+  position: fixed;
+  right: var(--spacing-xl);
+  bottom: var(--spacing-xl);
+  z-index: 999;
+
+  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+    bottom: calc(var(--spacing-xl) + 80px);
+  }
+
+  @media (min-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+.create-offer-fab-desktop {
+  position: fixed;
+  right: var(--spacing-xl);
+  bottom: var(--spacing-xl);
+  z-index: 999;
+  display: none;
+
+  @media (min-width: $breakpoint-md) {
+    display: flex;
+  }
+}

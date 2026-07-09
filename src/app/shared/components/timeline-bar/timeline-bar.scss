@@ -1,0 +1,155 @@
+@use '../../../../_variables' as *;
+
+.timeline-bar {
+  width: 100%;
+}
+
+// Dot
+
+$timeline-active-size: 36px;
+$timeline-dot-size: 20px;
+$timeline-ring-thickness: 8px;
+$timeline-gap: var(--spacing-md);
+
+.timeline-marker {
+  position: relative;
+  z-index: 1;
+  height: $timeline-active-size;
+  width: $timeline-active-size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.timeline-dot {
+  width: $timeline-dot-size;
+  height: $timeline-dot-size;
+  border-radius: var(--mat-sys-corner-full);
+  background: var(--mat-sys-outline-variant);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.timeline-dot-inner {
+  display: none;
+}
+
+.timeline-marker.completed .timeline-dot {
+  background: var(--mat-sys-secondary);
+}
+
+// Active step: donut ring with a surface-lowest center, larger than the
+// plain completed/upcoming dots.
+.timeline-marker.active .timeline-dot {
+  width: $timeline-active-size;
+  height: $timeline-active-size;
+  background: var(--mat-sys-secondary);
+  padding: $timeline-ring-thickness;
+}
+
+.timeline-marker.active .timeline-dot-inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--mat-sys-corner-full);
+  background: var(--mat-sys-surface-container-lowest);
+}
+
+// Labels
+
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-label {
+  color: var(--mat-sys-on-surface-variant);
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.timeline-time {
+  white-space: nowrap;
+}
+
+.timeline-content.completed *,
+.timeline-content.active * {
+  color: var(--mat-sys-on-secondary-container);
+}
+
+// Connector segments
+
+.timeline-connector {
+  background: var(--mat-sys-outline-variant);
+  transition: background 0.3s ease;
+
+  &.completed {
+    background: var(--mat-sys-secondary);
+  }
+}
+
+// Horizontal layout: a grid with one column per item and two rows (markers,
+// then labels). Connector lines are absolutely positioned inside each
+// marker cell, reaching from the previous cell's center to this cell's
+// center — independent of label width, and never overflowing the grid.
+
+.timeline-bar--horizontal {
+  .timeline-grid {
+    display: grid;
+    grid-template-rows: auto auto;
+    column-gap: $timeline-gap;
+    row-gap: var(--spacing-sm);
+  }
+
+  .timeline-marker-cell {
+    position: relative;
+    height: $timeline-active-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .timeline-connector {
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    right: 50%;
+    width: calc(100% + #{$timeline-gap});
+    height: $timeline-ring-thickness;
+    border-radius: var(--mat-sys-corner-full);
+    transform: translateY(-50%);
+  }
+
+  .timeline-content {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+// Vertical layout
+
+.timeline-bar--vertical {
+  display: flex;
+  flex-direction: column;
+
+  .timeline-step {
+    display: flex;
+    gap: var(--spacing-md);
+  }
+
+  .timeline-content {
+    padding-bottom: var(--spacing-md);
+    justify-content: center;
+  }
+
+  .timeline-connector {
+    width: 2px;
+    flex: 1 1 auto;
+    min-height: var(--spacing-md);
+    margin-left: calc(#{$timeline-active-size} / 2 - 1px);
+  }
+}
