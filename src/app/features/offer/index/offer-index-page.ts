@@ -86,6 +86,7 @@ export class OfferShowPage {
     this.pageHeader.setBreadcrumbs([{ label: 'Offers', route: '/offers' }]);
     this.initializeNotifications();
     this.fetchOffers();
+    this.detectCurrentLocation();
   }
 
   fetchOffers(query?: string) {
