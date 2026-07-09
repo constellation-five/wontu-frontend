@@ -32,6 +32,13 @@ jobs:
             const coredemo = require('@actions/core')
             return await coredemo.getIDToken()
           result-encoding: string
+      - name: Generate runtime env config
+        run: |
+          cat > src/assets/env-config.js <<EOF
+          window.__env = {
+            googleMapsApiKey: '${{ secrets.GOOGLE_MAPS_API_KEY }}',
+          };
+          EOF
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1

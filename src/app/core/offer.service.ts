@@ -81,12 +81,15 @@ export class OfferService {
     return this.http.get<Offer>(`${environment.api}/offers/${id}`);
   }
 
-  loadOffers(search?: string) {
+  loadOffers(search?: string, coords?: { lat: number; lng: number }) {
     this.state.update((s) => ({ ...s, isLoading: true }));
 
     let params = new HttpParams();
     if (search) {
       params = params.set('search', search);
+    }
+    if (coords) {
+      params = params.set('lat', coords.lat).set('lng', coords.lng);
     }
 
     return this.http

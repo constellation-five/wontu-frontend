@@ -4,6 +4,7 @@ import {
   inject,
   signal,
   computed,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,6 +21,7 @@ import { NaturalDateTimePipe } from '../../../shared/pipes/natural-date-time.pip
 import { NotificationBellComponent, Notification } from '../../../shared/components/notification-bell/notification-bell';
 import { LocationPickerDialog } from '../../../shared/components/location-picker-dialog/location-picker-dialog';
 import { IconButtonVariantDirective } from '../../../shared/directives/button';
+import { LocationLookupService } from '../../../core/location-lookup.service';
 
 @Component({
   selector: 'offer-index',
@@ -41,9 +43,11 @@ import { IconButtonVariantDirective } from '../../../shared/directives/button';
 export class OfferShowPage {
   private readonly auth = inject(AuthService);
   private readonly offerService = inject(OfferService);
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly router = inject(Router);
   private readonly pageHeader = inject(PageHeaderService);
   private readonly dialog = inject(MatDialog);
+  private readonly locationLookup = inject(LocationLookupService);
 
   readonly user = this.auth.user;
   readonly offers = this.offerService.allOffers;
@@ -82,10 +86,11 @@ export class OfferShowPage {
     this.pageHeader.setBreadcrumbs([{ label: 'Offers', route: '/offers' }]);
     this.initializeNotifications();
     this.fetchOffers();
+    this.detectCurrentLocation();
   }
 
   fetchOffers(query?: string) {
-    this.offerService.loadOffers(query).subscribe({
+    this.offerService.loadOffers(query, this.userLocationCoordinates() ?? undefined).subscribe({
       error: (err) => console.error('Error fetching offers:', err),
     });
   }
@@ -166,42 +171,69 @@ export class OfferShowPage {
   }
 
   onChangeLocation() {
-    this.requestGeolocationPermission();
-  }
-
-  private requestGeolocationPermission() {
-    if (!navigator.geolocation) {
-      this.showLocationPickerDialog();
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.showLocationPickerDialog(position.coords);
-      },
-      (error) => {
-        console.log('Geolocation error:', error);
-        this.showLocationPickerDialog();
-      }
-    );
-  }
-
-  private showLocationPickerDialog(coords?: GeolocationCoordinates) {
     const dialogRef = this.dialog.open(LocationPickerDialog, {
       width: '500px',
-      maxWidth: '90vw',
-      data: { coords },
+      data: {
+        coords: this.userLocationCoordinates() ?? undefined,
+        label: this.userLocation() !== 'Choose your location' ? this.userLocation() : undefined,
+      },
       disableClose: false,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.location) {
         this.userLocation.set(result.location);
-        this.userLocationCoordinates.set(result.coords ? {
-          lat: result.coords.latitude,
-          lng: result.coords.longitude,
-        } : null);
+        this.userLocationCoordinates.set(result.coords ?? null);
+        this.cdr.markForCheck();
+        this.fetchOffers(this.searchQuery());
       }
     });
+  }
+
+  private detectCurrentLocation(retriesLeft = 2) {
+    if (!navigator.geolocation) return;
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const coords = { lat: position.coords.latitude, lng: position.coords.longitude };
+        this.applyDetectedLocation(coords);
+      },
+      (error) => {
+        console.log('Geolocation error:', error);
+        // POSITION_UNAVAILABLE (macOS CoreLocation's kCLErrorLocationUnknown) is usually
+        // a transient hiccup right after permission is granted — retry a couple times.
+        if (error.code === error.POSITION_UNAVAILABLE && retriesLeft > 0) {
+          setTimeout(() => this.detectCurrentLocation(retriesLeft - 1), 2000);
+        }
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+    );
+  }
+
+  private async applyDetectedLocation(coords: { lat: number; lng: number }) {
+    this.userLocationCoordinates.set(coords);
+    // Offers are filtered server-side to within 200m of the user's coordinates,
+    // so the initial (unfiltered) fetch from the constructor needs redoing here.
+    this.fetchOffers(this.searchQuery());
+
+    try {
+      this.userLocation.set(await this.locationLookup.resolvePlaceName(coords));
+    } catch (err) {
+      console.log('Location lookup error:', err);
+      this.userLocation.set(`${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`);
+    }
+
+    this.cdr.markForCheck();
+  }
+
+  openLocationInMaps(location: string) {
+    const mapsUrl = `https://www.google.com/maps/search/${encodeURIComponent(location)}`;
+    window.open(mapsUrl, '_blank');
+  }
+
+  openCurrentLocationInMaps() {
+    if (this.userLocation() !== 'Choose your location') {
+      this.openLocationInMaps(this.userLocation());
+    }
   }
 }

@@ -367,6 +367,14 @@ mat-card.mat-mdc-card {
   border-radius: var(--mat-sys-corner-small);
 }
 
+mat-option.mat-mdc-option {
+  padding: var(--spacing-xs) var(--spacing-md);
+}
+
+.cdk-overlay-pane:has(> .mdc-menu-surface) {
+  background-color: var(--mat-sys-surface-container);
+}
+
 .mat-mdc-menu-panel > .mat-mdc-menu-content {
   padding-top: 0;
   padding-bottom: 0;

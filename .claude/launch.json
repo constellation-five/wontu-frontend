@@ -2,11 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "wontu-frontend",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["ng", "serve", "--port", "4200"],
-      "autoPort": false,
-      "port": 4200
+      "name": "wontu-frontend-dev",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["exec", "ng", "serve", "--port", "4201"],
+      "port": 4201
     }
   ]
 }
