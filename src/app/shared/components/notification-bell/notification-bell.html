@@ -67,7 +67,7 @@
             <div class="notification-title-row">
               <span class="notification-title mat-font-label-md">{{ notification.title }}</span>
               <span class="notification-time mat-font-label-sm mat-text-on-surface-variant">{{
-                timeAgo(notification.createdAt)
+                notification.createdAt | naturalDateTime: undefined : false
               }}</span>
             </div>
             <p class="notification-description mat-font-body-sm mat-text-on-surface-variant">

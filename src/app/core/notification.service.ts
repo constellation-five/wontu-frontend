@@ -20,6 +20,28 @@ export interface ToastItem {
   notification: AppNotification;
 }
 
+interface ApiNotification {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  type: NotificationType;
+  read: boolean;
+  created_at: string;
+}
+
+function toAppNotification(raw: ApiNotification): AppNotification {
+  return {
+    id: raw.id,
+    title: raw.title,
+    description: raw.description,
+    icon: raw.icon,
+    type: raw.type,
+    read: raw.read,
+    createdAt: raw.created_at,
+  };
+}
+
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
   private readonly http = inject(HttpClient);
@@ -68,10 +90,10 @@ export class NotificationService {
   loadNotifications(): void {
     this._isLoading.set(true);
     this.http
-      .get<AppNotification[]>(`${environment.api}/notifications`)
+      .get<ApiNotification[]>(`${environment.api}/notifications`)
       .subscribe({
         next: (notifications) => {
-          this._notifications.set(notifications);
+          this._notifications.set(notifications.map(toAppNotification));
           this._isLoading.set(false);
           this.listLoaded = true;
           if (this._unreadCount() > 0) {
