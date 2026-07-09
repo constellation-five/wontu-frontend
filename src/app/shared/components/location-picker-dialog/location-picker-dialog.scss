@@ -18,7 +18,7 @@ mat-dialog-content {
 // The locate-me control is injected into the map as raw DOM by the Maps JS API,
 // outside Angular's view — ::ng-deep is the standard way to style it from here.
 ::ng-deep .locate-me-control {
-  margin: var(--spacing-sm);
+  margin-right: 10px;
 
   button {
     display: flex;
@@ -29,13 +29,13 @@ mat-dialog-content {
     padding: 0;
     border: none;
     border-radius: 50%;
-    background-color: var(--mat-sys-surface-container-lowest);
+    background-color: #fff;
     color: var(--mat-sys-on-surface-variant);
-    box-shadow: var(--mat-sys-level1);
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
     cursor: pointer;
 
-    &:hover {
-      background-color: var(--mat-sys-surface-container);
+    &:active {
+      color: var(--mat-sys-primary);
     }
 
     .material-symbols-outlined {
