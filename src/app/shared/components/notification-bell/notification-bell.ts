@@ -1,57 +1,70 @@
-import { ChangeDetectionStrategy, Component, input, output, computed, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output, computed, viewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NotificationService, AppNotification } from '../../../core/notification.service';
+import { IconButtonVariantDirective } from '../../directives/button/icon-button-variant';
 
-export interface Notification {
-  id: string;
-  title: string;
-  message: string;
-  timestamp: string;
-  read: boolean;
-}
+export type { AppNotification };
 
 @Component({
   selector: 'app-notification-bell',
   standalone: true,
   imports: [
-    CommonModule,
     MatIconModule,
     MatBadgeModule,
     MatMenuModule,
     MatButtonModule,
-    MatListModule,
     MatDividerModule,
+    MatTooltipModule,
+    IconButtonVariantDirective,
   ],
   templateUrl: './notification-bell.html',
-  styleUrls: ['./notification-bell.scss'],
+  styleUrl: './notification-bell.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationBellComponent {
-  notifications = input<Notification[]>([]);
-  markAllAsRead = output<void>();
-  markAsRead = output<string>();
+  protected readonly notificationService = inject(NotificationService);
 
-  menuTrigger = viewChild<MatMenuTrigger>(MatMenuTrigger);
-
-  unreadCount = computed(() => this.notifications().filter((n) => !n.read).length);
-
-  hasNotifications = computed(() => this.unreadCount() > 0);
-
-  onMarkAllAsRead() {
-    this.markAllAsRead.emit();
+  get badgeContent(): string {
+    const count = this.notificationService.unreadCount();
+    return count > 9 ? '9+' : String(count);
   }
 
-  onMarkAsRead(notificationId: string) {
-    this.markAsRead.emit(notificationId);
+  onPanelOpen(): void {
+    this.notificationService.loadNotifications();
   }
 
-  getUnreadBadgeContent(): string {
-    const count = this.unreadCount();
-    return count > 9 ? '9+' : count.toString();
+  onDelete(event: Event, id: string): void {
+    event.stopPropagation();
+    this.notificationService.deleteNotification(id);
+  }
+
+  onClearAll(): void {
+    this.notificationService.clearAll();
+  }
+
+  typeIcon(type: AppNotification['type']): string {
+    const icons: Record<AppNotification['type'], string> = {
+      info: 'info',
+      success: 'check_circle',
+      warning: 'warning',
+      error: 'error',
+    };
+    return icons[type];
+  }
+
+  timeAgo(isoString: string): string {
+    const diff = Date.now() - new Date(isoString).getTime();
+    const minutes = Math.floor(diff / 60000);
+    if (minutes < 1) return 'Just now';
+    if (minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+    return `${Math.floor(hours / 24)}d ago`;
   }
 }

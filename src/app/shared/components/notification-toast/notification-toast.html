@@ -1,0 +1,23 @@
+<div class="toast-container" aria-live="polite" aria-label="Notifications">
+  @for (toast of notificationService.toasts(); track toast.toastId) {
+    <div class="toast-card" [attr.data-type]="toast.notification.type" role="alert">
+      <div class="toast-icon" [attr.data-type]="toast.notification.type">
+        <mat-icon fontSet="material-symbols-outlined">{{ iconForType(toast.notification.type) }}</mat-icon>
+      </div>
+      <div class="toast-body">
+        <p class="toast-title">{{ toast.notification.title }}</p>
+        <p class="toast-description">{{ toast.notification.description }}</p>
+      </div>
+      <button
+        matIconButton
+        appIconButtonVariant="text"
+        class="toast-close"
+        (click)="dismiss(toast.toastId)"
+        aria-label="Dismiss notification"
+      >
+        <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+      </button>
+      <div class="toast-progress" [attr.data-type]="toast.notification.type"></div>
+    </div>
+  }
+</div>
