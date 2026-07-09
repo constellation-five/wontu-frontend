@@ -22,7 +22,7 @@
 <mat-menu #notificationMenu="matMenu" class="notification-menu">
   <!-- HEADER -->
   <div class="notification-header" (click)="$event.stopPropagation()">
-    <h3 class="mat-font-title-sm">Notifications</h3>
+    <h3 class="mat-font-title-md">Notifications</h3>
     @if (notificationService.notifications().length > 0) {
       <button
         matIconButton
@@ -43,27 +43,39 @@
   <div class="notification-list" (click)="$event.stopPropagation()">
     @if (notificationService.isLoading()) {
       <div class="empty-state">
-        <mat-icon fontSet="material-symbols-outlined" class="loading-icon">hourglass_empty</mat-icon>
+        <mat-icon fontSet="material-symbols-outlined" class="loading-icon"
+          >hourglass_empty</mat-icon
+        >
         <p class="mat-font-body-sm mat-text-on-surface-variant">Loading…</p>
       </div>
     } @else if (notificationService.notifications().length === 0) {
       <div class="empty-state">
         <mat-icon fontSet="material-symbols-outlined">notifications_none</mat-icon>
-        <p class="mat-font-body-sm mat-text-on-surface-variant">No notifications</p>
+        <p class="mat-font-label-md mat-text-on-surface-variant">You have no notifications</p>
       </div>
     } @else {
       @for (notification of notificationService.notifications(); track notification.id) {
-        <div class="notification-item" [class.unread]="!notification.read" [attr.data-type]="notification.type">
+        <div
+          class="notification-item"
+          [class.unread]="!notification.read"
+          [attr.data-type]="notification.type"
+        >
           <div class="notification-icon" [attr.data-type]="notification.type">
             <mat-icon fontSet="material-symbols-outlined">{{ notification.icon }}</mat-icon>
           </div>
           <div class="notification-body">
             <div class="notification-title-row">
               <span class="notification-title mat-font-label-md">{{ notification.title }}</span>
-              <span class="notification-time mat-font-label-sm mat-text-on-surface-variant">{{ timeAgo(notification.createdAt) }}</span>
+              <span class="notification-time mat-font-label-sm mat-text-on-surface-variant">{{
+                timeAgo(notification.createdAt)
+              }}</span>
             </div>
-            <p class="notification-description mat-font-body-sm mat-text-on-surface-variant">{{ notification.description }}</p>
-            <span class="notification-type-chip" [attr.data-type]="notification.type">{{ notification.type }}</span>
+            <p class="notification-description mat-font-body-sm mat-text-on-surface-variant">
+              {{ notification.description }}
+            </p>
+            <span class="notification-type-chip" [attr.data-type]="notification.type">{{
+              notification.type
+            }}</span>
           </div>
           <button
             matIconButton
