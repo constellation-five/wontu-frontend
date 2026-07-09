@@ -90,7 +90,7 @@ export class OfferShowPage {
   }
 
   fetchOffers(query?: string) {
-    this.offerService.loadOffers(query).subscribe({
+    this.offerService.loadOffers(query, this.userLocationCoordinates() ?? undefined).subscribe({
       error: (err) => console.error('Error fetching offers:', err),
     });
   }
@@ -185,6 +185,7 @@ export class OfferShowPage {
         this.userLocation.set(result.location);
         this.userLocationCoordinates.set(result.coords ?? null);
         this.cdr.markForCheck();
+        this.fetchOffers(this.searchQuery());
       }
     });
   }
@@ -211,6 +212,9 @@ export class OfferShowPage {
 
   private async applyDetectedLocation(coords: { lat: number; lng: number }) {
     this.userLocationCoordinates.set(coords);
+    // Offers are filtered server-side to within 200m of the user's coordinates,
+    // so the initial (unfiltered) fetch from the constructor needs redoing here.
+    this.fetchOffers(this.searchQuery());
 
     try {
       this.userLocation.set(await this.locationLookup.resolvePlaceName(coords));
