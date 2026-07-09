@@ -49,18 +49,22 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
   readonly searchForm = form(this.searchModel);
   private readonly searchInput$ = new Subject<string>();
 
-  suggestions: SearchSuggestion[] = [];
-  locationInput: string = '';
-  hasCoordinates: boolean = false;
-  isLocationVerified = false;
-  isVerifying = false;
-  verificationError: string | null = null;
+  // Mutated from async callbacks (debounced RxJS, awaited Google Maps API calls)
+  // that don't run inside a DOM-event context this app's zoneless change detection
+  // tracks — plain fields silently went stale until some unrelated event forced a
+  // check. Signals notify Angular directly, regardless of what triggered the write.
+  readonly suggestions = signal<SearchSuggestion[]>([]);
+  readonly locationInput = signal<string>('');
+  readonly hasCoordinates = signal<boolean>(false);
+  readonly isLocationVerified = signal(false);
+  readonly isVerifying = signal(false);
+  readonly verificationError = signal<string | null>(null);
 
-  mapsLoading = true;
-  mapsError: string | null = null;
+  readonly mapsLoading = signal(true);
+  readonly mapsError = signal<string | null>(null);
 
-  center: google.maps.LatLngLiteral = DEFAULT_CENTER;
-  markerPosition: google.maps.LatLngLiteral = DEFAULT_CENTER;
+  readonly center = signal<google.maps.LatLngLiteral>(DEFAULT_CENTER);
+  readonly markerPosition = signal<google.maps.LatLngLiteral>(DEFAULT_CENTER);
   zoom = 16;
   readonly mapOptions: google.maps.MapOptions = {
     disableDefaultUI: false,
@@ -86,11 +90,11 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
   private suppressNextSearchChange = false;
 
   constructor() {
-    this.hasCoordinates = !!this.data.coords;
+    this.hasCoordinates.set(!!this.data.coords);
     this.userCoords = this.data.coords;
     if (this.data.coords) {
-      this.center = this.data.coords;
-      this.markerPosition = this.data.coords;
+      this.center.set(this.data.coords);
+      this.markerPosition.set(this.data.coords);
     }
     if (this.data.label) {
       this.setLocationText(this.data.label);
@@ -106,11 +110,11 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
         this.suppressNextSearchChange = false;
         return;
       }
-      this.locationInput = value;
+      this.locationInput.set(value);
       // Typing invalidates whatever was previously verified — confirmLocation()
       // will re-verify this exact text against the Places/Geocoding API.
-      this.isLocationVerified = false;
-      this.verificationError = null;
+      this.isLocationVerified.set(false);
+      this.verificationError.set(null);
       this.searchInput$.next(value);
     });
   }
@@ -118,18 +122,18 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
   async ngAfterViewInit() {
     try {
       await this.mapsLoader.load();
-      this.mapsLoading = false;
+      this.mapsLoading.set(false);
 
       // Only auto-resolve a name from coordinates if we don't already have one —
       // re-running the nearby search here could surface a different nearby place
       // than the one already confirmed, silently overriding the user's choice.
-      if (this.hasCoordinates && !this.locationInput) {
-        this.lookupPlace(this.markerPosition);
+      if (this.hasCoordinates() && !this.locationInput()) {
+        this.lookupPlace(this.markerPosition());
       }
     } catch (err) {
       console.error('Google Maps failed to load:', err);
-      this.mapsLoading = false;
-      this.mapsError = 'Map unavailable right now — you can still type an address below.';
+      this.mapsLoading.set(false);
+      this.mapsError.set('Map unavailable right now — you can still type an address below.');
     }
   }
 
@@ -140,7 +144,7 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
   private async fetchSuggestions(query: string) {
     const trimmed = query.trim();
     if (trimmed.length < 2) {
-      this.suggestions = [];
+      this.suggestions.set([]);
       return;
     }
 
@@ -150,7 +154,7 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
 
       // Bias toward the user's real location (not wherever the pin/map happens to
       // be at the moment) so "distance" reflects distance from the user, per spec.
-      const biasCenter = this.userCoords ?? this.center;
+      const biasCenter = this.userCoords ?? this.center();
 
       const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
         input: trimmed,
@@ -163,19 +167,21 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
       // exposed numeric relevance score to blend with distance ourselves, so the
       // correct lever is feeding it the right bias/origin point rather than
       // re-sorting its output (which would just override relevance ordering).
-      this.suggestions = suggestions
-        .map((s) => s.placePrediction)
-        .filter((p): p is google.maps.places.PlacePrediction => !!p)
-        .map((prediction) => ({ label: prediction.text.text, prediction }));
+      this.suggestions.set(
+        suggestions
+          .map((s) => s.placePrediction)
+          .filter((p): p is google.maps.places.PlacePrediction => !!p)
+          .map((prediction) => ({ label: prediction.text.text, prediction })),
+      );
     } catch (err) {
       console.log('Autocomplete suggestions error:', err);
-      this.suggestions = [];
+      this.suggestions.set([]);
     }
   }
 
   async onOptionSelected(event: MatAutocompleteSelectedEvent) {
-    const selected = this.suggestions.find((s) => s.label === event.option.value);
-    this.suggestions = [];
+    const selected = this.suggestions().find((s) => s.label === event.option.value);
+    this.suggestions.set([]);
     if (!selected) return;
 
     try {
@@ -194,8 +200,8 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
 
       if (place.location) {
         const coords = { lat: place.location.lat(), lng: place.location.lng() };
-        this.center = coords;
-        this.markerPosition = coords;
+        this.center.set(coords);
+        this.markerPosition.set(coords);
       }
 
       const address = place.displayName
@@ -230,9 +236,9 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const coords = { lat: position.coords.latitude, lng: position.coords.longitude };
-        this.hasCoordinates = true;
-        this.center = coords;
-        this.markerPosition = coords;
+        this.hasCoordinates.set(true);
+        this.center.set(coords);
+        this.markerPosition.set(coords);
         this.lookupPlace(coords);
       },
       (error) => console.log('Geolocation error:', error),
@@ -243,14 +249,14 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
   onMapClick(event: google.maps.MapMouseEvent) {
     if (!event.latLng) return;
     const coords = { lat: event.latLng.lat(), lng: event.latLng.lng() };
-    this.markerPosition = coords;
+    this.markerPosition.set(coords);
     this.lookupPlace(coords);
   }
 
   onMarkerDragEnd(event: google.maps.MapMouseEvent) {
     if (!event.latLng) return;
     const coords = { lat: event.latLng.lat(), lng: event.latLng.lng() };
-    this.markerPosition = coords;
+    this.markerPosition.set(coords);
     this.lookupPlace(coords);
   }
 
@@ -266,25 +272,25 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
   // Only called from trusted, already-real sources (a resolved place, a resolved
   // pin/GPS coordinate, or a previously-confirmed label) — never from raw typing.
   private setLocationText(text: string) {
-    this.locationInput = text;
-    this.suggestions = [];
+    this.locationInput.set(text);
+    this.suggestions.set([]);
     this.suppressNextSearchChange = true;
     this.searchModel.set({ search: text });
-    this.isLocationVerified = true;
-    this.verificationError = null;
+    this.isLocationVerified.set(true);
+    this.verificationError.set(null);
   }
 
   clearInput() {
     this.setLocationText('');
-    this.isLocationVerified = false;
+    this.isLocationVerified.set(false);
   }
 
   async confirmLocation() {
-    const text = this.locationInput.trim();
-    if (!text || this.isVerifying) return;
+    const text = this.locationInput().trim();
+    if (!text || this.isVerifying()) return;
 
-    if (this.isLocationVerified) {
-      this.dialogRef.close({ location: text, coords: this.markerPosition });
+    if (this.isLocationVerified()) {
+      this.dialogRef.close({ location: text, coords: this.markerPosition() });
       return;
     }
 
@@ -292,11 +298,11 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
     // Geocoding will happily fuzzy-match near-gibberish to some unrelated place, so
     // validation instead goes through the same Autocomplete Suggestions engine that
     // powers the dropdown — it returns nothing for input that isn't a real place.
-    this.isVerifying = true;
-    this.verificationError = null;
+    this.isVerifying.set(true);
+    this.verificationError.set(null);
 
     try {
-      const biasCenter = this.userCoords ?? this.center;
+      const biasCenter = this.userCoords ?? this.center();
       const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
         input: text,
         origin: biasCenter,
@@ -305,7 +311,7 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
 
       const prediction = suggestions.find((s) => s.placePrediction)?.placePrediction;
       if (!prediction) {
-        this.verificationError = "We couldn't find that place. Try picking a suggestion from the list.";
+        this.verificationError.set("We couldn't find that place. Try picking a suggestion from the list.");
         return;
       }
 
@@ -314,12 +320,12 @@ export class LocationPickerDialog implements AfterViewInit, OnDestroy {
       // fetching full place details happens to fail (applyPrediction falls back
       // to the prediction's own text in that case).
       await this.applyPrediction(prediction, prediction.text.text);
-      this.dialogRef.close({ location: this.locationInput, coords: this.markerPosition });
+      this.dialogRef.close({ location: this.locationInput(), coords: this.markerPosition() });
     } catch (err) {
       console.log('Location verification error:', err);
-      this.verificationError = 'Something went wrong verifying that location. Please try again.';
+      this.verificationError.set('Something went wrong verifying that location. Please try again.');
     } finally {
-      this.isVerifying = false;
+      this.isVerifying.set(false);
     }
   }
 }

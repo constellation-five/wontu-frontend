@@ -10,7 +10,7 @@
       [matAutocomplete]="auto"
       (keyup.enter)="confirmLocation()"
     />
-    @if (locationInput) {
+    @if (locationInput()) {
       <button matIconButton matSuffix appButtonSize="compact" type="button" (click)="clearInput()">
         <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
       </button>
@@ -18,34 +18,34 @@
   </mat-form-field>
 
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
-    @for (option of suggestions; track option.prediction.placeId) {
+    @for (option of suggestions(); track option.prediction.placeId) {
       <mat-option [value]="option.label">{{ option.label }}</mat-option>
     }
   </mat-autocomplete>
 
-  @if (verificationError) {
-    <p class="verification-error">{{ verificationError }}</p>
+  @if (verificationError()) {
+    <p class="verification-error">{{ verificationError() }}</p>
   }
 
   <div class="map-wrapper">
-    @if (mapsLoading) {
+    @if (mapsLoading()) {
       <div class="map-status">Loading map...</div>
     }
-    @if (mapsError) {
-      <div class="map-status map-error">{{ mapsError }}</div>
+    @if (mapsError()) {
+      <div class="map-status map-error">{{ mapsError() }}</div>
     }
-    @if (!mapsLoading && !mapsError) {
+    @if (!mapsLoading() && !mapsError()) {
       <google-map
         height="240px"
         width="100%"
-        [center]="center"
+        [center]="center()"
         [zoom]="zoom"
         [options]="mapOptions"
         (mapInitialized)="onMapReady($event)"
         (mapClick)="onMapClick($event)"
       >
         <map-advanced-marker
-          [position]="markerPosition"
+          [position]="markerPosition()"
           [gmpDraggable]="true"
           (mapDragend)="onMarkerDragEnd($event)"
         ></map-advanced-marker>
@@ -61,9 +61,9 @@
     appButtonSize="sm"
     appButtonColor="primary"
     type="button"
-    [disabled]="!locationInput.trim() || isVerifying"
+    [disabled]="!locationInput().trim() || isVerifying()"
     (click)="confirmLocation()"
   >
-    {{ isVerifying ? 'Verifying...' : 'Confirm Location' }}
+    {{ isVerifying() ? 'Verifying...' : 'Confirm Location' }}
   </button>
 </mat-dialog-actions>
