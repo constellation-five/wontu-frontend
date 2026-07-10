@@ -27,6 +27,7 @@
       <button
         matIconButton
         appIconButtonVariant="text"
+        appButtonSize="compact"
         class="clear-all-btn"
         matTooltip="Clear all"
         (click)="onClearAll()"
@@ -70,23 +71,23 @@
                 notification.createdAt | naturalDateTime: undefined : false
               }}</span>
             </div>
-            <p class="notification-description mat-font-body-sm mat-text-on-surface-variant">
-              {{ notification.description }}
-            </p>
-            <span class="notification-type-chip" [attr.data-type]="notification.type">{{
-              notification.type
-            }}</span>
+            <div class="notification-body-row">
+              <p class="notification-description mat-font-body-sm mat-text-on-surface-variant">
+                {{ notification.description }}
+              </p>
+              <button
+                matIconButton
+                appIconButtonVariant="text"
+                appButtonSize="compact"
+                class="delete-btn"
+                matTooltip="Remove"
+                (click)="onDelete($event, notification.id)"
+                aria-label="Delete notification"
+              >
+                <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+              </button>
+            </div>
           </div>
-          <button
-            matIconButton
-            appIconButtonVariant="text"
-            class="delete-btn"
-            matTooltip="Remove"
-            (click)="onDelete($event, notification.id)"
-            aria-label="Delete notification"
-          >
-            <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-          </button>
         </div>
       }
     }

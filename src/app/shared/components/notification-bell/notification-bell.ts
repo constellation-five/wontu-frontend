@@ -8,6 +8,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotificationService, AppNotification } from '../../../core/notification.service';
 import { IconButtonVariantDirective } from '../../directives/button/icon-button-variant';
+import { ButtonSizeDirective } from '../../directives/button/button-size';
 import { NaturalDateTimePipe } from '../../pipes/natural-date-time.pipe';
 
 export type { AppNotification };
@@ -23,6 +24,7 @@ export type { AppNotification };
     MatDividerModule,
     MatTooltipModule,
     IconButtonVariantDirective,
+    ButtonSizeDirective,
     NaturalDateTimePipe,
   ],
   templateUrl: './notification-bell.html',
@@ -48,15 +50,5 @@ export class NotificationBellComponent {
 
   onClearAll(): void {
     this.notificationService.clearAll();
-  }
-
-  typeIcon(type: AppNotification['type']): string {
-    const icons: Record<AppNotification['type'], string> = {
-      info: 'info',
-      success: 'check_circle',
-      warning: 'warning',
-      error: 'error',
-    };
-    return icons[type];
   }
 }
