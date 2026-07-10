@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, effect, inject, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnDestroy,
+  QueryList,
+  ViewChildren,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NotificationService } from '../../../core/notification.service';
@@ -8,6 +19,7 @@ import { ButtonSizeDirective } from '../../directives/button/button-size';
 const AUTO_DISMISS_MS = 5000;
 const EXIT_MS = 240;
 const DRAG_DISMISS_THRESHOLD_PX = 90;
+const CARD_GAP_PX = 10;
 
 interface DragState {
   startX: number;
@@ -22,14 +34,16 @@ interface DragState {
   styleUrl: './notification-toast.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotificationToast implements OnDestroy {
+export class NotificationToast implements AfterViewInit, OnDestroy {
   protected readonly notificationService = inject(NotificationService);
-  protected readonly cardStep = 98;
+
+  @ViewChildren('wrapperEl') private readonly wrapperEls!: QueryList<ElementRef<HTMLElement>>;
 
   private readonly leavingIds = signal<ReadonlySet<string>>(new Set());
   private readonly timers = new Map<string, ReturnType<typeof setTimeout>>();
   private readonly seenIds = new Set<string>();
   private readonly dragStates = new Map<string, DragState>();
+  private wrappersByToastId = new Map<string, HTMLElement>();
 
   constructor() {
     effect(() => {
@@ -46,10 +60,16 @@ export class NotificationToast implements OnDestroy {
       for (const id of [...this.seenIds]) {
         if (!currentIds.has(id)) {
           this.seenIds.delete(id);
+          this.wrappersByToastId.delete(id);
           this.clearTimer(id);
         }
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.syncWrappers();
+    this.wrapperEls.changes.subscribe(() => this.syncWrappers());
   }
 
   ngOnDestroy(): void {
@@ -139,5 +159,46 @@ export class NotificationToast implements OnDestroy {
 
   private scheduleRemoval(toastId: string, delay: number): void {
     setTimeout(() => this.notificationService.dismissToast(toastId), delay);
+  }
+
+  /**
+   * Pairs each rendered `.toast-wrapper` with its toast id (array order
+   * matches the @for order) and recomputes every wrapper's stacking offset.
+   * Runs whenever a wrapper is added or removed — i.e. a toast arrives, or
+   * one finishes leaving and is actually removed from the array.
+   */
+  private syncWrappers(): void {
+    const toasts = this.notificationService.toasts();
+    const refs = this.wrapperEls.toArray();
+
+    this.wrappersByToastId.clear();
+    refs.forEach((ref, i) => {
+      const toast = toasts[i];
+      if (toast) {
+        this.wrappersByToastId.set(toast.toastId, ref.nativeElement);
+      }
+    });
+
+    this.recomputeOffsets();
+  }
+
+  /**
+   * Positions each toast at the cumulative rendered height of the toasts
+   * stacked above it, measured live from the DOM — so any content height
+   * works, with no clipping. Each wrapper animates to its new offset via its
+   * own `transition: transform`, so adding/removing a toast smoothly pushes
+   * the others down/up entirely through normal, composited transforms.
+   */
+  private recomputeOffsets(): void {
+    const toasts = this.notificationService.toasts();
+    let cumulative = 0;
+    for (const toast of toasts) {
+      const el = this.wrappersByToastId.get(toast.toastId);
+      if (!el) {
+        continue;
+      }
+      el.style.transform = `translateY(${cumulative}px)`;
+      cumulative += el.offsetHeight + CARD_GAP_PX;
+    }
   }
 }

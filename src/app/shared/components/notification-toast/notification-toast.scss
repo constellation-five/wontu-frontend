@@ -89,6 +89,10 @@
 .notification-title {
   color: var(--mat-sys-on-surface);
   font-weight: 600;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .notification-description {
@@ -105,31 +109,33 @@
   color: var(--mat-sys-on-surface-variant);
 }
 
-// TOAST SLOT (positioning layer)
-// Stacked via an index-driven `translateY`, so newer toasts appear above
-// older ones and the older ones smoothly slide down to make room. Kept on a
-// separate element from .toast-card so this vertical transform never fights
-// the card's own horizontal drag/exit transform.
+// TOAST WRAPPER (layout layer)
+// Absolutely positioned; its `translateY` is measured live from the actual
+// rendered height of every card stacked above it (see the component), so any
+// content height works with no clipping. Kept as a separate element from
+// .toast-card so this vertical transform never fights the card's own
+// horizontal drag/exit transform — both are `transform`, and one element's
+// `transform` can only hold one of the two at a time.
 // ============================================================================
-.toast-slot {
+.toast-wrapper {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   transition: transform 0.3s ease;
-  will-change: transform;
 }
 
-// TOAST CARD (notification-item, but standalone: rounded on all corners, shadowed, animated)
+// TOAST CARD (notification-item, standalone: rounded on all corners, shadowed, animated)
+// Renders at its full natural height immediately — no height clipping, so
+// nothing needs `overflow: hidden` here, which also means the box-shadow
+// below is never cropped.
 // ============================================================================
 .toast-card {
-  height: 88px;
   box-sizing: border-box;
   border-radius: var(--mat-sys-corner-medium);
   background-color: var(--mat-sys-surface-container-high);
   box-shadow: var(--mat-sys-level3);
   pointer-events: auto;
-  overflow: hidden;
   touch-action: pan-y;
   user-select: none;
   // No fill-mode: an active/filled animation would keep overriding this

@@ -1,6 +1,6 @@
 <div class="toast-container" aria-live="polite" aria-label="Notifications">
-  @for (toast of notificationService.toasts(); track toast.toastId; let i = $index) {
-    <div class="toast-slot" [style.transform]="'translateY(' + i * cardStep + 'px)'">
+  @for (toast of notificationService.toasts(); track toast.toastId) {
+    <div class="toast-wrapper" #wrapperEl>
       <div
         class="notification-item toast-card unread"
         [class.leaving]="isLeaving(toast.toastId)"
