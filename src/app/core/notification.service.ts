@@ -162,6 +162,5 @@ export class NotificationService {
   private pushToast(notification: AppNotification): void {
     const toastId = crypto.randomUUID();
     this._toasts.update((prev) => [{ toastId, notification }, ...prev].slice(0, 3));
-    setTimeout(() => this.dismissToast(toastId), 5000);
   }
 }

@@ -1,23 +1,40 @@
 <div class="toast-container" aria-live="polite" aria-label="Notifications">
-  @for (toast of notificationService.toasts(); track toast.toastId) {
-    <div class="toast-card" [attr.data-type]="toast.notification.type" role="alert">
-      <div class="toast-icon" [attr.data-type]="toast.notification.type">
-        <mat-icon fontSet="material-symbols-outlined">{{ iconForType(toast.notification.type) }}</mat-icon>
-      </div>
-      <div class="toast-body">
-        <p class="toast-title">{{ toast.notification.title }}</p>
-        <p class="toast-description">{{ toast.notification.description }}</p>
-      </div>
-      <button
-        matIconButton
-        appIconButtonVariant="text"
-        class="toast-close"
-        (click)="dismiss(toast.toastId)"
-        aria-label="Dismiss notification"
+  @for (toast of notificationService.toasts(); track toast.toastId; let i = $index) {
+    <div class="toast-slot" [style.transform]="'translateY(' + i * cardStep + 'px)'">
+      <div
+        class="notification-item toast-card unread"
+        [class.leaving]="isLeaving(toast.toastId)"
+        [attr.data-type]="toast.notification.type"
+        role="alert"
+        (pointerdown)="onPointerDown($event, toast.toastId)"
+        (pointermove)="onPointerMove($event, toast.toastId)"
+        (pointerup)="onPointerUp($event, toast.toastId)"
+        (pointercancel)="onPointerUp($event, toast.toastId)"
       >
-        <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-      </button>
-      <div class="toast-progress" [attr.data-type]="toast.notification.type"></div>
+        <div class="notification-icon" [attr.data-type]="toast.notification.type">
+          <mat-icon fontSet="material-symbols-outlined">{{ toast.notification.icon }}</mat-icon>
+        </div>
+        <div class="notification-body">
+          <div class="notification-title-row">
+            <span class="notification-title mat-font-label-md">{{ toast.notification.title }}</span>
+          </div>
+          <div class="notification-body-row">
+            <p class="notification-description mat-font-body-sm mat-text-on-surface-variant">
+              {{ toast.notification.description }}
+            </p>
+            <button
+              matIconButton
+              appIconButtonVariant="text"
+              appButtonSize="compact"
+              class="delete-btn"
+              (click)="onDismissClick(toast.toastId)"
+              aria-label="Dismiss notification"
+            >
+              <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   }
 </div>
