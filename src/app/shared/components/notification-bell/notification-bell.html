@@ -20,76 +20,47 @@
 </button>
 
 <mat-menu #notificationMenu="matMenu" class="notification-menu">
-  <!-- HEADER -->
-  <div class="notification-header" (click)="$event.stopPropagation()">
-    <h3 class="mat-font-title-md">Notifications</h3>
-    @if (notificationService.notifications().length > 0) {
-      <button
-        matIconButton
-        appIconButtonVariant="text"
-        appButtonSize="compact"
-        class="clear-all-btn"
-        matTooltip="Clear all"
-        (click)="onClearAll()"
-        aria-label="Clear all notifications"
-      >
-        <mat-icon fontSet="material-symbols-outlined">delete_sweep</mat-icon>
-      </button>
-    }
+  <!-- HEADER CARD -->
+  <div class="notification-header-card" (click)="$event.stopPropagation()">
+    <h3 class="mat-font-title-md">{{ headerText() }}</h3>
+    <!--
+      Always rendered (never structurally removed) so the header is the same
+      height regardless of notification count — only visibility/interactivity
+      toggle, not layout.
+    -->
+    <button
+      matIconButton
+      appIconButtonVariant="text"
+      appButtonSize="compact"
+      class="clear-all-btn"
+      [class.clear-all-btn-hidden]="notificationService.notifications().length === 0"
+      [disabled]="notificationService.notifications().length === 0"
+      [attr.aria-hidden]="notificationService.notifications().length === 0"
+      [tabIndex]="notificationService.notifications().length === 0 ? -1 : 0"
+      matTooltip="Clear all"
+      (click)="onClearAll()"
+      aria-label="Clear all notifications"
+    >
+      <mat-icon fontSet="material-symbols-outlined">delete_sweep</mat-icon>
+    </button>
   </div>
-
-  <mat-divider />
 
   <!-- CONTENT -->
-  <div class="notification-list" (click)="$event.stopPropagation()">
-    @if (notificationService.isLoading()) {
-      <div class="empty-state">
-        <mat-icon fontSet="material-symbols-outlined" class="loading-icon"
-          >hourglass_empty</mat-icon
-        >
-        <p class="mat-font-body-sm mat-text-on-surface-variant">Loading…</p>
-      </div>
-    } @else if (notificationService.notifications().length === 0) {
-      <div class="empty-state">
-        <mat-icon fontSet="material-symbols-outlined">notifications_none</mat-icon>
-        <p class="mat-font-label-md mat-text-on-surface-variant">You have no notifications</p>
-      </div>
-    } @else {
-      @for (notification of notificationService.notifications(); track notification.id) {
-        <div
-          class="notification-item"
-          [class.unread]="!notification.read"
-          [attr.data-type]="notification.type"
-        >
-          <div class="notification-icon" [attr.data-type]="notification.type">
-            <mat-icon fontSet="material-symbols-outlined">{{ notification.icon }}</mat-icon>
-          </div>
-          <div class="notification-body">
-            <div class="notification-title-row">
-              <span class="notification-title mat-font-label-md">{{ notification.title }}</span>
-              <span class="notification-time mat-font-label-sm mat-text-on-surface-variant">{{
-                notification.createdAt | naturalDateTime: undefined : false
-              }}</span>
-            </div>
-            <div class="notification-body-row">
-              <p class="notification-description mat-font-body-sm mat-text-on-surface-variant">
-                {{ notification.description }}
-              </p>
-              <button
-                matIconButton
-                appIconButtonVariant="text"
-                appButtonSize="compact"
-                class="delete-btn"
-                matTooltip="Remove"
-                (click)="onDelete($event, notification.id)"
-                aria-label="Delete notification"
-              >
-                <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-              </button>
-            </div>
-          </div>
-        </div>
-      }
-    }
-  </div>
+  @if (notificationService.isLoading()) {
+    <div class="empty-state" (click)="$event.stopPropagation()">
+      <mat-icon fontSet="material-symbols-outlined" class="loading-icon">hourglass_empty</mat-icon>
+      <p class="mat-font-body-sm mat-text-on-surface-variant">Loading…</p>
+    </div>
+  } @else if (notificationService.notifications().length > 0) {
+    <div
+      class="notification-list"
+      #listEl
+      [class.fade-top]="showTopFade()"
+      [class.fade-bottom]="showBottomFade()"
+      (click)="$event.stopPropagation()"
+      (scroll)="onListScroll($event)"
+    >
+      <app-notification-stack [items]="items()" (dismissed)="onDismissed($event)" />
+    </div>
+  }
 </mat-menu>

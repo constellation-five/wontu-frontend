@@ -13,31 +13,42 @@
 }
 
 // NOTIFICATION MENU PANEL
+// The panel itself is just a transparent, unshadowed layout box now — the
+// header and the notification list are each their own floating card.
 // ============================================================================
 ::ng-deep {
   .notification-menu {
     max-width: none !important;
     width: 360px;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    // Material's default menu panel clips to its own (rounded-corner) box —
+    // without this, the header card's shadow gets cropped whenever the panel
+    // hugs its content tightly (e.g. the empty state, with no list below).
+    overflow: visible !important;
 
     .mat-mdc-menu-content {
-      padding: 0 !important;
+      padding: 0 14px !important;
       width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
-  }
-
-  .mat-divider {
-    margin: 0 !important;
   }
 }
 
-// HEADER
+// HEADER CARD
 // ============================================================================
-.notification-header {
+.notification-header-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px 12px 20px;
+  border-radius: var(--mat-sys-corner-medium);
   background-color: var(--mat-sys-surface-container);
+  box-shadow: var(--mat-sys-level3);
 
   h3 {
     margin: 0;
@@ -46,14 +57,72 @@
 
   .clear-all-btn {
     color: var(--mat-sys-on-surface-variant);
+
+    // Kept in the layout (not structurally removed) so the header's height
+    // never depends on whether there's anything to clear — just visually
+    // hidden and non-interactive when there isn't.
+    &-hidden {
+      visibility: hidden;
+      pointer-events: none;
+    }
   }
 }
 
 // NOTIFICATION LIST
+// Grows with its content up to (roughly) the available page height, only
+// scrolling past that point — `100vh` minus room for the header card, the
+// bell button's own position, and a bit of breathing room above/below.
+//
+// `overflow-x: hidden` is required here (a scrolling `overflow-y` forces the
+// other axis to clip too, per the CSS overflow spec) — and that clipping
+// happens at *this* element's own edge, so shadow room has to come from
+// padding inside it, not from a parent's padding (which only creates space
+// outside this box, not within the region it actually clips). The negative
+// margin expands this box back out to the full content width first, so
+// adding that padding back doesn't leave the cards narrower than the header.
+//
+// --mat-sys-level3's shadow is offset *downward* (`6px`/`8px`/`3px`, no
+// negative values), so its reach past the card is small on top (~12px,
+// blur-only) but much larger on the bottom (~28px, offset + blur + spread),
+// and about ~14px on the sides (blur/2 + spread) — without this padding, the
+// first/last visible card clips top/bottom, and every card clips left/right.
 // ============================================================================
 .notification-list {
-  max-height: 420px;
+  max-height: calc(100vh - 160px);
   overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  margin: 0 -14px;
+  padding: 12px 14px 28px;
+  -webkit-mask-image: linear-gradient(to bottom, black, black);
+  mask-image: linear-gradient(to bottom, black, black);
+
+  &.fade-top:not(.fade-bottom) {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0, black 32px);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0, black 32px);
+  }
+
+  &.fade-bottom:not(.fade-top) {
+    -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 32px), rgba(0, 0, 0, 0.5) 100%);
+    mask-image: linear-gradient(to bottom, black calc(100% - 32px), rgba(0, 0, 0, 0.5) 100%);
+  }
+
+  &.fade-top.fade-bottom {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5) 0,
+      black 32px,
+      black calc(100% - 32px),
+      rgba(0, 0, 0, 0.5) 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5) 0,
+      black 32px,
+      black calc(100% - 32px),
+      rgba(0, 0, 0, 0.5) 100%
+    );
+  }
 
   &::-webkit-scrollbar {
     width: 5px;
@@ -69,142 +138,6 @@
   }
 }
 
-// NOTIFICATION ITEM
-// ============================================================================
-.notification-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--mat-sys-surface-variant);
-  transition: background-color 0.15s ease;
-  position: relative;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &.unread {
-    background-color: var(--mat-sys-surface-container-low);
-
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      border-radius: 0 2px 2px 0;
-    }
-
-    &[data-type='info']::before {
-      background-color: var(--mat-sys-primary);
-    }
-    &[data-type='success']::before {
-      background-color: #22c55e;
-    }
-    &[data-type='warning']::before {
-      background-color: #f59e0b;
-    }
-    &[data-type='error']::before {
-      background-color: var(--mat-sys-error);
-    }
-  }
-
-  &:hover {
-    background-color: var(--mat-sys-surface-container);
-  }
-}
-
-.notification-icon {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--mat-sys-corner-full);
-  margin-top: 2px;
-
-  mat-icon {
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
-  }
-
-  &[data-type='info'] {
-    background-color: color-mix(in srgb, var(--mat-sys-primary) 15%, transparent);
-    color: var(--mat-sys-primary);
-  }
-
-  &[data-type='success'] {
-    background-color: color-mix(in srgb, #22c55e 15%, transparent);
-    color: #22c55e;
-  }
-
-  &[data-type='warning'] {
-    background-color: color-mix(in srgb, #f59e0b 15%, transparent);
-    color: #f59e0b;
-  }
-
-  &[data-type='error'] {
-    background-color: color-mix(in srgb, var(--mat-sys-error) 15%, transparent);
-    color: var(--mat-sys-error);
-  }
-}
-
-.notification-body {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.notification-title-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-
-.notification-body-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-
-.notification-title {
-  color: var(--mat-sys-on-surface);
-  font-weight: 600;
-}
-
-.notification-time {
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.notification-description {
-  margin: 0;
-  line-height: 1.4;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-.delete-btn {
-  flex-shrink: 0;
-  color: var(--mat-sys-on-surface-variant);
-  opacity: 0;
-  transition: opacity 0.15s ease;
-
-  .notification-item:hover & {
-    opacity: 1;
-  }
-}
-
 // EMPTY & LOADING STATE
 // ============================================================================
 .empty-state {
@@ -213,6 +146,9 @@
   align-items: center;
   justify-content: center;
   padding: 36px 16px;
+  border-radius: var(--mat-sys-corner-medium);
+  background-color: var(--mat-sys-surface-container);
+  box-shadow: var(--mat-sys-level3);
   color: var(--mat-sys-on-surface-variant);
 
   mat-icon {
