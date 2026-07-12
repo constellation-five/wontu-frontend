@@ -47,7 +47,7 @@ export class NotificationBellComponent {
   );
 
   protected readonly headerText = computed<string>(() =>
-    !this.notificationService.isLoading() && this.notificationService.notifications().length === 0
+    this.notificationService.notifications().length === 0
       ? 'You have no notifications'
       : 'Notifications',
   );

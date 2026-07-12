@@ -46,12 +46,7 @@
   </div>
 
   <!-- CONTENT -->
-  @if (notificationService.isLoading()) {
-    <div class="empty-state" (click)="$event.stopPropagation()">
-      <mat-icon fontSet="material-symbols-outlined" class="loading-icon">hourglass_empty</mat-icon>
-      <p class="mat-font-body-sm mat-text-on-surface-variant">Loading…</p>
-    </div>
-  } @else if (notificationService.notifications().length > 0) {
+  @if (notificationService.notifications().length > 0) {
     <div
       class="notification-list"
       #listEl
