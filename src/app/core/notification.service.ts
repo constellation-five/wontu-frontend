@@ -11,6 +11,7 @@ export interface AppNotification {
   description: string;
   icon: string;
   type: NotificationType;
+  actionUrl?: string;
   read: boolean;
   createdAt: string;
 }
@@ -26,6 +27,7 @@ interface ApiNotification {
   description: string;
   icon: string;
   type: NotificationType;
+  action_url?: string;
   read: boolean;
   created_at: string;
 }
@@ -37,6 +39,7 @@ function toAppNotification(raw: ApiNotification): AppNotification {
     description: raw.description,
     icon: raw.icon,
     type: raw.type,
+    actionUrl: raw.action_url,
     read: raw.read,
     createdAt: raw.created_at,
   };
@@ -72,6 +75,7 @@ export class NotificationService {
         description: raw['description'] as string,
         icon: (raw['icon'] as string) ?? 'notifications',
         type: (raw['notification_type'] as NotificationType) ?? 'info',
+        actionUrl: raw['action_url'] as string | undefined,
         read: false,
         createdAt: new Date().toISOString(),
       };

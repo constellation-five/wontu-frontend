@@ -8,6 +8,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatMenuModule } from '@angular/material/menu';
@@ -39,6 +40,7 @@ export type { AppNotification };
 })
 export class NotificationBellComponent {
   protected readonly notificationService = inject(NotificationService);
+  private readonly router = inject(Router);
 
   protected readonly items = computed<NotificationStackItem[]>(() =>
     this.notificationService
@@ -101,5 +103,15 @@ export class NotificationBellComponent {
 
   onClearAll(): void {
     this.notificationService.clearAll();
+  }
+
+  onNotificationClick(notification: AppNotification): void {
+    if (!notification.read) {
+      this.notificationService.markAsRead(notification.id);
+    }
+    
+    if (notification.actionUrl) {
+      this.router.navigateByUrl(notification.actionUrl);
+    }
   }
 }

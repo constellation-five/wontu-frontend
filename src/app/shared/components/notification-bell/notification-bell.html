@@ -55,7 +55,7 @@
       (click)="$event.stopPropagation()"
       (scroll)="onListScroll($event)"
     >
-      <app-notification-stack [items]="items()" (dismissed)="onDismissed($event)" />
+      <app-notification-stack [items]="items()" (dismissed)="onDismissed($event)" (clicked)="onNotificationClick($event)" />
     </div>
   }
 </mat-menu>

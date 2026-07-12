@@ -78,6 +78,7 @@ export class NotificationStack implements AfterViewInit, OnDestroy {
   /** If set, each item auto-dismisses this many ms after it first appears. Omit for a persistent list. */
   readonly autoDismissMs = input<number | null>(null);
   readonly dismissed = output<string>();
+  readonly clicked = output<AppNotification>();
 
   @ViewChildren('wrapperEl') private readonly wrapperEls!: QueryList<ElementRef<HTMLElement>>;
   @ViewChild('containerEl') private readonly containerEl!: ElementRef<HTMLElement>;
@@ -196,6 +197,13 @@ export class NotificationStack implements AfterViewInit, OnDestroy {
         const autoDismissMs = this.autoDismissMs();
         if (autoDismissMs) {
           this.scheduleAutoDismiss(id, autoDismissMs);
+        }
+        
+        if (dx < 5) {
+          const item = this.items().find((i) => i.id === id);
+          if (item) {
+            this.clicked.emit(item.notification);
+          }
         }
       }, 200);
     }
