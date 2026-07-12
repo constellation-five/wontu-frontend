@@ -46,7 +46,7 @@
   </div>
 
   <!-- CONTENT -->
-  @if (notificationService.notifications().length > 0) {
+  @if (!notificationService.isLoading() && notificationService.notifications().length > 0) {
     <div
       class="notification-list"
       #listEl
