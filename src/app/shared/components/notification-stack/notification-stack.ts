@@ -62,7 +62,13 @@ interface DragState {
 @Component({
   selector: 'app-notification-stack',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, IconButtonVariantDirective, ButtonSizeDirective, NaturalDateTimePipe],
+  imports: [
+    MatIconModule,
+    MatButtonModule,
+    IconButtonVariantDirective,
+    ButtonSizeDirective,
+    NaturalDateTimePipe,
+  ],
   templateUrl: './notification-stack.html',
   styleUrl: './notification-stack.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -137,7 +143,12 @@ export class NotificationStack implements AfterViewInit, OnDestroy {
     // it gets dragged before release.
     const clone = this.createPortalClone(el);
     el.style.visibility = 'hidden';
-    this.dragStates.set(id, { startX: event.clientX, currentX: event.clientX, clone, sourceEl: el });
+    this.dragStates.set(id, {
+      startX: event.clientX,
+      currentX: event.clientX,
+      clone,
+      sourceEl: el,
+    });
   }
 
   onPointerMove(event: PointerEvent, id: string): void {
@@ -257,8 +268,6 @@ export class NotificationStack implements AfterViewInit, OnDestroy {
     clone.style.pointerEvents = 'none';
     clone.style.animation = 'none';
     clone.style.transition = 'none';
-    // A lifted card sits above its neighbours with a heavier shadow.
-    clone.style.boxShadow = 'var(--mat-sys-level5)';
     // Carry over whatever transform/opacity the source already had (e.g. a
     // still-running entrance animation) so the handoff is visually seamless.
     clone.style.transform = computed.transform === 'none' ? '' : computed.transform;
