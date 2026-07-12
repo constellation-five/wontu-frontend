@@ -190,6 +190,9 @@ export class NotificationStack implements AfterViewInit, OnDestroy {
       setTimeout(() => {
         clone.remove();
         sourceEl.style.visibility = '';
+        sourceEl.classList.remove('shadow-transition-backwards');
+        void sourceEl.offsetWidth;
+        sourceEl.classList.add('shadow-transition-backwards');
         const autoDismissMs = this.autoDismissMs();
         if (autoDismissMs) {
           this.scheduleAutoDismiss(id, autoDismissMs);
@@ -258,6 +261,8 @@ export class NotificationStack implements AfterViewInit, OnDestroy {
 
     const clone = sourceEl.cloneNode(true) as HTMLElement;
     clone.classList.remove('leaving');
+    clone.classList.remove('shadow-transition-backwards');
+    clone.classList.add('shadow-transition-forwards');
     clone.style.position = 'fixed';
     clone.style.margin = '0';
     clone.style.top = `${rect.top}px`;
@@ -266,7 +271,6 @@ export class NotificationStack implements AfterViewInit, OnDestroy {
     clone.style.height = `${rect.height}px`;
     clone.style.zIndex = '9999';
     clone.style.pointerEvents = 'none';
-    clone.style.animation = 'none';
     clone.style.transition = 'none';
     // Carry over whatever transform/opacity the source already had (e.g. a
     // still-running entrance animation) so the handoff is visually seamless.

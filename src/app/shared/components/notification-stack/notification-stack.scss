@@ -165,3 +165,20 @@
     opacity: 1;
   }
 }
+
+.shadow-transition-forwards {
+  animation: shadow-transition 0.2s ease forwards;
+}
+
+.shadow-transition-backwards {
+  animation: shadow-transition 0.2s ease reverse forwards;
+}
+
+@keyframes shadow-transition {
+  from {
+    box-shadow: var(--mat-sys-level3);
+  }
+  to {
+    box-shadow: var(--mat-sys-level5);
+  }
+}
