@@ -1,0 +1,99 @@
+@if (isMobile()) {
+  <header class="mobile-header mat-bg-surface">
+    <button mat-icon-button (click)="goBack()" class="back-button">
+      <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
+    </button>
+    <h1 class="mobile-title mat-title-medium mat-text-on-surface">Following</h1>
+  </header>
+}
+
+<div [class.mobile-wrapper]="isMobile()">
+  <app-pane>
+    @if (!isMobile()) {
+      <h2 class="page-title mat-text-on-surface mb-lg" style="font: var(--mat-sys-title-large);">Following</h2>
+    }
+
+    @if (isLoading()) {
+      <div class="loading-state mat-font-body-md mat-text-on-surface-variant">Loading...</div>
+    } @else {
+      <div class="following-container">
+        <!-- Search Bar -->
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-icon matPrefix fontSet="material-symbols-outlined" class="search-icon">search</mat-icon>
+          <input
+            matInput
+            placeholder="Search"
+            [ngModel]="searchQuery()"
+            (ngModelChange)="onSearchChange($event)"
+          />
+        </mat-form-field>
+
+        <!-- Following List -->
+        @if (filteredFollowing().length > 0) {
+          <div class="following-list">
+            @for (user of filteredFollowing(); track user.user_id) {
+              <div class="following-item">
+                <div class="following-left">
+                  <div class="user-info" (click)="navigateToProfile(user.user_id)">
+                    @if (user.avatar) {
+                      <img [src]="user.avatar" [alt]="user.name" class="avatar" />
+                    } @else {
+                      <div class="avatar-placeholder mat-bg-primary-container mat-text-on-primary-container">
+                        {{ user.name.charAt(0).toUpperCase() }}
+                      </div>
+                    }
+                    <div class="user-details">
+                      <p class="user-name mat-text-on-surface" [class.mat-font-body-sm]="isMobile()" [class.mat-font-body-md]="!isMobile()">{{ user.name }}</p>
+                      @if (user.mutual_count > 0) {
+                        <p class="mutual-text-mobile mat-font-label-sm mat-text-on-surface-variant">
+                          <span class="mutual-count mat-text-primary">{{ user.mutual_count }}</span> mutual friends
+                        </p>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                @if (user.mutual_count > 0) {
+                  <div class="mutual-section">
+                    <div class="mutual-avatars">
+                      @for (friend of user.mutual_friends.slice(0, 3); track friend.user_id; let i = $index) {
+                        @if (friend.avatar) {
+                          <img [src]="friend.avatar" [alt]="friend.name" class="mutual-avatar" [style.z-index]="3 - i" />
+                        } @else {
+                          <div class="mutual-avatar-placeholder mat-bg-primary-container mat-text-on-primary-container" [style.z-index]="3 - i">
+                            {{ friend.name.charAt(0).toUpperCase() }}
+                          </div>
+                        }
+                      }
+                      @if (user.mutual_count > 3) {
+                        <div class="mutual-more mat-bg-surface-container-high mat-text-primary" [style.z-index]="0">
+                          +{{ user.mutual_count - 3 }}
+                        </div>
+                      }
+                    </div>
+                    <p class="mutual-text mat-font-label-sm mat-text-on-surface-variant">
+                      <span class="mutual-count mat-text-primary">{{ user.mutual_count }}</span> mutual friends
+                    </p>
+                  </div>
+                }
+
+                <button
+                  matButton="outlined"
+                  [appButtonSize]="'sm'"
+                  class="btn-following"
+                  (click)="unfollow(user)"
+                >
+                  Following
+                </button>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty-state mat-font-body-md mat-text-on-surface-variant">
+            No following found
+          </div>
+        }
+      </div>
+    }
+  </app-pane>
+</div>

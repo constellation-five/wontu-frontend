@@ -1,5 +1,87 @@
-<section class="p-6 pb-28">
-  <button mat-raised-button color="primary" routerLink="/profile/payment-method">
-    Add Payment Method
-  </button>
-</section>
+<div class="profile-container" [class.mobile]="isMobile()">
+  <!-- Sidebar - Show only when: Desktop OR (Mobile AND at root) -->
+  @if (!isMobile() || currentRoute() === 'none') {
+    <aside class="profile-sidebar" [class.mobile-mode]="isMobile() && currentRoute() === 'none'" [class.desktop-mode]="!isMobile()">
+      @if (profile(); as user) {
+        @if (isMobile() && currentRoute() === 'none') {
+          <h1 class="mobile-profile-title mat-title-large mat-text-on-surface">Profile</h1>
+        }
+        
+        <!-- User Avatar & Info -->
+        <div class="user-header">
+          <div class="avatar-container">
+            @if (user.avatar) {
+              <img [src]="user.avatar" [alt]="user.name" class="avatar" />
+            } @else {
+              <div class="avatar-placeholder mat-bg-primary-container mat-text-on-primary-container">
+                {{ user.name.charAt(0).toUpperCase() }}
+              </div>
+            }
+          </div>
+          <h3 class="username mat-font-body-lg text-bold mat-text-on-surface">{{ user.name }}</h3>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats mat-bg-surface-container-lowest mat-corner-lg mat-shadow-1">
+          <a routerLink="/profile/followers" class="stat-item">
+            <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{ formatNumber(user.followers_count) }}</span>
+            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant">Followers</span>
+          </a>
+          <a routerLink="/profile/following" class="stat-item">
+            <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{ formatNumber(user.following_count) }}</span>
+            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant">Following</span>
+          </a>
+          <button (click)="openRatingDialog()" class="stat-item stat-button">
+            <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{ user.average_rating }}/5</span>
+            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant">Rating</span>
+          </button>
+        </div>
+
+        <!-- Menu Items -->
+        <nav class="menu">
+          <button
+            (click)="navigateToSubpage('')"
+            [class.active]="currentRoute() === 'account'"
+            class="menu-item mat-font-label-lg mat-text-on-surface"
+          >
+            <mat-icon class="menu-icon" fontSet="material-symbols-outlined">person</mat-icon>
+            Account
+          </button>
+
+          <button
+            (click)="navigateToSubpage('payment-method')"
+            [class.active]="currentRoute() === 'payment'"
+            class="menu-item mat-font-label-lg mat-text-on-surface"
+          >
+            <mat-icon class="menu-icon" fontSet="material-symbols-outlined">attach_money</mat-icon>
+            Payment
+          </button>
+
+          <button
+            (click)="navigateToSubpage('settings')"
+            [class.active]="currentRoute() === 'settings'"
+            class="menu-item mat-font-label-lg mat-text-on-surface"
+          >
+            <mat-icon class="menu-icon" fontSet="material-symbols-outlined">settings</mat-icon>
+            Settings
+          </button>
+
+          <button
+            (click)="logout()"
+            class="menu-item mat-font-label-lg logout-btn"
+          >
+            <mat-icon class="menu-icon logout-icon" fontSet="material-symbols-outlined">logout</mat-icon>
+            <span class="logout-text">Sign out</span>
+          </button>
+        </nav>
+      }
+    </aside>
+  }
+
+  <!-- Main Content -->
+  @if (shouldShowContent()) {
+    <main class="profile-content">
+      <router-outlet />
+    </main>
+  }
+</div>

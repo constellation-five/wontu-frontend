@@ -1,0 +1,132 @@
+.rating-dialog {
+  display: flex;
+  flex-direction: column;
+  width: 510px;
+  max-width: 90vw;
+  background-color: var(--mat-sys-surface-container-lowest);
+  border-radius: var(--mat-sys-corner-large);
+  overflow: hidden;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xl) var(--spacing-xl) 0 var(--spacing-xl);
+  background-color: var(--mat-sys-surface-container-lowest);
+}
+
+.dialog-title {
+  margin: 0;
+}
+
+.close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--mat-sys-corner-full);
+  color: var(--mat-sys-on-surface-variant);
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: var(--mat-sys-surface-container-high);
+  }
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.rating-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-md) var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+  background-color: var(--mat-sys-surface-container-lowest);
+}
+
+.rating-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2xs); // 4px gap
+  text-align: center;
+}
+
+.star-display {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.star {
+  font-size: 40px;
+  color: var(--mat-sys-outline-variant);
+  
+  &.filled {
+    color: #FFA500; // Orange color for filled stars
+  }
+}
+
+.average-text {
+  margin: 0;
+}
+
+.total-ratings {
+  margin: 0;
+}
+
+.rating-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.breakdown-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.star-label {
+  min-width: 50px;
+  margin: 0;
+}
+
+.progress-bar-container {
+  flex: 1;
+  height: 24px;
+  background-color: var(--mat-sys-surface-container-high);
+  border-radius: var(--mat-sys-corner-full);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--mat-sys-surface-container-high);
+  border-radius: var(--mat-sys-corner-full);
+  transition: width 0.3s ease;
+  
+  &.has-value {
+    background-color: var(--mat-sys-primary);
+  }
+}
+
+.percentage-label {
+  min-width: 60px;
+  text-align: right;
+  margin: 0;
+}
+
+.loading-state,
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  background-color: var(--mat-sys-surface-container-lowest);
+}

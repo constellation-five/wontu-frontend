@@ -1,0 +1,92 @@
+@if (isMobile()) {
+  <header class="mobile-header mat-bg-surface">
+    <button mat-icon-button (click)="goBack()" class="back-button">
+      <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
+    </button>
+    <h1 class="mobile-title mat-title-large mat-text-on-surface">Settings</h1>
+  </header>
+}
+
+<div [class.mobile-wrapper]="isMobile()">
+  <app-pane [class.mobile-pane]="isMobile()">
+    <h2 class="page-title mat-title-large mat-text-on-surface">Settings</h2>
+
+  <div class="settings-container">
+    <!-- Notification Settings Section -->
+    <section class="settings-section">
+      <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface">Notification Settings</h3>
+      <p class="section-desc mat-font-body-sm mat-text-on-surface-variant">
+        We may still send you important notifications about your account outside of your notification settings.
+      </p>
+
+      <div class="notification-list">
+        <!-- Header Row -->
+        <div class="notification-header">
+          <div class="header-spacer"></div>
+          <div class="header-toggles">
+            <span class="header-label mat-font-body-md mat-text-on-surface-variant">Push</span>
+            <span class="header-label mat-font-body-md mat-text-on-surface-variant">Email</span>
+          </div>
+        </div>
+
+        <!-- Notification Items -->
+        @for (setting of notificationSettings(); track setting.id) {
+          <div class="notification-item">
+            <div class="notification-info">
+              <h4 class="notification-label mat-font-body-lg mat-text-on-surface">{{ setting.label }}</h4>
+              <p class="notification-desc mat-font-body-sm mat-text-on-surface-variant">
+                {{ setting.description }}
+              </p>
+            </div>
+            <div class="notification-toggles">
+              <mat-slide-toggle
+                [checked]="setting.push"
+                (change)="togglePush(setting.id)"
+                color="primary"
+              ></mat-slide-toggle>
+              <mat-slide-toggle
+                [checked]="setting.email"
+                (change)="toggleEmail(setting.id)"
+                color="primary"
+              ></mat-slide-toggle>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Language Settings Section -->
+    <section class="settings-section">
+      <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface">Language Settings</h3>
+      
+      <mat-form-field appearance="outline" class="language-select">
+        <mat-select
+          [value]="selectedLanguage()"
+          (selectionChange)="changeLanguage($event.value)"
+          placeholder="Select Language"
+        >
+          @for (lang of languages; track lang.value) {
+            <mat-option [value]="lang.value">{{ lang.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </section>
+
+    <!-- Dark Mode Section -->
+    <section class="settings-section">
+      <div class="dark-mode-header">
+        <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface">Dark Mode</h3>
+        <mat-slide-toggle
+          [checked]="darkMode()"
+          (change)="toggleDarkMode()"
+          color="primary"
+          class="dark-mode-toggle"
+        ></mat-slide-toggle>
+      </div>
+      <p class="section-desc mat-font-body-sm mat-text-on-surface-variant">
+        Switch to a darker theme to reduce eye strain in low-light environments.
+      </p>
+    </section>
+  </div>
+</app-pane>
+</div>

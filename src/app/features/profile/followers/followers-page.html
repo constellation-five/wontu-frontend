@@ -1,0 +1,99 @@
+@if (isMobile()) {
+  <header class="mobile-header mat-bg-surface">
+    <button mat-icon-button (click)="goBack()" class="back-button">
+      <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
+    </button>
+    <h1 class="mobile-title mat-title-medium mat-text-on-surface">Followers</h1>
+  </header>
+}
+
+<div [class.mobile-wrapper]="isMobile()">
+  <app-pane>
+    @if (!isMobile()) {
+      <h2 class="page-title mat-text-on-surface mb-lg" style="font: var(--mat-sys-title-large);">Followers</h2>
+    }
+
+    @if (isLoading()) {
+      <div class="loading-state mat-font-body-md mat-text-on-surface-variant">Loading...</div>
+    } @else {
+      <div class="followers-container">
+        <!-- Search Bar -->
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-icon matPrefix fontSet="material-symbols-outlined" class="search-icon">search</mat-icon>
+          <input
+            matInput
+            placeholder="Search"
+            [ngModel]="searchQuery()"
+            (ngModelChange)="onSearchChange($event)"
+          />
+        </mat-form-field>
+
+        <!-- Followers List -->
+        @if (filteredFollowers().length > 0) {
+          <div class="followers-list">
+            @for (follower of filteredFollowers(); track follower.user_id) {
+              <div class="follower-item">
+                <div class="follower-left">
+                  <div class="follower-info" (click)="navigateToProfile(follower.user_id)">
+                    @if (follower.avatar) {
+                      <img [src]="follower.avatar" [alt]="follower.name" class="avatar" />
+                    } @else {
+                      <div class="avatar-placeholder mat-bg-primary-container mat-text-on-primary-container">
+                        {{ follower.name.charAt(0).toUpperCase() }}
+                      </div>
+                    }
+                    <div class="user-details">
+                      <p class="user-name mat-text-on-surface" [class.mat-font-body-sm]="isMobile()" [class.mat-font-body-md]="!isMobile()">{{ follower.name }}</p>
+                      @if (follower.mutual_count > 0) {
+                        <p class="mutual-text-mobile mat-font-label-sm mat-text-on-surface-variant">
+                          <span class="mutual-count mat-text-primary">{{ follower.mutual_count }}</span> mutual friends
+                        </p>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                @if (follower.mutual_count > 0) {
+                  <div class="mutual-section">
+                    <div class="mutual-avatars">
+                      @for (friend of follower.mutual_friends.slice(0, 3); track friend.user_id; let i = $index) {
+                        @if (friend.avatar) {
+                          <img [src]="friend.avatar" [alt]="friend.name" class="mutual-avatar" [style.z-index]="3 - i" />
+                        } @else {
+                          <div class="mutual-avatar-placeholder mat-bg-primary-container mat-text-on-primary-container" [style.z-index]="3 - i">
+                            {{ friend.name.charAt(0).toUpperCase() }}
+                          </div>
+                        }
+                      }
+                      @if (follower.mutual_count > 3) {
+                        <div class="mutual-more mat-bg-surface-container-high mat-text-primary" [style.z-index]="0">
+                          +{{ follower.mutual_count - 3 }}
+                        </div>
+                      }
+                    </div>
+                    <p class="mutual-text mat-font-label-sm mat-text-on-surface-variant">
+                      <span class="mutual-count mat-text-primary">{{ follower.mutual_count }}</span> mutual friends
+                    </p>
+                  </div>
+                }
+
+                <button
+                  [matButton]="follower.is_following ? 'outlined' : 'filled'"
+                  [appButtonSize]="'sm'"
+                  [ngClass]="follower.is_following ? 'btn-following' : 'btn-follow-back'"
+                  (click)="toggleFollow(follower)"
+                >
+                  {{ follower.is_following ? 'Following' : 'Follow Back' }}
+                </button>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="empty-state mat-font-body-md mat-text-on-surface-variant">
+            No followers found
+          </div>
+        }
+      </div>
+    }
+  </app-pane>
+</div>

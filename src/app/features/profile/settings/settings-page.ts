@@ -1,0 +1,180 @@
+import { ChangeDetectionStrategy, Component, signal, HostListener, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { PaneComponent } from '../../../shared/components/pane/pane';
+import { BREAKPOINTS } from '../../../core/constants';
+import { environment } from '../../../../environments/environment';
+
+interface NotificationSetting {
+  id: string;
+  label: string;
+  description: string;
+  push: boolean;
+  email: boolean;
+}
+
+interface SettingsResponse {
+  success: boolean;
+  message: string;
+  data: {
+    notifications: Record<string, { push: boolean; email: boolean }>;
+    language: string;
+    dark_mode: boolean;
+  };
+}
+
+@Component({
+  selector: 'settings-page',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatIconModule,
+    PaneComponent,
+  ],
+  templateUrl: './settings-page.html',
+  styleUrl: './settings-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class SettingsPage implements OnInit {
+  private router = inject(Router);
+  private http = inject(HttpClient);
+
+  isMobile = signal(false);
+  isLoading = signal(true);
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkMobile();
+  }
+
+  ngOnInit() {
+    this.checkMobile();
+    this.loadSettings();
+  }
+
+  checkMobile() {
+    this.isMobile.set(window.innerWidth <= BREAKPOINTS.MD);
+  }
+
+  goBack() {
+    this.router.navigate(['/profile']);
+  }
+
+  // Notification settings metadata
+  private notificationMetadata = [
+    {
+      id: 'new-offers',
+      label: 'New Offers',
+      description: 'These are notifications when new offers match your preferences or become available.',
+    },
+    {
+      id: 'offer-updates',
+      label: 'Offer Updates',
+      description: 'These are notifications about price drops, status changes, or important updates on offers you follow.',
+    },
+    {
+      id: 'expiring-offers',
+      label: 'Expiring Offers',
+      description: 'These are reminders before an active offer\'s period or availability ends.',
+    },
+    {
+      id: 'new-messages',
+      label: 'New Messages',
+      description: 'These are notifications for direct messages and active discussions about offers or requests.',
+    },
+    {
+      id: 'account-activity',
+      label: 'Account Activity',
+      description: 'These are alerts for logins from new devices, profile changes, or essential security.',
+    },
+  ];
+
+  notificationSettings = signal<NotificationSetting[]>([]);
+  selectedLanguage = signal('english');
+  darkMode = signal(false);
+
+  languages = [
+    { value: 'english', label: 'English' },
+    { value: 'indonesian', label: 'Indonesian' },
+  ];
+
+  loadSettings() {
+    this.http.get<SettingsResponse>(`${environment.api}/settings`, { withCredentials: true }).subscribe({
+      next: (res) => {
+        // Map backend data to frontend structure
+        const settings = this.notificationMetadata.map(meta => ({
+          id: meta.id,
+          label: meta.label,
+          description: meta.description,
+          push: res.data.notifications[meta.id]?.push ?? false,
+          email: res.data.notifications[meta.id]?.email ?? false,
+        }));
+        
+        this.notificationSettings.set(settings);
+        this.selectedLanguage.set(res.data.language);
+        this.darkMode.set(res.data.dark_mode);
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.isLoading.set(false);
+      },
+    });
+  }
+
+  saveSettings() {
+    // Convert frontend structure to backend format
+    const notifications: Record<string, { push: boolean; email: boolean }> = {};
+    this.notificationSettings().forEach(setting => {
+      notifications[setting.id] = {
+        push: setting.push,
+        email: setting.email,
+      };
+    });
+
+    const data = {
+      notifications,
+      language: this.selectedLanguage(),
+      dark_mode: this.darkMode(),
+    };
+
+    this.http.put<SettingsResponse>(`${environment.api}/settings`, data, { withCredentials: true }).subscribe();
+  }
+
+  togglePush(settingId: string) {
+    this.notificationSettings.update(settings =>
+      settings.map(s =>
+        s.id === settingId ? { ...s, push: !s.push } : s
+      )
+    );
+    this.saveSettings();
+  }
+
+  toggleEmail(settingId: string) {
+    this.notificationSettings.update(settings =>
+      settings.map(s =>
+        s.id === settingId ? { ...s, email: !s.email } : s
+      )
+    );
+    this.saveSettings();
+  }
+
+  toggleDarkMode() {
+    this.darkMode.update(mode => !mode);
+    this.saveSettings();
+  }
+
+  changeLanguage(language: string) {
+    this.selectedLanguage.set(language);
+    this.saveSettings();
+  }
+}

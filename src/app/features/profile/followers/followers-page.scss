@@ -1,0 +1,269 @@
+@use '../../../../variables' as *;
+
+.mobile-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-sm);
+  z-index: 101;
+  box-shadow: var(--mat-sys-level1);
+  background-color: var(--mat-sys-surface);
+
+  .back-button {
+    position: absolute;
+    left: var(--spacing-sm);
+  }
+
+  .mobile-title {
+    margin: 0;
+    font: var(--mat-sys-title-medium);
+    text-align: center;
+  }
+}
+
+.mobile-wrapper {
+  padding: 64px var(--spacing-md) 80px; // 64px top for header, 80px bottom for navbar
+  background-color: var(--mat-sys-background);
+  min-height: 100vh;
+}
+
+.page-title {
+  margin: 0;
+}
+
+.followers-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.search-field {
+  width: 100%;
+
+  ::ng-deep {
+    .mat-mdc-form-field-focus-overlay {
+      background-color: var(--mat-sys-surface-container-high);
+    }
+
+    .mdc-text-field {
+      border-radius: var(--mat-sys-corner-full);
+      background-color: var(--mat-sys-surface-container-high);
+    }
+
+    .mdc-notched-outline {
+      display: none;
+    }
+
+    .mat-mdc-input-element {
+      color: var(--mat-sys-on-surface-variant);
+    }
+
+    .mat-mdc-input-element::placeholder {
+      color: var(--mat-sys-on-surface-variant);
+      opacity: 1;
+    }
+
+    // Remove the subscript wrapper spacing
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+  }
+}
+
+.search-icon {
+  color: var(--mat-sys-on-surface);
+}
+
+.followers-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.follower-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xs);
+  border-radius: var(--mat-sys-corner-medium);
+  background-color: var(--mat-sys-surface-container-lowest);
+  transition: background-color 0.2s;
+  gap: var(--spacing-lg);
+
+  &:hover {
+    background-color: var(--mat-sys-surface-container-low);
+  }
+
+  @media (max-width: $breakpoint-md) {
+    gap: var(--spacing-sm);
+    flex-wrap: nowrap;
+  }
+}
+
+.follower-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.follower-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  min-width: 0;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--mat-sys-corner-full);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.avatar-placeholder {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--mat-sys-corner-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.user-name {
+  margin: 0;
+}
+
+.mutual-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex: 1;
+  text-align: center;
+
+  @media (max-width: $breakpoint-md) {
+    // Mobile: only show text, no avatars
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-xs);
+    flex: 0;
+  }
+}
+
+.mutual-avatars {
+  display: flex;
+  position: relative;
+  height: 32px;
+
+  @media (max-width: $breakpoint-md) {
+    // Hide avatars on mobile
+    display: none;
+  }
+}
+
+.mutual-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--mat-sys-corner-full);
+  border: 2px solid var(--mat-sys-surface-container-lowest);
+  object-fit: cover;
+  position: relative;
+  
+  &:not(:first-child) {
+    margin-left: -12px;
+  }
+}
+
+.mutual-avatar-placeholder {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--mat-sys-corner-full);
+  border: 2px solid var(--mat-sys-surface-container-lowest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  
+  &:not(:first-child) {
+    margin-left: calc(var(--spacing-sm) * -1);
+  }
+}
+
+.mutual-more {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--mat-sys-corner-full);
+  border: 2px solid var(--mat-sys-surface-container-lowest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: calc(var(--spacing-sm) * -1);
+  position: relative;
+}
+
+.mutual-text {
+  margin: 0;
+
+  @media (max-width: $breakpoint-md) {
+    // Hide desktop mutual text on mobile
+    display: none;
+  }
+}
+
+.mutual-text-mobile {
+  margin: 0;
+  display: none; // Hidden on desktop
+
+  @media (max-width: $breakpoint-md) {
+    // Show only on mobile
+    display: block;
+  }
+}
+
+.mutual-count {
+  font-weight: 600;
+}
+
+// Button styling
+.btn-follow-back {
+  background-color: var(--mat-sys-primary) !important;
+  color: var(--mat-sys-on-primary) !important;
+  min-width: 120px;
+}
+
+.btn-following {
+  background-color: var(--mat-sys-surface-container-lowest) !important;
+  color: var(--mat-sys-on-surface-variant) !important;
+  border: 1.1px solid var(--mat-sys-outline-variant) !important;
+  min-width: 120px;
+}
+
+.loading-state,
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-2xl);
+}

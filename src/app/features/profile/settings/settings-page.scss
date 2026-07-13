@@ -1,0 +1,208 @@
+@use '../../../../variables' as *;
+
+.mobile-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-sm);
+  z-index: 101;
+  box-shadow: var(--mat-sys-level1);
+  background-color: var(--mat-sys-surface);
+
+  .back-button {
+    position: absolute;
+    left: var(--spacing-sm);
+  }
+
+  .mobile-title {
+    margin: 0;
+    font: var(--mat-sys-title-medium);
+    text-align: center;
+  }
+}
+
+.mobile-wrapper {
+  padding: 64px var(--spacing-md) 80px; // 64px top for header, 80px bottom for navbar
+  background-color: var(--mat-sys-background);
+  min-height: 100vh;
+}
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.page-title {
+  margin: 0 0 var(--spacing-lg) 0;
+  font: var(--mat-sys-title-large);
+}
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.section-title {
+  margin: 0;
+}
+
+.section-desc {
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xs);
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--spacing-xs);
+}
+
+.header-spacer {
+  flex: 1;
+}
+
+.header-toggles {
+  display: flex;
+  gap: var(--spacing-lg);
+  min-width: 120px;
+  padding-left: var(--spacing-xs);
+}
+
+.header-label {
+  min-width: 60px;
+  text-align: center;
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-2xl);
+
+  @media (max-width: $breakpoint-md) {
+    flex-direction: row;
+    gap: var(--spacing-md);
+    align-items: center;
+  }
+}
+
+.notification-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+
+  @media (max-width: $breakpoint-md) {
+    min-width: 0;
+  }
+}
+
+.notification-label {
+  margin: 0;
+}
+
+.notification-desc {
+  margin: 0;
+
+  @media (max-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+.notification-toggles {
+  display: flex;
+  gap: var(--spacing-lg);
+  min-width: 120px;
+  align-items: center;
+
+  mat-slide-toggle {
+    min-width: 60px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.toggle-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  justify-content: space-between;
+}
+
+.toggle-label {
+  min-width: 50px;
+  text-align: right;
+}
+
+// Hide icons (checkmark and dash) but keep the white circle
+::ng-deep {
+  .mat-mdc-slide-toggle {
+    // Hide checkmark and dash icons
+    .mdc-switch__icons {
+      display: none;
+    }
+    
+    // Remove border/outline on track
+    .mdc-switch__track {
+      border: none;
+      
+      &::before,
+      &::after {
+        border: none;
+      }
+    }
+    
+    // Ensure white circle is visible
+    .mdc-switch__handle::after {
+      background: white;
+    }
+  }
+}
+
+.language-select {
+  max-width: 300px;
+  margin-top: var(--spacing-xs);
+
+  @media (max-width: $breakpoint-md) {
+    max-width: 100%;
+  }
+
+  ::ng-deep {
+    // Remove the subscript wrapper spacing
+    .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+  }
+}
+
+.dark-mode-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-xs);
+}
+
+.dark-mode-toggle {
+  flex-shrink: 0;
+}

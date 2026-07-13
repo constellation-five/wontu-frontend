@@ -3,31 +3,33 @@
     <div class="bank-info">
       <bank-logo [bankName]="method().bank_name" size="56px" />
       <div class="bank-details">
-        <p class="bank-name">{{ method().bank_name }}</p>
-        <p class="account-name">{{ method().account_name }}</p>
+        <p class="bank-name mat-font-body-lg mat-text-on-surface">{{ method().bank_name }}</p>
+        <p class="account-name mat-font-body-sm mat-text-on-surface-variant">{{ method().account_name }}</p>
       </div>
     </div>
 
-    <div class="account-number-box">
-      <label class="account-label">Account number</label>
-      <div class="account-content">
-        <span class="account-text">{{ method().account_number }}</span>
+    <div class="right-section">
+      <div class="account-number-section">
+        <div class="account-number-box">
+          <span class="account-label mat-font-label-sm mat-text-on-surface-variant">Account Number</span>
+          <span class="account-number mat-font-body-md mat-text-on-surface">{{ method().account_number }}</span>
+          <button 
+            mat-icon-button
+            class="copy-button"
+            (click)="copyToClipboard(method().account_number); $event.stopPropagation()">
+            <mat-icon fontSet="material-symbols-outlined">content_copy</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      @if (showEdit()) {
         <button 
           mat-icon-button
-          class="copy-button"
-          (click)="copyToClipboard(method().account_number); $event.stopPropagation()">
-          <mat-icon fontSet="material-symbols-outlined">content_copy</mat-icon>
+          class="edit-button"
+          (click)="edit.emit(method())">
+          <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
         </button>
-      </div>
+      }
     </div>
-
-    @if (showEdit()) {
-      <button 
-        mat-icon-button
-        class="edit-button"
-        (click)="edit.emit(method())">
-        <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-      </button>
-    }
   </div>
 </mat-card>

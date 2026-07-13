@@ -84,7 +84,11 @@ export class Navbar {
 
   isTopLevelPage(): boolean {
     const path = this.router.url.split('?')[0].split('#')[0];
-    return this.links.some((link) => link.path === path);
+    // Check if exact match with nav links
+    const isExactMatch = this.links.some((link) => link.path === path);
+    // Or check if it's a profile subpage
+    const isProfileSubpage = path.startsWith('/profile/');
+    return isExactMatch || isProfileSubpage;
   }
 
   shouldHideBottomBar(): boolean {
