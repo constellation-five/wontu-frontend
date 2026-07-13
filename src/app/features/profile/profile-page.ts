@@ -172,8 +172,7 @@ export class ProfilePage implements OnInit {
             icon: 'logout',
             type: 'filled',
             action: 'logout',
-            bgColor: 'var(--mat-sys-error)',
-            textColor: 'var(--mat-sys-on-primary)'
+            color: 'error'
           }
         ]
       }

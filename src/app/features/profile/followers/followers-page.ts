@@ -131,14 +131,7 @@ export class FollowersPage implements OnInit, OnDestroy {
         })
         .subscribe({
           next: () => {
-            // Update local state
-            this.followers.update((followers) =>
-              followers.map((f) =>
-                f.user_id === follower.user_id ? { ...f, is_following: false } : f
-              )
-            );
-            this.onSearchChange(this.searchQuery());
-            // Refetch to get updated mutual counts
+            // Refetch to get fresh data including is_following_back status
             this.fetchFollowers();
             // Trigger parent profile page to refresh stats
             window.dispatchEvent(new CustomEvent('profile-updated'));
@@ -153,14 +146,7 @@ export class FollowersPage implements OnInit, OnDestroy {
         )
         .subscribe({
           next: () => {
-            // Update local state
-            this.followers.update((followers) =>
-              followers.map((f) =>
-                f.user_id === follower.user_id ? { ...f, is_following: true } : f
-              )
-            );
-            this.onSearchChange(this.searchQuery());
-            // Refetch to get updated mutual counts
+            // Refetch to get fresh data including is_following_back status
             this.fetchFollowers();
             // Trigger parent profile page to refresh stats
             window.dispatchEvent(new CustomEvent('profile-updated'));

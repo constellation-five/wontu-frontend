@@ -129,10 +129,8 @@ export class FollowingPage implements OnInit, OnDestroy {
       })
       .subscribe({
         next: () => {
-          this.following.update((following) =>
-            following.filter((f) => f.user_id !== user.user_id)
-          );
-          this.onSearchChange(this.searchQuery());
+          // Refetch to get fresh data
+          this.fetchFollowing();
           // Trigger parent profile page to refresh stats
           window.dispatchEvent(new CustomEvent('profile-updated'));
         },
