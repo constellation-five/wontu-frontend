@@ -1,5 +1,41 @@
 @use '../../../_variables' as *;
 
+.mobile-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-sm);
+  z-index: 101;
+  box-shadow: var(--mat-sys-level1);
+  background-color: var(--mat-sys-surface);
+
+  .back-button {
+    position: absolute;
+    left: var(--spacing-sm);
+  }
+
+  .mobile-title {
+    margin: 0;
+    font: var(--mat-sys-title-medium);
+    text-align: center;
+  }
+}
+
+.mobile-wrapper {
+  padding: 64px var(--spacing-md) 80px; // 64px top for header, 80px bottom for navbar
+  background-color: var(--mat-sys-background);
+  min-height: 100vh;
+}
+
+.page-title {
+  margin: 0 0 var(--spacing-sm) 0; // 12px gap to content below
+}
+
 .payment-methods-content {
   display: flex;
   flex-direction: column;
@@ -58,42 +94,78 @@
   padding: var(--spacing-2xl);
   max-width: 540px;
   width: 100%;
+  background-color: var(--mat-sys-surface-container-lowest);
 }
 
 .dialog-title {
   margin: 0 0 var(--spacing-lg) 0;
-  font: var(--mat-sys-headline-medium);
+  font: var(--mat-sys-headline-small);
   color: var(--mat-sys-on-surface);
 }
 
 .method-form {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-xs);
 
   mat-form-field {
     width: 100%;
+
+    ::ng-deep {
+      // Keep subscript wrapper but reduce its height when empty
+      .mat-mdc-form-field-subscript-wrapper {
+        min-height: 0;
+        
+        &:empty {
+          display: none;
+        }
+      }
+
+      // Style error message
+      .mat-mdc-form-field-error {
+        font: var(--mat-sys-body-small);
+      }
+    }
   }
 }
 
 .form-actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   gap: var(--spacing-sm);
-  margin-top: var(--spacing-lg);
+  margin-top: var(--spacing-xs);
   width: 100%;
+
+  @media (max-width: 400px) {
+    flex-wrap: wrap;
+  }
 }
 
-.primary-actions {
-  display: flex;
-  gap: var(--spacing-sm);
-  width: 100%;
+.spacer {
+  flex: 1;
 
-  button {
-    flex: 1;
+  @media (max-width: 400px) {
+    display: none;
+  }
+}
+
+.form-actions button {
+  flex: 0 0 auto;
+  min-width: auto;
+  white-space: nowrap;
+
+  @media (max-width: 400px) {
+    &:not(.delete-button) {
+      flex: 1;
+    }
   }
 }
 
 .delete-button {
-  width: 100%;
+  @media (max-width: 400px) {
+    order: 3;
+    width: 100%;
+    flex: 0 0 100%;
+  }
 }

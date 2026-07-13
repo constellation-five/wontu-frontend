@@ -1,0 +1,225 @@
+@if (isMobile()) {
+  <header class="mobile-header mat-bg-surface">
+    <button mat-icon-button (click)="goBack()" class="back-button">
+      <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
+    </button>
+    <h1 class="mobile-title mat-title-medium mat-text-on-surface">Account</h1>
+  </header>
+}
+
+<div [class.mobile-wrapper]="isMobile()" [class.desktop-wrapper]="!isMobile()">
+  @if (!isMobile()) {
+    <app-pane>
+      <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-large);">Account</h2>
+      
+      @if (personalInfo(); as info) {
+        <div class="account-container">
+          <!-- Profile Section -->
+          <section class="profile-section">
+            <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface">Profile</h3>
+            <p class="section-desc mat-font-body-sm mat-text-on-surface-variant">
+              This information will be displayed publicly so be careful what you share.
+            </p>
+
+            <!-- Name Field -->
+            <div class="form-field">
+              <label class="field-label mat-font-body-lg mat-text-on-surface">Name</label>
+              <div class="field-input-group">
+                <mat-form-field appearance="outline" class="username-input">
+                  <input 
+                    matInput 
+                    [formControl]="profileForm.controls.name" 
+                    placeholder="Enter name"
+                    [readonly]="!isEditingName()"
+                  />
+                </mat-form-field>
+                @if (isEditingName()) {
+                  <button
+                    matButton="filled"
+                    [appButtonSize]="'sm'"
+                    [appButtonColor]="'primary'"
+                    (click)="saveProfile()"
+                    [disabled]="profileForm.invalid || isSaving()"
+                    class="save-btn"
+                  >
+                    Save
+                  </button>
+                } @else {
+                  <button
+                    mat-icon-button
+                    (click)="enableNameEdit()"
+                    class="edit-btn"
+                  >
+                    <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+                  </button>
+                }
+              </div>
+            </div>
+
+            <!-- Username Field -->
+            <div class="form-field">
+              <label class="field-label mat-font-body-lg mat-text-on-surface">Username</label>
+              <div class="field-input-group">
+                <mat-form-field appearance="outline" class="username-input">
+                  <input 
+                    matInput 
+                    [formControl]="profileForm.controls.username" 
+                    placeholder="Enter username"
+                    [readonly]="!isEditingUsername()"
+                  />
+                </mat-form-field>
+                @if (isEditingUsername()) {
+                  <button
+                    matButton="filled"
+                    [appButtonSize]="'sm'"
+                    [appButtonColor]="'primary'"
+                    (click)="saveProfile()"
+                    [disabled]="profileForm.invalid || isSaving()"
+                    class="save-btn"
+                  >
+                    Save
+                  </button>
+                } @else {
+                  <button
+                    mat-icon-button
+                    (click)="enableUsernameEdit()"
+                    class="edit-btn"
+                  >
+                    <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+                  </button>
+                }
+              </div>
+            </div>
+          </section>
+
+          <!-- Personal Information Section -->
+          <section class="personal-info-section">
+            <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface">Personal Information</h3>
+            <p class="section-desc mat-font-body-sm mat-text-on-surface-variant">
+              This information is only displayed to you.
+            </p>
+
+            <!-- Email Field (Read-only) -->
+            <div class="form-field">
+              <label class="field-label mat-font-body-lg mat-text-on-surface">Email address</label>
+              <mat-form-field appearance="outline" class="readonly-input">
+                <input matInput [value]="info.email" readonly />
+              </mat-form-field>
+            </div>
+
+            <!-- Created At -->
+            <p class="created-at mat-font-body-sm mat-text-on-surface-variant">
+              This account was created on {{ formatDate(info.created_at) }}.
+            </p>
+          </section>
+        </div>
+      }
+    </app-pane>
+  } @else {
+    <!-- Mobile Layout -->
+    <app-pane>
+      @if (personalInfo(); as info) {
+        <div class="account-container">
+          <!-- Profile Section -->
+          <section class="profile-section">
+            <h3 class="section-title mat-font-body-md text-bold mat-text-on-surface">Profile</h3>
+            <p class="section-desc mat-font-label-sm mat-text-on-surface-variant">
+              This information will be displayed publicly so be careful what you share.
+            </p>
+
+            <!-- Name Field -->
+            <div class="form-field">
+              <label class="field-label mat-font-body-md mat-text-on-surface">Name</label>
+              <div class="field-input-group">
+                <mat-form-field appearance="outline" class="username-input">
+                  <input 
+                    matInput 
+                    [formControl]="profileForm.controls.name" 
+                    placeholder="Enter name"
+                    [readonly]="!isEditingName()"
+                  />
+                </mat-form-field>
+                @if (isEditingName()) {
+                  <button
+                    matButton="filled"
+                    [appButtonSize]="'sm'"
+                    [appButtonColor]="'primary'"
+                    (click)="saveProfile()"
+                    [disabled]="profileForm.invalid || isSaving()"
+                    class="save-btn"
+                  >
+                    Save
+                  </button>
+                } @else {
+                  <button
+                    mat-icon-button
+                    (click)="enableNameEdit()"
+                    class="edit-btn"
+                  >
+                    <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+                  </button>
+                }
+              </div>
+            </div>
+
+            <!-- Username Field -->
+            <div class="form-field">
+              <label class="field-label mat-font-body-md mat-text-on-surface">Username</label>
+              <div class="field-input-group">
+                <mat-form-field appearance="outline" class="username-input">
+                  <input 
+                    matInput 
+                    [formControl]="profileForm.controls.username" 
+                    placeholder="Enter username"
+                    [readonly]="!isEditingUsername()"
+                  />
+                </mat-form-field>
+                @if (isEditingUsername()) {
+                  <button
+                    matButton="filled"
+                    [appButtonSize]="'sm'"
+                    [appButtonColor]="'primary'"
+                    (click)="saveProfile()"
+                    [disabled]="profileForm.invalid || isSaving()"
+                    class="save-btn"
+                  >
+                    Save
+                  </button>
+                } @else {
+                  <button
+                    mat-icon-button
+                    (click)="enableUsernameEdit()"
+                    class="edit-btn"
+                  >
+                    <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+                  </button>
+                }
+              </div>
+            </div>
+          </section>
+
+          <!-- Personal Information Section -->
+          <section class="personal-info-section">
+            <h3 class="section-title mat-font-body-md text-bold mat-text-on-surface">Personal Information</h3>
+            <p class="section-desc mat-font-label-sm mat-text-on-surface-variant">
+              This information is only displayed to you.
+            </p>
+
+            <!-- Email Field (Read-only) -->
+            <div class="form-field">
+              <label class="field-label mat-font-body-md mat-text-on-surface">Email address</label>
+              <mat-form-field appearance="outline" class="readonly-input">
+                <input matInput [value]="info.email" readonly />
+              </mat-form-field>
+            </div>
+
+            <!-- Created At -->
+            <p class="created-at mat-font-label-sm mat-text-on-surface-variant">
+              This account was created on {{ formatDate(info.created_at) }}.
+            </p>
+          </section>
+        </div>
+      }
+    </app-pane>
+  }
+</div>

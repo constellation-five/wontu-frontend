@@ -3,8 +3,8 @@
     <div class="bank-info">
       <bank-logo [bankName]="method().bank_name" size="56px" />
       <div class="bank-details">
-        <p class="bank-name">{{ method().bank_name }}</p>
-        <p class="account-name">{{ method().account_name }}</p>
+        <p class="bank-name mat-text-on-surface" [class.mat-title-medium]="isMobile()" [class.mat-font-body-lg]="!isMobile()">{{ method().bank_name }}</p>
+        <p class="account-name mat-text-on-surface" [class.mat-font-body-md]="isMobile()" [class.mat-font-body-sm]="!isMobile()">{{ method().account_name }}</p>
       </div>
     </div>
 

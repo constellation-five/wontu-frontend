@@ -1,0 +1,52 @@
+<div class="rating-dialog">
+  <!-- Header -->
+  <div class="dialog-header">
+    <h2 class="dialog-title mat-font-headline-sm mat-text-on-surface">Customer Reviews</h2>
+    <button class="close-btn" (click)="close()">
+      <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Content -->
+  @if (isLoading()) {
+    <div class="loading-state mat-font-body-md mat-text-on-surface-variant">Loading...</div>
+  } @else if (ratingData(); as data) {
+    <div class="rating-content">
+      <!-- Average Rating Display -->
+      <div class="rating-summary">
+        <div class="star-display">
+          @for (star of getStarArray(5); track $index) {
+            <span class="star" [class.filled]="$index < Math.floor(data.average_rating)">★</span>
+          }
+        </div>
+        <p class="average-text mat-font-body-md text-bold mat-text-on-surface-variant">
+          {{ data.average_rating }} out of 5
+        </p>
+        <p class="total-ratings mat-font-body-md mat-text-on-surface-variant">
+          {{ data.total_ratings }} customer ratings
+        </p>
+      </div>
+
+      <!-- Rating Breakdown -->
+      <div class="rating-breakdown">
+        @for (item of data.breakdown; track item.stars) {
+          <div class="breakdown-row">
+            <span class="star-label mat-font-body-lg mat-text-on-surface">{{ item.stars }} star</span>
+            <div class="progress-bar-container">
+              <div 
+                class="progress-bar" 
+                [style.width.%]="item.percentage"
+                [class.has-value]="item.percentage > 0"
+              ></div>
+            </div>
+            <span class="percentage-label mat-font-body-lg mat-text-on-surface">{{ item.percentage }} %</span>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="empty-state mat-font-body-md mat-text-on-surface-variant">
+      No rating data available
+    </div>
+  }
+</div>

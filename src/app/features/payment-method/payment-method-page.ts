@@ -5,11 +5,12 @@ import {
   inject,
   signal,
   ViewChild,
-  TemplateRef,
+  TemplateRef, HostListener,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -22,6 +23,7 @@ import { PaymentMethodCard } from '../../shared/components/payment-method-card/p
 import { PaneComponent } from '../../shared/components/pane/pane';
 import { PageHeaderService } from '../../core/page-header.service';
 import { ButtonSizeDirective, ButtonColorDirective } from '../../shared/directives/button';
+import { BREAKPOINTS } from '../../core/constants';
 
 export interface PaymentMethodData {
   payment_method_id: number;
@@ -56,24 +58,40 @@ export class PaymentMethod implements OnInit {
   private dialog = inject(MatDialog);
   private fb = inject(FormBuilder);
   private pageHeader = inject(PageHeaderService);
+  private router = inject(Router);
 
   @ViewChild('methodDialog') methodDialog!: TemplateRef<any>;
 
   paymentMethods = signal<PaymentMethodData[]>([]);
   isLoading = signal(true);
-
+  isMobile = signal(false);
+  
   isEditMode = signal(false);
   selectedId = signal<number | null>(null);
 
   paymentForm = this.fb.group({
     bank_name: ['', [Validators.required]],
     account_name: ['', [Validators.required]],
-    account_number: ['', [Validators.required]],
+    account_number: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
   });
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkMobile();
+  }
 
   ngOnInit() {
     this.pageHeader.setTitle('Payment Methods');
     this.fetchPaymentMethods();
+    this.checkMobile();
+  }
+
+  checkMobile() {
+    this.isMobile.set(window.innerWidth <= BREAKPOINTS.MD);
+  }
+
+  goBack() {
+    this.router.navigate(['/profile']);
   }
 
   fetchPaymentMethods() {
@@ -90,7 +108,10 @@ export class PaymentMethod implements OnInit {
     this.isEditMode.set(false);
     this.selectedId.set(null);
     this.paymentForm.reset();
-    this.dialog.open(this.methodDialog, { width: '540px' });
+    this.dialog.open(this.methodDialog, { 
+      width: this.isMobile() ? '370px' : '540px',
+      maxWidth: '90vw'
+    });
   }
 
   openEditModal(method: PaymentMethodData) {
@@ -101,7 +122,10 @@ export class PaymentMethod implements OnInit {
       account_name: method.account_name,
       account_number: method.account_number,
     });
-    this.dialog.open(this.methodDialog, { width: '540px' });
+    this.dialog.open(this.methodDialog, { 
+      width: this.isMobile() ? '370px' : '540px',
+      maxWidth: '90vw'
+    });
   }
 
   save() {
