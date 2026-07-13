@@ -42,14 +42,11 @@
   gap: var(--spacing-xl);
 }
 
-.page-title {
-  margin: 0 0 var(--spacing-lg) 0;
-}
-
 .profile-section,
 .personal-info-section {
   display: flex;
   flex-direction: column;
+  gap: var(--spacing-xs);
   padding-bottom: var(--spacing-xl);
   border-bottom: 1px solid var(--mat-sys-outline-variant);
 
@@ -58,28 +55,12 @@
   }
 }
 
-.profile-section {
-  gap: var(--spacing-2xs); // 4px between title and description
-  
-  .section-desc {
-    margin-bottom: var(--spacing-md); // 16px from description to username field
-  }
-}
-
-.personal-info-section {
-  gap: var(--spacing-2xs); // 4px between title and description
-  
-  .section-desc {
-    margin-bottom: var(--spacing-md); // 16px from description to email field
-  }
-}
-
 .section-title {
   margin: 0;
 }
 
 .section-desc {
-  margin: 0;
+  margin: 0 0 var(--spacing-md) 0;
 }
 
 .form-field {
@@ -90,155 +71,34 @@
 
 .field-input-group {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--spacing-sm);
-
-  @media (max-width: $breakpoint-md) {
-    // Keep horizontal layout in mobile
-    flex-direction: row;
-    width: 100%;
-  }
 }
 
-.username-input {
+.field-input {
   flex: 1;
   max-width: 400px;
 
   @media (max-width: $breakpoint-md) {
     max-width: 100%;
-
-    ::ng-deep {
-      // Reduce padding for compact mobile input
-      .mat-mdc-form-field-infix {
-        padding-top: var(--spacing-2xs);
-        padding-bottom: var(--spacing-2xs);
-        min-height: 40px;
-      }
-    }
   }
-
-  ::ng-deep {
-    // Remove the subscript wrapper spacing
-    .mat-mdc-form-field-subscript-wrapper {
-      display: none;
-    }
-
-    // Consistent border styling
-    .mdc-notched-outline__leading,
-    .mdc-notched-outline__notch,
-    .mdc-notched-outline__trailing {
-      border-color: var(--mat-sys-outline-variant) !important;
-      border-radius: var(--mat-sys-corner-small);
-    }
-
-    .mdc-notched-outline__leading {
-      border-radius: var(--mat-sys-corner-small) 0 0 var(--mat-sys-corner-small);
-    }
-
-    .mdc-notched-outline__trailing {
-      border-radius: 0 var(--mat-sys-corner-small) var(--mat-sys-corner-small) 0;
-    }
-
-    // Input text styling - label small 10/12 for mobile, default for desktop
-    input {
-      @media (max-width: $breakpoint-md) {
-        font: var(--mat-sys-label-small);
-        color: var(--mat-sys-on-surface-variant);
-      }
-
-      @media (min-width: calc(#{$breakpoint-md} + 1px)) {
-        color: var(--mat-sys-on-surface-variant);
-      }
-    }
-  }
-
-  // Style for readonly state
+  
+  // For readonly input
   &:has(input[readonly]) {
-    ::ng-deep {
-      .mat-mdc-text-field-wrapper {
-        background-color: var(--mat-sys-surface-container-lowest);
-      }
-
-      input {
-        cursor: default;
-      }
+    input {
+      cursor: default;
     }
   }
 }
 
 .save-btn {
-  align-self: center;
+  flex-shrink: 0;
+  margin-top: var(--spacing-2xs);
 }
 
 .edit-btn {
-  align-self: center;
-  border: 1px solid var(--mat-sys-outline-variant);
-  border-radius: 50%;
-  color: var(--mat-sys-on-surface-variant);
-  
-  &:hover {
-    background-color: var(--mat-sys-surface-container-high);
-  }
-}
-
-.readonly-input {
-  max-width: 400px;
-  pointer-events: none;
-  
-  @media (max-width: $breakpoint-md) {
-    max-width: 100%;
-
-    ::ng-deep {
-      // Reduce padding for compact mobile input
-      .mat-mdc-form-field-infix {
-        padding-top: var(--spacing-2xs);
-        padding-bottom: var(--spacing-2xs);
-        min-height: 40px;
-      }
-    }
-  }
-  
-  ::ng-deep {
-    .mat-mdc-text-field-wrapper {
-      background-color: var(--mat-sys-surface-container-lowest);
-    }
-
-    // Input text styling - label small 10/12 for mobile, default for desktop
-    input {
-      @media (max-width: $breakpoint-md) {
-        font: var(--mat-sys-label-small);
-        color: var(--mat-sys-on-surface-variant);
-      }
-
-      @media (min-width: calc(#{$breakpoint-md} + 1px)) {
-        color: var(--mat-sys-on-surface-variant);
-      }
-    }
-
-    // Consistent border styling
-    .mdc-notched-outline__leading,
-    .mdc-notched-outline__notch,
-    .mdc-notched-outline__trailing {
-      border-color: var(--mat-sys-outline-variant) !important;
-    }
-
-    .mdc-notched-outline__leading {
-      border-radius: var(--mat-sys-corner-small) 0 0 var(--mat-sys-corner-small);
-    }
-
-    .mdc-notched-outline__trailing {
-      border-radius: 0 var(--mat-sys-corner-small) var(--mat-sys-corner-small) 0;
-    }
-
-    // Remove the subscript wrapper spacing
-    .mat-mdc-form-field-subscript-wrapper {
-      display: none;
-    }
-  }
-
-  @media (max-width: $breakpoint-md) {
-    max-width: 100%;
-  }
+  flex-shrink: 0;
+  margin-top: var(--spacing-2xs);
 }
 
 .created-at {

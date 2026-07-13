@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal, HostListener } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -12,6 +12,7 @@ import { environment } from '../../../../environments/environment';
 import { PaneComponent } from '../../../shared/components/pane/pane';
 import { ButtonSizeDirective, ButtonColorDirective } from '../../../shared/directives/button';
 import { AuthService } from '../../../core/auth.service';
+import { PageHeaderService } from '../../../core/page-header.service';
 import { BREAKPOINTS } from '../../../core/constants';
 
 interface PersonalInfo {
@@ -52,8 +53,8 @@ export class AccountPage implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private snackBar = inject(MatSnackBar);
+  private pageHeader = inject(PageHeaderService);
   private router = inject(Router);
-  private location = inject(Location);
 
   personalInfo = signal<PersonalInfo | null>(null);
   isLoading = signal(true);
@@ -73,6 +74,11 @@ export class AccountPage implements OnInit {
   }
 
   ngOnInit() {
+    this.pageHeader.setTitle('Account');
+    this.pageHeader.setBreadcrumbs([
+      { label: 'Profile', route: '/profile' },
+      { label: 'Account', route: '/profile/account' },
+    ]);
     this.fetchPersonalInfo();
     this.checkMobile();
   }

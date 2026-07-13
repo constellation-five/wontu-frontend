@@ -4,17 +4,13 @@
   background-color: var(--mat-sys-surface-container-lowest);
   border-radius: var(--mat-sys-corner-large);
   box-shadow: var(--mat-sys-level1);
-  padding: var(--spacing-sm);
-
-  @media (min-width: $breakpoint-md) {
-    padding: var(--spacing-md);
-  }
+  padding: var(--spacing-md);
 }
 
 .card-content {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: var(--spacing-md);
 }
 
@@ -23,14 +19,15 @@
   align-items: center;
   gap: var(--spacing-md);
   flex: 1;
-  min-width: 0;
+  min-width: 200px;
 }
 
 .bank-details {
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3xs);
+  min-width: 0;
+  flex: 1;
 }
 
 .bank-name {
@@ -47,60 +44,54 @@
   text-overflow: ellipsis;
 }
 
-.account-number-box {
-  display: none;
+.account-number-section {
+  flex: 1;
+  min-width: 0;
   position: relative;
-  flex-shrink: 0;
+}
 
-  @media (min-width: $breakpoint-md) {
-    display: block;
-  }
+.account-number-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-2xs) var(--spacing-md);
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: var(--mat-sys-corner-small);
+  min-height: 48px;
+  position: relative;
 }
 
 .account-label {
   position: absolute;
   top: -8px;
-  left: var(--spacing-sm);
+  left: 12px;
+  padding: 0 4px;
+  margin: 0;
   background-color: var(--mat-sys-surface-container-lowest);
-  padding: 0 var(--spacing-2xs);
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--mat-sys-on-surface-variant);
-  letter-spacing: 0.5px;
-  z-index: 1;
 }
 
-.account-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-xs) var(--spacing-md);
-  border: 1px solid var(--mat-sys-outline-variant);
-  border-radius: 8px;
-  min-height: 56px;
-  width: 256px;
-  pointer-events: none;
-}
-
-.account-text {
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--mat-sys-on-surface);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.account-number {
+  flex: 1;
+  min-width: 0;
+  word-break: break-all;
 }
 
 .copy-button {
   flex-shrink: 0;
   color: var(--mat-sys-on-surface-variant);
-  pointer-events: auto;
-  cursor: pointer;
 
   &:hover {
     color: var(--mat-sys-primary);
   }
+}
+
+.right-section {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-sm);
+  flex: 1;
+  min-width: 300px;
 }
 
 .edit-button {
@@ -109,5 +100,23 @@
 
   &:hover {
     color: var(--mat-sys-primary);
+  }
+}
+
+// Mobile very small screen only - remove min-widths to prevent overflow
+@media (max-width: 400px) {
+  .card-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .bank-info {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .right-section {
+    min-width: 0;
+    width: 100%;
   }
 }
