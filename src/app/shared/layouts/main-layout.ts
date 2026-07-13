@@ -5,6 +5,7 @@ import { Navbar } from '../components/navbar/navbar';
 import { PageHeaderComponent } from '../components/page-header/page-header';
 import { TopBarComponent } from '../components/top-bar/top-bar';
 import { PageHeaderService } from '../../core/page-header.service';
+import { NotificationToast } from '../components/notification-toast/notification-toast';
 
 @Component({
   selector: 'main-layout',
@@ -21,9 +22,11 @@ import { PageHeaderService } from '../../core/page-header.service';
       }
       <router-outlet />
     </main>
+
+    <app-notification-toast />
   `,
   styleUrl: './main-layout.scss',
-  imports: [RouterOutlet, Navbar, PageHeaderComponent, TopBarComponent],
+  imports: [RouterOutlet, Navbar, PageHeaderComponent, TopBarComponent, NotificationToast],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayout {

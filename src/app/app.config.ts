@@ -17,6 +17,8 @@ import { AuthService } from './core/auth.service';
 import { routes } from './app.routes';
 import { credentialsInterceptor } from './core/credentials.interceptor';
 
+import { OVERLAY_DEFAULT_CONFIG } from '@angular/cdk/overlay';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -27,5 +29,6 @@ export const appConfig: ApplicationConfig = {
       const auth = inject(AuthService);
       return auth.loadUser();
     }),
+    { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } },
   ],
 };

@@ -1,0 +1,25 @@
+// NOTIFICATION TOAST CONTAINER
+// Fixed top-right, above everything. The card styling, drag-to-dismiss, and
+// stacking animation all live in the shared <app-notification-stack>.
+// ============================================================================
+
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2000;
+  pointer-events: none;
+  width: 360px;
+  max-width: calc(100vw - 2rem);
+}
+
+// RESPONSIVE
+// ============================================================================
+@media (max-width: 480px) {
+  .toast-container {
+    top: 0.5rem;
+    right: 0.5rem;
+    left: 0.5rem;
+    width: auto;
+  }
+}

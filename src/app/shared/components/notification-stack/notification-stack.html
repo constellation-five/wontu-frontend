@@ -1,0 +1,43 @@
+<div class="stack-container" #containerEl>
+  @for (item of items(); track item.id) {
+    <div class="stack-wrapper" #wrapperEl>
+      <div
+        class="notification-item stack-card"
+        [class.leaving]="isLeaving(item.id)"
+        [attr.data-type]="item.notification.type"
+        role="alert"
+        (pointerdown)="onPointerDown($event, item.id)"
+        (pointermove)="onPointerMove($event, item.id)"
+        (pointerup)="onPointerUp($event, item.id)"
+        (pointercancel)="onPointerUp($event, item.id)"
+      >
+        <div class="notification-icon" [attr.data-type]="item.notification.type">
+          <mat-icon fontSet="material-symbols-outlined">{{ item.notification.icon }}</mat-icon>
+        </div>
+        <div class="notification-body">
+          <div class="notification-title-row">
+            <span class="notification-title mat-font-label-md">{{ item.notification.title }}</span>
+            <span class="notification-time mat-font-label-sm mat-text-on-surface-variant">{{
+              item.notification.createdAt | naturalDateTime: undefined : false
+            }}</span>
+          </div>
+          <div class="notification-body-row">
+            <p class="notification-description mat-font-body-sm mat-text-on-surface-variant">
+              {{ item.notification.description }}
+            </p>
+            <button
+              matIconButton
+              appIconButtonVariant="text"
+              appButtonSize="compact"
+              class="delete-btn"
+              (click)="onDismissClick(item.id)"
+              aria-label="Dismiss notification"
+            >
+              <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

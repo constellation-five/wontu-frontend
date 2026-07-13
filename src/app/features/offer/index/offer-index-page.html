@@ -9,11 +9,7 @@
     </span>
   </div>
 
-  <app-notification-bell
-    [notifications]="userNotifications()"
-    (markAllAsRead)="onMarkAllNotificationsRead()"
-    (markAsRead)="onMarkNotificationAsRead($event)"
-  />
+  <app-notification-bell />
 </div>
 
 <!-- Welcome Section -->
@@ -27,12 +23,7 @@
   </div>
 
   <!-- Notification Bell (Desktop only) -->
-  <app-notification-bell
-    class="desktop-notification"
-    [notifications]="userNotifications()"
-    (markAllAsRead)="onMarkAllNotificationsRead()"
-    (markAsRead)="onMarkNotificationAsRead($event)"
-  />
+  <app-notification-bell class="desktop-notification" />
 </div>
 
 <!-- Search Bar with Filter -->

@@ -4,13 +4,7 @@
 .notification-button {
   position: relative;
   color: var(--mat-sys-on-primary-container);
-  transition: all 0.2s ease-in-out;
-  padding: 0;
-  margin: 0;
-
-  &:hover {
-    opacity: 0.7;
-  }
+  transition: opacity 0.2s ease;
 
   mat-icon {
     font-size: 24px;
@@ -18,175 +12,169 @@
   }
 }
 
-// NOTIFICATION MENU
+// NOTIFICATION MENU PANEL
+// The panel itself is just a transparent, unshadowed layout box now — the
+// header and the notification list are each their own floating card.
 // ============================================================================
 ::ng-deep {
   .notification-menu {
+    margin-right: -20px !important;
+    max-width: none !important;
+    width: 360px;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    // Material's default menu panel clips to its own (rounded-corner) box —
+    // without this, the header card's shadow gets cropped whenever the panel
+    // hugs its content tightly (e.g. the empty state, with no list below).
+    overflow: visible !important;
+
     .mat-mdc-menu-content {
-      padding: 0 !important;
-      max-width: 400px;
+      padding: 0 20px !important;
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
   }
 }
 
-.notification-header {
+// HEADER CARD
+// ============================================================================
+.notification-header-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
+  padding: 12px 16px 12px 20px;
+  border-radius: var(--mat-sys-corner-medium);
   background-color: var(--mat-sys-surface-container);
+  box-shadow: var(--mat-sys-level3);
 
   h3 {
     margin: 0;
-    font-size: 16px;
-    font-weight: 600;
     color: var(--mat-sys-on-surface);
   }
 
-  .mark-all-btn {
-    padding: 4px;
-    min-width: 32px;
-    min-height: 32px;
+  .clear-all-btn {
+    color: var(--mat-sys-on-surface-variant);
 
-    mat-icon {
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
-      color: var(--mat-sys-primary);
+    // Kept in the layout (not structurally removed) so the header's height
+    // never depends on whether there's anything to clear — just visually
+    // hidden and non-interactive when there isn't.
+    &-hidden {
+      visibility: hidden;
+      pointer-events: none;
     }
   }
 }
 
 // NOTIFICATION LIST
+// Grows with its content up to (roughly) the available page height, only
+// scrolling past that point — `100vh` minus room for the header card, the
+// bell button's own position, and a bit of breathing room above/below.
+//
+// `overflow-x: hidden` is required here (a scrolling `overflow-y` forces the
+// other axis to clip too, per the CSS overflow spec) — and that clipping
+// happens at *this* element's own edge, so shadow room has to come from
+// padding inside it, not from a parent's padding (which only creates space
+// outside this box, not within the region it actually clips). The negative
+// margin expands this box back out to the full content width first, so
+// adding that padding back doesn't leave the cards narrower than the header.
+//
+// --mat-sys-level3's shadow is offset *downward* (`6px`/`8px`/`3px`, no
+// negative values), so its reach past the card is small on top (~12px,
+// blur-only) but much larger on the bottom (~28px, offset + blur + spread),
+// and about ~14px on the sides (blur/2 + spread) — without this padding, the
+// first/last visible card clips top/bottom, and every card clips left/right.
 // ============================================================================
 .notification-list {
-  max-height: 400px;
+  max-height: calc(100vh - 160px);
   overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  margin: 0 -20px;
+  padding: 12px 20px 36px;
+  -webkit-mask-image: linear-gradient(to bottom, black, black);
+  mask-image: linear-gradient(to bottom, black, black);
+
+  &.fade-top:not(.fade-bottom) {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, black 32px);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, black 32px);
+  }
+
+  &.fade-bottom:not(.fade-top) {
+    -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 32px), rgba(0, 0, 0, 0) 100%);
+    mask-image: linear-gradient(to bottom, black calc(100% - 32px), rgba(0, 0, 0, 0) 100%);
+  }
+
+  &.fade-top.fade-bottom {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0,
+      black 32px,
+      black calc(100% - 32px),
+      rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0,
+      black 32px,
+      black calc(100% - 32px),
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
 
   &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--mat-sys-outline-variant);
-    border-radius: 3px;
-
-    &:hover {
-      background: var(--mat-sys-outline);
-    }
+    display: none;
   }
 }
 
-// NOTIFICATION ITEM
-// ============================================================================
-.notification-item {
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
-  padding: 12px 16px !important;
-  text-align: left;
-  border-radius: 0 !important;
-  border-bottom: 1px solid var(--mat-sys-outline-variant);
-  gap: 12px;
-  transition: all 0.2s ease-in-out;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:hover {
-    background-color: var(--mat-sys-surface-container);
-  }
-
-  &.unread {
-    background-color: var(--mat-sys-surface-container-low);
-
-    &:hover {
-      background-color: var(--mat-sys-surface-container);
-    }
-  }
-}
-
-.notification-content {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-
-  .notification-title-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-
-    .notification-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--mat-sys-on-surface);
-    }
-
-    .notification-time {
-      font-size: 11px;
-      color: var(--mat-sys-on-surface-variant);
-      white-space: nowrap;
-    }
-  }
-
-  .notification-message {
-    font-size: 12px;
-    color: var(--mat-sys-on-surface-variant);
-    line-height: 1.4;
-  }
-}
-
-.unread-indicator {
-  flex-shrink: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--mat-sys-primary);
-}
-
-// EMPTY STATE
+// EMPTY & LOADING STATE
 // ============================================================================
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 32px 16px;
+  padding: 36px 16px;
+  border-radius: var(--mat-sys-corner-medium);
+  background-color: var(--mat-sys-surface-container);
+  box-shadow: var(--mat-sys-level3);
   color: var(--mat-sys-on-surface-variant);
 
   mat-icon {
-    font-size: 32px;
-    width: 32px;
-    height: 32px;
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
     margin-bottom: 8px;
-    opacity: 0.5;
+    opacity: 0.4;
   }
 
   p {
     margin: 0;
-    font-size: 13px;
   }
 }
 
-// RESPONSIVE DESIGN
+.loading-icon {
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// RESPONSIVE
 // ============================================================================
 @media (max-width: 480px) {
   ::ng-deep {
     .notification-menu {
-      .mat-mdc-menu-content {
-        max-width: 100vw !important;
-      }
+      width: 100vw !important;
     }
-  }
-
-  .notification-list {
-    max-height: 50vh;
   }
 }

@@ -18,7 +18,7 @@ import { PageHeaderService } from '../../../core/page-header.service';
 import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card';
 import { NaturalDateTimePipe } from '../../../shared/pipes/natural-date-time.pipe';
-import { NotificationBellComponent, Notification } from '../../../shared/components/notification-bell/notification-bell';
+import { NotificationBellComponent } from '../../../shared/components/notification-bell/notification-bell';
 import { LocationPickerDialog } from '../../../shared/components/location-picker-dialog/location-picker-dialog';
 import { IconButtonVariantDirective } from '../../../shared/directives/button';
 import { LocationLookupService } from '../../../core/location-lookup.service';
@@ -58,7 +58,6 @@ export class OfferShowPage {
   filterOther = signal<boolean>(true);
   userLocation = signal<string>('Choose your location');
   userLocationCoordinates = signal<{ lat: number; lng: number } | null>(null);
-  userNotifications = signal<Notification[]>([]);
 
   filteredOffers = computed(() => {
     const allOffers = this.offers();
@@ -84,7 +83,6 @@ export class OfferShowPage {
   constructor() {
     this.pageHeader.setTitle('Offers');
     this.pageHeader.setBreadcrumbs([{ label: 'Offers', route: '/offers' }]);
-    this.initializeNotifications();
     this.fetchOffers();
     this.detectCurrentLocation();
   }
@@ -130,44 +128,6 @@ export class OfferShowPage {
     }
 
     return offer.items.reduce((total, item) => total + (item.slot - item.current_slot), 0);
-  }
-
-  initializeNotifications() {
-    this.userNotifications.set([
-      {
-        id: '1',
-        title: 'Order Confirmed',
-        message: 'Your order for Martabakku Love has been confirmed',
-        timestamp: '5 min ago',
-        read: false,
-      },
-      {
-        id: '2',
-        title: 'New Offer',
-        message: 'Check out the new martabak offer near you',
-        timestamp: '1 hour ago',
-        read: false,
-      },
-      {
-        id: '3',
-        title: 'Order Delivered',
-        message: 'Your order has been delivered successfully',
-        timestamp: '2 hours ago',
-        read: true,
-      },
-    ]);
-  }
-
-  onMarkAllNotificationsRead() {
-    this.userNotifications.update((notifications) =>
-      notifications.map((n) => ({ ...n, read: true }))
-    );
-  }
-
-  onMarkNotificationAsRead(notificationId: string) {
-    this.userNotifications.update((notifications) =>
-      notifications.map((n) => (n.id === notificationId ? { ...n, read: true } : n))
-    );
   }
 
   onChangeLocation() {

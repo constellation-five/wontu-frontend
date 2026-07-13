@@ -1,57 +1,117 @@
-import { ChangeDetectionStrategy, Component, input, output, computed, viewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  ViewChild,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
-import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NotificationService, AppNotification } from '../../../core/notification.service';
+import { IconButtonVariantDirective } from '../../directives/button/icon-button-variant';
+import { ButtonSizeDirective } from '../../directives/button/button-size';
+import { NotificationStack, NotificationStackItem } from '../notification-stack/notification-stack';
 
-export interface Notification {
-  id: string;
-  title: string;
-  message: string;
-  timestamp: string;
-  read: boolean;
-}
+export type { AppNotification };
 
 @Component({
   selector: 'app-notification-bell',
   standalone: true,
   imports: [
-    CommonModule,
     MatIconModule,
     MatBadgeModule,
     MatMenuModule,
     MatButtonModule,
-    MatListModule,
-    MatDividerModule,
+    MatTooltipModule,
+    IconButtonVariantDirective,
+    ButtonSizeDirective,
+    NotificationStack,
   ],
   templateUrl: './notification-bell.html',
-  styleUrls: ['./notification-bell.scss'],
+  styleUrl: './notification-bell.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationBellComponent {
-  notifications = input<Notification[]>([]);
-  markAllAsRead = output<void>();
-  markAsRead = output<string>();
+  protected readonly notificationService = inject(NotificationService);
+  private readonly router = inject(Router);
 
-  menuTrigger = viewChild<MatMenuTrigger>(MatMenuTrigger);
+  protected readonly items = computed<NotificationStackItem[]>(() =>
+    this.notificationService
+      .notifications()
+      .map((notification) => ({ id: notification.id, notification })),
+  );
 
-  unreadCount = computed(() => this.notifications().filter((n) => !n.read).length);
+  protected readonly headerText = computed<string>(() =>
+    this.notificationService.notifications().length === 0
+      ? 'You have no notifications'
+      : 'Notifications',
+  );
 
-  hasNotifications = computed(() => this.unreadCount() > 0);
+  protected readonly showTopFade = signal(false);
+  protected readonly showBottomFade = signal(false);
 
-  onMarkAllAsRead() {
-    this.markAllAsRead.emit();
+  private listEl: HTMLElement | null = null;
+
+  // A setter-based ViewChild: the list only exists in the DOM while there
+  // are notifications (behind an @if), so this fires as it's created and
+  // destroyed rather than only once at startup.
+  @ViewChild('listEl') private set listElRef(ref: ElementRef<HTMLElement> | undefined) {
+    this.listEl = ref?.nativeElement ?? null;
+    this.updateFadeState(this.listEl);
   }
 
-  onMarkAsRead(notificationId: string) {
-    this.markAsRead.emit(notificationId);
+  constructor() {
+    // The list's scrollHeight changes whenever items are added/removed, so
+    // re-check the fade state then too (not just on manual scroll).
+    effect(() => {
+      this.items();
+      queueMicrotask(() => this.updateFadeState(this.listEl));
+    });
   }
 
-  getUnreadBadgeContent(): string {
-    const count = this.unreadCount();
-    return count > 9 ? '9+' : count.toString();
+  get badgeContent(): string {
+    const count = this.notificationService.unreadCount();
+    return count > 9 ? '9+' : String(count);
+  }
+
+  onPanelOpen(): void {
+    this.notificationService.loadNotifications();
+  }
+
+  onListScroll(event: Event): void {
+    this.updateFadeState(event.currentTarget as HTMLElement);
+  }
+
+  private updateFadeState(el: HTMLElement | null): void {
+    if (!el) {
+      return;
+    }
+    this.showTopFade.set(el.scrollTop > 2);
+    this.showBottomFade.set(el.scrollTop + el.clientHeight < el.scrollHeight - 2);
+  }
+
+  onDismissed(id: string): void {
+    this.notificationService.deleteNotification(id);
+  }
+
+  onClearAll(): void {
+    this.notificationService.clearAll();
+  }
+
+  onNotificationClick(notification: AppNotification): void {
+    if (!notification.read) {
+      this.notificationService.markAsRead(notification.id);
+    }
+    
+    if (notification.actionUrl) {
+      this.router.navigateByUrl(notification.actionUrl);
+    }
   }
 }
