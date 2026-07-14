@@ -22,6 +22,7 @@ import { NotificationBellComponent } from '../../../shared/components/notificati
 import { LocationPickerDialog } from '../../../shared/components/location-picker-dialog/location-picker-dialog';
 import { IconButtonVariantDirective } from '../../../shared/directives/button';
 import { LocationLookupService } from '../../../core/location-lookup.service';
+import { LocationStateService } from '../../../core/location-state.service';
 
 @Component({
   selector: 'offer-index',
@@ -48,16 +49,17 @@ export class OfferShowPage {
   private readonly pageHeader = inject(PageHeaderService);
   private readonly dialog = inject(MatDialog);
   private readonly locationLookup = inject(LocationLookupService);
-
+  private readonly locationState = inject(LocationStateService);
+  
   readonly user = this.auth.user;
   readonly offers = this.offerService.allOffers;
   readonly isLoading = this.offerService.isLoading;
+  readonly userLocation = this.locationState.userLocation;
+  readonly userLocationCoordinates = this.locationState.userLocationCoordinates;
 
   searchQuery = signal<string>('');
   filterFood = signal<boolean>(true);
   filterOther = signal<boolean>(true);
-  userLocation = signal<string>('Choose your location');
-  userLocationCoordinates = signal<{ lat: number; lng: number } | null>(null);
 
   filteredOffers = computed(() => {
     const allOffers = this.offers();
@@ -83,8 +85,12 @@ export class OfferShowPage {
   constructor() {
     this.pageHeader.setTitle('Offers');
     this.pageHeader.setBreadcrumbs([{ label: 'Offers', route: '/offers' }]);
-    this.fetchOffers();
-    this.detectCurrentLocation();
+
+    if (!this.userLocationCoordinates()) {
+      this.detectCurrentLocation();
+    } else {
+      this.fetchOffers();
+    }
   }
 
   fetchOffers(query?: string) {
@@ -142,10 +148,13 @@ export class OfferShowPage {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.location) {
+        this.locationState.isManuallySet.set(true); 
+
         this.userLocation.set(result.location);
         this.userLocationCoordinates.set(result.coords ?? null);
+        
         this.cdr.markForCheck();
-        this.fetchOffers(this.searchQuery());
+        this.fetchOffers();
       }
     });
   }
@@ -171,10 +180,12 @@ export class OfferShowPage {
   }
 
   private async applyDetectedLocation(coords: { lat: number; lng: number }) {
+    if (this.locationState.isManuallySet()) {
+      return; 
+    }
+
     this.userLocationCoordinates.set(coords);
-    // Offers are filtered server-side to within 200m of the user's coordinates,
-    // so the initial (unfiltered) fetch from the constructor needs redoing here.
-    this.fetchOffers(this.searchQuery());
+    this.fetchOffers(); 
 
     try {
       this.userLocation.set(await this.locationLookup.resolvePlaceName(coords));
