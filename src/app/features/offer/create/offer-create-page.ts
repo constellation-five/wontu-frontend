@@ -35,7 +35,7 @@ import { ButtonSizeDirective } from '../../../shared/directives/button';
 import { BottomBarService } from '../../../core/bottom-bar.service';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { OfferService, Offer, OfferItemInput, OfferInput } from '../../../core/offer.service';
-import { UserLocationService } from '../../../core/user-location.service';
+import { LocationStateService } from '../../../core/location-state.service';
 import { ResponsiveDialogService } from '../../../shared/components/responsive-dialog/responsive-dialog.service';
 import {
   AddEditItemDialog,
@@ -77,7 +77,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
   private readonly bottomBarService = inject(BottomBarService);
   private readonly pageHeader = inject(PageHeaderService);
   private readonly snackBar = inject(MatSnackBar);
-  private readonly userLocationService = inject(UserLocationService);
+  private readonly locationState = inject(LocationStateService);
 
   @ViewChild('actionsTpl') private actionsTpl!: TemplateRef<unknown>;
   private readonly viewContainerRef = inject(ViewContainerRef);
@@ -147,7 +147,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
         })),
       );
     } else {
-      const currentLocation = this.userLocationService.coordinates();
+      const currentLocation = this.locationState.userLocationCoordinates();
       if (currentLocation) {
         // Use the location already set on the main Offers page, if any.
         this.locationLat = currentLocation.lat;
