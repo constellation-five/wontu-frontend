@@ -1,152 +1,155 @@
 <div class="content-layout">
-    <div class="left-column">
-      <app-pane title="">
-        <app-timeline-bar
-          [items]="timelineItems()"
-          [currentStep]="currentStep()"
-          [style]="'horizontal'"
-        />
-      </app-pane>
+  <div class="left-column">
+    <app-pane title="">
+      <app-timeline-bar
+        [items]="timelineItems()"
+        [currentStep]="currentStep()"
+        [style]="'horizontal'"
+      />
+    </app-pane>
 
-      <app-pane title="Customers">
-        @if (orders().length > 0) {
-          <mat-accordion multi>
-            @for (order of orders(); track order.offer_buyer_id) {
-              <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  <mat-panel-title class="panel-title">
-                    <img [src]="order.buyer.avatar" [alt]="order.buyer.name" class="buyer-avatar" />
-                    <span class="buyer-name mat-font-title-md mat-text-on-surface">{{
-                      order.buyer.name
-                    }}</span>
-                  </mat-panel-title>
-                  <mat-panel-description class="panel-description">
-                    <span class="count">{{ orderItemCountLabel(order) }}</span>
-                    <span
-                      class="status-chip mat-font-label-md"
-                      [class.status-not-paid]="paymentStatus(order) === 'not_paid'"
-                      [class.status-pending]="paymentStatus(order) === 'pending'"
-                      [class.status-confirmed]="paymentStatus(order) === 'confirmed'"
-                    >
-                      {{ paymentStatusLabel(order) }}
-                    </span>
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
+    <app-pane title="Customers">
+      @if (orders().length > 0) {
+        <mat-accordion multi>
+          @for (order of orders(); track order.offer_buyer_id) {
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title class="panel-title">
+                  <img [src]="order.buyer.avatar" [alt]="order.buyer.name" class="buyer-avatar" />
+                  <span class="buyer-name mat-font-title-md mat-text-on-surface">{{
+                    order.buyer.name
+                  }}</span>
+                </mat-panel-title>
+                <mat-panel-description class="panel-description">
+                  <span class="count">{{ orderItemCountLabel(order) }}</span>
+                  <span
+                    class="status-chip mat-font-label-md"
+                    [class.status-not-paid]="paymentStatus(order) === 'not_paid'"
+                    [class.status-pending]="paymentStatus(order) === 'pending'"
+                    [class.status-confirmed]="paymentStatus(order) === 'confirmed'"
+                  >
+                    {{ paymentStatusLabel(order) }}
+                  </span>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
 
-                <div class="order-items-grid">
-                  @for (ci of order.items; track ci.item.item_id) {
-                    <app-cart-item-card [item]="ci" [showPrice]="false" [editable]="false" />
+              <div class="order-items-grid">
+                @for (ci of order.items; track ci.item.item_id) {
+                  <app-cart-item-card [item]="ci" [showPrice]="false" [editable]="false" />
+                }
+              </div>
+
+              <div class="order-footer">
+                <span class="mat-font-body-lg mat-text-on-surface text-bold">
+                  Total: Rp {{ orderTotal(order) | number: '1.0-0' }}
+                </span>
+                <div class="order-actions">
+                  <button
+                    matButton="outlined"
+                    appButtonSize="sm"
+                    [disabled]="!order.payment_proof_url"
+                    (click)="viewProofOfPayment(order)"
+                  >
+                    <mat-icon fontSet="material-symbols-outlined">visibility</mat-icon>
+                    Proof of payment
+                  </button>
+                  @if (!order.is_confirmed) {
+                    <button matButton="filled" appButtonSize="sm" (click)="confirmPayment(order)">
+                      <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+                      Confirm payment
+                    </button>
                   }
                 </div>
+              </div>
+            </mat-expansion-panel>
+          }
+        </mat-accordion>
+      } @else if (!isLoading()) {
+        <p class="mat-font-body-md mat-text-on-surface-variant">No customers have joined yet.</p>
+      }
+    </app-pane>
 
-                <div class="order-footer">
-                  <span class="mat-font-body-lg mat-text-on-surface text-bold">
-                    Total: Rp {{ orderTotal(order) | number: '1.0-0' }}
-                  </span>
-                  <div class="order-actions">
-                    <button
-                      matButton="outlined"
-                      appButtonSize="sm"
-                      [disabled]="!order.payment_proof_url"
-                      (click)="viewProofOfPayment(order)"
-                    >
-                      <mat-icon fontSet="material-symbols-outlined">visibility</mat-icon>
-                      Proof of payment
-                    </button>
-                    @if (!order.is_confirmed) {
-                      <button matButton="filled" appButtonSize="sm" (click)="confirmPayment(order)">
-                        <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-                        Confirm payment
-                      </button>
-                    }
-                  </div>
-                </div>
-              </mat-expansion-panel>
-            }
-          </mat-accordion>
-        } @else if (!isLoading()) {
-          <p class="mat-font-body-md mat-text-on-surface-variant">No customers have joined yet.</p>
-        }
-      </app-pane>
+    <app-pane title="Payment Methods">
+      @if (paymentMethods().length > 0) {
+        <div class="payment-methods-list">
+          @for (method of paymentMethods(); track method.payment_method_id) {
+            <payment-method-card [method]="method" [showEdit]="false" />
+          }
+        </div>
+      } @else {
+        <p class="mat-font-body-md mat-text-on-surface-variant">No payment methods enabled.</p>
+      }
+    </app-pane>
+  </div>
 
-      <app-pane title="Payment Methods">
-        @if (paymentMethods().length > 0) {
-          <div class="payment-methods-list">
-            @for (method of paymentMethods(); track method.payment_method_id) {
-              <payment-method-card [method]="method" [showEdit]="false" />
-            }
-          </div>
+  <aside class="right-column">
+    <app-pane class="desktop-only">
+      <div class="action-buttons">
+        @if (!isClosed()) {
+          <button
+            matButton="tonal"
+            appButtonSize="sm"
+            (click)="closeOfferNow()"
+            [disabled]="isActionInProgress()"
+          >
+            <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+            Close offer now
+          </button>
+          <button matButton="tonal" appButtonSize="sm" (click)="openChat()">
+            <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
+            Chat
+          </button>
         } @else {
-          <p class="mat-font-body-md mat-text-on-surface-variant">No payment methods enabled.</p>
-        }
-      </app-pane>
-    </div>
-
-    <aside class="right-column">
-      <app-pane>
-        <div class="action-buttons desktop-only">
-          @if (!isClosed()) {
+          @if (!isArrived()) {
             <button
-              matButton="tonal"
+              matButton="filled"
               appButtonSize="sm"
-              (click)="closeOfferNow()"
+              (click)="markItemsArrived()"
               [disabled]="isActionInProgress()"
             >
-              <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-              Close offer now
-            </button>
-            <button matButton="tonal" appButtonSize="sm" (click)="openChat()">
-              <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-              Chat
-            </button>
-            <div class="edit-delete">
-              <button matButton="outlined" appButtonSize="sm" (click)="editOffer()">
-                <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-                Edit offer
-              </button>
-              <button
-                matButton="outlined"
-                appButtonColor="error"
-                appButtonSize="sm"
-                (click)="openDeleteConfirm()"
-              >
-                <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
-                Delete offer
-              </button>
-            </div>
-          } @else {
-            @if (!isArrived()) {
-              <button
-                matButton="filled"
-                appButtonSize="sm"
-                (click)="markItemsArrived()"
-                [disabled]="isActionInProgress()"
-              >
-                <mat-icon fontSet="material-symbols-outlined">local_shipping</mat-icon>
-                Mark items as arrived
-              </button>
-            }
-            <button matButton="tonal" appButtonSize="sm" (click)="openChat()">
-              <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-              Chat
+              <mat-icon fontSet="material-symbols-outlined">local_shipping</mat-icon>
+              Mark items as arrived
             </button>
           }
-        </div>
-      </app-pane>
+          <button matButton="tonal" appButtonSize="sm" (click)="openChat()">
+            <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
+            Chat
+          </button>
+        }
+      </div>
+    </app-pane>
 
-      <app-pane title="Item Summary">
-        <div class="items-list">
-          @for (item of offer().items; track item.item_id) {
-            <app-cart-item-card
-              [item]="{ item: item, quantity: item.slot }"
-              [editable]="false"
-              [quantityLabel]="itemRemainingText(item)"
-            />
-          }
+    <app-pane title="Item Summary">
+      <div class="items-list">
+        @for (item of offer().items; track item.item_id) {
+          <app-cart-item-card
+            [item]="{ item: item, quantity: item.slot }"
+            [editable]="false"
+            [quantityLabel]="itemRemainingText(item)"
+          />
+        }
+      </div>
+
+      @if (!isClosed()) {
+        <div class="edit-delete">
+          <button matButton="outlined" appButtonSize="sm" (click)="editOffer()">
+            <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+            Edit offer
+          </button>
+          <button
+            matButton="outlined"
+            appButtonColor="error"
+            appButtonSize="sm"
+            (click)="openDeleteConfirm()"
+          >
+            <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+            Delete offer
+          </button>
         </div>
-      </app-pane>
-    </aside>
-  </div>
+      }
+    </app-pane>
+  </aside>
+</div>
 
 <app-bottom-bar />
 
@@ -164,19 +167,6 @@
     <button matButton="tonal" appButtonSize="sm" (click)="openChat()">
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
       Chat
-    </button>
-    <button matButton="outlined" appButtonSize="sm" (click)="editOffer()">
-      <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-      Edit offer
-    </button>
-    <button
-      matButton="outlined"
-      appButtonColor="error"
-      appButtonSize="sm"
-      (click)="openDeleteConfirm()"
-    >
-      <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
-      Delete offer
     </button>
   } @else {
     <button

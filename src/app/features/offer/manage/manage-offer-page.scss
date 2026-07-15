@@ -3,17 +3,21 @@
 :host {
   display: block;
   width: 100%;
-  overflow-x: hidden;
 }
 
+// Content Layout: 1 column on mobile, 1fr + fixed-width aside from md/lg up
 .content-layout {
   display: grid;
   gap: var(--spacing-lg);
   grid-template-columns: 1fr;
 
   @media (min-width: $breakpoint-md) {
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: 1fr 320px;
     gap: var(--spacing-xl);
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: 1fr 400px;
   }
 }
 
@@ -144,18 +148,18 @@
   }
 }
 
+.desktop-only {
+  display: none !important;
+
+  @media (min-width: $breakpoint-md) {
+    display: block !important;
+  }
+}
+
 .action-buttons {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
-
-  &.desktop-only {
-    display: none;
-
-    @media (min-width: $breakpoint-md) {
-      display: flex;
-    }
-  }
 
   button {
     width: 100%;
@@ -163,8 +167,14 @@
 }
 
 .edit-delete {
+  width: 100%;
   display: flex;
   gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+
+  button {
+    width: 100%;
+  }
 }
 
 .items-list {

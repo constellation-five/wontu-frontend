@@ -3,7 +3,6 @@
 :host {
   display: block;
   width: 100%;
-  overflow-x: hidden;
 }
 
 // Helper classes shared with the menu view's markup structure
@@ -112,11 +111,10 @@
 // view, even where class names are shared (e.g. .seller-section).
 .checkout-view {
   width: 100%;
-  overflow-x: hidden;
   box-sizing: border-box;
   padding-bottom: 160px; // Space for mobile bottom bar
 
-  @media (min-width: 769px) {
+  @media (min-width: $breakpoint-md) {
     padding-bottom: 0;
   }
 
@@ -140,7 +138,7 @@
     gap: var(--spacing-md);
     padding: var(--spacing-md);
 
-    @media (min-width: 769px) {
+    @media (min-width: $breakpoint-md) {
       display: none;
     }
   }
@@ -156,24 +154,25 @@
   .desktop-layout {
     display: none;
 
-    @media (min-width: 769px) {
+    @media (min-width: $breakpoint-md) {
       display: block;
       padding: var(--spacing-lg);
     }
-
-    @media (min-width: 1200px) {
-      padding: var(--spacing-xl);
-    }
   }
 
+  // Content Layout: 1 column on mobile, 1fr + fixed-width aside from md/lg up
   .content-layout {
     display: grid;
     gap: var(--spacing-lg);
     grid-template-columns: 1fr;
 
     @media (min-width: $breakpoint-md) {
-      grid-template-columns: 1fr 400px;
+      grid-template-columns: 1fr 320px;
       gap: var(--spacing-xl);
+    }
+
+    @media (min-width: $breakpoint-lg) {
+      grid-template-columns: 1fr 400px;
     }
   }
 
@@ -191,7 +190,7 @@
     flex-direction: column;
     gap: var(--spacing-sm);
 
-    @media (min-width: 769px) {
+    @media (min-width: $breakpoint-md) {
       display: none;
     }
   }
@@ -221,10 +220,6 @@
     flex-direction: column;
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
-
-    @media (min-width: 768px) {
-      margin-bottom: var(--spacing-xl);
-    }
   }
 
   /* Proof of Payment */
@@ -239,10 +234,6 @@
 
   .proof-upload-container {
     margin-bottom: var(--spacing-md);
-
-    @media (min-width: 768px) {
-      margin-bottom: var(--spacing-lg);
-    }
   }
 
   .upload-area {
@@ -254,10 +245,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    @media (min-width: 768px) {
-      padding: var(--spacing-xl);
-    }
 
     &:hover {
       border-color: var(--mat-sys-primary);
@@ -275,13 +262,6 @@
     height: 40px;
     color: var(--mat-sys-on-surface-variant);
     margin-bottom: var(--spacing-sm);
-
-    @media (min-width: 768px) {
-      font-size: 48px;
-      width: 48px;
-      height: 48px;
-      margin-bottom: var(--spacing-md);
-    }
   }
 
   .browse-btn {
@@ -296,11 +276,6 @@
     border-radius: var(--mat-sys-corner-medium);
     background-color: var(--mat-sys-surface-container-low);
     border: 1px solid var(--mat-sys-outline-variant);
-
-    @media (min-width: 768px) {
-      gap: var(--spacing-md);
-      padding: var(--spacing-md);
-    }
   }
 
   .file-icon {
@@ -309,12 +284,6 @@
     height: 28px;
     color: var(--mat-sys-primary);
     flex-shrink: 0;
-
-    @media (min-width: 768px) {
-      font-size: 32px;
-      width: 32px;
-      height: 32px;
-    }
   }
 
   .file-info {
@@ -347,19 +316,7 @@
     gap: var(--spacing-lg);
     min-width: 0;
 
-    @media (min-width: 768px) and (max-width: 1023px) {
-      flex-wrap: wrap;
-
-      /* Make both panes take roughly equal width in tablet */
-      > * {
-        flex: 1 1 calc(50% - var(--spacing-lg) / 2);
-        min-width: 280px;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      /* Desktop: Sidebar stays on right as column */
-      flex-direction: column;
+    @media (min-width: $breakpoint-md) {
       position: sticky;
       top: var(--spacing-lg);
     }
@@ -369,10 +326,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-xs);
-
-    @media (min-width: 768px) {
-      gap: var(--spacing-sm);
-    }
   }
 
   .cancel-order-btn,

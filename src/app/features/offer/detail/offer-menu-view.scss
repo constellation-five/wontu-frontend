@@ -3,22 +3,21 @@
 :host {
   display: block;
   width: 100%;
-  overflow-x: hidden;
 }
 
-// Content Layout (2 columns on desktop, 2 columns on tablet, 1 on mobile)
+// Content Layout: 1 column on mobile, 1fr + fixed-width aside from md/lg up
 .content-layout {
   display: grid;
   gap: var(--spacing-lg);
   grid-template-columns: 1fr;
 
-  @media (min-width: 481px) and (max-width: calc(#{$breakpoint-md} - 1px)) {
-    grid-template-columns: 1fr;
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: 1fr 320px;
+    gap: var(--spacing-xl);
   }
 
-  @media (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-lg) {
     grid-template-columns: 1fr 400px;
-    gap: var(--spacing-xl);
   }
 }
 
@@ -33,29 +32,14 @@
   display: grid;
   gap: var(--spacing-md);
   width: 100%;
+  grid-template-columns: repeat(2, 1fr);
 
-  // Mobile small: 1 column
-  @media (max-width: 425px) {
-    grid-template-columns: 1fr;
-  }
-
-  // Mobile large: 2 columns
-  @media (min-width: 426px) and (max-width: 480px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  // Tablet: 2 columns
-  @media (min-width: 481px) and (max-width: calc(#{$breakpoint-md} - 1px)) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  // Desktop: auto-fill with min 220px
   @media (min-width: $breakpoint-md) {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
 }
 
-// Sidebar (Right) - Hidden on mobile/tablet
+// Sidebar (Right) - Hidden on mobile
 .sidebar {
   display: none;
 
