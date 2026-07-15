@@ -1,8 +1,23 @@
 @use '../../../../_variables' as *;
 
+// Lets the layout below switch on the component's own rendered width
+// (via the @container query further down) rather than the viewport's —
+// this component can end up in a narrow sidebar on a wide screen just as
+// easily as it can span a full-width mobile page.
+:host {
+  display: block;
+  width: 100%;
+  container-type: inline-size;
+  container-name: timeline-bar;
+}
+
 .timeline-bar {
   width: 100%;
 }
+
+// Width at which there's enough room to lay every step out side by side
+// instead of stacking them vertically.
+$timeline-horizontal-min-width: 560px;
 
 // Dot
 
@@ -10,6 +25,7 @@ $timeline-active-size: 36px;
 $timeline-dot-size: 20px;
 $timeline-ring-thickness: 8px;
 $timeline-gap: var(--spacing-md);
+$timeline-vertical-row-height: calc(#{$timeline-active-size} + #{$timeline-gap});
 
 .timeline-marker {
   position: relative;
@@ -92,18 +108,25 @@ $timeline-gap: var(--spacing-md);
   }
 }
 
+// Both layouts are always rendered; the container query below picks which
+// one is actually shown, so the switch is pure CSS with no JS involved.
+.timeline-bar--horizontal {
+  display: none;
+}
+
+.timeline-bar--vertical {
+  display: grid;
+}
+
 // Horizontal layout: a grid with one column per item and two rows (markers,
 // then labels). Connector lines are absolutely positioned inside each
 // marker cell, reaching from the previous cell's center to this cell's
 // center — independent of label width, and never overflowing the grid.
 
 .timeline-bar--horizontal {
-  .timeline-grid {
-    display: grid;
-    grid-template-rows: auto auto;
-    column-gap: $timeline-gap;
-    row-gap: var(--spacing-sm);
-  }
+  grid-template-rows: auto auto;
+  column-gap: $timeline-gap;
+  row-gap: var(--spacing-sm);
 
   .timeline-marker-cell {
     position: relative;
@@ -130,26 +153,60 @@ $timeline-gap: var(--spacing-md);
   }
 }
 
-// Vertical layout
+// Vertical layout: a two-column grid (marker, then content), every row a
+// fixed height so the connector math below always lands on the next dot.
 
 .timeline-bar--vertical {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: auto 1fr;
+  grid-auto-rows: $timeline-vertical-row-height;
+  column-gap: $timeline-gap;
+  row-gap: 0;
 
-  .timeline-step {
+  .timeline-marker-cell {
+    position: relative;
     display: flex;
-    gap: var(--spacing-md);
-  }
-
-  .timeline-content {
-    padding-bottom: var(--spacing-md);
+    align-items: center;
     justify-content: center;
   }
 
+  .timeline-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: $timeline-gap;
+    min-width: 0;
+  }
+
+  .timeline-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .timeline-time {
+    margin-left: auto;
+  }
+
+  // A single strip spanning exactly one row height, starting at this row's
+  // own center — since every row is the same height, that always ends
+  // precisely on the next row's center, with no gap and no overlap.
   .timeline-connector {
-    width: 2px;
-    flex: 1 1 auto;
-    min-height: var(--spacing-md);
-    margin-left: calc(#{$timeline-active-size} / 2 - 1px);
+    position: absolute;
+    z-index: 0;
+    left: 50%;
+    top: 50%;
+    width: $timeline-ring-thickness;
+    height: 100%;
+    border-radius: var(--mat-sys-corner-full);
+    transform: translateX(-50%);
+  }
+}
+
+@container timeline-bar (min-width: #{$timeline-horizontal-min-width}) {
+  .timeline-bar--horizontal {
+    display: grid;
+  }
+
+  .timeline-bar--vertical {
+    display: none;
   }
 }

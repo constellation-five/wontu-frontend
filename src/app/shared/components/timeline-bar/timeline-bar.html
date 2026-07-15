@@ -1,60 +1,64 @@
-<div
-  class="timeline-bar"
-  [class.timeline-bar--horizontal]="style() === 'horizontal'"
-  [class.timeline-bar--vertical]="style() === 'vertical'"
->
-  @if (style() === 'horizontal') {
-    <!-- A grid with one column per item and two rows (markers, then labels).
-    Connector lines are absolutely positioned within each marker cell,
-    reaching left into the previous cell, so label width can never affect
-    where a line sits — and grid columns keep every label within bounds
-    instead of letting it overflow past the edges. -->
-    <div class="timeline-grid" [style.grid-template-columns]="'repeat(' + items().length + ', minmax(0, 1fr))'">
-      @for (item of items(); track $index; let i = $index) {
-        <div class="timeline-marker-cell">
-          @if (i > 0) {
-            <div class="timeline-connector" [class.completed]="isCompleted(i - 1)"></div>
-          }
-          <div class="timeline-marker" [class.completed]="isCompleted(i)" [class.active]="isActive(i)">
-            <div class="timeline-dot">
-              <div class="timeline-dot-inner"></div>
-            </div>
-          </div>
-        </div>
-      }
-      @for (item of items(); track $index; let i = $index) {
-        <div class="timeline-content" [class.completed]="isCompleted(i)" [class.active]="isActive(i)">
-          <span class="timeline-label mat-font-label-lg">{{ item.label }}</span>
-          @if (item.time) {
-            <span class="timeline-time mat-font-label-md mat-text-on-surface-variant">
-              {{ item.time | naturalDateTime: undefined : false }}
-            </span>
-          }
-        </div>
-      }
-    </div>
-  } @else {
-    @for (item of items(); track $index; let isLast = $last; let i = $index) {
-      <div class="timeline-step">
+<div class="timeline-bar">
+  <!-- Horizontal layout: shown once the component's own container is wide
+  enough to fit every step side by side (see the container query in the
+  stylesheet) — a grid with one column per item and two rows (markers, then
+  labels). Connector lines are absolutely positioned within each marker
+  cell, reaching left into the previous cell, so label width can never
+  affect where a line sits — and grid columns keep every label within
+  bounds instead of letting it overflow past the edges. -->
+  <div
+    class="timeline-bar--horizontal"
+    [style.grid-template-columns]="'repeat(' + items().length + ', minmax(0, 1fr))'"
+  >
+    @for (item of items(); track $index; let i = $index) {
+      <div class="timeline-marker-cell">
+        @if (i > 0) {
+          <div class="timeline-connector" [class.completed]="isCompleted(i - 1)"></div>
+        }
         <div class="timeline-marker" [class.completed]="isCompleted(i)" [class.active]="isActive(i)">
           <div class="timeline-dot">
             <div class="timeline-dot-inner"></div>
           </div>
         </div>
+      </div>
+    }
+    @for (item of items(); track $index; let i = $index) {
+      <div class="timeline-content" [class.completed]="isCompleted(i)" [class.active]="isActive(i)">
+        <span class="timeline-label mat-font-label-lg">{{ item.label }}</span>
+        @if (item.time) {
+          <span class="timeline-time mat-font-label-md mat-text-on-surface-variant">
+            {{ item.time | naturalDateTime: undefined : false }}
+          </span>
+        }
+      </div>
+    }
+  </div>
 
-        <div class="timeline-content" [class.completed]="isCompleted(i)" [class.active]="isActive(i)">
-          <span class="timeline-label mat-font-label-lg">{{ item.label }}</span>
-          @if (item.time) {
-            <span class="timeline-time mat-font-label-md mat-text-on-surface-variant">
-              {{ item.time | naturalDateTime: undefined : false }}
-            </span>
-          }
+  <!-- Vertical layout: shown below that width — a two-column grid (marker,
+  then content) with every row the same fixed height, so a connector that's
+  simply "50% down to 150%" of its own cell lands exactly on the next row's
+  dot regardless of label/time length, reading as one unbroken line. -->
+  <div class="timeline-bar--vertical">
+    @for (item of items(); track $index; let i = $index; let isLast = $last) {
+      <div class="timeline-marker-cell">
+        @if (!isLast) {
+          <div class="timeline-connector" [class.completed]="isCompleted(i)"></div>
+        }
+        <div class="timeline-marker" [class.completed]="isCompleted(i)" [class.active]="isActive(i)">
+          <div class="timeline-dot">
+            <div class="timeline-dot-inner"></div>
+          </div>
         </div>
       </div>
 
-      @if (!isLast) {
-        <div class="timeline-connector" [class.completed]="isCompleted(i)"></div>
-      }
+      <div class="timeline-content" [class.completed]="isCompleted(i)" [class.active]="isActive(i)">
+        <span class="timeline-label mat-font-label-lg">{{ item.label }}</span>
+        @if (item.time) {
+          <span class="timeline-time mat-font-label-md mat-text-on-surface-variant">
+            {{ item.time | naturalDateTime: undefined : false }}
+          </span>
+        }
+      </div>
     }
-  }
+  </div>
 </div>

@@ -2,8 +2,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NaturalDateTimePipe } from '../../pipes/natural-date-time.pipe';
 
-export type TimelineBarStyle = 'horizontal' | 'vertical';
-
 export interface TimelineItem {
   label: string;
   time?: string | Date;
@@ -20,7 +18,6 @@ export interface TimelineItem {
 export class TimelineBar {
   items = input.required<TimelineItem[]>();
   currentStep = input<number>(0);
-  style = input<TimelineBarStyle>('horizontal');
 
   isCompleted(index: number): boolean {
     return index < this.currentStep();

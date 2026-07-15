@@ -18,13 +18,9 @@
       </div>
     </app-pane>
 
-    <!-- 2. Progress (Vertical Style) -->
+    <!-- 2. Progress -->
     <app-pane title="">
-      <app-timeline-bar
-        [items]="progressItems()"
-        [currentStep]="currentProgressStep()"
-        [style]="'vertical'"
-      />
+      <app-timeline-bar [items]="progressItems()" [currentStep]="currentProgressStep()" />
     </app-pane>
 
     <!-- 3. Cart (No Buttons) -->
@@ -103,13 +99,9 @@
     <div class="content-layout">
       <!-- Left: Progress and Payment -->
       <div class="left-section">
-        <!-- Offer Progress Pane (Horizontal Style) -->
+        <!-- Offer Progress Pane -->
         <app-pane title="">
-          <app-timeline-bar
-            [items]="progressItems()"
-            [currentStep]="currentProgressStep()"
-            [style]="'horizontal'"
-          />
+          <app-timeline-bar [items]="progressItems()" [currentStep]="currentProgressStep()" />
         </app-pane>
 
         <!-- Payment Pane -->
