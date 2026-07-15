@@ -19,8 +19,8 @@
       
       <div 
         class="vote-section" 
-        [style.cursor]="isLoggedIn() ? 'pointer' : 'default'"
-        (click)="isLoggedIn() ? voteClick.emit() : null" 
+        style="cursor: pointer;"
+        (click)="voteClick.emit()" 
         role="button" 
         tabindex="0"
       >
@@ -43,11 +43,9 @@
         </button>
       }
       
-      @if (isLoggedIn() && !isOwner()) {
-        <button mat-flat-button color="primary" class="w-full" (click)="createOfferClick.emit()">
-          Create offer
-        </button>
-      }
+      <button mat-flat-button color="primary" class="w-full" (click)="createOfferClick.emit()">
+        Create offer
+      </button>
     </div>
   </div>
 </mat-card>

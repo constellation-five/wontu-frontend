@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { CategoryLabelComponent } from './../category-label/category-label';
+import { CategoryLabelComponent } from '../../../shared/components/category-label/category-label';
 
 @Component({
   selector: 'app-request-card',
