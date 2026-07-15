@@ -70,32 +70,37 @@ export class SettingsPage implements OnInit {
     this.router.navigate(['/profile']);
   }
 
-  // Notification settings metadata
+  // Notification settings metadata — keys must match backend's
+  // App\Support\NotificationCategories, the single source of truth for
+  // which notification classes each category actually gates.
   private notificationMetadata = [
     {
-      id: 'new-offers',
-      label: 'New Offers',
-      description: 'These are notifications when new offers match your preferences or become available.',
+      id: 'new-orders',
+      label: 'New orders & payments',
+      description:
+        'A buyer joins, places, updates, or cancels an order on one of your offers, or submits proof of payment.',
+    },
+    {
+      id: 'offer-lifecycle',
+      label: 'Offer status changes',
+      description:
+        "One of your offers closes automatically — either it reached its closing time or sold out.",
     },
     {
       id: 'offer-updates',
-      label: 'Offer Updates',
-      description: 'These are notifications about price drops, status changes, or important updates on offers you follow.',
+      label: 'Offer updates',
+      description:
+        "An offer you've joined is edited, closed, deleted, or completed, or your order on it is adjusted or removed.",
     },
     {
-      id: 'expiring-offers',
-      label: 'Expiring Offers',
-      description: 'These are reminders before an active offer\'s period or availability ends.',
+      id: 'order-status',
+      label: 'Order status',
+      description: 'Your payment is confirmed, or the items you ordered have arrived.',
     },
     {
-      id: 'new-messages',
-      label: 'New Messages',
-      description: 'These are notifications for direct messages and active discussions about offers or requests.',
-    },
-    {
-      id: 'account-activity',
-      label: 'Account Activity',
-      description: 'These are alerts for logins from new devices, profile changes, or essential security.',
+      id: 'social',
+      label: 'Social',
+      description: 'Someone follows your profile.',
     },
   ];
 
