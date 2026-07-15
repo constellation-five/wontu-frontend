@@ -41,6 +41,9 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  overflow: hidden;
+  flex: 1000 1000 auto;
+  min-width: 160px;
 }
 
 .buyer-avatar {
@@ -51,14 +54,44 @@
   flex-shrink: 0;
 }
 
+.buyer-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
 .panel-description {
   justify-content: flex-end;
   align-items: center;
+  gap: var(--spacing-sm);
+  overflow: hidden;
+  flex: 1 1 170px;
+  max-width: 170px;
+  min-width: 56px;
+  container-type: inline-size;
+}
+
+.count {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex-shrink: 1;
+  display: none;
+
+  @container (min-width: 160px) {
+    display: inline;
+  }
+}
+
+.status-chip {
+  flex-shrink: 0;
 }
 
 .order-items-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(256px, 100%), 1fr));
   gap: var(--spacing-sm);
   margin-bottom: var(--spacing-md);
 }
@@ -77,11 +110,25 @@
   gap: var(--spacing-sm);
 }
 
-.confirmed-chip {
+.status-chip {
   padding: var(--spacing-2xs) var(--spacing-sm);
   border-radius: var(--mat-sys-corner-full);
-  background-color: var(--mat-sys-secondary-container);
-  color: var(--mat-sys-on-secondary-container);
+  white-space: nowrap;
+
+  &.status-not-paid {
+    background-color: var(--mat-sys-error-container);
+    color: var(--mat-sys-on-error-container);
+  }
+
+  &.status-pending {
+    background-color: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+  }
+
+  &.status-confirmed {
+    background-color: var(--mat-sys-success-container);
+    color: var(--mat-sys-on-success-container);
+  }
 }
 
 .payment-methods-list {
@@ -127,6 +174,11 @@
   }
 }
 
+.edit-delete {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
 .items-list {
   display: flex;
   flex-direction: column;
@@ -136,4 +188,3 @@
 .text-bold {
   font-weight: 600;
 }
-

@@ -96,11 +96,11 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
   readonly model = signal({
     category: (this.existingOffer?.category as 'food' | 'other') ?? 'food',
     merchant_name: this.existingOffer?.merchant_name ?? '',
-    closing_date: this.existingOffer ? new Date(this.existingOffer.closing_time) : null,
+    closing_date: this.existingOffer ? new Date(this.existingOffer.closing_time) : new Date(),
     closing_time_of_day: this.existingOffer
       ? this.toTimeOfDay(this.existingOffer.closing_time)
       : '',
-    arrival_date: this.existingOffer ? new Date(this.existingOffer.arrival_time) : null,
+    arrival_date: this.existingOffer ? new Date(this.existingOffer.arrival_time) : new Date(),
     arrival_time_of_day: this.existingOffer
       ? this.toTimeOfDay(this.existingOffer.arrival_time)
       : '',

@@ -48,28 +48,6 @@
   }
 }
 
-.info-rows {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-}
-
-.info-row {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--spacing-xl);
-  align-items: center;
-
-  span:first-child {
-    white-space: nowrap;
-  }
-
-  span:last-child {
-    text-align: right;
-    justify-self: end;
-  }
-}
-
 .cart-items-container {
   display: flex;
   flex-direction: column;
@@ -153,7 +131,6 @@
     display: flex;
     gap: var(--spacing-md);
     align-items: center;
-    margin-top: var(--spacing-xl);
   }
 
   /* Mobile Layout - Mobile only */

@@ -4,14 +4,24 @@
   gap: var(--spacing-md);
 }
 
-.full-width {
-  width: 100%;
+.text-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
-.quantity-row {
+.price-quantity {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.price {
+  flex: 1;
+}
+
+.full-width {
+  width: 100%;
 }
 
 .dialog-footer {

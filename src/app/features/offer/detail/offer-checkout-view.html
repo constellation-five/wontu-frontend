@@ -69,61 +69,31 @@
         <h3 class="mat-font-title-md mat-text-on-surface proof-title">Proof of payment</h3>
 
         <div class="proof-upload-container">
-          @if (proofOfPayment()) {
-            <div class="file-preview">
-              <mat-icon fontSet="material-symbols-outlined" class="file-icon"
-                >description</mat-icon
-              >
-              <div class="file-info">
-                <span class="mat-font-body-md mat-text-on-surface">{{
-                  proofOfPayment()!.name
-                }}</span>
-                <span class="mat-font-body-sm mat-text-on-surface-variant">
-                  {{ (proofOfPayment()!.size / 1024 / 1024).toFixed(2) }} MB
-                </span>
-              </div>
-              <button matIconButton (click)="proofOfPaymentClear.emit()" class="remove-file-btn">
-                <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-              </button>
-            </div>
+          @if (myOrder()?.payment_submitted_at) {
+            <app-upload-file-card [remoteUrl]="myOrder()!.payment_proof_url" />
+          } @else if (proofOfPayment(); as file) {
+            <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
           } @else {
-            <div class="upload-area" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
-              <mat-icon fontSet="material-symbols-outlined" class="upload-icon"
-                >description</mat-icon
-              >
-              <button
-                matButton="tonal"
-                appButtonSize="xs"
-                (click)="fileInput.click()"
-                class="browse-btn"
-              >
-                Browse
-              </button>
-              <p class="mat-font-body-sm mat-text-on-surface-variant">or drag here to upload</p>
-              <p class="mat-font-body-sm mat-text-on-surface-variant">
-                Format: .jpg, .jpeg, .png | Max. 3 MB
-              </p>
-              <input
-                #fileInput
-                type="file"
-                accept=".jpg,.jpeg,.png"
-                (change)="onFileSelected($event)"
-                style="display: none"
-              />
-            </div>
+            <app-file-drop-upload
+              label="Proof of payment"
+              [file]="proofOfPayment()"
+              (fileChange)="proofOfPaymentChange.emit($event)"
+            />
           }
         </div>
 
-        <button
-          matButton="filled"
-          appButtonSize="md"
-          class="complete-payment-btn"
-          [disabled]="!proofOfPayment()"
-          (click)="completePayment.emit()"
-        >
-          <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-          Complete payment
-        </button>
+        @if (!myOrder()?.payment_submitted_at) {
+          <button
+            matButton="filled"
+            appButtonSize="md"
+            class="complete-payment-btn"
+            [disabled]="!proofOfPayment() || uploadProgress() !== null"
+            (click)="completePayment.emit()"
+          >
+            <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+            Complete payment
+          </button>
+        }
       </div>
     </app-pane>
   </div>
@@ -162,67 +132,31 @@
             <h3 class="mat-font-title-md mat-text-on-surface proof-title">Proof of payment</h3>
 
             <div class="proof-upload-container">
-              @if (proofOfPayment()) {
-                <div class="file-preview">
-                  <mat-icon fontSet="material-symbols-outlined" class="file-icon"
-                    >description</mat-icon
-                  >
-                  <div class="file-info">
-                    <span class="mat-font-body-md mat-text-on-surface">{{
-                      proofOfPayment()!.name
-                    }}</span>
-                    <span class="mat-font-body-sm mat-text-on-surface-variant">
-                      {{ (proofOfPayment()!.size / 1024 / 1024).toFixed(2) }} MB
-                    </span>
-                  </div>
-                  <button
-                    matIconButton
-                    (click)="proofOfPaymentClear.emit()"
-                    class="remove-file-btn"
-                  >
-                    <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-                  </button>
-                </div>
+              @if (myOrder()?.payment_submitted_at) {
+                <app-upload-file-card [remoteUrl]="myOrder()!.payment_proof_url" />
+              } @else if (proofOfPayment(); as file) {
+                <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
               } @else {
-                <div class="upload-area" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
-                  <mat-icon fontSet="material-symbols-outlined" class="upload-icon"
-                    >description</mat-icon
-                  >
-                  <button
-                    matButton="tonal"
-                    appButtonSize="xs"
-                    (click)="fileInput.click()"
-                    class="browse-btn"
-                  >
-                    Browse
-                  </button>
-                  <p class="mat-font-body-sm mat-text-on-surface-variant">
-                    or drag here to upload
-                  </p>
-                  <p class="mat-font-body-sm mat-text-on-surface-variant">
-                    Format: .jpg, .jpeg, .png | Max. 3 MB
-                  </p>
-                  <input
-                    #fileInput
-                    type="file"
-                    accept=".jpg,.jpeg,.png"
-                    (change)="onFileSelected($event)"
-                    style="display: none"
-                  />
-                </div>
+                <app-file-drop-upload
+                  label="Proof of payment"
+                  [file]="proofOfPayment()"
+                  (fileChange)="proofOfPaymentChange.emit($event)"
+                />
               }
             </div>
 
-            <button
-              matButton="filled"
-              appButtonSize="md"
-              class="complete-payment-btn"
-              [disabled]="!proofOfPayment()"
-              (click)="completePayment.emit()"
-            >
-              <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-              Complete payment
-            </button>
+            @if (!myOrder()?.payment_submitted_at) {
+              <button
+                matButton="filled"
+                appButtonSize="md"
+                class="complete-payment-btn"
+                [disabled]="!proofOfPayment() || uploadProgress() !== null"
+                (click)="completePayment.emit()"
+              >
+                <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+                Complete payment
+              </button>
+            }
           </div>
         </app-pane>
       </div>
@@ -230,28 +164,9 @@
       <!-- Right: Offer Info and Cart -->
       <aside class="right-section">
         <!-- Offer Information Pane -->
-        <app-pane title="Offer Information">
-          <div class="info-rows">
-            <div class="info-row">
-              <span class="mat-font-body-md mat-text-on-surface-variant">Offer closes at</span>
-              <span class="mat-font-body-md mat-text-on-surface text-bold">
-                {{ formatDate(offer().closing_time) }}
-              </span>
-            </div>
-            <div class="info-row">
-              <span class="mat-font-body-md mat-text-on-surface-variant">Items arrive at</span>
-              <span class="mat-font-body-md mat-text-on-surface text-bold">
-                {{ formatDate(offer().arrival_time) }}
-              </span>
-            </div>
-          </div>
-
+        <app-pane>
           <div class="seller-section">
-            <img
-              [src]="offer().seller.avatar"
-              [alt]="offer().seller.name"
-              class="seller-avatar"
-            />
+            <img [src]="offer().seller.avatar" [alt]="offer().seller.name" class="seller-avatar" />
             <div class="seller-info">
               <div class="seller-name mat-font-body-md mat-text-on-surface">
                 {{ offer().seller.name }}
@@ -320,7 +235,7 @@
 
   <!-- Mobile Bottom Action Bar -->
   <div class="mobile-bottom-bar">
-    <button matButton="tonal" appButtonSize="md" class="chat-action-btn" (click)="openChat.emit()">
+    <button matButton="tonal" appButtonSize="sm" class="chat-action-btn" (click)="openChat.emit()">
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
       <span>Chat</span>
     </button>
@@ -328,7 +243,7 @@
       <div class="bottom-actions-row">
         <button
           matButton="outlined"
-          appButtonSize="md"
+          appButtonSize="sm"
           appButtonColor="error"
           class="cancel-action-btn"
           (click)="cancelOrder.emit()"
@@ -338,7 +253,7 @@
         </button>
         <button
           matButton="tonal"
-          appButtonSize="md"
+          appButtonSize="sm"
           class="edit-action-btn"
           (click)="editOrder.emit()"
         >

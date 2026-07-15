@@ -1,6 +1,13 @@
-import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  computed,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
@@ -26,7 +33,7 @@ type OfferDetailView = 'menu' | 'checkout';
   styleUrls: ['./offer-detail-page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferPage {
+export class OfferPage implements OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly http = inject(HttpClient);
@@ -64,6 +71,7 @@ export class OfferPage {
     account_number: '1020-3782832-283982382',
   };
   proofOfPayment = signal<File | null>(null);
+  uploadProgress = signal<number | null>(null);
   currentProgressStep = signal(0); // 0 = Offer joined
   isOfferClosed = computed(() => this.offer()?.is_completed ?? false);
 
@@ -101,7 +109,12 @@ export class OfferPage {
 
   private selectedItemForRemoval = signal<CheckoutItem | null>(null);
 
+  // Bound once so add/removeEventListener target the same reference.
+  private readonly cleanupOrphanedProofBound = () => this.cleanupOrphanedProof();
+
   constructor() {
+    window.addEventListener('beforeunload', this.cleanupOrphanedProofBound);
+
     const offerId = this.route.snapshot.paramMap.get('id');
     if (!offerId) {
       this.router.navigate(['/offers']);
@@ -398,38 +411,73 @@ export class OfferPage {
     this.router.navigate(['/offers', offer.offer_id, 'chat']);
   }
 
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.setProofOfPayment(input.files[0]);
+  private uploadedProofUrl = signal<string | null>(null);
+
+  ngOnDestroy() {
+    window.removeEventListener('beforeunload', this.cleanupOrphanedProofBound);
+    this.cleanupOrphanedProof();
+  }
+
+  /** Deletes a picked-and-uploaded-but-never-submitted proof file, so reloading/navigating away doesn't leave it orphaned on the server. */
+  private cleanupOrphanedProof() {
+    const url = this.uploadedProofUrl();
+    if (url && !this.myOrder()?.payment_submitted_at) {
+      this.offerService.deleteUpload(url);
     }
   }
 
-  onDrop(event: DragEvent) {
-    if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
-      this.setProofOfPayment(event.dataTransfer.files[0]);
-    }
-  }
-
-  private setProofOfPayment(file: File) {
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-    if (!allowedTypes.includes(file.type)) {
-      alert('Invalid file type. Please upload .jpg, .jpeg, or .png file.');
-      return;
-    }
-
-    const maxSize = 3 * 1024 * 1024;
-    if (file.size > maxSize) {
-      alert('File size too large. Maximum size is 3 MB.');
-      return;
-    }
-
+  onProofOfPaymentChange(file: File | null) {
+    this.cleanupOrphanedProof();
     this.proofOfPayment.set(file);
+    this.uploadedProofUrl.set(null);
+
+    if (!file) {
+      this.uploadProgress.set(null);
+      return;
+    }
+
+    this.uploadProgress.set(0);
+    this.offerService.uploadImageWithProgress(file).subscribe({
+      next: (event) => {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+          this.uploadProgress.set(Math.round((100 * event.loaded) / event.total));
+        } else if (event.type === HttpEventType.Response) {
+          this.uploadProgress.set(null);
+          this.uploadedProofUrl.set(event.body?.url ?? null);
+        }
+      },
+      error: (err) => {
+        console.error('Failed to upload proof of payment:', err);
+        this.uploadProgress.set(null);
+        this.proofOfPayment.set(null);
+        alert('Failed to upload proof of payment. Please try again.');
+      },
+    });
   }
 
   completePayment() {
-    // TODO: Implement payment completion with file upload
-    console.log('Complete payment', this.proofOfPayment());
+    const offer = this.offer();
+    const proofUrl = this.uploadedProofUrl();
+    if (!offer || !proofUrl || this.uploadProgress() !== null) return;
+
+    this.submitPayment(offer.offer_id, proofUrl);
+  }
+
+  private submitPayment(offerId: number, proofUrl: string) {
+    // Deliberately leave proofOfPayment/uploadedProofUrl set on success —
+    // the file card stays displayed in the payment proof section.
+    this.offerService.submitPayment(offerId, proofUrl).subscribe({
+      next: () => {
+        this.offerService.getMyOrder(offerId).subscribe({
+          next: (res) => this.myOrder.set(res.data),
+          error: (err) => console.error('Failed to refresh order status:', err),
+        });
+      },
+      error: (err) => {
+        console.error('Failed to submit payment:', err);
+        alert('Failed to submit proof of payment. Please try again.');
+      },
+    });
   }
 
   navigateToMobileCart() {

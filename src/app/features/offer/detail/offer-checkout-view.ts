@@ -5,6 +5,8 @@ import { DecimalPipe } from '@angular/common';
 import { PaneComponent } from '../../../shared/components/pane/pane';
 import { CartItemCard } from '../../../shared/components/cart-item-card/cart-item-card';
 import { TimelineBar, TimelineItem } from '../../../shared/components/timeline-bar/timeline-bar';
+import { FileDropUpload } from '../../../shared/components/file-drop-upload/file-drop-upload';
+import { UploadFileCard } from '../../../shared/components/upload-file-card/upload-file-card';
 import {
   PaymentMethodCard,
   PaymentMethodData,
@@ -21,6 +23,8 @@ import { Offer, CheckoutItem, MyOrder } from '../../../core/offer.service';
     PaneComponent,
     CartItemCard,
     TimelineBar,
+    FileDropUpload,
+    UploadFileCard,
     PaymentMethodCard,
     ButtonSizeDirective,
     ButtonColorDirective,
@@ -38,6 +42,7 @@ export class OfferCheckoutView {
   readonly paymentMethods = input.required<PaymentMethodData[]>();
   readonly dummyPaymentMethod = input.required<PaymentMethodData>();
   readonly proofOfPayment = input<File | null>(null);
+  readonly uploadProgress = input<number | null>(null);
   readonly progressItems = input.required<TimelineItem[]>();
   readonly currentProgressStep = input.required<number>();
   readonly isOfferClosed = input<boolean>(false);
@@ -46,26 +51,7 @@ export class OfferCheckoutView {
   readonly editOrder = output<void>();
   readonly cancelOrder = output<void>();
   readonly completePayment = output<void>();
-  readonly fileSelected = output<Event>();
-  readonly proofOfPaymentClear = output<void>();
-  readonly dragOver = output<DragEvent>();
-  readonly drop = output<DragEvent>();
-
-  onFileSelected(event: Event) {
-    this.fileSelected.emit(event);
-  }
-
-  onDragOver(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.dragOver.emit(event);
-  }
-
-  onDrop(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    this.drop.emit(event);
-  }
+  readonly proofOfPaymentChange = output<File | null>();
 
   formatDate(dateString: string): string {
     const date = new Date(dateString);

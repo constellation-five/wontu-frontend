@@ -40,7 +40,7 @@
 .form-grid {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-xs);
 }
 
 mat-form-field {
@@ -54,7 +54,7 @@ mat-form-field {
 }
 
 .datetime-group-label {
-  margin: 0;
+  margin-bottom: var(--spacing-xs);
 }
 
 .datetime-row {
@@ -149,4 +149,3 @@ mat-form-field {
     display: flex;
   }
 }
-

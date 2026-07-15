@@ -91,9 +91,11 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
     const offer = this.offer();
     return [
       { label: 'Offer opened', time: offer.created_at },
-      { label: 'Offer closed', time: offer.closed_at ?? undefined },
+      // Falls back to the seller's originally planned schedule until the
+      // actual event happens (closed_at/arrived_at are only set then).
+      { label: 'Offer closed', time: offer.closed_at ?? offer.closing_time },
       { label: 'Payments confirmed' },
-      { label: 'Items arrived', time: offer.arrived_at ?? undefined },
+      { label: 'Items arrived', time: offer.arrived_at ?? offer.arrival_time },
     ];
   });
 
@@ -150,6 +152,28 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
     return order.items.reduce((sum, item) => sum + item.quantity, 0);
   }
 
+  orderItemCountLabel(order: OfferOrder): string {
+    const count = this.orderItemCount(order);
+    return `${count} item${count === 1 ? '' : 's'}`;
+  }
+
+  paymentStatus(order: OfferOrder): 'not_paid' | 'pending' | 'confirmed' {
+    if (order.is_confirmed) return 'confirmed';
+    if (order.payment_submitted_at) return 'pending';
+    return 'not_paid';
+  }
+
+  paymentStatusLabel(order: OfferOrder): string {
+    switch (this.paymentStatus(order)) {
+      case 'confirmed':
+        return 'Confirmed';
+      case 'pending':
+        return 'Pending confirmation';
+      default:
+        return 'Not paid';
+    }
+  }
+
   orderTotal(order: OfferOrder): number {
     return order.items.reduce((sum, item) => sum + +item.item.item_price * item.quantity, 0);
   }
@@ -157,6 +181,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
   viewProofOfPayment(order: OfferOrder) {
     if (!order.payment_proof_url) return;
     this.dialog.open(ImagePreviewDialog, {
+      minWidth: '320px',
       data: { imageUrl: order.payment_proof_url, title: 'Proof of Payment' },
     });
   }

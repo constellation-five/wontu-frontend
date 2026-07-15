@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  booleanAttribute,
+  computed,
+  input,
+  model,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -6,9 +13,10 @@ import { inject } from '@angular/core';
 import { ButtonSizeDirective } from '../../directives/button';
 
 /**
- * Drag-and-drop / browse image upload field. Extracted from the
- * proof-of-payment upload UI so it can be reused for item images and
- * payment proof alike.
+ * Drag-and-drop / browse image upload field. Shows the picked/existing
+ * image as a thumbnail preview with a remove button — or, while `uploading`
+ * is true, stays in its initial dropzone state regardless of whether a file
+ * has been picked (pair it with `app-upload-file-card` to show progress).
  */
 @Component({
   selector: 'app-file-drop-upload',
@@ -24,12 +32,15 @@ export class FileDropUpload {
   maxSizeMb = input<number>(3);
   /** Existing image URL to preview (e.g. when editing), shown until a new file is picked. */
   existingUrl = input<string | null>(null);
+  /** While true, always shows the dropzone rather than the preview, even if a file/existingUrl is set. */
+  uploading = input(false, { transform: booleanAttribute });
 
   file = model<File | null>(null);
 
   private readonly snackBar = inject(MatSnackBar);
 
   previewUrl = computed(() => {
+    if (this.uploading()) return null;
     const file = this.file();
     if (file) return URL.createObjectURL(file);
     return this.existingUrl();

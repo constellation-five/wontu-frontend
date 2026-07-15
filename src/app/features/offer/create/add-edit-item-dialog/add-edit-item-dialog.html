@@ -12,29 +12,38 @@
     }
   </mat-form-field>
 
-  <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Price</mat-label>
-    <span matTextPrefix>Rp&nbsp;</span>
-    <input matInput type="number" [formField]="form.item_price" />
-    @if (form.item_price().invalid() && form.item_price().touched()) {
-      <mat-error>{{ form.item_price().errors()[0]?.message }}</mat-error>
-    }
-  </mat-form-field>
-
-  <div class="quantity-row">
-    <span class="mat-font-body-md mat-text-on-surface-variant">Quantity</span>
-    <app-counter-field [(value)]="slot" [min]="1" />
+  <div class="price-quantity">
+    <mat-form-field appearance="outline" class="price">
+      <mat-label>Price</mat-label>
+      <span matTextPrefix>Rp&nbsp;</span>
+      <input matInput type="number" [formField]="form.item_price" />
+      @if (form.item_price().invalid() && form.item_price().touched()) {
+        <mat-error>{{ form.item_price().errors()[0]?.message }}</mat-error>
+      }
+    </mat-form-field>
+    <app-counter-field label="Quantity" [(value)]="slot" [min]="1" />
   </div>
 
   <app-file-drop-upload
     label="Item image"
     [existingUrl]="existingImageUrl"
-    [(file)]="file"
+    [uploading]="isUploading()"
+    [file]="file()"
+    (fileChange)="onFileChange($event)"
   />
+
+  @if (isUploading() && file(); as pickedFile) {
+    <app-upload-file-card [file]="pickedFile" [uploadProgress]="uploadProgress()" />
+  }
 
   <div class="dialog-footer" [class.hide-inline]="dialogContext?.isMobile()">
     @if (isEdit) {
-      <button matButton="outlined" appButtonColor="error" appButtonSize="md" (click)="openDeleteConfirm()">
+      <button
+        matButton="outlined"
+        appButtonColor="error"
+        appButtonSize="md"
+        (click)="openDeleteConfirm()"
+      >
         <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
         Delete
       </button>

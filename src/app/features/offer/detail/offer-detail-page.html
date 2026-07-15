@@ -13,6 +13,7 @@
     [paymentMethods]="paymentMethods()"
     [dummyPaymentMethod]="dummyPaymentMethod"
     [proofOfPayment]="proofOfPayment()"
+    [uploadProgress]="uploadProgress()"
     [progressItems]="progressItems()"
     [currentProgressStep]="currentProgressStep()"
     [isOfferClosed]="isOfferClosed()"
@@ -20,9 +21,7 @@
     (editOrder)="editOrder()"
     (cancelOrder)="openCancelOrderDialog()"
     (completePayment)="completePayment()"
-    (fileSelected)="onFileSelected($event)"
-    (proofOfPaymentClear)="proofOfPayment.set(null)"
-    (drop)="onDrop($event)"
+    (proofOfPaymentChange)="onProofOfPaymentChange($event)"
   />
 } @else {
   <app-offer-menu-view

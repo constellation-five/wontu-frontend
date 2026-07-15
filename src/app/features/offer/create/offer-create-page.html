@@ -20,7 +20,9 @@
           </mat-form-field>
 
           <div class="datetime-group">
-            <span class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant">Offer closes at</span>
+            <span class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant"
+              >Offer closes at</span
+            >
             <div class="datetime-row">
               <mat-form-field appearance="outline">
                 <mat-label>Date</mat-label>
@@ -36,7 +38,9 @@
           </div>
 
           <div class="datetime-group">
-            <span class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant">Items arrive at</span>
+            <span class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant"
+              >Items arrive at</span
+            >
             <div class="datetime-row">
               <mat-form-field appearance="outline">
                 <mat-label>Date</mat-label>
@@ -80,9 +84,15 @@
           <div class="items-list">
             @for (item of items(); track item.localId) {
               <div class="item-row">
-                <img [src]="item.image_url || 'assets/img/wontusad.svg'" class="item-image" alt="" />
+                <img
+                  [src]="item.image_url || 'assets/img/wontusad.svg'"
+                  class="item-image"
+                  alt=""
+                />
                 <div class="item-info">
-                  <span class="mat-font-body-md mat-text-on-surface item-name">{{ item.item_name }}</span>
+                  <span class="mat-font-body-md mat-text-on-surface item-name">{{
+                    item.item_name
+                  }}</span>
                   <span class="mat-font-body-sm mat-text-on-surface-variant">
                     Rp {{ item.item_price | number: '1.0-0' }}
                   </span>
@@ -106,7 +116,12 @@
           </div>
         }
 
-        <button matButton="outlined" appButtonSize="md" class="add-item-btn" (click)="openAddItemDialog()">
+        <button
+          matButton="tonal"
+          appButtonSize="sm"
+          class="add-item-btn"
+          (click)="openAddItemDialog()"
+        >
           <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
           Add item
         </button>

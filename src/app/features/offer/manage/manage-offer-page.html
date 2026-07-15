@@ -2,21 +2,35 @@
   <div class="content-layout">
     <div class="left-column">
       <app-pane title="">
-        <app-timeline-bar [items]="timelineItems()" [currentStep]="currentStep()" [style]="'horizontal'" />
+        <app-timeline-bar
+          [items]="timelineItems()"
+          [currentStep]="currentStep()"
+          [style]="'horizontal'"
+        />
       </app-pane>
 
       <app-pane title="Customers">
         @if (orders().length > 0) {
-          <mat-accordion>
+          <mat-accordion multi>
             @for (order of orders(); track order.offer_buyer_id) {
               <mat-expansion-panel>
                 <mat-expansion-panel-header>
                   <mat-panel-title class="panel-title">
                     <img [src]="order.buyer.avatar" [alt]="order.buyer.name" class="buyer-avatar" />
-                    <span class="mat-font-body-md mat-text-on-surface">{{ order.buyer.name }}</span>
+                    <span class="buyer-name mat-font-title-md mat-text-on-surface">{{
+                      order.buyer.name
+                    }}</span>
                   </mat-panel-title>
                   <mat-panel-description class="panel-description">
-                    {{ orderItemCount(order) }} item(s)
+                    <span class="count">{{ orderItemCountLabel(order) }}</span>
+                    <span
+                      class="status-chip mat-font-label-md"
+                      [class.status-not-paid]="paymentStatus(order) === 'not_paid'"
+                      [class.status-pending]="paymentStatus(order) === 'pending'"
+                      [class.status-confirmed]="paymentStatus(order) === 'confirmed'"
+                    >
+                      {{ paymentStatusLabel(order) }}
+                    </span>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
 
@@ -37,12 +51,12 @@
                       [disabled]="!order.payment_proof_url"
                       (click)="viewProofOfPayment(order)"
                     >
-                      View proof of payment
+                      <mat-icon fontSet="material-symbols-outlined">visibility</mat-icon>
+                      Proof of payment
                     </button>
-                    @if (order.is_confirmed) {
-                      <span class="confirmed-chip mat-font-label-md">Confirmed</span>
-                    } @else {
+                    @if (!order.is_confirmed) {
                       <button matButton="filled" appButtonSize="sm" (click)="confirmPayment(order)">
+                        <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
                         Confirm payment
                       </button>
                     }
@@ -70,25 +84,15 @@
     </div>
 
     <aside class="right-column">
-      <app-pane title="Offer Information">
-        <div class="info-rows">
-          <div class="info-row">
-            <span class="mat-font-body-md mat-text-on-surface-variant">Offer closes at</span>
-            <span class="mat-font-body-md mat-text-on-surface text-bold">
-              {{ formatDate(offer().closing_time) }}
-            </span>
-          </div>
-          <div class="info-row">
-            <span class="mat-font-body-md mat-text-on-surface-variant">Items arrive at</span>
-            <span class="mat-font-body-md mat-text-on-surface text-bold">
-              {{ formatDate(offer().arrival_time) }}
-            </span>
-          </div>
-        </div>
-
+      <app-pane>
         <div class="action-buttons desktop-only">
           @if (!isClosed()) {
-            <button matButton="tonal" appButtonSize="sm" (click)="closeOfferNow()" [disabled]="isActionInProgress()">
+            <button
+              matButton="tonal"
+              appButtonSize="sm"
+              (click)="closeOfferNow()"
+              [disabled]="isActionInProgress()"
+            >
               <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
               Close offer now
             </button>
@@ -96,29 +100,33 @@
               <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
               Chat
             </button>
-            <button matButton="outlined" appButtonSize="sm" (click)="editOffer()">
-              <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-              Edit offer
-            </button>
-            <button
-              matButton="outlined"
-              appButtonColor="error"
-              appButtonSize="sm"
-              (click)="openDeleteConfirm()"
-            >
-              <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
-              Delete offer
-            </button>
+            <div class="edit-delete">
+              <button matButton="outlined" appButtonSize="sm" (click)="editOffer()">
+                <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+                Edit offer
+              </button>
+              <button
+                matButton="outlined"
+                appButtonColor="error"
+                appButtonSize="sm"
+                (click)="openDeleteConfirm()"
+              >
+                <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+                Delete offer
+              </button>
+            </div>
           } @else {
-            <button
-              matButton="tonal"
-              appButtonSize="sm"
-              (click)="markItemsArrived()"
-              [disabled]="isActionInProgress() || isArrived()"
-            >
-              <mat-icon fontSet="material-symbols-outlined">local_shipping</mat-icon>
-              {{ isArrived() ? 'Items arrived' : 'Mark items as arrived' }}
-            </button>
+            @if (!isArrived()) {
+              <button
+                matButton="filled"
+                appButtonSize="sm"
+                (click)="markItemsArrived()"
+                [disabled]="isActionInProgress()"
+              >
+                <mat-icon fontSet="material-symbols-outlined">local_shipping</mat-icon>
+                Mark items as arrived
+              </button>
+            }
             <button matButton="tonal" appButtonSize="sm" (click)="openChat()">
               <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
               Chat
@@ -146,7 +154,12 @@
 
 <ng-template #actionsTpl>
   @if (!isClosed()) {
-    <button matButton="tonal" appButtonSize="sm" (click)="closeOfferNow()" [disabled]="isActionInProgress()">
+    <button
+      matButton="tonal"
+      appButtonSize="sm"
+      (click)="closeOfferNow()"
+      [disabled]="isActionInProgress()"
+    >
       <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
       Close offer now
     </button>
@@ -158,7 +171,12 @@
       <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
       Edit offer
     </button>
-    <button matButton="outlined" appButtonColor="error" appButtonSize="sm" (click)="openDeleteConfirm()">
+    <button
+      matButton="outlined"
+      appButtonColor="error"
+      appButtonSize="sm"
+      (click)="openDeleteConfirm()"
+    >
       <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
       Delete offer
     </button>

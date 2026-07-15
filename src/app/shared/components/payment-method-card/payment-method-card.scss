@@ -2,9 +2,13 @@
 
 .payment-card {
   background-color: var(--mat-sys-surface-container-lowest);
-  border-radius: var(--mat-sys-corner-large);
+  border-radius: var(--mat-sys-corner-medium);
   box-shadow: var(--mat-sys-level1);
   padding: var(--spacing-md);
+}
+
+.selectable {
+  cursor: pointer;
 }
 
 .card-content {
@@ -93,6 +97,11 @@
   gap: var(--spacing-sm);
   flex: 1;
   min-width: 300px;
+}
+
+.right-section.no-account-number {
+  flex: initial;
+  min-width: 0;
 }
 
 .select-checkbox {

@@ -261,4 +261,37 @@ export class OfferService {
     formData.append('file', file);
     return this.http.post<{ url: string }>(`${environment.api}/uploads/image`, formData);
   }
+
+  /** Same as uploadImage(), but emits HttpEvents (including UploadProgress) so callers can show a progress indicator. */
+  uploadImageWithProgress(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<{ url: string }>(`${environment.api}/uploads/image`, formData, {
+      reportProgress: true,
+      observe: 'events',
+    });
+  }
+
+  /**
+   * Deletes an uploaded-but-never-attached file (e.g. a payment proof the
+   * user picked but never submitted before reloading/navigating away). Uses
+   * `fetch(..., { keepalive: true })` instead of HttpClient so the request
+   * survives a page unload — a `beforeunload` handler is the main caller.
+   */
+  deleteUpload(url: string) {
+    const match = document.cookie.match(/(?:^|;\s*)XSRF-TOKEN=([^;]*)/);
+    const xsrfToken = match ? decodeURIComponent(match[1]) : '';
+
+    fetch(`${environment.api}/uploads/delete`, {
+      method: 'POST',
+      credentials: 'include',
+      keepalive: true,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-XSRF-TOKEN': xsrfToken,
+      },
+      body: JSON.stringify({ url }),
+    }).catch(() => {});
+  }
 }

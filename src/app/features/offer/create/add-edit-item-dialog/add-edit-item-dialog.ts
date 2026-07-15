@@ -6,10 +6,12 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
+  computed,
   inject,
   signal,
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { HttpEventType } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,6 +20,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { form, FormField, required } from '@angular/forms/signals';
 import { CounterField } from '../../../../shared/components/counter-field/counter-field';
 import { FileDropUpload } from '../../../../shared/components/file-drop-upload/file-drop-upload';
+import { UploadFileCard } from '../../../../shared/components/upload-file-card/upload-file-card';
 import { DialogComponent } from '../../../../shared/components/dialog/dialog';
 import { ButtonSizeDirective, ButtonColorDirective } from '../../../../shared/directives/button';
 import { BottomBarService } from '../../../../core/bottom-bar.service';
@@ -41,6 +44,7 @@ export type AddEditItemDialogResult = (OfferItemInput & { localId: string }) | {
     FormField,
     CounterField,
     FileDropUpload,
+    UploadFileCard,
     ButtonSizeDirective,
     ButtonColorDirective,
   ],
@@ -61,8 +65,10 @@ export class AddEditItemDialog implements AfterViewInit, OnDestroy {
 
   readonly isEdit = !!this.data.item;
   readonly localId = this.data.item?.localId ?? crypto.randomUUID();
-  readonly isUploading = signal(false);
+  readonly uploadProgress = signal<number | null>(null);
+  readonly isUploading = computed(() => this.uploadProgress() !== null);
   readonly file = signal<File | null>(null);
+  private uploadedImageUrl = signal<string | null>(null);
 
   readonly model = signal({
     item_url: this.data.item?.item_url ?? '',
@@ -98,37 +104,45 @@ export class AddEditItemDialog implements AfterViewInit, OnDestroy {
     this.dialogRef.close();
   }
 
+  onFileChange(file: File | null) {
+    this.file.set(file);
+    this.uploadedImageUrl.set(null);
+
+    if (!file) {
+      this.uploadProgress.set(null);
+      return;
+    }
+
+    this.uploadProgress.set(0);
+    this.offerService.uploadImageWithProgress(file).subscribe({
+      next: (event) => {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+          this.uploadProgress.set(Math.round((100 * event.loaded) / event.total));
+        } else if (event.type === HttpEventType.Response) {
+          this.uploadProgress.set(null);
+          this.uploadedImageUrl.set(event.body?.url ?? null);
+        }
+      },
+      error: () => {
+        this.uploadProgress.set(null);
+        this.file.set(null);
+      },
+    });
+  }
+
   submit() {
     if (this.form().invalid() || this.isUploading()) return;
 
-    const finish = (imageUrl: string | null | undefined) => {
-      const m = this.model();
-      this.dialogRef.close({
-        localId: this.localId,
-        item_id: this.data.item?.item_id,
-        item_name: m.item_name,
-        item_price: +m.item_price,
-        item_url: m.item_url || null,
-        slot: this.slot(),
-        image_url: imageUrl ?? this.existingImageUrl,
-      });
-    };
-
-    const file = this.file();
-    if (file) {
-      this.isUploading.set(true);
-      this.offerService.uploadImage(file).subscribe({
-        next: (res) => {
-          this.isUploading.set(false);
-          finish(res.url);
-        },
-        error: () => {
-          this.isUploading.set(false);
-        },
-      });
-    } else {
-      finish(undefined);
-    }
+    const m = this.model();
+    this.dialogRef.close({
+      localId: this.localId,
+      item_id: this.data.item?.item_id,
+      item_name: m.item_name,
+      item_price: +m.item_price,
+      item_url: m.item_url || null,
+      slot: this.slot(),
+      image_url: this.uploadedImageUrl() ?? this.existingImageUrl,
+    });
   }
 
   openDeleteConfirm() {

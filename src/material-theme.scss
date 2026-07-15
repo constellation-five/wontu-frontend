@@ -219,6 +219,14 @@ html {
     0px 12px 20px -6px rgba(0, 0, 0, 0.1), 0px 18px 28px 3px rgba(0, 0, 0, 0.07),
     0px 6px 36px 6px rgba(0, 0, 0, 0.05);
 
+  /* Standardized success colors — not part of Angular Material's own M3
+     token set, added here alongside it for states like "payment confirmed"
+     that don't map to any built-in role (primary/secondary/tertiary/error). */
+  --mat-sys-success: #1e8e3e;
+  --mat-sys-on-success: #ffffff;
+  --mat-sys-success-container: #d9f2df;
+  --mat-sys-on-success-container: #0f5132;
+
   /* Spacing */
   --spacing-3xs: 2px;
   --spacing-2xs: 4px;
@@ -310,6 +318,12 @@ html {
     (
       filled-container-shape: var(--mat-sys-corner-small),
       outlined-container-shape: var(--mat-sys-corner-small),
+    )
+  );
+
+  @include mat.progress-bar-overrides(
+    (
+      active-indicator-color: var(--mat-sys-secondary),
     )
   );
 }

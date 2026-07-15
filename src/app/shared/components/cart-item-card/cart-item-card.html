@@ -11,33 +11,35 @@
         </div>
       }
     </div>
-    <div class="cart-item-footer">
-      @if (showPrice()) {
-        <div class="cart-item-price mat-font-body-lg mat-text-on-surface text-bold">
-          Rp {{ +item().item.item_price | number: '1.0-0' }}
-        </div>
-      }
-      @if (editable()) {
-        <div class="cart-item-controls">
-          <button
-            matIconButton
-            appButtonSize="xs"
-            appIconButtonVariant="outlined"
-            class="cart-notes-btn"
-            (click)="notesEdit.emit(item())"
-          >
-            <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-          </button>
-          <app-counter-field
-            #qtyField
-            compact
-            [value]="item().quantity"
-            [max]="item().item.slot - item().item.current_slot"
-            (valueChange)="onCounterChange($event, qtyField)"
-          />
-        </div>
-      }
-    </div>
+    @if (showPrice() || editable()) {
+      <div class="cart-item-footer">
+        @if (showPrice()) {
+          <div class="cart-item-price mat-font-body-lg mat-text-on-surface text-bold">
+            Rp {{ +item().item.item_price | number: '1.0-0' }}
+          </div>
+        }
+        @if (editable()) {
+          <div class="cart-item-controls">
+            <button
+              matIconButton
+              appButtonSize="xs"
+              appIconButtonVariant="outlined"
+              class="cart-notes-btn"
+              (click)="notesEdit.emit(item())"
+            >
+              <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+            </button>
+            <app-counter-field
+              #qtyField
+              compact
+              [value]="item().quantity"
+              [max]="item().item.slot - item().item.current_slot"
+              (valueChange)="onCounterChange($event, qtyField)"
+            />
+          </div>
+        }
+      </div>
+    }
   </div>
   @if (!editable()) {
     <div class="cart-item-qty mat-font-body-lg mat-text-on-surface text-bold">
