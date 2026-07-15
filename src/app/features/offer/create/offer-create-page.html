@@ -73,9 +73,7 @@
         } @else {
           <div class="empty-items-container">
             <img src="assets/img/wontusad.svg" alt="No payment methods" />
-            <p class="mat-font-body-md mat-text-on-surface-variant">
-              You have no payment methods.
-            </p>
+            <p class="mat-font-body-md mat-text-on-surface-variant">You have no payment methods.</p>
           </div>
         }
 
@@ -103,22 +101,28 @@
                   alt=""
                 />
                 <div class="item-info">
-                  <span class="mat-font-body-md mat-text-on-surface item-name">{{
+                  <span class="mat-font-body-lg mat-text-on-surface item-name">{{
                     item.item_name
                   }}</span>
-                  <span class="mat-font-body-sm mat-text-on-surface-variant">
+                  <span class="mat-font-body-lg mat-text-on-surface-variant price">
                     Rp {{ item.item_price | number: '1.0-0' }}
                   </span>
                 </div>
+                <button
+                  matIconButton
+                  appButtonSize="xs"
+                  appIconButtonVariant="outlined"
+                  (click)="openEditItemDialog(item)"
+                  aria-label="Edit item"
+                >
+                  <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+                </button>
                 <app-counter-field
                   [compact]="true"
                   [value]="item.slot"
                   [min]="1"
                   (valueChange)="onItemSlotChange(item.localId, $event)"
                 />
-                <button matIconButton (click)="openEditItemDialog(item)" aria-label="Edit item">
-                  <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-                </button>
               </div>
             }
           </div>

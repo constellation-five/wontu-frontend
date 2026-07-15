@@ -32,7 +32,7 @@ import {
   PaymentMethodData,
 } from '../../../shared/components/payment-method-card/payment-method-card';
 import { BottomBar } from '../../../shared/components/bottom-bar/bottom-bar';
-import { ButtonSizeDirective } from '../../../shared/directives/button';
+import { ButtonSizeDirective, IconButtonVariantDirective } from '../../../shared/directives/button';
 import { BottomBarService } from '../../../core/bottom-bar.service';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { OfferService, Offer, OfferItemInput, OfferInput } from '../../../core/offer.service';
@@ -69,7 +69,8 @@ type LocalItem = OfferItemInput & { localId: string };
     PaymentMethodCard,
     BottomBar,
     ButtonSizeDirective,
-  ],
+    IconButtonVariantDirective
+],
   templateUrl: './offer-create-page.html',
   styleUrls: ['./offer-create-page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

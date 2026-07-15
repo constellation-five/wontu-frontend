@@ -109,8 +109,8 @@ mat-form-field {
 }
 
 .item-image {
-  width: 48px;
-  height: 48px;
+  width: 72px;
+  height: 72px;
   border-radius: var(--mat-sys-corner-small);
   object-fit: cover;
   flex-shrink: 0;
@@ -128,6 +128,10 @@ mat-form-field {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.price {
+  font-weight: bold;
 }
 
 .add-item-btn,
