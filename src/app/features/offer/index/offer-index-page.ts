@@ -87,7 +87,7 @@ export class OfferShowPage {
     if (!this.userLocationCoordinates()) {
       this.detectCurrentLocation();
     } else {
-      this.fetchOffers();
+      this.fetchOffers(this.searchQuery());
     }
   }
 
@@ -158,7 +158,10 @@ export class OfferShowPage {
   }
 
   private detectCurrentLocation(retriesLeft = 2) {
-    if (!navigator.geolocation) return;
+    if (!navigator.geolocation) {
+      this.fetchOffers(this.searchQuery());
+      return;
+    }
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -171,6 +174,8 @@ export class OfferShowPage {
         // a transient hiccup right after permission is granted — retry a couple times.
         if (error.code === error.POSITION_UNAVAILABLE && retriesLeft > 0) {
           setTimeout(() => this.detectCurrentLocation(retriesLeft - 1), 2000);
+        } else {
+          this.fetchOffers(this.searchQuery());
         }
       },
       { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
