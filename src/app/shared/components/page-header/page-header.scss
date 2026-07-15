@@ -1,7 +1,7 @@
 @use '../../../../variables' as *;
 
 .page-header {
-  padding: var(--spacing-sm) var(--spacing-xl);
+  padding: var(--spacing-sm) 0;
   margin-bottom: var(--spacing-xl);
   display: flex;
   flex-direction: column;

@@ -6,22 +6,6 @@
   overflow-x: hidden;
 }
 
-.page-wrapper {
-  box-sizing: border-box;
-  width: 100%;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-  padding: var(--spacing-md);
-  margin: 0 auto;
-
-  @media (min-width: $breakpoint-md) {
-    padding: var(--spacing-xl);
-    gap: var(--spacing-lg);
-  }
-}
-
 // Content Layout (2 columns on desktop, 2 columns on tablet, 1 on mobile)
 .content-layout {
   display: grid;

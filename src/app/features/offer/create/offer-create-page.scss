@@ -6,18 +6,6 @@
   overflow-x: hidden;
 }
 
-.page-wrapper {
-  box-sizing: border-box;
-  width: 100%;
-  padding: var(--spacing-md);
-  padding-bottom: 96px;
-
-  @media (min-width: $breakpoint-md) {
-    padding: var(--spacing-xl);
-    padding-bottom: var(--spacing-xl);
-  }
-}
-
 .content-layout {
   display: grid;
   gap: var(--spacing-lg);

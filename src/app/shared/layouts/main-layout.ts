@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Navbar } from '../components/navbar/navbar';
@@ -6,6 +6,7 @@ import { PageHeaderComponent } from '../components/page-header/page-header';
 import { TopBarComponent } from '../components/top-bar/top-bar';
 import { PageHeaderService } from '../../core/page-header.service';
 import { NotificationToast } from '../components/notification-toast/notification-toast';
+import { BottomBarService } from '../../core/bottom-bar.service';
 
 @Component({
   selector: 'main-layout',
@@ -16,7 +17,11 @@ import { NotificationToast } from '../components/notification-toast/notification
       <app-top-bar />
     }
 
-    <main class="layout-body" [class.no-bottom-margin]="shouldHideBottomBar()">
+    <main
+      class="layout-body"
+      [class.no-bottom-margin]="shouldHideBottomBar() && !hasBottomActionBar()"
+      [class.action-bar-margin]="hasBottomActionBar()"
+    >
       @if (pageHeaderService.showHeader()) {
         <app-page-header />
       }
@@ -32,7 +37,14 @@ import { NotificationToast } from '../components/notification-toast/notification
 export class MainLayout {
   pageHeaderService = inject(PageHeaderService);
   private readonly router = inject(Router);
+  private readonly bottomBarService = inject(BottomBarService);
   private hideBottomBar = signal(false);
+
+  // Whether a page has set contextual bottom-bar actions (via
+  // BottomBarService) — distinct from the persistent nav Navbar hides via
+  // the `hideBottomBar` route data flag. Pages using one generally hide the
+  // other, but the body still needs room reserved for whichever is showing.
+  readonly hasBottomActionBar = computed(() => this.bottomBarService.portal() !== null);
 
   constructor() {
     this.router.events
