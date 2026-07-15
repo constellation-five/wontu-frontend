@@ -13,8 +13,95 @@
 
     <mat-menu #filterMenu="matMenu">
       <div class="filter-menu-content" (click)="$event.stopPropagation()">
-        <span class="mat-font-body-md mat-text-on-surface-variant">No filters available</span>
+        <mat-checkbox
+          [checked]="filterFood()"
+          (change)="filterFood.set($event.checked)"
+          class="filter-checkbox"
+        >
+          Food
+        </mat-checkbox>
+        <mat-checkbox
+          [checked]="filterOther()"
+          (change)="filterOther.set($event.checked)"
+          class="filter-checkbox"
+        >
+          Other
+        </mat-checkbox>
       </div>
     </mat-menu>
   </ng-container>
 </app-main-page-header>
+
+@if (isLoading()) {
+  <div class="loading-container">
+    <p class="mat-font-body-lg mat-text-on-surface-variant">Loading requests...</p>
+  </div>
+} @else if (filteredRequests().length > 0) {
+  
+  @if (ongoingRequests().length > 0) {
+    <div class="section-container">
+      <h2 class="section-title mat-font-title-lg">Ongoing</h2>
+      <div class="requests-grid">
+        @for (req of ongoingRequests(); track req.request_id) {
+          <app-request-card 
+            [title]="req.item_name"
+            [subtitle]="'For ' + (req.arrival_time | naturalDateTime)"
+            [category]="req.category"
+            [votes]="req.total_votes"
+            [hasVoted]="req.has_voted || false"
+            [isOwner]="true"
+            [isLoggedIn]="!!user()"
+            (editClick)="onEditRequest(req)"
+            (createOfferClick)="onCreateOffer(req)"
+            (voteClick)="onVoteRequest(req)"
+          />
+        }
+      </div>
+    </div>
+  }
+
+  @if (otherRequests().length > 0) {
+    <div class="section-container" [class.mt-xl]="ongoingRequests().length > 0">
+      @if (ongoingRequests().length > 0) {
+        <h2 class="section-title mat-font-title-lg">Others</h2>
+      }
+      <div class="requests-grid">
+        @for (req of otherRequests(); track req.request_id) {
+          <app-request-card 
+            [title]="req.item_name"
+            [subtitle]="'For ' + (req.arrival_time | naturalDateTime)"
+            [category]="req.category"
+            [votes]="req.total_votes"
+            [hasVoted]="req.has_voted || false"
+            [isOwner]="false"
+            [isLoggedIn]="!!user()"
+            (editClick)="onEditRequest(req)"
+            (createOfferClick)="onCreateOffer(req)"
+            (voteClick)="onVoteRequest(req)"
+          />
+        }
+      </div>
+    </div>
+  }
+
+} @else {
+  <div class="empty-state">
+    <mat-icon fontSet="material-symbols-outlined" class="empty-icon">inbox</mat-icon>
+    <p class="mat-font-body-lg mat-text-on-surface-variant">No requests available</p>
+  </div>
+}
+
+<button matFab class="create-req-fab" aria-label="Create Request" (click)="openCreateRequest()">
+  <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+</button>
+
+<button
+  matFab
+  extended
+  class="create-req-fab-desktop"
+  aria-label="Create Request"
+  (click)="openCreateRequest()"
+>
+  <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+  Create Request
+</button>
