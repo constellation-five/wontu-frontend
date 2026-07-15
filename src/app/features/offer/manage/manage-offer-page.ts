@@ -80,7 +80,10 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
     const offer = this.offer();
     const orders = this.orders();
     if (offer.arrived_at != null) return 3;
-    if (offer.closed_at != null && orders.length > 0 && orders.every((o) => o.is_confirmed)) {
+    if (
+      offer.payments_confirmed_at != null ||
+      (offer.closed_at != null && orders.length > 0 && orders.every((o) => o.is_confirmed))
+    ) {
       return 2;
     }
     if (offer.closed_at != null) return 1;
@@ -94,7 +97,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
       // Falls back to the seller's originally planned schedule until the
       // actual event happens (closed_at/arrived_at are only set then).
       { label: 'Offer closed', time: offer.closed_at ?? offer.closing_time },
-      { label: 'Payments confirmed' },
+      { label: 'Payments confirmed', time: offer.payments_confirmed_at ?? undefined },
       { label: 'Items arrived', time: offer.arrived_at ?? offer.arrival_time },
     ];
   });
@@ -189,12 +192,15 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
   confirmPayment(order: OfferOrder) {
     if (order.is_confirmed) return;
     this.offerService.confirmPayment(this.offer().offer_id, order.offer_buyer_id).subscribe({
-      next: () => {
+      next: (res) => {
         this.orders.update((orders) =>
           orders.map((o) =>
             o.offer_buyer_id === order.offer_buyer_id ? { ...o, is_confirmed: true } : o,
           ),
         );
+        if (res.offer) {
+          this.offer.set(res.offer);
+        }
       },
       error: (err) => {
         console.error('Failed to confirm payment:', err);

@@ -30,6 +30,8 @@ export interface Offer {
   // distinct from closing_time/arrival_time, which are just the plan.
   closed_at: string | null;
   arrived_at: string | null;
+  // Set once every buyer's payment on this (closed) offer has been confirmed.
+  payments_confirmed_at: string | null;
   has_cod_payment: boolean;
   is_completed: boolean;
   created_at: string;
@@ -212,7 +214,7 @@ export class OfferService {
   }
 
   confirmPayment(offerId: number, offerBuyerId: number) {
-    return this.http.post<{ message: string }>(
+    return this.http.post<{ message: string; offer: Offer }>(
       `${environment.api}/offers/${offerId}/orders/${offerBuyerId}/confirm-payment`,
       {},
     );

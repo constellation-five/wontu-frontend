@@ -243,26 +243,52 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  private startOfDay(date: Date): Date {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }
+
   submit() {
     if (!this.canSubmit() || this.isSubmitting()) return;
 
     const m = this.model();
-    if (!m.closing_date || !m.arrival_date || !m.closing_time_of_day || !m.arrival_time_of_day) {
-      this.snackBar.open('Please fill in the closing and arrival date/time.', 'Close', {
+    if (!m.closing_date || !m.arrival_date) {
+      this.snackBar.open('Please fill in the closing and arrival dates.', 'Close', {
         duration: 3000,
       });
+      return;
+    }
+
+    // The date must always be closing <= arrival, regardless of whether a
+    // time-of-day was set. Only when BOTH time-of-day fields are set (and
+    // the dates are the same day) do we additionally compare the times.
+    const closingDateOnly = this.startOfDay(m.closing_date);
+    const arrivalDateOnly = this.startOfDay(m.arrival_date);
+
+    if (arrivalDateOnly.getTime() < closingDateOnly.getTime()) {
+      this.snackBar.open('Items must arrive on or after the offer closing date.', 'Close', {
+        duration: 3000,
+      });
+      return;
+    }
+
+    if (
+      arrivalDateOnly.getTime() === closingDateOnly.getTime() &&
+      m.closing_time_of_day &&
+      m.arrival_time_of_day &&
+      m.arrival_time_of_day < m.closing_time_of_day
+    ) {
+      this.snackBar.open(
+        'On the same day, items must arrive at or after the offer closing time.',
+        'Close',
+        { duration: 3000 },
+      );
       return;
     }
 
     const closingTime = this.combineDateTime(m.closing_date, m.closing_time_of_day);
     const arrivalTime = this.combineDateTime(m.arrival_date, m.arrival_time_of_day);
-
-    if (new Date(arrivalTime) < new Date(closingTime)) {
-      this.snackBar.open('Items must arrive at or after the offer closing time.', 'Close', {
-        duration: 3000,
-      });
-      return;
-    }
 
     const payload: OfferInput = {
       category: m.category,
