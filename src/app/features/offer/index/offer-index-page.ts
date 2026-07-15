@@ -15,10 +15,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../../core/auth.service';
 import { OfferService, Offer } from '../../../core/offer.service';
 import { PageHeaderService } from '../../../core/page-header.service';
-import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card';
 import { NaturalDateTimePipe } from '../../../shared/pipes/natural-date-time.pipe';
-import { NotificationBellComponent } from '../../../shared/components/notification-bell/notification-bell';
+import { MainPageHeaderComponent } from '../../../shared/components/main-page-header/main-page-header';
 import { LocationPickerDialog } from '../../../shared/components/location-picker-dialog/location-picker-dialog';
 import { IconButtonVariantDirective } from '../../../shared/directives/button';
 import { LocationLookupService } from '../../../core/location-lookup.service';
@@ -33,10 +32,9 @@ import { LocationStateService } from '../../../core/location-state.service';
     MatButtonModule,
     MatMenuModule,
     MatCheckboxModule,
-    SearchBarComponent,
     ProductCardComponent,
     NaturalDateTimePipe,
-    NotificationBellComponent,
+    MainPageHeaderComponent,
     IconButtonVariantDirective
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,

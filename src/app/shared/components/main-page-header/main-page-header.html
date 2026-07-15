@@ -1,0 +1,23 @@
+<div class="title-row">
+  <div class="title-location">
+    <h1 class="page-title">{{ pageTitle() }}</h1>
+
+    <button matButton appButtonSize="md" class="location-button" (click)="locationClick.emit()">
+      <mat-icon fontSet="material-symbols-outlined">location_on</mat-icon>
+      {{ location() }}
+    </button>
+  </div>
+
+  <app-notification-bell class="notification-bell" />
+</div>
+
+<div class="search-filter-row" [class.stuck]="stuck()">
+  <app-search-bar
+    class="search-bar"
+    [value]="searchValue()"
+    (valueChange)="searchValueChange.emit($event)"
+    [placeholder]="searchPlaceholder()"
+  />
+
+  <ng-content select="[filterActions]" />
+</div>

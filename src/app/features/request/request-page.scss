@@ -1,10 +1,4 @@
-.request-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--page-spacer-sm, 16px);
-
-  h1 {
-    margin: 0;
-  }
+.filter-menu-content {
+  padding: var(--spacing-xs) var(--spacing-md);
+  min-width: 150px;
 }
