@@ -154,7 +154,7 @@ export class OfferShowPage {
         this.userLocationCoordinates.set(result.coords ?? null);
         
         this.cdr.markForCheck();
-        this.fetchOffers();
+        this.fetchOffers(this.searchQuery());
       }
     });
   }
@@ -185,7 +185,7 @@ export class OfferShowPage {
     }
 
     this.userLocationCoordinates.set(coords);
-    this.fetchOffers(); 
+    this.fetchOffers(this.searchQuery());
 
     try {
       this.userLocation.set(await this.locationLookup.resolvePlaceName(coords));
