@@ -71,10 +71,23 @@
             }
           </div>
         } @else {
-          <p class="mat-font-body-md mat-text-on-surface-variant">
-            You have no saved payment methods yet.
-          </p>
+          <div class="empty-items-container">
+            <img src="assets/img/wontusad.svg" alt="No payment methods" />
+            <p class="mat-font-body-md mat-text-on-surface-variant">
+              You have no payment methods.
+            </p>
+          </div>
         }
+
+        <button
+          matButton="tonal"
+          appButtonSize="sm"
+          class="add-payment-method-btn"
+          (click)="openAddPaymentMethodDialog()"
+        >
+          <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+          Add payment method
+        </button>
       </app-pane>
     </div>
 

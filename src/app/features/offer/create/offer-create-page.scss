@@ -67,6 +67,7 @@ mat-form-field {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
 }
 
 .items-list {
@@ -129,9 +130,9 @@ mat-form-field {
   white-space: nowrap;
 }
 
-.add-item-btn {
+.add-item-btn,
+.add-payment-method-btn {
   width: 100%;
-  margin-bottom: var(--spacing-md);
 }
 
 .submit-btn {
@@ -140,6 +141,7 @@ mat-form-field {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-xs);
+  margin-top: var(--spacing-md);
 }
 
 .desktop-only {

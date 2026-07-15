@@ -1,0 +1,45 @@
+.method-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding-top: var(--spacing-xs);
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+mat-dialog-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+mat-dialog-actions button {
+  flex: 0 0 auto;
+  min-width: auto;
+  white-space: nowrap;
+
+  @media (max-width: 400px) {
+    &:not(.delete-button) {
+      flex: 1;
+    }
+  }
+}
+
+.spacer {
+  flex: 1;
+
+  @media (max-width: 400px) {
+    display: none;
+  }
+}
+
+.delete-button {
+  @media (max-width: 400px) {
+    order: 3;
+    width: 100%;
+    flex: 0 0 100%;
+  }
+}

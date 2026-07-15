@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DecimalPipe } from '@angular/common';
 import { TemplatePortal } from '@angular/cdk/portal';
@@ -37,6 +38,10 @@ import { PageHeaderService } from '../../../core/page-header.service';
 import { OfferService, Offer, OfferItemInput, OfferInput } from '../../../core/offer.service';
 import { LocationStateService } from '../../../core/location-state.service';
 import { ResponsiveDialogService } from '../../../shared/components/responsive-dialog/responsive-dialog.service';
+import {
+  PaymentMethodFormDialog,
+  PaymentMethodFormDialogData,
+} from '../../../shared/components/payment-method-form-dialog/payment-method-form-dialog';
 import {
   AddEditItemDialog,
   AddEditItemDialogData,
@@ -78,6 +83,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
   private readonly pageHeader = inject(PageHeaderService);
   private readonly snackBar = inject(MatSnackBar);
   private readonly locationState = inject(LocationStateService);
+  private readonly dialog = inject(MatDialog);
 
   @ViewChild('actionsTpl') private actionsTpl!: TemplateRef<unknown>;
   private readonly viewContainerRef = inject(ViewContainerRef);
@@ -113,7 +119,12 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     required(f.arrival_date, { message: 'Arrival date is required' });
   });
 
-  readonly canSubmit = computed(() => !this.form().invalid() && this.items().length > 0);
+  readonly canSubmit = computed(
+    () =>
+      !this.form().invalid() &&
+      this.items().length > 0 &&
+      this.selectedPaymentMethodIds().length > 0,
+  );
 
   ngOnInit() {
     // Set after NavigationEnd (which runs its own route-title-derived
@@ -125,12 +136,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
       { label: this.isEditMode ? 'Edit Offer' : 'Create Offer' },
     ]);
 
-    this.offerService.listMyPaymentMethods().subscribe({
-      next: (res) => {
-        this.paymentMethods.set(res.data || []);
-      },
-      error: (err) => console.error('Failed to load payment methods:', err),
-    });
+    this.loadPaymentMethods();
 
     if (this.existingOffer) {
       this.locationLat = this.existingOffer.latitude ?? this.locationLat;
@@ -191,6 +197,15 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     return combined.toISOString();
   }
 
+  private loadPaymentMethods() {
+    this.offerService.listMyPaymentMethods().subscribe({
+      next: (res) => {
+        this.paymentMethods.set(res.data || []);
+      },
+      error: (err) => console.error('Failed to load payment methods:', err),
+    });
+  }
+
   isSelected(id: number): boolean {
     return this.selectedPaymentMethodIds().includes(id);
   }
@@ -199,6 +214,24 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     this.selectedPaymentMethodIds.update((ids) =>
       selected ? [...ids, id] : ids.filter((existing) => existing !== id),
     );
+  }
+
+  openAddPaymentMethodDialog() {
+    const dialogRef = this.dialog.open<
+      PaymentMethodFormDialog,
+      PaymentMethodFormDialogData,
+      PaymentMethodData | 'deleted'
+    >(PaymentMethodFormDialog, {
+      width: '540px',
+      maxWidth: '90vw',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined) {
+        this.loadPaymentMethods();
+      }
+    });
   }
 
   onItemSlotChange(localId: string, newSlot: number) {
