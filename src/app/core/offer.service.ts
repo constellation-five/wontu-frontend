@@ -21,6 +21,9 @@ export interface Offer {
   seller_id: string;
   category: string;
   merchant_name: string;
+  location_label?: string | null;
+  latitude?: number;
+  longitude?: number;
   closing_time: string;
   arrival_time: string;
   // Set once the seller actually closes the offer / marks items arrived —
@@ -33,6 +36,7 @@ export interface Offer {
   updated_at: string;
   items: OfferItem[];
   seller: {
+    user_id?: string;
     name: string;
     avatar: string;
   };
@@ -45,12 +49,11 @@ export interface CheckoutItem {
 }
 
 export interface MyOrder {
-  status: 'pending' | 'confirmed' | 'completed';
-  is_verified: boolean;
+  is_confirmed: boolean;
   payment_proof_url: string | null;
   joined_at: string;
   payment_submitted_at: string | null;
-  verified_at: string | null;
+  confirmed_at: string | null;
   items: CheckoutItem[];
 }
 
@@ -58,6 +61,44 @@ export interface MyOrderSummary extends MyOrder {
   offer_id: number;
   merchant_name: string;
   created_at: string;
+}
+
+/** A single buyer's order, as seen by the seller on the Manage Offer page. */
+export interface OfferOrder {
+  offer_buyer_id: number;
+  buyer: {
+    user_id: string;
+    name: string;
+    avatar: string;
+  };
+  is_confirmed: boolean;
+  payment_proof_url: string | null;
+  joined_at: string;
+  payment_submitted_at: string | null;
+  confirmed_at: string | null;
+  items: CheckoutItem[];
+}
+
+export interface OfferItemInput {
+  item_id?: number;
+  item_name: string;
+  item_price: number;
+  item_url?: string | null;
+  slot: number;
+  image_url?: string | null;
+}
+
+export interface OfferInput {
+  category: string;
+  merchant_name: string;
+  location_label?: string | null;
+  location_lat: number;
+  location_lng: number;
+  closing_time: string;
+  arrival_time: string;
+  has_cod_payment?: boolean;
+  payment_method_ids: number[];
+  items: OfferItemInput[];
 }
 
 @Injectable({
@@ -135,5 +176,89 @@ export class OfferService {
     return this.http.get<{ status: string; data: MyOrderSummary[] }>(
       `${environment.api}/my-orders`,
     );
+  }
+
+  getOfferPaymentMethods(offerId: number) {
+    return this.http.get<{ status: string; data: { payment_method_id: number; bank_name: string; account_name: string; account_number: string }[] }>(
+      `${environment.api}/offers/${offerId}/payment-methods`,
+    );
+  }
+
+  // --- Seller flow ---
+
+  createOffer(payload: OfferInput) {
+    return this.http.post<{ message: string; offer: Offer }>(`${environment.api}/offers`, payload);
+  }
+
+  updateOffer(offerId: number, payload: OfferInput) {
+    return this.http.put<{ message: string; offer: Offer }>(
+      `${environment.api}/offers/${offerId}`,
+      payload,
+    );
+  }
+
+  deleteOffer(offerId: number) {
+    return this.http.delete<{ message: string }>(`${environment.api}/offers/${offerId}`);
+  }
+
+  getMyOffers() {
+    return this.http.get<{ status: string; data: Offer[] }>(`${environment.api}/offers/mine`);
+  }
+
+  getOfferOrders(offerId: number) {
+    return this.http.get<{ status: string; data: OfferOrder[] }>(
+      `${environment.api}/offers/${offerId}/orders`,
+    );
+  }
+
+  confirmPayment(offerId: number, offerBuyerId: number) {
+    return this.http.post<{ message: string }>(
+      `${environment.api}/offers/${offerId}/orders/${offerBuyerId}/confirm-payment`,
+      {},
+    );
+  }
+
+  closeOfferNow(offerId: number) {
+    return this.http.post<{ message: string; offer: Offer }>(
+      `${environment.api}/offers/${offerId}/close`,
+      {},
+    );
+  }
+
+  markItemsArrived(offerId: number) {
+    return this.http.post<{ message: string; offer: Offer }>(
+      `${environment.api}/offers/${offerId}/mark-arrived`,
+      {},
+    );
+  }
+
+  respondToOfferChanges(offerId: number, action: 'keep' | 'leave') {
+    return this.http.post<{ message: string }>(
+      `${environment.api}/offers/${offerId}/orders/respond-to-changes`,
+      { action },
+    );
+  }
+
+  submitPayment(offerId: number, paymentProofUrl: string) {
+    return this.http.post<{ message: string }>(
+      `${environment.api}/offers/${offerId}/submit-payment`,
+      { payment_proof_url: paymentProofUrl },
+    );
+  }
+
+  /** The logged-in user's full list of saved payment methods (seller-side selection on the Create Offer form). */
+  listMyPaymentMethods() {
+    return this.http.get<{
+      success: boolean;
+      message: string;
+      data: { payment_method_id: number; bank_name: string; account_name: string; account_number: string }[];
+    }>(`${environment.api}/payment-methods`);
+  }
+
+  /** Generic image upload (item images, payment proof); returns a URL usable directly as image_url/payment_proof_url. */
+  uploadImage(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<{ url: string }>(`${environment.api}/uploads/image`, formData);
   }
 }

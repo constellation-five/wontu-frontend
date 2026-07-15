@@ -12,9 +12,11 @@
       }
     </div>
     <div class="cart-item-footer">
-      <div class="cart-item-price mat-font-body-lg mat-text-on-surface text-bold">
-        Rp {{ +item().item.item_price | number: '1.0-0' }}
-      </div>
+      @if (showPrice()) {
+        <div class="cart-item-price mat-font-body-lg mat-text-on-surface text-bold">
+          Rp {{ +item().item.item_price | number: '1.0-0' }}
+        </div>
+      }
       @if (editable()) {
         <div class="cart-item-controls">
           <button
@@ -39,7 +41,7 @@
   </div>
   @if (!editable()) {
     <div class="cart-item-qty mat-font-body-lg mat-text-on-surface text-bold">
-      {{ item().quantity }}
+      {{ quantityLabel() ?? item().quantity }}
     </div>
   }
 </div>

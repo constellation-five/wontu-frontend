@@ -50,7 +50,7 @@ export class OfferShowPage {
   private readonly dialog = inject(MatDialog);
   private readonly locationLookup = inject(LocationLookupService);
   private readonly locationState = inject(LocationStateService);
-  
+
   readonly user = this.auth.user;
   readonly offers = this.offerService.allOffers;
   readonly isLoading = this.offerService.isLoading;
@@ -148,11 +148,11 @@ export class OfferShowPage {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.location) {
-        this.locationState.isManuallySet.set(true); 
+        this.locationState.isManuallySet.set(true);
 
         this.userLocation.set(result.location);
         this.userLocationCoordinates.set(result.coords ?? null);
-        
+
         this.cdr.markForCheck();
         this.fetchOffers(this.searchQuery());
       }
@@ -181,7 +181,7 @@ export class OfferShowPage {
 
   private async applyDetectedLocation(coords: { lat: number; lng: number }) {
     if (this.locationState.isManuallySet()) {
-      return; 
+      return;
     }
 
     this.userLocationCoordinates.set(coords);

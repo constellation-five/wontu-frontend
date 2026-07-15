@@ -1,0 +1,29 @@
+<div class="responsive-dialog" [class.is-mobile]="isMobile()">
+  @if (isMobile()) {
+    <div class="responsive-dialog-topbar">
+      <button matIconButton (click)="close()">
+        <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
+      </button>
+      <div class="responsive-dialog-title mat-font-title-md mat-text-on-surface">{{ title }}</div>
+    </div>
+  } @else {
+    <div class="responsive-dialog-header">
+      <h2 mat-dialog-title class="responsive-dialog-title">{{ title }}</h2>
+      <button matIconButton (click)="close()">
+        <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+      </button>
+    </div>
+  }
+
+  <div
+    class="responsive-dialog-body"
+    [class.mat-mdc-dialog-content]="!isMobile()"
+    [class.mdc-dialog__content]="!isMobile()"
+  >
+    <ng-container #outlet></ng-container>
+  </div>
+
+  @if (isMobile()) {
+    <app-bottom-bar />
+  }
+</div>

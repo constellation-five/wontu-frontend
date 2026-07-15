@@ -397,3 +397,17 @@ mat-option.mat-mdc-option {
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
   background: rgba(0, 0, 0, 0.6);
 }
+
+// The app's persistent top bar / bottom bar are position:fixed with z-index
+// 1200, above the CDK overlay container's default z-index (1000) — without
+// this, they visually bleed through on top of full-screen dialogs (e.g. the
+// mobile ResponsiveDialog), looking like a duplicated/offset header.
+.cdk-overlay-container {
+  z-index: 1300;
+}
+
+// Mobile ResponsiveDialog fullscreen panel — no rounded corners, so it
+// completely covers the screen edge-to-edge.
+.responsive-dialog-fullscreen .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 0;
+}

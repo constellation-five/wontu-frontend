@@ -89,9 +89,14 @@
 .right-section {
   display: flex;
   align-items: flex-end;
+  justify-content: space-between;
   gap: var(--spacing-sm);
   flex: 1;
   min-width: 300px;
+}
+
+.select-checkbox {
+  margin-left: auto;
 }
 
 .edit-button {

@@ -1,57 +1,37 @@
 import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
-import { DecimalPipe } from '@angular/common';
-import { ProductCardComponent } from '../../../shared/components/product-card/product-card';
-import { CounterField } from '../../../shared/components/counter-field/counter-field';
-import { PaneComponent } from '../../../shared/components/pane/pane';
-import { CartItemCard } from './cart-item-card/cart-item-card';
-import { TimelineBar, TimelineItem } from '../../../shared/components/timeline-bar/timeline-bar';
-import {
-  PaymentMethodCard,
-  PaymentMethodData,
-} from '../../../shared/components/payment-method-card/payment-method-card';
+import { forkJoin } from 'rxjs';
+import { TimelineItem } from '../../../shared/components/timeline-bar/timeline-bar';
+import { PaymentMethodData } from '../../../shared/components/payment-method-card/payment-method-card';
 import { DialogComponent } from '../../../shared/components/dialog/dialog';
 import { PageHeaderService } from '../../../core/page-header.service';
+import { AuthService } from '../../../core/auth.service';
 import { OfferService, Offer, OfferItem, CheckoutItem, MyOrder } from '../../../core/offer.service';
-import { ButtonSizeDirective, ButtonColorDirective } from '../../../shared/directives/button';
 import { EditNotesDialog } from './edit-notes-dialog';
 import { environment } from '../../../../environments/environment';
+import { OfferMenuView } from './offer-menu-view';
+import { OfferCheckoutView } from './offer-checkout-view';
+import ManageOfferPage from '../manage/manage-offer-page';
 
 type OfferDetailView = 'menu' | 'checkout';
 
 @Component({
   selector: 'app-offer-detail-page',
   standalone: true,
-  imports: [
-    MatIconModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-    MatCardModule,
-    ProductCardComponent,
-    CounterField,
-    PaneComponent,
-    CartItemCard,
-    TimelineBar,
-    PaymentMethodCard,
-    ButtonSizeDirective,
-    ButtonColorDirective,
-    DecimalPipe,
-  ],
+  imports: [MatProgressSpinnerModule, OfferMenuView, OfferCheckoutView, ManageOfferPage],
   templateUrl: './offer-detail-page.html',
   styleUrls: ['./offer-detail-page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferDetailPage {
+export class OfferPage {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly http = inject(HttpClient);
   private readonly offerService = inject(OfferService);
+  private readonly authService = inject(AuthService);
   private readonly dialog = inject(MatDialog);
   protected readonly pageHeader = inject(PageHeaderService);
 
@@ -59,6 +39,11 @@ export class OfferDetailPage {
   cart = signal<Map<number, CheckoutItem>>(new Map());
   isLoading = signal(true);
   view = signal<OfferDetailView>('menu');
+
+  readonly isSeller = computed(() => {
+    const offer = this.offer();
+    return !!offer && offer.seller_id === this.authService.user()?.user_id;
+  });
 
   // Whether the backend already has a placed order for this offer. Backed by
   // the server (fetched on load, updated after place/replace/cancel) rather
@@ -91,7 +76,7 @@ export class OfferDetailPage {
       // seller acts; fall back to the seller's planned schedule until then.
       { label: 'Offer closes', time: offer?.closed_at ?? offer?.closing_time },
       { label: 'Payment made', time: order?.payment_submitted_at ?? undefined },
-      { label: 'Payment confirmed', time: order?.verified_at ?? undefined },
+      { label: 'Payment confirmed', time: order?.confirmed_at ?? undefined },
       { label: 'Items arrive', time: offer?.arrived_at ?? offer?.arrival_time },
     ];
   });
@@ -123,25 +108,47 @@ export class OfferDetailPage {
       return;
     }
 
-    this.offerService.getMyOrder(+offerId).subscribe({
-      next: (res) => {
-        const order = res.data;
-        if (order && order.items.length > 0) {
+    forkJoin({
+      offer: this.offerService.getOfferById(offerId),
+      order: this.offerService.getMyOrder(+offerId),
+    }).subscribe({
+      next: ({ offer, order: orderRes }) => {
+        this.offer.set(offer);
+        this.pageHeader.setTitle(offer.merchant_name);
+        this.setBreadcrumbs(offer);
+
+        const isSeller = offer.seller_id === this.authService.user()?.user_id;
+        const order = orderRes.data;
+        const hasOrder = !!order && order.items.length > 0;
+
+        if (!isSeller && !hasOrder && offer.closed_at !== null) {
+          this.router.navigate(['/offers']);
+          return;
+        }
+
+        if (isSeller) {
+          this.isLoading.set(false);
+          return;
+        }
+
+        if (hasOrder && order) {
           const cartMap = new Map<number, CheckoutItem>();
           order.items.forEach((item) => cartMap.set(item.item.item_id, item));
           this.cart.set(cartMap);
           this.view.set('checkout');
           this.hasPlacedOrder.set(true);
           this.myOrder.set(order);
+          this.loadPaymentMethods();
         } else {
           this.loadDraftCart(offerId);
+          this.updateCartItemsWithFreshData(offer);
+          this.isLoading.set(false);
         }
-        this.loadOffer(offerId);
       },
       error: (err) => {
-        console.error('Failed to load order status:', err);
-        this.loadDraftCart(offerId);
-        this.loadOffer(offerId);
+        console.error('Failed to load offer:', err);
+        this.isLoading.set(false);
+        this.router.navigate(['/offers']);
       },
     });
   }
@@ -178,31 +185,6 @@ export class OfferDetailPage {
 
   private clearCartFromLocalStorage(offerId: string) {
     localStorage.removeItem(`cart_${offerId}`);
-  }
-
-  loadOffer(id: string) {
-    this.isLoading.set(true);
-    this.offerService.getOfferById(id).subscribe({
-      next: (offer) => {
-        this.offer.set(offer);
-        this.pageHeader.setTitle(offer.merchant_name);
-        this.setBreadcrumbs(offer);
-
-        // Update cart items with fresh offer data
-        this.updateCartItemsWithFreshData(offer);
-
-        if (this.view() === 'checkout') {
-          this.loadPaymentMethods();
-        } else {
-          this.isLoading.set(false);
-        }
-      },
-      error: (err) => {
-        console.error('Failed to load offer:', err);
-        this.isLoading.set(false);
-        this.router.navigate(['/offers']);
-      },
-    });
   }
 
   private setBreadcrumbs(offer: Offer) {
@@ -277,18 +259,8 @@ export class OfferDetailPage {
     }
   }
 
-  onRemoveItem(itemId: number) {
-    const currentCart = new Map(this.cart());
-    currentCart.delete(itemId);
-    this.cart.set(currentCart);
-    const offerId = this.route.snapshot.paramMap.get('id');
-    if (offerId) {
-      if (currentCart.size === 0) {
-        this.clearCartFromLocalStorage(offerId);
-      } else {
-        this.saveCartToLocalStorage(offerId);
-      }
-    }
+  isItemOutOfStock(item: OfferItem): boolean {
+    return item.current_slot >= item.slot;
   }
 
   onIncreaseQuantity(itemId: number) {
@@ -327,46 +299,6 @@ export class OfferDetailPage {
     }
   }
 
-  isItemInCart(itemId: number): boolean {
-    return this.cart().has(itemId);
-  }
-
-  getItemQuantity(itemId: number): number {
-    return this.cart().get(itemId)?.quantity || 0;
-  }
-
-  isItemOutOfStock(item: OfferItem): boolean {
-    return item.current_slot >= item.slot;
-  }
-
-  formatItemPrice(item: OfferItem): string {
-    return 'Rp ' + (+item.item_price).toLocaleString('id-ID');
-  }
-
-  getItemStockText(item: OfferItem): string {
-    const remaining = item.slot - item.current_slot;
-    return remaining > 0 ? `Stock: ${remaining} left` : 'Out of Stock';
-  }
-
-  getItemStockVariant(item: OfferItem): 'default' | 'low' {
-    return item.slot - item.current_slot > 5 ? 'default' : 'low';
-  }
-
-  onItemCounterChange(item: OfferItem, newValue: number, field: CounterField) {
-    const current = this.getItemQuantity(item.item_id);
-
-    if (newValue > current) {
-      this.onIncreaseQuantity(item.item_id);
-    } else if (newValue < current) {
-      if (current === 1) {
-        // Decreasing past 1 opens a remove-confirmation dialog rather than
-        // actually changing the quantity, so snap the field back visually.
-        field.value.set(1);
-      }
-      this.onDecreaseQuantity(item.item_id);
-    }
-  }
-
   onPlaceOrder() {
     const offer = this.offer();
     if (!offer || this.totalItems() === 0) return;
@@ -382,7 +314,7 @@ export class OfferDetailPage {
         next: () => this.finishPlacingOrder(offer),
         error: (err) => {
           console.error('Failed to replace order:', err);
-          alert('Failed to update order. Please try again.');
+          alert(err.error?.message || 'Failed to update order. Please try again.');
         },
       });
     } else {
@@ -390,7 +322,7 @@ export class OfferDetailPage {
         next: () => this.finishPlacingOrder(offer),
         error: (err) => {
           console.error('Failed to place order:', err);
-          alert('Failed to place order. Please try again.');
+          alert(err.error?.message || 'Failed to place order. Please try again.');
         },
       });
     }
@@ -473,15 +405,7 @@ export class OfferDetailPage {
     }
   }
 
-  onDragOver(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
   onDrop(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-
     if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
       this.setProofOfPayment(event.dataTransfer.files[0]);
     }
@@ -519,26 +443,6 @@ export class OfferDetailPage {
         cart: Array.from(this.cart().entries()),
       },
     });
-  }
-
-  formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return (
-      date.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      }) +
-      ', ' +
-      date
-        .toLocaleTimeString('en-GB', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true,
-        })
-        .replace('am', 'AM')
-        .replace('pm', 'PM')
-    );
   }
 
   editCartItemNotes(cartItem: CheckoutItem) {

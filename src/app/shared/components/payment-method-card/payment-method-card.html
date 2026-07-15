@@ -9,21 +9,30 @@
     </div>
 
     <div class="right-section">
-      <div class="account-number-section">
-        <div class="account-number-box">
-          <span class="account-label mat-font-label-sm mat-text-on-surface-variant">Account Number</span>
-          <span class="account-number mat-font-body-md mat-text-on-surface">{{ method().account_number }}</span>
-          <button 
-            mat-icon-button
-            class="copy-button"
-            (click)="copyToClipboard(method().account_number); $event.stopPropagation()">
-            <mat-icon fontSet="material-symbols-outlined">content_copy</mat-icon>
-          </button>
+      @if (showAccountNumber()) {
+        <div class="account-number-section">
+          <div class="account-number-box">
+            <span class="account-label mat-font-label-sm mat-text-on-surface-variant">Account Number</span>
+            <span class="account-number mat-font-body-md mat-text-on-surface">{{ method().account_number }}</span>
+            <button
+              mat-icon-button
+              class="copy-button"
+              (click)="copyToClipboard(method().account_number); $event.stopPropagation()">
+              <mat-icon fontSet="material-symbols-outlined">content_copy</mat-icon>
+            </button>
+          </div>
         </div>
-      </div>
+      }
 
-      @if (showEdit()) {
-        <button 
+      @if (selectable()) {
+        <mat-checkbox
+          class="select-checkbox"
+          [checked]="selected()"
+          (change)="selectedChange.emit($event.checked)"
+          (click)="$event.stopPropagation()"
+        ></mat-checkbox>
+      } @else if (showEdit()) {
+        <button
           mat-icon-button
           class="edit-button"
           (click)="edit.emit(method())">

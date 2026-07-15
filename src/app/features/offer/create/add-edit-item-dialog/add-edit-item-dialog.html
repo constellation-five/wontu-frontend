@@ -1,0 +1,63 @@
+<div class="item-dialog">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Item link (optional)</mat-label>
+    <input matInput [formField]="form.item_url" placeholder="https://..." />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Item name</mat-label>
+    <input matInput [formField]="form.item_name" />
+    @if (form.item_name().invalid() && form.item_name().touched()) {
+      <mat-error>{{ form.item_name().errors()[0]?.message }}</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Price</mat-label>
+    <span matTextPrefix>Rp&nbsp;</span>
+    <input matInput type="number" [formField]="form.item_price" />
+    @if (form.item_price().invalid() && form.item_price().touched()) {
+      <mat-error>{{ form.item_price().errors()[0]?.message }}</mat-error>
+    }
+  </mat-form-field>
+
+  <div class="quantity-row">
+    <span class="mat-font-body-md mat-text-on-surface-variant">Quantity</span>
+    <app-counter-field [(value)]="slot" [min]="1" />
+  </div>
+
+  <app-file-drop-upload
+    label="Item image"
+    [existingUrl]="existingImageUrl"
+    [(file)]="file"
+  />
+
+  <div class="dialog-footer" [class.hide-inline]="dialogContext?.isMobile()">
+    @if (isEdit) {
+      <button matButton="outlined" appButtonColor="error" appButtonSize="md" (click)="openDeleteConfirm()">
+        <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+        Delete
+      </button>
+    }
+    <div class="spacer"></div>
+    <button
+      matButton="filled"
+      appButtonSize="md"
+      [disabled]="form().invalid() || isUploading()"
+      (click)="submit()"
+    >
+      {{ isEdit ? 'Save item' : 'Add item' }}
+    </button>
+  </div>
+</div>
+
+<ng-template #actionsTpl>
+  <button
+    matButton="filled"
+    appButtonSize="md"
+    [disabled]="form().invalid() || isUploading()"
+    (click)="submit()"
+  >
+    {{ isEdit ? 'Save item' : 'Add item' }}
+  </button>
+</ng-template>
