@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { PaneComponent } from '../../shared/components/pane/pane';
 import { PageHeaderService } from '../../core/page-header.service';
-import { OfferService } from '../../core/offer.service';
+import { Offer, OfferService } from '../../core/offer.service';
 import { ButtonSizeDirective } from '../../shared/directives/button';
 
 interface HistoryOrder {
@@ -14,13 +14,24 @@ interface HistoryOrder {
   totalItems: number;
   totalPrice: number;
   orderDate: Date;
-  status: 'pending' | 'confirmed' | 'completed';
+  status: 'pending' | 'confirmed';
   items: {
     itemName: string;
     quantity: number;
     price: string;
     imageUrl?: string;
   }[];
+}
+
+type SellerOfferStatus = 'open' | 'closed' | 'arrived';
+
+interface HistoryOffer {
+  offerId: number;
+  merchantName: string;
+  category: string;
+  itemCount: number;
+  imageUrl?: string;
+  status: SellerOfferStatus;
 }
 
 @Component({
@@ -45,11 +56,13 @@ export class HistoryPage {
   private readonly offerService = inject(OfferService);
 
   orders = signal<HistoryOrder[]>([]);
+  offers = signal<HistoryOffer[]>([]);
 
   constructor() {
     this.pageHeader.setTitle('Order History');
     this.pageHeader.setBreadcrumbs([{ label: 'Order History' }]);
     this.loadOrderHistory();
+    this.loadMyOffers();
   }
 
   private loadOrderHistory() {
@@ -75,7 +88,7 @@ export class HistoryPage {
             totalItems,
             totalPrice,
             orderDate: new Date(order.created_at),
-            status: order.status,
+            status: order.is_confirmed ? 'confirmed' : 'pending',
             items,
           };
         });
@@ -92,7 +105,6 @@ export class HistoryPage {
     switch (status) {
       case 'pending': return 'Order Placed';
       case 'confirmed': return 'Confirmed';
-      case 'completed': return 'Completed';
       default: return status;
     }
   }
@@ -101,12 +113,59 @@ export class HistoryPage {
     switch (status) {
       case 'pending': return 'var(--mat-sys-primary)';
       case 'confirmed': return 'var(--mat-sys-tertiary)';
-      case 'completed': return 'var(--mat-sys-tertiary)';
       default: return 'var(--mat-sys-on-surface)';
     }
   }
 
   viewOrderDetail(order: HistoryOrder) {
     this.router.navigate(['/offers', order.offerId]);
+  }
+
+  private loadMyOffers() {
+    this.offerService.getMyOffers().subscribe({
+      next: (res) => {
+        const offers: HistoryOffer[] = (res.data || []).map((offer: Offer) => ({
+          offerId: offer.offer_id,
+          merchantName: offer.merchant_name,
+          category: offer.category,
+          itemCount: offer.items.length,
+          imageUrl: offer.items[0]?.image_url,
+          status: this.deriveOfferStatus(offer),
+        }));
+
+        this.offers.set(offers);
+      },
+      error: (err) => {
+        console.error('Failed to load your offers:', err);
+      },
+    });
+  }
+
+  private deriveOfferStatus(offer: Offer): SellerOfferStatus {
+    if (offer.arrived_at) return 'arrived';
+    if (offer.closed_at) return 'closed';
+    return 'open';
+  }
+
+  getOfferStatusLabel(status: SellerOfferStatus): string {
+    switch (status) {
+      case 'open': return 'Open';
+      case 'closed': return 'Closed';
+      case 'arrived': return 'Items Arrived';
+      default: return status;
+    }
+  }
+
+  getOfferStatusColor(status: SellerOfferStatus): string {
+    switch (status) {
+      case 'open': return 'var(--mat-sys-primary)';
+      case 'closed': return 'var(--mat-sys-error)';
+      case 'arrived': return 'var(--mat-sys-tertiary)';
+      default: return 'var(--mat-sys-on-surface)';
+    }
+  }
+
+  viewOfferDetail(offer: HistoryOffer) {
+    this.router.navigate(['/offers', offer.offerId]);
   }
 }

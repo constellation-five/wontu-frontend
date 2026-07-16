@@ -1,4 +1,20 @@
-<div class="request-header">
-  <h1 class="mat-font-headline-md mat-text-on-surface">Requests</h1>
-  <app-notification-bell />
-</div>
+<app-main-page-header
+  pageTitle="Requests"
+  [location]="userLocation()"
+  [searchValue]="searchQuery()"
+  searchPlaceholder="Search requests"
+  (locationClick)="onChangeLocation()"
+  (searchValueChange)="searchQuery.set($event)"
+>
+  <ng-container filterActions>
+    <button mat-icon-button [matMenuTriggerFor]="filterMenu" class="filter-button">
+      <mat-icon fontSet="material-symbols-outlined">filter_list</mat-icon>
+    </button>
+
+    <mat-menu #filterMenu="matMenu">
+      <div class="filter-menu-content" (click)="$event.stopPropagation()">
+        <span class="mat-font-body-md mat-text-on-surface-variant">No filters available</span>
+      </div>
+    </mat-menu>
+  </ng-container>
+</app-main-page-header>

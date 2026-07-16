@@ -1,74 +1,36 @@
-<!-- Location and Notification Section (Mobile only) -->
-<div class="location-notification-section">
-  <div class="location-bar" (click)="onChangeLocation()">
-    <mat-icon fontSet="material-symbols-outlined" class="mat-text-on-surface">
-      location_on
-    </mat-icon>
-    <span class="mat-font-body-md mat-text-on-surface-variant">
-      {{ userLocation() }}
-    </span>
-  </div>
-
-  <app-notification-bell />
-</div>
-
-<!-- Welcome Section -->
-<div class="welcome-section">
-  <div class="welcome-text-container">
-    <h1 class="welcome-heading">
-      <span class="mat-font-headline-md mat-text-on-surface">Welcome, </span>
-      <span class="mat-font-headline-md mat-text-primary">{{ user()?.name || 'Guest' }}</span>
-    </h1>
-    <p class="mat-font-body-md mat-text-on-surface-variant">Find what you need, anytime</p>
-  </div>
-
-  <!-- Notification Bell (Desktop only) -->
-  <app-notification-bell class="desktop-notification" />
-</div>
-
-<!-- Search Bar with Filter -->
-<div class="search-filter-section">
-  <!-- Location Bar (Desktop only) -->
-  <div class="location-bar desktop-location" (click)="onChangeLocation()">
-    <mat-icon fontSet="material-symbols-outlined" class="mat-text-on-surface">
-      location_on
-    </mat-icon>
-    <span class="mat-font-body-md mat-text-on-surface-variant">
-      {{ userLocation() }}
-    </span>
-  </div>
-
-  <div class="search-filter-group">
-    <app-search-bar
-      [value]="searchQuery()"
-      (valueChange)="onSearchChange($event)"
-      [placeholder]="'Search offers'"
-    />
-
+<app-main-page-header
+  pageTitle="Offers"
+  [location]="userLocation()"
+  [searchValue]="searchQuery()"
+  searchPlaceholder="Search offers"
+  (locationClick)="onChangeLocation()"
+  (searchValueChange)="onSearchChange($event)"
+>
+  <ng-container filterActions>
     <button mat-icon-button [matMenuTriggerFor]="filterMenu" class="filter-button">
       <mat-icon fontSet="material-symbols-outlined">filter_list</mat-icon>
     </button>
-  </div>
 
-  <mat-menu #filterMenu="matMenu">
-    <div class="filter-menu-content" (click)="$event.stopPropagation()">
-      <mat-checkbox
-        [checked]="filterFood()"
-        (change)="filterFood.set($event.checked)"
-        class="filter-checkbox"
-      >
-        Food
-      </mat-checkbox>
-      <mat-checkbox
-        [checked]="filterOther()"
-        (change)="filterOther.set($event.checked)"
-        class="filter-checkbox"
-      >
-        Other
-      </mat-checkbox>
-    </div>
-  </mat-menu>
-</div>
+    <mat-menu #filterMenu="matMenu">
+      <div class="filter-menu-content" (click)="$event.stopPropagation()">
+        <mat-checkbox
+          [checked]="filterFood()"
+          (change)="filterFood.set($event.checked)"
+          class="filter-checkbox"
+        >
+          Food
+        </mat-checkbox>
+        <mat-checkbox
+          [checked]="filterOther()"
+          (change)="filterOther.set($event.checked)"
+          class="filter-checkbox"
+        >
+          Other
+        </mat-checkbox>
+      </div>
+    </mat-menu>
+  </ng-container>
+</app-main-page-header>
 
 <!-- Offers Grid -->
 @if (isLoading()) {

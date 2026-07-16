@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, booleanAttribute, input, output } f
 import { DecimalPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { CheckoutItem } from '../../../../core/offer.service';
-import { CounterField } from '../../../../shared/components/counter-field/counter-field';
-import { ButtonSizeDirective } from '../../../../shared/directives/button';
-import { IconButtonVariantDirective } from '../../../../shared/directives/button/icon-button-variant';
+import { CheckoutItem } from '../../../core/offer.service';
+import { CounterField } from '../counter-field/counter-field';
+import { ButtonSizeDirective } from '../../directives/button';
+import { IconButtonVariantDirective } from '../../directives/button/icon-button-variant';
 
 @Component({
   selector: 'app-cart-item-card',
@@ -25,6 +25,9 @@ import { IconButtonVariantDirective } from '../../../../shared/directives/button
 export class CartItemCard {
   item = input.required<CheckoutItem>();
   editable = input(false, { transform: booleanAttribute });
+  showPrice = input(true, { transform: booleanAttribute });
+  /** Overrides the displayed quantity (e.g. "3/4" remaining-of-total) when set — used by the seller's Item Summary. */
+  quantityLabel = input<string | null>(null);
 
   increase = output<number>();
   decrease = output<number>();

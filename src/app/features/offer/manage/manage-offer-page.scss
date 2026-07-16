@@ -1,0 +1,209 @@
+@use '../../../../variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+// Content Layout: single column (same order as mobile) below $breakpoint-lg
+// — including the $breakpoint-md–lg tier, which keeps the desktop chrome
+// but not the two-column split — then 1fr + fixed-width aside from there up.
+.content-layout {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: 1fr;
+
+  @media (max-width: calc(#{$breakpoint-lg} - 1px)) {
+    // Unwrap the two column containers below $breakpoint-lg so each pane
+    // becomes an ordinary grid item that `order` (below) can reposition.
+    .left-column,
+    .right-column {
+      display: contents;
+    }
+  }
+
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: 1fr 400px;
+    gap: var(--spacing-xl);
+  }
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  min-width: 0;
+}
+
+// In the single-column tier, the action-buttons pane (only visible from
+// $breakpoint-md up — see .desktop-only) moves to the very top, and the
+// item summary pane moves to the very bottom, rather than following their
+// normal document order.
+@media (max-width: calc(#{$breakpoint-lg} - 1px)) {
+  .right-column > app-pane.desktop-only {
+    order: -1;
+  }
+
+  .right-column > .item-summary-pane {
+    order: 1;
+  }
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  overflow: hidden;
+  flex: 1000 1000 auto;
+  min-width: 160px;
+}
+
+.buyer-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--mat-sys-corner-full);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.buyer-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.panel-description {
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--spacing-sm);
+  overflow: hidden;
+  flex: 1 1 170px;
+  max-width: 170px;
+  min-width: 56px;
+  container-type: inline-size;
+}
+
+.count {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex-shrink: 1;
+  display: none;
+
+  @container (min-width: 160px) {
+    display: inline;
+  }
+}
+
+.status-chip {
+  flex-shrink: 0;
+}
+
+.order-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(256px, 100%), 1fr));
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.order-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.order-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.status-chip {
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  border-radius: var(--mat-sys-corner-full);
+  white-space: nowrap;
+
+  &.status-not-paid {
+    background-color: var(--mat-sys-error-container);
+    color: var(--mat-sys-on-error-container);
+  }
+
+  &.status-pending {
+    background-color: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+  }
+
+  &.status-confirmed {
+    background-color: var(--mat-sys-success-container);
+    color: var(--mat-sys-on-success-container);
+  }
+}
+
+.payment-methods-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.info-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-lg);
+}
+
+.info-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+
+  span:last-child {
+    text-align: right;
+    justify-self: end;
+  }
+}
+
+.desktop-only {
+  display: none !important;
+
+  @media (min-width: $breakpoint-md) {
+    display: block !important;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+
+  button {
+    width: 100%;
+  }
+}
+
+.edit-delete {
+  width: 100%;
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+
+  button {
+    width: 100%;
+  }
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.text-bold {
+  font-weight: 600;
+}

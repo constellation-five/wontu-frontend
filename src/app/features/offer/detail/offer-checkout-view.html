@@ -1,0 +1,296 @@
+<div class="checkout-view">
+  <!-- Mobile Layout -->
+  <div class="mobile-layout">
+    <!-- 1. Seller Info (No Title) -->
+    <app-pane title="" class="mobile-seller-pane">
+      <div class="seller-section">
+        <img [src]="offer().seller.avatar" [alt]="offer().seller.name" class="seller-avatar" />
+        <div class="seller-info">
+          <div class="seller-name mat-font-body-md mat-text-on-surface">
+            {{ offer().seller.name }}
+          </div>
+          <div class="seller-rating">
+            <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
+            <span class="mat-font-label-md mat-text-on-surface">4.9</span>
+            <span class="mat-font-body-sm mat-text-on-surface-variant">(100+)</span>
+          </div>
+        </div>
+        <!-- The fixed mobile bottom bar covers this below $breakpoint-md; from
+        there up it's hidden, so this pane needs its own Chat button. -->
+        <div class="tablet-only-action">
+          <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
+            <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
+            <span>Chat</span>
+          </button>
+        </div>
+      </div>
+    </app-pane>
+
+    <!-- 2. Progress -->
+    <app-pane title="">
+      <app-timeline-bar [items]="progressItems()" [currentStep]="currentProgressStep()" />
+    </app-pane>
+
+    <!-- 3. Cart (No Buttons) -->
+    <app-pane title="Cart">
+      @if (cartItems().length > 0) {
+        <div class="cart-items-container">
+          @for (item of cartItems(); track item.item.item_id) {
+            <app-cart-item-card [item]="item" />
+          }
+        </div>
+      } @else {
+        <div class="empty-cart-container">
+          <img src="assets/img/wontusad.svg" alt="Empty cart" class="empty-cart-icon" />
+          <p class="mat-font-body-md mat-text-on-surface-variant">You have no items.</p>
+        </div>
+      }
+
+      <div class="cart-total">
+        <span class="mat-font-body-lg mat-text-on-surface">Total</span>
+        <span class="mat-font-body-lg mat-text-on-surface text-bold">
+          Rp {{ totalPrice() | number: '1.0-0' }}
+        </span>
+      </div>
+
+      <!-- The fixed mobile bottom bar covers these below $breakpoint-md; from
+      there up it's hidden, so this pane needs its own inline actions. -->
+      <div class="tablet-only-action">
+        @if (!isOfferClosed()) {
+          <div class="cart-actions">
+            <button
+              matButton="outlined"
+              appButtonColor="error"
+              class="cancel-order-btn"
+              (click)="cancelOrder.emit()"
+            >
+              <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+              <span>Cancel order</span>
+            </button>
+            <button matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
+              <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+              <span>Edit order</span>
+            </button>
+          </div>
+        } @else {
+          <div class="offer-closed-message mat-font-body-sm mat-text-on-surface-variant">
+            Offer has been closed. No further changes allowed.
+          </div>
+        }
+      </div>
+    </app-pane>
+
+    <!-- 4. Payment Methods -->
+    <app-pane title="Payment Methods">
+      @if (paymentMethods().length > 0) {
+        <div class="payment-methods-list">
+          @for (method of paymentMethods(); track method.payment_method_id) {
+            <payment-method-card [method]="method" [showEdit]="false" />
+          }
+        </div>
+      } @else {
+        <div class="payment-methods-list">
+          <payment-method-card [method]="dummyPaymentMethod()" [showEdit]="false" />
+        </div>
+      }
+
+      <!-- Proof of Payment -->
+      <div class="proof-section">
+        <h3 class="mat-font-title-md mat-text-on-surface proof-title">Proof of payment</h3>
+
+        <div class="proof-upload-container">
+          @if (myOrder()?.payment_submitted_at) {
+            <app-upload-file-card [remoteUrl]="myOrder()!.payment_proof_url" />
+          } @else if (proofOfPayment(); as file) {
+            <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
+          } @else {
+            <app-file-drop-upload
+              label="Proof of payment"
+              [file]="proofOfPayment()"
+              (fileChange)="proofOfPaymentChange.emit($event)"
+            />
+          }
+        </div>
+
+        @if (!myOrder()?.payment_submitted_at) {
+          <button
+            matButton="filled"
+            appButtonSize="md"
+            class="complete-payment-btn"
+            [disabled]="!proofOfPayment() || uploadProgress() !== null"
+            (click)="completePayment.emit()"
+          >
+            <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+            Complete payment
+          </button>
+        }
+      </div>
+    </app-pane>
+  </div>
+
+  <!-- Desktop Layout (Two Column) -->
+  <div class="desktop-layout">
+    <div class="content-layout">
+      <!-- Left: Progress and Payment -->
+      <div class="left-section">
+        <!-- Offer Progress Pane -->
+        <app-pane title="">
+          <app-timeline-bar [items]="progressItems()" [currentStep]="currentProgressStep()" />
+        </app-pane>
+
+        <!-- Payment Pane -->
+        <app-pane title="Payment">
+          <!-- Payment Methods List -->
+          @if (paymentMethods().length > 0) {
+            <div class="payment-methods-list">
+              @for (method of paymentMethods(); track method.payment_method_id) {
+                <payment-method-card [method]="method" [showEdit]="false" />
+              }
+            </div>
+          } @else {
+            <div class="payment-methods-list">
+              <payment-method-card [method]="dummyPaymentMethod()" [showEdit]="false" />
+            </div>
+          }
+
+          <!-- Proof of Payment Section -->
+          <div class="proof-section">
+            <h3 class="mat-font-title-md mat-text-on-surface proof-title">Proof of payment</h3>
+
+            <div class="proof-upload-container">
+              @if (myOrder()?.payment_submitted_at) {
+                <app-upload-file-card [remoteUrl]="myOrder()!.payment_proof_url" />
+              } @else if (proofOfPayment(); as file) {
+                <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
+              } @else {
+                <app-file-drop-upload
+                  label="Proof of payment"
+                  [file]="proofOfPayment()"
+                  (fileChange)="proofOfPaymentChange.emit($event)"
+                />
+              }
+            </div>
+
+            @if (!myOrder()?.payment_submitted_at) {
+              <button
+                matButton="filled"
+                appButtonSize="md"
+                class="complete-payment-btn"
+                [disabled]="!proofOfPayment() || uploadProgress() !== null"
+                (click)="completePayment.emit()"
+              >
+                <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+                Complete payment
+              </button>
+            }
+          </div>
+        </app-pane>
+      </div>
+
+      <!-- Right: Offer Info and Cart -->
+      <aside class="right-section">
+        <!-- Offer Information Pane -->
+        <app-pane>
+          <div class="seller-section">
+            <img [src]="offer().seller.avatar" [alt]="offer().seller.name" class="seller-avatar" />
+            <div class="seller-info">
+              <div class="seller-name mat-font-body-md mat-text-on-surface">
+                {{ offer().seller.name }}
+              </div>
+              <div class="seller-rating">
+                <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
+                <span class="mat-font-label-md mat-text-on-surface">4.9</span>
+                <span class="mat-font-body-sm mat-text-on-surface-variant">(100+)</span>
+              </div>
+            </div>
+            <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
+              <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
+              <span>Chat</span>
+            </button>
+          </div>
+        </app-pane>
+
+        <!-- Cart Pane -->
+        <app-pane title="Cart">
+          @if (cartItems().length > 0) {
+            <div class="cart-items-container">
+              @for (item of cartItems(); track item.item.item_id) {
+                <app-cart-item-card [item]="item" />
+              }
+            </div>
+          } @else {
+            <div class="empty-cart-container">
+              <img src="assets/img/wontusad.svg" alt="Empty cart" class="empty-cart-icon" />
+              <p class="mat-font-body-md mat-text-on-surface-variant">You have no items.</p>
+            </div>
+          }
+
+          <div class="cart-footer">
+            <div class="cart-total">
+              <span class="mat-font-body-lg mat-text-on-surface">Total</span>
+              <span class="mat-font-body-lg mat-text-on-surface text-bold">
+                Rp {{ totalPrice() | number: '1.0-0' }}
+              </span>
+            </div>
+            @if (!isOfferClosed()) {
+              <div class="cart-actions">
+                <button
+                  matButton="outlined"
+                  appButtonColor="error"
+                  class="cancel-order-btn"
+                  (click)="cancelOrder.emit()"
+                >
+                  <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+                  <span>Cancel order</span>
+                </button>
+                <button matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
+                  <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+                  <span>Edit order</span>
+                </button>
+              </div>
+            } @else {
+              <div class="offer-closed-message mat-font-body-sm mat-text-on-surface-variant">
+                Offer has been closed. No further changes allowed.
+              </div>
+            }
+          </div>
+        </app-pane>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Action Bar -->
+  <div class="mobile-bottom-bar">
+    <button matButton="tonal" appButtonSize="sm" class="chat-action-btn" (click)="openChat.emit()">
+      <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
+      <span>Chat</span>
+    </button>
+    @if (!isOfferClosed()) {
+      <div class="bottom-actions-row">
+        <button
+          matButton="outlined"
+          appButtonSize="sm"
+          appButtonColor="error"
+          class="cancel-action-btn"
+          (click)="cancelOrder.emit()"
+        >
+          <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+          <span>Cancel order</span>
+        </button>
+        <button
+          matButton="tonal"
+          appButtonSize="sm"
+          class="edit-action-btn"
+          (click)="editOrder.emit()"
+        >
+          <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+          <span>Edit order</span>
+        </button>
+      </div>
+    } @else {
+      <div class="offer-closed-message mat-font-body-sm mat-text-on-surface-variant">
+        Offer has been closed. No further changes allowed.
+      </div>
+    }
+  </div>
+</div>

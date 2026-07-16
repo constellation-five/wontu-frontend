@@ -15,10 +15,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../../core/auth.service';
 import { OfferService, Offer } from '../../../core/offer.service';
 import { PageHeaderService } from '../../../core/page-header.service';
-import { SearchBarComponent } from '../../../shared/components/search-bar/search-bar';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card';
 import { NaturalDateTimePipe } from '../../../shared/pipes/natural-date-time.pipe';
-import { NotificationBellComponent } from '../../../shared/components/notification-bell/notification-bell';
+import { MainPageHeaderComponent } from '../../../shared/components/main-page-header/main-page-header';
 import { LocationPickerDialog } from '../../../shared/components/location-picker-dialog/location-picker-dialog';
 import { IconButtonVariantDirective } from '../../../shared/directives/button';
 import { LocationLookupService } from '../../../core/location-lookup.service';
@@ -33,10 +32,9 @@ import { LocationStateService } from '../../../core/location-state.service';
     MatButtonModule,
     MatMenuModule,
     MatCheckboxModule,
-    SearchBarComponent,
     ProductCardComponent,
     NaturalDateTimePipe,
-    NotificationBellComponent,
+    MainPageHeaderComponent,
     IconButtonVariantDirective
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,7 +48,7 @@ export class OfferShowPage {
   private readonly dialog = inject(MatDialog);
   private readonly locationLookup = inject(LocationLookupService);
   private readonly locationState = inject(LocationStateService);
-  
+
   readonly user = this.auth.user;
   readonly offers = this.offerService.allOffers;
   readonly isLoading = this.offerService.isLoading;
@@ -148,11 +146,11 @@ export class OfferShowPage {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.location) {
-        this.locationState.isManuallySet.set(true); 
+        this.locationState.isManuallySet.set(true);
 
         this.userLocation.set(result.location);
         this.userLocationCoordinates.set(result.coords ?? null);
-        
+
         this.cdr.markForCheck();
         this.fetchOffers(this.searchQuery());
       }
@@ -181,7 +179,7 @@ export class OfferShowPage {
 
   private async applyDetectedLocation(coords: { lat: number; lng: number }) {
     if (this.locationState.isManuallySet()) {
-      return; 
+      return;
     }
 
     this.userLocationCoordinates.set(coords);

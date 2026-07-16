@@ -1,0 +1,150 @@
+@use '../../../../variables' as *;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+// Single column (same order as mobile) below $breakpoint-lg — including the
+// $breakpoint-md–lg tier, which keeps the desktop chrome but not the
+// two-column split — then 2 equal columns from there up.
+.content-layout {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: 1fr;
+
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+  }
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  min-width: 0;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.datetime-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.datetime-group-label {
+  margin-bottom: var(--spacing-xs);
+}
+
+.datetime-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--spacing-sm);
+}
+
+.payment-methods-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border-radius: var(--mat-sys-corner-medium);
+  background-color: var(--mat-sys-surface-container-lowest);
+  box-shadow: var(--mat-sys-level1);
+}
+
+.empty-items-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  min-height: 200px;
+  padding: var(--spacing-xl) var(--spacing-md);
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+
+  img {
+    width: 96px;
+    height: 96px;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.item-image {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--mat-sys-corner-small);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xs);
+}
+
+.item-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.price {
+  font-weight: bold;
+}
+
+.add-item-btn,
+.add-payment-method-btn {
+  width: 100%;
+}
+
+.submit-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+
+  &.desktop-only {
+    margin-top: var(--spacing-md);
+  }
+}
+
+.desktop-only {
+  display: none;
+
+  @media (min-width: $breakpoint-md) {
+    display: flex;
+  }
+}

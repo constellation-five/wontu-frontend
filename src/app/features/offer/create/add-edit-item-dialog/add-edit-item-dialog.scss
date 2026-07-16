@@ -1,0 +1,40 @@
+.item-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.text-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.price-quantity {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.price {
+  flex: 1;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.dialog-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+
+  &.hide-inline {
+    display: none;
+  }
+}
+
+.spacer {
+  flex: 1;
+}

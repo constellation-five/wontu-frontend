@@ -22,4 +22,13 @@
       margin-bottom: var(--page-spacer-sm);
     }
   }
+
+  // Reserve room for the contextual app-bottom-bar (BottomBarService) on
+  // mobile, wherever it's actually in use — it's fixed-position, so without
+  // this the last bit of page content would render underneath it.
+  &.action-bar-margin {
+    @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+      margin-bottom: 84px;
+    }
+  }
 }

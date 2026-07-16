@@ -1,0 +1,55 @@
+.responsive-dialog {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: inherit;
+}
+
+// Desktop: no extra padding here — mat-dialog-title/mat-dialog-content below
+// bring Angular Material's own spacing, matching DialogComponent exactly.
+.responsive-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 8px;
+
+  h2.responsive-dialog-title {
+    flex: 1;
+  }
+}
+
+.responsive-dialog-topbar {
+  position: sticky;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--spacing-md);
+  background: var(--mat-sys-surface);
+  box-shadow: var(--mat-sys-level2);
+  z-index: 1;
+}
+
+.back-button {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+}
+
+// Mobile fullscreen body only — desktop uses mat-dialog-content's own padding.
+.responsive-dialog-body {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  padding: var(--spacing-lg, 16px);
+}
+
+.is-mobile {
+  height: 100%;
+
+  .responsive-dialog-body {
+    padding-bottom: calc(var(--spacing-lg, 16px) + 72px);
+  }
+}

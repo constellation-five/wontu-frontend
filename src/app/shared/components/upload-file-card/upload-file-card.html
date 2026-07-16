@@ -1,0 +1,24 @@
+<div class="upload-file-card">
+  <mat-icon fontSet="material-symbols-outlined" class="file-icon">description</mat-icon>
+  <div class="file-info">
+    <span class="mat-font-body-md mat-text-on-surface file-name">{{ fileName() }}</span>
+    @if (uploadedSizeLabel(); as uploadedLabel) {
+      <mat-progress-bar mode="determinate" [value]="uploadProgress()" class="file-progress" />
+      <span class="mat-font-body-sm mat-text-on-surface-variant">{{ uploadedLabel }}</span>
+    } @else if (totalSizeLabel(); as sizeLabel) {
+      <span class="mat-font-body-sm mat-text-on-surface-variant">{{ sizeLabel }}</span>
+    }
+  </div>
+  @if (isFinished()) {
+    <button
+      matIconButton
+      appIconButtonVariant="outlined"
+      type="button"
+      class="preview-btn"
+      (click)="openPreview()"
+      aria-label="Preview image"
+    >
+      <mat-icon fontSet="material-symbols-outlined">visibility</mat-icon>
+    </button>
+  }
+</div>

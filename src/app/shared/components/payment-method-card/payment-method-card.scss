@@ -2,9 +2,17 @@
 
 .payment-card {
   background-color: var(--mat-sys-surface-container-lowest);
-  border-radius: var(--mat-sys-corner-large);
+  border-radius: var(--mat-sys-corner-medium);
   box-shadow: var(--mat-sys-level1);
   padding: var(--spacing-md);
+}
+
+.selectable {
+  cursor: pointer;
+
+  .card-content {
+    flex-wrap: initial;
+  }
 }
 
 .card-content {
@@ -89,9 +97,19 @@
 .right-section {
   display: flex;
   align-items: flex-end;
+  justify-content: space-between;
   gap: var(--spacing-sm);
   flex: 1;
-  min-width: 300px;
+  min-width: 200px;
+}
+
+.right-section.no-account-number {
+  flex: initial;
+  min-width: 0;
+}
+
+.select-checkbox {
+  margin-left: auto;
 }
 
 .edit-button {
@@ -104,19 +122,8 @@
 }
 
 // Mobile very small screen only - remove min-widths to prevent overflow
-@media (max-width: 400px) {
-  .card-content {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .bank-info {
-    min-width: 0;
-    width: 100%;
-  }
-
-  .right-section {
-    min-width: 0;
-    width: 100%;
+@media (max-width: $breakpoint-sm) {
+  .bank-name {
+    white-space: normal;
   }
 }
