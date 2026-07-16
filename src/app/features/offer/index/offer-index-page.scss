@@ -5,33 +5,6 @@
   width: 100%;
 }
 
-.filter-button {
-  flex-shrink: 0;
-  --mdc-icon-button-state-layer-size: 40px;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-
-  mat-icon {
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
-  }
-
-  @media (min-width: $breakpoint-md) {
-    --mdc-icon-button-state-layer-size: initial;
-    width: auto;
-    height: auto;
-    padding: initial;
-
-    mat-icon {
-      font-size: initial;
-      width: initial;
-      height: initial;
-    }
-  }
-}
-
 .filter-menu-content {
   padding: var(--spacing-xs) var(--spacing-md);
   min-width: 150px;
