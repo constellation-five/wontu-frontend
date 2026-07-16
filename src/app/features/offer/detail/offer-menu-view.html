@@ -1,125 +1,144 @@
-<!-- Two Column Layout -->
-  <div class="content-layout">
-    <!-- Left: Items Grid -->
-    <div class="items-section">
-      <div class="items-grid">
-        @for (item of sortedItems(); track item.item_id) {
-          <app-product-card
-            [imageUrl]="item.image_url"
-            [title]="item.item_name"
-            [price]="formatItemPrice(item)"
-            [stockText]="getItemStockText(item)"
-            [stockVariant]="getItemStockVariant(item)"
-            [disabled]="isItemOutOfStock(item)"
-          >
-            @if (!isItemInCart(item.item_id)) {
-              <button
-                cardAction
-                matButton="tonal"
-                appButtonSize="xs"
-                [disabled]="isItemOutOfStock(item)"
-                (click)="addToCart.emit(item)"
-              >
-                <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-                Add
-              </button>
-            } @else {
-              <app-counter-field
-                cardAction
-                #qtyField
-                [compact]="true"
-                [value]="getItemQuantity(item.item_id)"
-                [max]="item.slot - item.current_slot"
-                (valueChange)="onItemCounterChange(item, $event, qtyField)"
-              />
-            }
-          </app-product-card>
-        }
+<ng-template #offerInfoTpl>
+  <app-pane title="Offer Information">
+    <div class="info-rows">
+      <div class="info-row">
+        <span class="mat-font-body-md mat-text-on-surface-variant">Offer closes at</span>
+        <span class="mat-font-body-md mat-text-on-surface text-bold">
+          {{ formatDate(offer().closing_time) }}
+        </span>
+      </div>
+      <div class="info-row">
+        <span class="mat-font-body-md mat-text-on-surface-variant">Items arrive at</span>
+        <span class="mat-font-body-md mat-text-on-surface text-bold">
+          {{ formatDate(offer().arrival_time) }}
+        </span>
       </div>
     </div>
 
-    <!-- Right: Sidebar with Panes -->
-    <aside class="sidebar">
-      <!-- Offer Information Pane -->
-      <app-pane title="Offer Information">
-        <div class="info-rows">
-          <div class="info-row">
-            <span class="mat-font-body-md mat-text-on-surface-variant">Offer closes at</span>
-            <span class="mat-font-body-md mat-text-on-surface text-bold">
-              {{ formatDate(offer().closing_time) }}
-            </span>
+    <div class="seller-section">
+      <div class="seller-profile-clickable" (click)="openSellerProfile.emit(offer().seller_id)">
+        <img [src]="offer().seller.avatar" [alt]="offer().seller.name" class="seller-avatar" />
+        <div class="seller-info">
+          <div class="seller-name mat-font-body-md mat-text-on-surface">
+            {{ offer().seller.name }}
           </div>
-          <div class="info-row">
-            <span class="mat-font-body-md mat-text-on-surface-variant">Items arrive at</span>
-            <span class="mat-font-body-md mat-text-on-surface text-bold">
-              {{ formatDate(offer().arrival_time) }}
-            </span>
+          <div class="seller-rating">
+            <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
+            <span class="mat-font-label-md mat-text-on-surface">4.9</span>
+            <span class="mat-font-body-sm mat-text-on-surface-variant">(100+)</span>
           </div>
         </div>
+      </div>
+      <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
+        <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
+        <span>Chat</span>
+      </button>
+    </div>
+  </app-pane>
+</ng-template>
 
-        <div class="seller-section">
-          <div class="seller-profile-clickable" (click)="openSellerProfile.emit(offer().seller_id)">
-            <img [src]="offer().seller.avatar" [alt]="offer().seller.name" class="seller-avatar" />
-            <div class="seller-info">
-              <div class="seller-name mat-font-body-md mat-text-on-surface">
-                {{ offer().seller.name }}
-              </div>
-              <div class="seller-rating">
-                <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
-                <span class="mat-font-label-md mat-text-on-surface">4.9</span>
-                <span class="mat-font-body-sm mat-text-on-surface-variant">(100+)</span>
-              </div>
-            </div>
-          </div>
-          <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
-            <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-            <span>Chat</span>
-          </button>
-        </div>
-      </app-pane>
-
-      <!-- Cart Pane -->
-      <app-pane title="Cart">
-        @if (cartItems().length > 0) {
-          <div class="cart-items-container">
-            @for (cartItem of cartItems(); track cartItem.item.item_id) {
-              <app-cart-item-card
-                [item]="cartItem"
-                [editable]="true"
-                (increase)="increaseQuantity.emit($event)"
-                (decrease)="decreaseQuantity.emit($event)"
-                (notesEdit)="editCartItemNotes.emit($event)"
-              />
-            }
-          </div>
-        } @else {
-          <div class="empty-cart-container">
-            <img src="assets/img/wontusad.svg" alt="Empty cart" class="empty-cart-icon" />
-            <p class="mat-font-body-md mat-text-on-surface-variant">You have no items yet.</p>
-          </div>
-        }
-
-        <div class="cart-footer">
-          <div class="cart-total">
-            <span class="mat-font-body-lg mat-text-on-surface">Total</span>
-            <span class="mat-font-body-lg mat-text-on-surface text-bold">
-              Rp {{ totalPrice() | number: '1.0-0' }}
-            </span>
-          </div>
+<ng-template #itemsGridTpl>
+  <div class="items-grid">
+    @for (item of sortedItems(); track item.item_id) {
+      <app-product-card
+        [imageUrl]="item.image_url"
+        [title]="item.item_name"
+        [price]="formatItemPrice(item)"
+        [stockText]="getItemStockText(item)"
+        [stockVariant]="getItemStockVariant(item)"
+        [disabled]="isItemOutOfStock(item)"
+      >
+        @if (!isItemInCart(item.item_id)) {
           <button
-            matButton="filled"
-            appButtonSize="md"
-            class="place-order-btn"
-            [disabled]="cartItems().length === 0"
-            (click)="placeOrder.emit()"
+            cardAction
+            matButton="tonal"
+            appButtonSize="xs"
+            [disabled]="isItemOutOfStock(item)"
+            (click)="addToCart.emit(item)"
           >
-            <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-            Place order
+            <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
+            Add
           </button>
-        </div>
-      </app-pane>
-    </aside>
+        } @else {
+          <app-counter-field
+            cardAction
+            #qtyField
+            [compact]="true"
+            [value]="getItemQuantity(item.item_id)"
+            [max]="item.slot - item.current_slot"
+            (valueChange)="onItemCounterChange(item, $event, qtyField)"
+          />
+        }
+      </app-product-card>
+    }
   </div>
+</ng-template>
+
+<ng-template #cartPaneTpl>
+  <app-pane title="Cart">
+    @if (cartItems().length > 0) {
+      <div class="cart-items-container">
+        @for (cartItem of cartItems(); track cartItem.item.item_id) {
+          <app-cart-item-card
+            [item]="cartItem"
+            [editable]="true"
+            (increase)="increaseQuantity.emit($event)"
+            (decrease)="decreaseQuantity.emit($event)"
+            (notesEdit)="editCartItemNotes.emit($event)"
+          />
+        }
+      </div>
+    } @else {
+      <div class="empty-cart-container">
+        <img src="assets/img/wontusad.svg" alt="Empty cart" class="empty-cart-icon" />
+        <p class="mat-font-body-md mat-text-on-surface-variant">You have no items yet.</p>
+      </div>
+    }
+
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span class="mat-font-body-lg mat-text-on-surface">Total</span>
+        <span class="mat-font-body-lg mat-text-on-surface text-bold">
+          Rp {{ totalPrice() | number: '1.0-0' }}
+        </span>
+      </div>
+      <button
+        matButton="filled"
+        appButtonSize="md"
+        class="place-order-btn"
+        [disabled]="cartItems().length === 0"
+        (click)="placeOrder.emit()"
+      >
+        <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+        Place order
+      </button>
+    </div>
+  </app-pane>
+</ng-template>
+
+<div class="menu-view">
+  <!-- Mobile & Tablet Layout -->
+  <div class="mobile-layout">
+    <ng-container *ngTemplateOutlet="offerInfoTpl"></ng-container>
+    <ng-container *ngTemplateOutlet="itemsGridTpl"></ng-container>
+    <div class="tablet-only-cart">
+      <ng-container *ngTemplateOutlet="cartPaneTpl"></ng-container>
+    </div>
+  </div>
+
+  <!-- Desktop Layout -->
+  <div class="desktop-layout">
+    <div class="content-layout">
+      <div class="left-section">
+        <ng-container *ngTemplateOutlet="itemsGridTpl"></ng-container>
+      </div>
+      <aside class="right-section">
+        <ng-container *ngTemplateOutlet="offerInfoTpl"></ng-container>
+        <ng-container *ngTemplateOutlet="cartPaneTpl"></ng-container>
+      </aside>
+    </div>
+  </div>
+</div>
 
 <!-- Mobile Cart FAB -->
 <button

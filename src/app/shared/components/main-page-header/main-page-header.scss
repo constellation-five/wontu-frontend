@@ -15,11 +15,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--spacing-md);
-  padding-top: var(--spacing-3xl);
-
-  @media (min-width: $breakpoint-md) {
-    padding-top: var(--spacing-sm);
-  }
+  padding-top: var(--spacing-sm);
 }
 
 .title-location {
