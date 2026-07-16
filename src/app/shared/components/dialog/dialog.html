@@ -24,6 +24,7 @@
           [matButton]="button.type"
           [appButtonColor]="button.color ?? 'primary'"
           (click)="invoke(button.action)"
+          [disabled]="button.disabled"
           [attr.cdkFocusInitial]="button.focus ? '' : null"
         >
           @if (button.icon) {

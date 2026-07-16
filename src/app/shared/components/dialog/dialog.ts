@@ -7,10 +7,11 @@ import { ButtonColorDirective } from '../../directives/button/button-color';
 export interface DialogButton {
   label: string;
   icon?: string;
-  type: 'filled' | 'outlined' | 'tonal'; // Material button appearance
-  action?: string | (() => void); // string closes the dialog with that value, function runs custom logic
+  type: 'filled' | 'outlined' | 'tonal';
+  action?: string | (() => void);
   color?: 'primary' | 'error';
-  focus?: boolean; // gets initial focus via cdkFocusInitial
+  focus?: boolean;
+  disabled?: boolean;
 }
 
 export interface DialogData {

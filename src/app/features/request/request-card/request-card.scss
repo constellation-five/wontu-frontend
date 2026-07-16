@@ -1,0 +1,77 @@
+@use '../../../../_variables' as *; // Sesuaikan path jika berbeda
+
+.request-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.request-card-content {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-md);
+  flex: 1;
+}
+
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  margin-top: var(--spacing-xs);
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  padding-right: var(--spacing-md);
+}
+
+.request-name {
+  margin: 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.request-subtitle {
+  margin: 0;
+  margin-top: var(--spacing-2xs);
+}
+
+.vote-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  gap: var(--spacing-2xs);
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  span {
+    display: block;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: auto;
+  padding-top: var(--spacing-md);
+}
+
+.w-full {
+  width: 100%;
+}
+
+.filled {
+  font-variation-settings: 'FILL' 1;
+}
