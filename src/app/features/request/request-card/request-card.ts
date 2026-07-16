@@ -19,7 +19,7 @@ import { CategoryLabelComponent } from '../../../shared/components/category-labe
   imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, CategoryLabelComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RequestCardComponent {
+export class RequestCard {
   title = input.required<string>();
   subtitle = input.required<string>();
   category = input<'food' | 'other'>('other');

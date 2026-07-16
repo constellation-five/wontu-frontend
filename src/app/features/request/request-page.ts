@@ -15,6 +15,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../core/auth.service';
 import { RequestService, RequestItem } from '../../core/request.service';
 import { PageHeaderService } from '../../core/page-header.service';
+import { RequestCard } from './request-card/request-card';
+import { NaturalDateTimePipe } from '../../shared/pipes/natural-date-time.pipe';
 import { MainPageHeaderComponent } from '../../shared/components/main-page-header/main-page-header';
 import { LocationLookupService } from '../../core/location-lookup.service';
 import { LocationStateService } from '../../core/location-state.service';
@@ -28,6 +30,8 @@ import { LocationPickerDialog } from '../../shared/components/location-picker-di
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
+    RequestCard,
+    NaturalDateTimePipe,
     MainPageHeaderComponent,
     MatCheckboxModule
   ],
