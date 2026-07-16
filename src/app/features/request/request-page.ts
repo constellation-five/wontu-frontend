@@ -18,9 +18,7 @@ import { PageHeaderService } from '../../core/page-header.service';
 import { MainPageHeaderComponent } from '../../shared/components/main-page-header/main-page-header';
 import { LocationLookupService } from '../../core/location-lookup.service';
 import { LocationStateService } from '../../core/location-state.service';
-import { NaturalDateTimePipe } from '../../shared/pipes/natural-date-time.pipe';
 import { LocationPickerDialog } from '../../shared/components/location-picker-dialog/location-picker-dialog';
-import { RequestCardComponent } from './request-card/request-card';
 
 @Component({
   selector: 'request-page',
@@ -31,9 +29,7 @@ import { RequestCardComponent } from './request-card/request-card';
     MatButtonModule,
     MatMenuModule,
     MainPageHeaderComponent,
-    MatCheckboxModule,
-    NaturalDateTimePipe,
-    RequestCardComponent
+    MatCheckboxModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
