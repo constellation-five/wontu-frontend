@@ -38,7 +38,7 @@
 
     <div class="action-buttons">
       @if (isOwner()) {
-        <button mat-icon-button (click)="editClick.emit()" aria-label="Edit Request">
+        <button matIconButton appIconButtonVariant="tonal" (click)="editClick.emit()" aria-label="Edit Request">
           <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
         </button>
       }
