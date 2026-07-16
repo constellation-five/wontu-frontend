@@ -12,6 +12,11 @@ export interface MenuItem {
   action: () => void;
 }
 
+export interface InfoAction {
+  icon?: string;
+  action: () => void;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -20,6 +25,9 @@ export class PageHeaderService {
   breadcrumbs = signal<BreadcrumbItem[]>([]);
   showHeader = signal<boolean>(true);
   menuItems = signal<MenuItem[]>([]);
+  infoAction = signal<InfoAction | null>(null);
+  forceTopBarSolid = signal<boolean>(false);
+  customBackAction = signal<(() => void) | null>(null);
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -44,6 +52,10 @@ export class PageHeaderService {
 
   setBreadcrumbs(breadcrumbs: BreadcrumbItem[]) {
     this.breadcrumbs.set(breadcrumbs);
+  }
+
+  setInfoAction(action: InfoAction | null) {
+    this.infoAction.set(action);
   }
 
   private buildRouteData(route: ActivatedRoute): {

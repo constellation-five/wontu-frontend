@@ -41,6 +41,12 @@
     top: 8px;
   }
 
+  .info-btn {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+  }
+
   @media (min-width: $breakpoint-md) {
     display: none;
   }

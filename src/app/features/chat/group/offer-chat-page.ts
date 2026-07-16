@@ -63,14 +63,14 @@ export class OfferChatPage implements OnDestroy {
       this.router.navigate(['/offers']);
     }
 
-    // The mobile layout renders its own local top bar in place of the app's
-    // global top-bar/breadcrumbs, so the global header is only shown on desktop.
-    effect(() => {
-      this.pageHeaderService.showHeader.set(!this.breakpointService.isMobile());
-    });
-
     effect(() => {
       this.pageHeaderService.setTitle(this.offer()?.merchant_name ?? 'Chat');
+      this.pageHeaderService.setInfoAction({
+        icon: 'info',
+        action: () => this.openInfoDialog(),
+      });
+      this.pageHeaderService.forceTopBarSolid.set(true);
+      this.pageHeaderService.customBackAction.set(() => this.goBack());
     });
   }
 
@@ -133,5 +133,8 @@ export class OfferChatPage implements OnDestroy {
   ngOnDestroy(): void {
     this.chatService.closeConversation();
     this.pageHeaderService.showHeader.set(true);
+    this.pageHeaderService.setInfoAction(null);
+    this.pageHeaderService.forceTopBarSolid.set(false);
+    this.pageHeaderService.customBackAction.set(null);
   }
 }

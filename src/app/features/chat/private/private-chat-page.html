@@ -1,13 +1,5 @@
 <div class="chat-page" [class.mobile-layout]="breakpointService.isMobile()">
   @if (breakpointService.isMobile()) {
-    <div class="mobile-topbar">
-      <button matIconButton type="button" (click)="goBack()" aria-label="Back">
-        <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
-      </button>
-      <span class="mobile-title mat-font-title-md mat-text-on-surface">
-        {{ otherParticipant()?.name ?? 'Chat' }}
-      </span>
-    </div>
 
     <chat-thread class="mobile-thread" [isGroup]="false" (avatarClick)="onAvatarClick($event)" />
   } @else {

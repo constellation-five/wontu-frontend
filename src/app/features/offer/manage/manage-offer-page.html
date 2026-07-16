@@ -165,15 +165,17 @@
       Chat
     </button>
   } @else {
-    <button
-      matButton="tonal"
-      appButtonSize="sm"
-      (click)="markItemsArrived()"
-      [disabled]="isActionInProgress() || isArrived()"
-    >
-      <mat-icon fontSet="material-symbols-outlined">local_shipping</mat-icon>
-      {{ isArrived() ? 'Items arrived' : 'Mark items as arrived' }}
-    </button>
+    @if (!isArrived()) {
+      <button
+        matButton="tonal"
+        appButtonSize="sm"
+        (click)="markItemsArrived()"
+        [disabled]="isActionInProgress() || isArrived()"
+      >
+        <mat-icon fontSet="material-symbols-outlined">local_shipping</mat-icon>
+        Mark items as arrived
+      </button>
+    }
     <button matButton="tonal" appButtonSize="sm" (click)="openChat()">
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
       Chat
