@@ -5,6 +5,7 @@
   flex-direction: column;
   gap: var(--spacing-sm);
   padding-top: var(--spacing-sm);
+  overflow: visible !important;
 }
 
 mat-form-field {
@@ -27,4 +28,14 @@ mat-form-field {
   grid-template-columns: 2fr 1fr;
   gap: var(--spacing-sm);
   padding-top: var(--spacing-xs);
+}
+
+:host.edit-mode ::ng-deep mat-dialog-actions {
+  button:first-child {
+    margin-right: auto;
+  }
+}
+
+::ng-deep .mat-mdc-dialog-content {
+  overflow: visible !important;
 }
