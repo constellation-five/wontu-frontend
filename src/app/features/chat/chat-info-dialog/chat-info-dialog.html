@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Chat Information</h2>
+
+<mat-dialog-content>
+  <chat-information-pane
+    [owner]="data.owner"
+    [participants]="data.participants"
+    (memberClick)="onMemberClick($event)"
+  />
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button matButton="text" type="button" mat-dialog-close>Close</button>
+</mat-dialog-actions>

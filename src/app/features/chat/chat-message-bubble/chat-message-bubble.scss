@@ -1,0 +1,104 @@
+:host {
+  display: block;
+}
+
+.system-message {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-xs) 0;
+  text-align: center;
+}
+
+.message-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+  max-width: 80%;
+
+  &.own {
+    margin-left: auto;
+    flex-direction: row-reverse;
+  }
+}
+
+.avatar-button {
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: var(--mat-sys-corner-full);
+}
+
+.avatar,
+.avatar-placeholder {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--mat-sys-corner-full);
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.bubble-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.message-row.own .bubble-column {
+  align-items: flex-end;
+}
+
+.message-meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-2xs);
+  padding: 0 var(--spacing-2xs);
+  margin-bottom: 2px;
+}
+
+.message-row.own .message-meta {
+  justify-content: flex-end;
+}
+
+.bubble {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--mat-sys-surface-container-high);
+  color: var(--mat-sys-on-surface);
+  word-break: break-word;
+
+  &.own-bubble {
+    background-color: var(--mat-sys-primary-container);
+    color: var(--mat-sys-on-primary-container);
+  }
+
+  // Whispered messages get a distinct color no matter who sent them, taking
+  // priority over the own/other distinction.
+  &.scoped-bubble {
+    background-color: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+  }
+}
+
+.bubble-image {
+  max-width: 100%;
+  max-height: 240px;
+  border-radius: var(--mat-sys-corner-small);
+  display: block;
+  object-fit: cover;
+}
+
+.bubble-image + .bubble-text {
+  margin-top: var(--spacing-2xs);
+}
+
+.bubble-text {
+  margin: 0;
+  white-space: pre-wrap;
+}

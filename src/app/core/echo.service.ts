@@ -59,6 +59,12 @@ export class EchoService {
       .notification(handler);
   }
 
+  listenToChatMessages(userId: string, handler: (data: unknown) => void): void {
+    this.getEcho()
+      .private(`App.Models.User.${userId}`)
+      .listen('.chat.message', handler);
+  }
+
   disconnect(): void {
     if (this.echo) {
       this.echo.disconnect();

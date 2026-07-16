@@ -1,0 +1,114 @@
+<div class="chat-thread">
+  <div class="messages-scroll" #scrollContainer>
+    @if (isLoading()) {
+      <div class="loading-container">
+        <mat-spinner diameter="32"></mat-spinner>
+      </div>
+    } @else if (messages().length === 0) {
+      <div class="empty-container">
+        <p class="mat-font-body-md mat-text-on-surface-variant">No messages yet. Say hello!</p>
+      </div>
+    } @else {
+      @for (entry of displayMessages(); track entry.message.id) {
+        <chat-message-bubble
+          [message]="entry.message"
+          [currentUserId]="currentUserId()"
+          [targetLabel]="targetLabelFor(entry.message.target_user_id)"
+          [showInfo]="entry.showInfo"
+          (avatarClick)="onAvatarClick($event)"
+        />
+      }
+    }
+  </div>
+
+  @if (conversation(); as conversation) {
+    @if (!conversation.chat_open) {
+      <div class="closed-banner">
+        <mat-icon fontSet="material-symbols-outlined">lock</mat-icon>
+        <span class="mat-font-body-sm"
+          >This chat is closed and no longer accepts new messages.</span
+        >
+      </div>
+    } @else {
+      <div class="composer">
+        @if (imagePreviewUrl(); as previewUrl) {
+          <div class="image-preview">
+            <img [src]="previewUrl" alt="Selected attachment" />
+            <button
+              matIconButton
+              type="button"
+              class="remove-image-btn"
+              (click)="clearSelectedImage()"
+              aria-label="Remove attachment"
+            >
+              <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+            </button>
+          </div>
+        }
+
+        <div class="composer-row">
+          @if (isGroup()) {
+            <mat-form-field appearance="outline" class="scope-field" subscriptSizing="dynamic">
+              <mat-select
+                [ngModel]="selectedTarget()"
+                (ngModelChange)="selectedTarget.set($event)"
+                aria-label="Send to"
+                hideSingleSelectionIndicator="true"
+              >
+                @for (option of scopeOptions(); track option.value) {
+                  <mat-option [value]="option.value" class="mat-font-body-md">{{
+                    option.label
+                  }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
+
+          <div class="message-row">
+            <div class="message-bar">
+              <input
+                class="text-input mat-font-body-md"
+                type="text"
+                placeholder="Type a message"
+                [ngModel]="bodyText()"
+                (ngModelChange)="bodyText.set($event)"
+                (keydown.enter)="send()"
+              />
+
+              <button
+                matIconButton
+                type="button"
+                appIconButtonVariant="text"
+                appButtonSize="compact"
+                class="attach-btn"
+                (click)="fileInput.click()"
+                aria-label="Attach image"
+              >
+                <mat-icon fontSet="material-symbols-outlined">image</mat-icon>
+              </button>
+              <input
+                #fileInput
+                type="file"
+                accept="image/png,image/jpeg"
+                hidden
+                (change)="onFileSelected($event)"
+              />
+            </div>
+
+            <button
+              matIconButton
+              type="button"
+              appIconButtonVariant="filled"
+              class="send-btn"
+              [disabled]="!canSend()"
+              (click)="send()"
+              aria-label="Send"
+            >
+              <mat-icon fontSet="material-symbols-outlined">send</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  }
+</div>

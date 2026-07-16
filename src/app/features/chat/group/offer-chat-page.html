@@ -1,0 +1,43 @@
+@if (isLoading()) {
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+} @else if (offer(); as offer) {
+  <div class="chat-page" [class.mobile-layout]="breakpointService.isMobile()">
+    @if (breakpointService.isMobile()) {
+      <div class="mobile-topbar">
+        <button matIconButton type="button" (click)="goBack()" aria-label="Back">
+          <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
+        </button>
+        <span class="mobile-title mat-font-title-md mat-text-on-surface">{{
+          offer.merchant_name
+        }}</span>
+        <button
+          matIconButton
+          type="button"
+          class="info-btn"
+          (click)="openInfoDialog()"
+          aria-label="Chat information"
+        >
+          <mat-icon fontSet="material-symbols-outlined">info</mat-icon>
+        </button>
+      </div>
+
+      <chat-thread class="mobile-thread" [isGroup]="true" (avatarClick)="onMemberClick($event)" />
+    } @else {
+      <div class="content-layout">
+        <app-pane title="Chat Information" class="sidebar">
+          <chat-information-pane
+            [owner]="chatService.conversation()?.owner ?? null"
+            [participants]="chatService.conversation()?.participants ?? []"
+            (memberClick)="onMemberClick($event)"
+          />
+        </app-pane>
+
+        <app-pane [title]="offer.merchant_name" class="chat-pane">
+          <chat-thread [isGroup]="true" (avatarClick)="onMemberClick($event)" />
+        </app-pane>
+      </div>
+    }
+  </div>
+}

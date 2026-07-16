@@ -5,6 +5,7 @@ import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { isProtectedRoute } from './routes.config';
 import { NotificationService } from './notification.service';
+import { ChatService } from './chat.service';
 
 export interface User {
   user_id: string;
@@ -22,6 +23,7 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly notificationService = inject(NotificationService);
+  private readonly chatService = inject(ChatService);
 
   private readonly state = signal<{
     user: User | null;
@@ -52,6 +54,7 @@ export class AuthService {
         tap((user) => {
           this.state.update((s) => ({ ...s, user, isLoading: false }));
           this.notificationService.initialize(user.user_id);
+          this.chatService.initialize(user.user_id);
         }),
         catchError(() => {
           this.state.update((s) => ({ ...s, user: null, isLoading: false }));
@@ -90,6 +93,7 @@ export class AuthService {
       tap(() => {
         this.state.update((s) => ({ ...s, user: null }));
         this.notificationService.teardown();
+        this.chatService.teardown();
         if (isProtectedRoute(this.router.url)) {
           this.router.navigate(['/']);
         }

@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { OfferShowPage } from './index/offer-index-page';
 import { OfferPage } from './detail/offer-detail-page';
 import { OfferMobileCart } from './detail/offer-mobile-cart';
-import { OfferChatPage } from './chat/offer-chat-page';
 import { authGuard } from '../../core/auth.guard';
 import { sellerGuard } from '../../core/seller.guard';
 import { offerResolver } from '../../core/offer.resolver';
@@ -43,11 +42,6 @@ export const OFFER_ROUTES: Routes = [
         component: OfferMobileCart,
         title: 'Cart',
         data: { hideBottomBar: true },
-      },
-      {
-        path: ':id/chat',
-        component: OfferChatPage,
-        title: 'Chat',
       },
     ],
   },
