@@ -145,8 +145,20 @@
 
   .seller-section {
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
     align-items: center;
+  }
+
+  .seller-profile-clickable {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    cursor: pointer;
+    flex: 1;
+    min-width: 0;
+    border-radius: var(--mat-sys-corner-medium);
+    padding: var(--spacing-xs);
+    margin: calc(-1 * var(--spacing-xs));
   }
 
   /* Single-column layout: true mobile, and the desktop-chrome-but-1-column

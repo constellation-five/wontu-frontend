@@ -40,6 +40,7 @@ export class OfferMenuView {
   readonly editCartItemNotes = output<CheckoutItem>();
   readonly placeOrder = output<void>();
   readonly openChat = output<void>();
+  readonly openSellerProfile = output<string>();
   readonly navigateToMobileCart = output<void>();
 
   isItemInCart(itemId: number): boolean {

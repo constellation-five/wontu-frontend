@@ -23,6 +23,7 @@ import { environment } from '../../../../environments/environment';
 import { OfferMenuView } from './offer-menu-view';
 import { OfferCheckoutView } from './offer-checkout-view';
 import ManageOfferPage from '../manage/manage-offer-page';
+import { UserProfileDialog } from '../../../shared/components/dialog/user-profile-dialog/user-profile-dialog';
 
 type OfferDetailView = 'menu' | 'checkout';
 
@@ -580,5 +581,11 @@ export class OfferPage implements OnDestroy {
         this.saveCartToLocalStorage(offerId);
       }
     }
+  }
+
+  openSellerProfile(userId: string) {
+    this.dialog.open(UserProfileDialog, {
+      data: { userId },
+    });
   }
 }

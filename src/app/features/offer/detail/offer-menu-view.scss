@@ -77,9 +77,22 @@
 
 .seller-section {
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
   align-items: center;
-  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.seller-profile-clickable {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+  border-radius: var(--mat-sys-corner-medium);
+  padding: var(--spacing-xs);
+  margin: calc(-1 * var(--spacing-xs));
 }
 
 .seller-avatar {
