@@ -35,7 +35,7 @@
   // mobile, wherever it's actually in use — it's fixed-position, so without
   // this the last bit of page content would render underneath it.
   &.action-bar-margin {
-    margin-bottom: 84px;
+    margin-bottom: calc(var(--page-spacer-sm) + 72px);
 
     @media (min-width: $breakpoint-md) {
       margin-bottom: var(--page-spacer-lg);

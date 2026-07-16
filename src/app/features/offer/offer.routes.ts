@@ -35,7 +35,6 @@ export const OFFER_ROUTES: Routes = [
         path: ':id',
         component: OfferPage,
         title: 'Offer Detail',
-        data: { hideBottomBar: true },
       },
       {
         path: ':id/mobile-cart',

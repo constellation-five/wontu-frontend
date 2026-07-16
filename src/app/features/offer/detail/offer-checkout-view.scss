@@ -112,7 +112,7 @@
 .checkout-view {
   width: 100%;
   box-sizing: border-box;
-  padding-bottom: 160px; // Space for mobile bottom bar
+  padding-bottom: 56px; // Space for mobile bottom bar
 
   @media (min-width: $breakpoint-md) {
     padding-bottom: 0;

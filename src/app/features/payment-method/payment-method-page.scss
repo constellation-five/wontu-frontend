@@ -115,7 +115,7 @@
       // Keep subscript wrapper but reduce its height when empty
       .mat-mdc-form-field-subscript-wrapper {
         min-height: 0;
-        
+
         &:empty {
           display: none;
         }
