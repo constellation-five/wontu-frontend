@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NaturalDateTimePipe } from '../../pipes/natural-date-time.pipe';
+import { TimeTickService } from '../../../core/time-tick.service';
 
 export interface TimelineItem {
   label: string;
@@ -16,6 +17,8 @@ export interface TimelineItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimelineBar {
+  protected readonly timeTick = inject(TimeTickService);
+
   items = input.required<TimelineItem[]>();
   currentStep = input<number>(0);
 

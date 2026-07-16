@@ -9,6 +9,10 @@ export class NaturalDateTimePipe implements PipeTransform {
     date: Date | string | number,
     locale: string = typeof navigator !== 'undefined' ? navigator.language : 'en-US',
     showTodayLabel: boolean = true,
+    // Unused — pass a periodically-changing value (e.g. TimeTickService.now())
+    // to force this pure pipe to recompute on a timer, so relative labels
+    // like "2m ago" stay fresh without any of the actual inputs changing.
+    _tick?: unknown,
   ): string {
     const d = new Date(date);
     if (isNaN(d.getTime())) {
