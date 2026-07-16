@@ -5,6 +5,7 @@ import {
   provideAppInitializer,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import {
   provideHttpClient,
   withFetch,
@@ -23,6 +24,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideAnimationsAsync(),
+    provideNativeDateAdapter(),
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([credentialsInterceptor])),
     provideAppInitializer(() => {

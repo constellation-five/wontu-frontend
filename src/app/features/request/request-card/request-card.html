@@ -1,0 +1,51 @@
+<mat-card class="request-card">
+  <div class="request-card-content">
+    @if (category()) {
+      <app-category-label [category]="category()" />
+    }
+
+    <div class="info-row">
+      <div class="text-content">
+        <h3 class="request-name mat-font-title-md mat-text-on-surface">
+          {{ title() }}
+        </h3>
+        
+        @if (subtitle()) {
+          <p class="request-subtitle mat-font-label-md mat-text-on-surface-variant">
+            {{ subtitle() }}
+          </p>
+        }
+      </div>
+      
+      <div 
+        class="vote-section" 
+        style="cursor: pointer;"
+        (click)="voteClick.emit()" 
+        role="button" 
+        tabindex="0"
+      >
+        <mat-icon 
+          [class.mat-text-error]="hasVoted()" 
+          [class.mat-text-on-surface-variant]="!hasVoted()"
+          [class.filled]="hasVoted()"
+          fontSet="material-symbols-outlined"
+        >
+          favorite
+        </mat-icon>
+        <span class="mat-font-label-md mat-text-on-surface-variant">{{ votes() }}</span>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      @if (isOwner()) {
+        <button matIconButton appIconButtonVariant="tonal" (click)="editClick.emit()" aria-label="Edit Request">
+          <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+        </button>
+      }
+      
+      <button mat-flat-button color="primary" class="w-full" (click)="createOfferClick.emit()">
+        Create offer
+      </button>
+    </div>
+  </div>
+</mat-card>

@@ -47,6 +47,7 @@ import {
   AddEditItemDialogData,
   AddEditItemDialogResult,
 } from './add-edit-item-dialog/add-edit-item-dialog';
+import { RequestService } from '../../../core/request.service';
 
 type LocalItem = OfferItemInput & { localId: string };
 
@@ -85,6 +86,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
   private readonly snackBar = inject(MatSnackBar);
   private readonly locationState = inject(LocationStateService);
   private readonly dialog = inject(MatDialog);
+  private readonly requestService = inject(RequestService);
 
   @ViewChild('actionsTpl') private actionsTpl!: TemplateRef<unknown>;
   private readonly viewContainerRef = inject(ViewContainerRef);
@@ -137,6 +139,13 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
       { label: this.isEditMode ? 'Edit Offer' : 'Create Offer' },
     ]);
 
+    this.route.queryParams.subscribe((params) => {
+      const requestId = params['requestId'];
+      if (requestId && !this.isEditMode) {
+        this.fetchRequestData(requestId);
+      }
+    });
+
     this.loadPaymentMethods();
 
     if (this.existingOffer) {
@@ -171,6 +180,44 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
         );
       }
     }
+  }
+
+  private fetchRequestData(id: string) {
+    this.requestService.getRequestById(Number(id)).subscribe({
+      next: (response: any) => {
+        // Jaga-jaga kalau datanya terbungkus dalam 'data'
+        const req = response.data ? response.data : response;
+
+        if (req) {
+          // 1. Isi Category & Datetime Arrival
+          if (req.arrival_time) {
+            const safeTimeStr = req.arrival_time.replace(' ', 'T');
+            this.model.update((m) => ({
+              ...m,
+              category: req.category || 'food',
+              arrival_date: new Date(safeTimeStr),
+              arrival_time_of_day: this.toTimeOfDay(safeTimeStr),
+            }));
+          }
+
+          // 2. Bikin 1 item otomatis berdasarkan nama request
+          if (req.item_name) {
+            this.items.update((currentItems) => [
+              ...currentItems,
+              {
+                localId: crypto.randomUUID(),
+                item_name: req.item_name,
+                item_price: 0,
+                slot: 1,    
+                item_url: '',
+                image_url: null,
+              }
+            ]);
+          }
+        }
+      },
+      error: (err) => console.error('Failed to fetch request data:', err),
+    });
   }
 
   private ownPortal!: TemplatePortal;

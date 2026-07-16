@@ -1,0 +1,40 @@
+<app-dialog [title]="isEditMode ? 'Edit Request' : 'Create Request'" [buttons]="buttons()">
+  
+  <div class="form-grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select [formField]="form.category">
+        <mat-option value="food">Food</mat-option>
+        <mat-option value="other">Other</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" subscriptSizing="dynamic">
+      <mat-label>Name</mat-label>
+      <input matInput [formField]="form.item_name" placeholder="Name" />
+      @if (form.item_name().invalid() && form.item_name().touched()) {
+        <mat-error>{{ form.item_name().errors()[0]?.message }}</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="datetime-group">
+      <span class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant">
+        Item arrive at
+      </span>
+      <div class="datetime-row">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Date</mat-label>
+          <input matInput [matDatepicker]="arrivalPicker" [formField]="form.arrival_date" />
+          <mat-datepicker-toggle matIconSuffix [for]="arrivalPicker"></mat-datepicker-toggle>
+          <mat-datepicker #arrivalPicker></mat-datepicker>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
+          <mat-label>Time</mat-label>
+          <input matInput type="time" [formField]="form.arrival_time_of_day" />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+</app-dialog>
