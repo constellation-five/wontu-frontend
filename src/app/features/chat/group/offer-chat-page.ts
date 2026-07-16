@@ -112,7 +112,6 @@ export class OfferChatPage implements OnDestroy {
 
     this.dialog.open(ChatInfoDialog, {
       width: '360px',
-      maxWidth: '90vw',
       data: { owner: conversation.owner, participants: conversation.participants },
       panelClass: 'chat-info-dialog-panel',
     });

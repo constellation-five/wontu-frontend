@@ -45,7 +45,6 @@ export class ResponsiveDialogService {
         disableClose: config.disableClose ?? false,
         panelClass: isMobile ? 'responsive-dialog-fullscreen' : 'responsive-dialog-normal',
         width: isMobile ? '100vw' : (config.width ?? '560px'),
-        maxWidth: isMobile ? '100vw' : '90vw',
         height: isMobile ? '100dvh' : undefined,
         maxHeight: isMobile ? '100dvh' : '90vh',
         autoFocus: false,

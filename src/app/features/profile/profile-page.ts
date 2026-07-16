@@ -66,7 +66,7 @@ export class ProfilePage implements OnInit {
     this.pageHeader.setTitle('Profile');
     this.fetchProfile();
     this.checkMobile();
-    
+
     // Handle initial route based on device
     const url = this.router.url;
     if ((url === '/profile' || url === '/profile/') && this.isMobile()) {
@@ -75,7 +75,7 @@ export class ProfilePage implements OnInit {
     } else {
       this.updateCurrentRoute();
     }
-    
+
     // Listen to route changes
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -192,7 +192,6 @@ export class ProfilePage implements OnInit {
   openRatingDialog() {
     this.dialog.open(RatingDialog, {
       width: '510px',
-      maxWidth: '90vw',
       panelClass: 'rating-dialog-panel',
     });
   }

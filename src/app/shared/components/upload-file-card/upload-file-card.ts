@@ -84,7 +84,7 @@ export class UploadFileCard {
     const imageUrl = this.previewUrl();
     if (!imageUrl) return;
     this.dialog.open(ImagePreviewDialog, {
-      minWidth: '320px',
+      width: '1600px',
       data: { imageUrl, title: this.fileName() },
     });
   }

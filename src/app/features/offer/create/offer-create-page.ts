@@ -224,7 +224,6 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
       PaymentMethodData | 'deleted'
     >(PaymentMethodFormDialog, {
       width: '540px',
-      maxWidth: '90vw',
       data: {},
     });
 

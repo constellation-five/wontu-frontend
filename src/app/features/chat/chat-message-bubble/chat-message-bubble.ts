@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ChatMessage } from '../../../core/chat.service';
 import { NaturalDateTimePipe } from '../../../shared/pipes/natural-date-time.pipe';
 import { TimeTickService } from '../../../core/time-tick.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ImagePreviewDialog } from '../../../shared/components/image-preview-dialog/image-preview-dialog';
 
 @Component({
   selector: 'chat-message-bubble',
@@ -19,6 +21,7 @@ import { TimeTickService } from '../../../core/time-tick.service';
 })
 export class ChatMessageBubble {
   protected readonly timeTick = inject(TimeTickService);
+  private readonly dialog = inject(MatDialog);
 
   message = input.required<ChatMessage>();
   currentUserId = input<string | null>(null);
@@ -41,6 +44,17 @@ export class ChatMessageBubble {
     const sender = this.message().sender;
     if (sender) {
       this.avatarClick.emit(sender.user_id);
+    }
+  }
+
+  openImagePreview() {
+    const url = this.message().image_url;
+    if (url) {
+      this.dialog.open(ImagePreviewDialog, {
+        width: '1600px',
+        data: { imageUrl: url },
+        panelClass: 'image-preview-panel',
+      });
     }
   }
 }

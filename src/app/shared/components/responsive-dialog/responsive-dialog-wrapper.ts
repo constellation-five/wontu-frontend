@@ -17,7 +17,7 @@ import { map } from 'rxjs';
 import { BottomBar } from '../bottom-bar/bottom-bar';
 import { RESPONSIVE_DIALOG_CONTEXT } from './responsive-dialog-context';
 
-export const MOBILE_BREAKPOINT = '(max-width: 768px)';
+export const MOBILE_BREAKPOINT = '(max-width: 799px)';
 
 export interface ResponsiveDialogWrapperData<D = unknown> {
   component: Type<unknown>;

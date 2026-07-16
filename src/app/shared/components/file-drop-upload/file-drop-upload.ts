@@ -9,8 +9,10 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { inject } from '@angular/core';
 import { ButtonSizeDirective } from '../../directives/button';
+import { ImagePreviewDialog } from '../image-preview-dialog/image-preview-dialog';
 
 /**
  * Drag-and-drop / browse image upload field. Shows the picked/existing
@@ -38,6 +40,7 @@ export class FileDropUpload {
   file = model<File | null>(null);
 
   private readonly snackBar = inject(MatSnackBar);
+  private readonly dialog = inject(MatDialog);
 
   previewUrl = computed(() => {
     if (this.uploading()) return null;
@@ -90,5 +93,16 @@ export class FileDropUpload {
     }
 
     this.file.set(file);
+  }
+
+  openImagePreview() {
+    const url = this.previewUrl();
+    if (url) {
+      this.dialog.open(ImagePreviewDialog, {
+        width: '1600px',
+        data: { imageUrl: url, title: this.label() },
+        panelClass: 'image-preview-panel',
+      });
+    }
   }
 }

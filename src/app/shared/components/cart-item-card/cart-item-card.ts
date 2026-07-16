@@ -1,9 +1,18 @@
-import { ChangeDetectionStrategy, Component, booleanAttribute, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  booleanAttribute,
+  input,
+  output,
+  inject,
+} from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { CheckoutItem } from '../../../core/offer.service';
 import { CounterField } from '../counter-field/counter-field';
+import { ImagePreviewDialog } from '../image-preview-dialog/image-preview-dialog';
 import { ButtonSizeDirective } from '../../directives/button';
 import { IconButtonVariantDirective } from '../../directives/button/icon-button-variant';
 
@@ -23,6 +32,8 @@ import { IconButtonVariantDirective } from '../../directives/button/icon-button-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartItemCard {
+  private readonly dialog = inject(MatDialog);
+
   item = input.required<CheckoutItem>();
   editable = input(false, { transform: booleanAttribute });
   showPrice = input(true, { transform: booleanAttribute });
@@ -47,5 +58,13 @@ export class CartItemCard {
       }
       this.decrease.emit(itemId);
     }
+  }
+
+  openImagePreview() {
+    this.dialog.open(ImagePreviewDialog, {
+      width: '1600px',
+      data: { imageUrl: this.item().item.image_url, title: this.item().item.item_name },
+      panelClass: 'image-preview-panel',
+    });
   }
 }

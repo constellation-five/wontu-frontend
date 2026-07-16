@@ -184,7 +184,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
   viewProofOfPayment(order: OfferOrder) {
     if (!order.payment_proof_url) return;
     this.dialog.open(ImagePreviewDialog, {
-      minWidth: '320px',
+      width: '1600px',
       data: { imageUrl: order.payment_proof_url, title: 'Proof of Payment' },
     });
   }
@@ -266,7 +266,13 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
         content: 'Are you sure you want to delete this offer?<br>This action cannot be undone.',
         buttons: [
           { label: 'Cancel', type: 'outlined', focus: true },
-          { label: 'Delete offer', icon: 'delete', type: 'filled', action: 'delete', color: 'error' },
+          {
+            label: 'Delete offer',
+            icon: 'delete',
+            type: 'filled',
+            action: 'delete',
+            color: 'error',
+          },
         ],
       },
     });
@@ -283,7 +289,9 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
       next: () => this.router.navigate(['/offers']),
       error: (err) => {
         console.error('Failed to delete offer:', err);
-        this.snackBar.open('Failed to delete offer. Please try again.', 'Close', { duration: 3000 });
+        this.snackBar.open('Failed to delete offer. Please try again.', 'Close', {
+          duration: 3000,
+        });
       },
     });
   }

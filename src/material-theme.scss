@@ -301,7 +301,7 @@ html {
   @include mat.dialog-overrides(
     (
       container-shape: var(--mat-sys-corner-large),
-      headline-padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-md),
+      headline-padding: var(--spacing-xs) var(--spacing-4xl) var(--spacing-md) var(--spacing-xl),
       actions-padding: var(--spacing-xl),
       container-elevation-shadow: var(--mat-sys-level4),
     )
@@ -399,7 +399,6 @@ mat-option.mat-mdc-option {
 }
 
 @include emit-spacing-utilities();
-
 
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
   background: rgba(0, 0, 0, 0.6);

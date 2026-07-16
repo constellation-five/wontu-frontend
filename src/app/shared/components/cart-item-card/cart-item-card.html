@@ -1,5 +1,10 @@
 <div class="cart-item-card mat-bg-surface-container-lowest">
-  <img [src]="item().item.image_url" [alt]="item().item.item_name" class="cart-item-image" />
+  <img 
+    [src]="item().item.image_url" 
+    [alt]="item().item.item_name" 
+    class="cart-item-image clickable-image"
+    (click)="openImagePreview()"
+  />
   <div class="cart-item-content">
     <div class="cart-item-header">
       <div class="cart-item-name mat-font-title-sm mat-text-on-surface">

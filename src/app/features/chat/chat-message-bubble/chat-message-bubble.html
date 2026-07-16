@@ -45,7 +45,12 @@
         [class.scoped-bubble]="isScoped()"
       >
         @if (message().image_url) {
-          <img [src]="message().image_url" alt="Attachment" class="bubble-image" />
+          <img 
+            [src]="message().image_url" 
+            alt="Attachment" 
+            class="bubble-image clickable-image" 
+            (click)="openImagePreview()"
+          />
         }
         @if (message().body) {
           <p class="bubble-text mat-font-body-md">{{ message().body }}</p>
