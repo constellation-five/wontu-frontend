@@ -41,4 +41,13 @@
       margin-bottom: var(--page-spacer-lg);
     }
   }
+
+
+  &.solid-top-bar-margin {
+    margin-top: calc(var(--page-spacer-sm) + 56px);
+
+    @media (min-width: $breakpoint-md) {
+      margin-top: var(--page-spacer-lg);
+    }
+  }
 }

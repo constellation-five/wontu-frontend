@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +13,6 @@ import { PaneComponent } from '../../../shared/components/pane/pane';
 import { ButtonSizeDirective, ButtonColorDirective } from '../../../shared/directives/button';
 import { AuthService } from '../../../core/auth.service';
 import { PageHeaderService } from '../../../core/page-header.service';
-import { BREAKPOINTS } from '../../../core/constants';
 
 interface PersonalInfo {
   user_id: string;
@@ -61,17 +60,13 @@ export class AccountPage implements OnInit {
   isSaving = signal(false);
   isEditingUsername = signal(false);
   isEditingName = signal(false);
-  isMobile = signal(false);
 
   profileForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(128)]],
     username: ['', [Validators.required, Validators.maxLength(64)]],
   });
 
-  @HostListener('window:resize')
-  onResize() {
-    this.checkMobile();
-  }
+
 
   ngOnInit() {
     this.pageHeader.setTitle('Account');
@@ -80,12 +75,9 @@ export class AccountPage implements OnInit {
       { label: 'Account', route: '/profile/account' },
     ]);
     this.fetchPersonalInfo();
-    this.checkMobile();
   }
 
-  checkMobile() {
-    this.isMobile.set(window.innerWidth <= BREAKPOINTS.MD);
-  }
+
 
   goBack() {
     this.router.navigate(['/profile']);

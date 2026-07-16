@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal, HostListener, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PaneComponent } from '../../../shared/components/pane/pane';
-import { BREAKPOINTS } from '../../../core/constants';
+import { PageHeaderService } from '../../../core/page-header.service';
 import { environment } from '../../../../environments/environment';
 
 interface NotificationSetting {
@@ -49,21 +49,16 @@ export class SettingsPage implements OnInit {
   private router = inject(Router);
   private http = inject(HttpClient);
 
-  isMobile = signal(false);
+  private pageHeader = inject(PageHeaderService);
   isLoading = signal(true);
 
-  @HostListener('window:resize')
-  onResize() {
-    this.checkMobile();
-  }
-
   ngOnInit() {
-    this.checkMobile();
+    this.pageHeader.setTitle('Settings');
+    this.pageHeader.setBreadcrumbs([
+      { label: 'Profile', route: '/profile' },
+      { label: 'Settings', route: '/profile/settings' },
+    ]);
     this.loadSettings();
-  }
-
-  checkMobile() {
-    this.isMobile.set(window.innerWidth <= BREAKPOINTS.MD);
   }
 
   goBack() {

@@ -5,7 +5,6 @@ import {
   OnDestroy,
   inject,
   signal,
-  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -21,7 +20,7 @@ import { PaneComponent } from '../../../shared/components/pane/pane';
 import { AuthService } from '../../../core/auth.service';
 import { ButtonSizeDirective } from '../../../shared/directives/button/button-size';
 import { UserProfileDialog } from '../../../shared/components/dialog/user-profile-dialog';
-import { BREAKPOINTS } from '../../../core/constants';
+import { PageHeaderService } from '../../../core/page-header.service';
 
 interface Following {
   user_id: string;
@@ -70,17 +69,16 @@ export class FollowingPage implements OnInit, OnDestroy {
   filteredFollowing = signal<Following[]>([]);
   searchQuery = signal('');
   isLoading = signal(true);
-  isMobile = signal(false);
+  private pageHeader = inject(PageHeaderService);
 
   private profileUpdatedListener = () => this.fetchFollowing();
 
-  @HostListener('window:resize')
-  onResize() {
-    this.checkMobile();
-  }
-
   ngOnInit() {
-    this.checkMobile();
+    this.pageHeader.setTitle('Following');
+    this.pageHeader.setBreadcrumbs([
+      { label: 'Profile', route: '/profile' },
+      { label: 'Following', route: '/profile/following' },
+    ]);
     this.fetchFollowing();
 
     // Listen for profile updates from dialog
@@ -91,9 +89,7 @@ export class FollowingPage implements OnInit, OnDestroy {
     window.removeEventListener('profile-updated', this.profileUpdatedListener);
   }
 
-  checkMobile() {
-    this.isMobile.set(window.innerWidth <= BREAKPOINTS.MD);
-  }
+
 
   goBack() {
     this.router.navigate(['/profile']);

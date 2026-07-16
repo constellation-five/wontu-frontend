@@ -1,17 +1,5 @@
-@if (isMobile()) {
-  <header class="mobile-header mat-bg-surface">
-    <button mat-icon-button (click)="goBack()" class="back-button">
-      <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
-    </button>
-    <h1 class="mobile-title mat-title-medium mat-text-on-surface">Followers</h1>
-  </header>
-}
-
-<div [class.mobile-wrapper]="isMobile()">
-  <app-pane>
-    @if (!isMobile()) {
-      <h2 class="page-title mat-text-on-surface mb-lg" style="font: var(--mat-sys-title-large);">Followers</h2>
-    }
+<app-pane>
+  <h2 class="page-title mat-text-on-surface mb-lg" style="font: var(--mat-sys-title-large);">Followers</h2>
 
     @if (isLoading()) {
       <div class="loading-state mat-font-body-md mat-text-on-surface-variant">Loading...</div>
@@ -43,7 +31,7 @@
                       </div>
                     }
                     <div class="user-details">
-                      <p class="user-name mat-text-on-surface" [class.mat-font-body-sm]="isMobile()" [class.mat-font-body-md]="!isMobile()">{{ follower.name }}</p>
+                      <p class="user-name mat-text-on-surface mat-font-body-md">{{ follower.name }}</p>
                       @if (follower.mutual_count > 0) {
                         <p class="mutual-text-mobile mat-font-label-sm mat-text-on-surface-variant">
                           <span class="mutual-count mat-text-primary">{{ follower.mutual_count }}</span> mutual friends
@@ -96,4 +84,3 @@
       </div>
     }
   </app-pane>
-</div>

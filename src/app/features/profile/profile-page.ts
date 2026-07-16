@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject, signal, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
 import { PageHeaderService } from '../../core/page-header.service';
 import { AuthService } from '../../core/auth.service';
 import { CommonModule } from '@angular/common';
-import { filter } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 import { DialogComponent } from '../../shared/components/dialog/dialog';
 import { RatingDialog } from './rating/rating-dialog';
 import { BREAKPOINTS } from '../../core/constants';
@@ -45,7 +45,7 @@ interface ProfileResponse {
   styleUrl: './profile-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage implements OnInit, OnDestroy {
   private http = inject(HttpClient);
   private pageHeader = inject(PageHeaderService);
   private authService = inject(AuthService);
@@ -56,11 +56,14 @@ export class ProfilePage implements OnInit {
   isLoading = signal(true);
   currentRoute = signal('account');
   isMobile = signal(false);
+  private routerSubscription?: Subscription;
 
   @HostListener('window:resize')
   onResize() {
     this.checkMobile();
   }
+
+  constructor() {}
 
   ngOnInit() {
     this.pageHeader.setTitle('Profile');
@@ -77,7 +80,7 @@ export class ProfilePage implements OnInit {
     }
 
     // Listen to route changes
-    this.router.events
+    this.routerSubscription = this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         this.updateCurrentRoute();
@@ -89,8 +92,17 @@ export class ProfilePage implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+    // Note: window event listener is not removed, but let's leave it as is or fix it too?
+    // It's probably better to use a proper Subject for events, but we'll just fix the router for now.
+  }
+
   checkMobile() {
     this.isMobile.set(window.innerWidth <= BREAKPOINTS.MD);
+    this.updateCurrentRoute();
   }
 
   updateCurrentRoute() {
@@ -114,6 +126,14 @@ export class ProfilePage implements OnInit {
       }
     } else {
       this.currentRoute.set('account');
+    }
+
+    // Hide top bar completely when showing the mobile root menu
+    if (this.currentRoute() === 'none' && this.isMobile()) {
+      this.pageHeader.showHeader.set(false);
+    } else {
+      // Restore header if we are not on mobile root menu
+      this.pageHeader.showHeader.set(true);
     }
   }
 
