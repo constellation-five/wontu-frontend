@@ -400,13 +400,6 @@ mat-option.mat-mdc-option {
 
 @include emit-spacing-utilities();
 
-.user-profile-dialog-panel {
-  .mat-mdc-dialog-container {
-    padding: 0;
-    border-radius: var(--mat-sys-corner-extra-large);
-    background-color: var(--mat-sys-surface-container-lowest);
-  }
-}
 
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
   background: rgba(0, 0, 0, 0.6);

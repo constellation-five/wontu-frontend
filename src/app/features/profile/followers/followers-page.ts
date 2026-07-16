@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject, signal, HostListener } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  OnDestroy,
+  inject,
+  signal,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
@@ -64,7 +72,7 @@ export class FollowersPage implements OnInit, OnDestroy {
   searchQuery = signal('');
   isLoading = signal(true);
   isMobile = signal(false);
-  
+
   private profileUpdatedListener = () => this.fetchFollowers();
 
   @HostListener('window:resize')
@@ -75,11 +83,11 @@ export class FollowersPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.checkMobile();
     this.fetchFollowers();
-    
+
     // Listen for profile updates from dialog
     window.addEventListener('profile-updated', this.profileUpdatedListener);
   }
-  
+
   ngOnDestroy() {
     window.removeEventListener('profile-updated', this.profileUpdatedListener);
   }
@@ -118,7 +126,7 @@ export class FollowersPage implements OnInit, OnDestroy {
     }
 
     const filtered = this.followers().filter((follower) =>
-      follower.name.toLowerCase().includes(query.toLowerCase())
+      follower.name.toLowerCase().includes(query.toLowerCase()),
     );
     this.filteredFollowers.set(filtered);
   }
@@ -142,7 +150,7 @@ export class FollowersPage implements OnInit, OnDestroy {
         .post(
           `${environment.api}/profile/${follower.user_id}/follow`,
           {},
-          { withCredentials: true }
+          { withCredentials: true },
         )
         .subscribe({
           next: () => {
@@ -157,8 +165,8 @@ export class FollowersPage implements OnInit, OnDestroy {
 
   navigateToProfile(userId: string) {
     this.dialog.open(UserProfileDialog, {
+      width: '348px',
       data: { userId },
-      panelClass: 'user-profile-dialog-panel',
     });
   }
 }

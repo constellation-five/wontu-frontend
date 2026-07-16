@@ -1,5 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/auth.service';
@@ -38,8 +43,8 @@ export class ChatInfoDialog {
     }
 
     this.dialog.open(UserProfileDialog, {
+      width: '348px',
       data: { userId },
-      panelClass: 'user-profile-dialog-panel',
     });
   }
 }

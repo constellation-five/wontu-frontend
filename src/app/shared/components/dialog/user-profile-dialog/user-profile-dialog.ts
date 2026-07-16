@@ -9,6 +9,7 @@ import { environment } from '../../../../../environments/environment';
 import { ButtonSizeDirective } from '../../../directives/button';
 import { AuthService } from '../../../../core/auth.service';
 import { ChatService } from '../../../../core/chat.service';
+import { DialogComponent } from '../dialog';
 
 interface UserProfile {
   user_id: string;
@@ -38,6 +39,7 @@ interface UserProfileResponse {
     MatIconModule,
     MatDialogModule,
     ButtonSizeDirective,
+    DialogComponent,
   ],
   templateUrl: './user-profile-dialog.html',
   styleUrl: './user-profile-dialog.scss',
@@ -61,7 +63,10 @@ export class UserProfileDialog implements OnInit {
   }
 
   loadProfile() {
-    this.http.get<UserProfileResponse>(`${environment.api}/profile/${this.data.userId}`, { withCredentials: true })
+    this.http
+      .get<UserProfileResponse>(`${environment.api}/profile/${this.data.userId}`, {
+        withCredentials: true,
+      })
       .subscribe({
         next: (res) => {
           this.profile.set(res.data);
@@ -70,7 +75,7 @@ export class UserProfileDialog implements OnInit {
         error: () => {
           this.isLoading.set(false);
           this.dialogRef.close();
-        }
+        },
       });
   }
 
@@ -81,19 +86,25 @@ export class UserProfileDialog implements OnInit {
     this.isProcessing.set(true);
 
     const request$ = profile.is_following
-      ? this.http.delete(`${environment.api}/profile/${profile.user_id}/unfollow`, { withCredentials: true })
-      : this.http.post(`${environment.api}/profile/${profile.user_id}/follow`, {}, { withCredentials: true });
+      ? this.http.delete(`${environment.api}/profile/${profile.user_id}/unfollow`, {
+          withCredentials: true,
+        })
+      : this.http.post(
+          `${environment.api}/profile/${profile.user_id}/follow`,
+          {},
+          { withCredentials: true },
+        );
 
     request$.subscribe({
       next: () => {
         // Reload profile to get updated data including is_following_back status
         this.loadProfile();
         this.isProcessing.set(false);
-        
+
         // Dispatch event to refresh parent list
         window.dispatchEvent(new CustomEvent('profile-updated'));
       },
-      error: () => this.isProcessing.set(false)
+      error: () => this.isProcessing.set(false),
     });
   }
 

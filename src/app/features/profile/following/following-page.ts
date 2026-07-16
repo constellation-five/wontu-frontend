@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject, signal, HostListener } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  OnDestroy,
+  inject,
+  signal,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
@@ -63,7 +71,7 @@ export class FollowingPage implements OnInit, OnDestroy {
   searchQuery = signal('');
   isLoading = signal(true);
   isMobile = signal(false);
-  
+
   private profileUpdatedListener = () => this.fetchFollowing();
 
   @HostListener('window:resize')
@@ -74,11 +82,11 @@ export class FollowingPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.checkMobile();
     this.fetchFollowing();
-    
+
     // Listen for profile updates from dialog
     window.addEventListener('profile-updated', this.profileUpdatedListener);
   }
-  
+
   ngOnDestroy() {
     window.removeEventListener('profile-updated', this.profileUpdatedListener);
   }
@@ -117,7 +125,7 @@ export class FollowingPage implements OnInit, OnDestroy {
     }
 
     const filtered = this.following().filter((user) =>
-      user.name.toLowerCase().includes(query.toLowerCase())
+      user.name.toLowerCase().includes(query.toLowerCase()),
     );
     this.filteredFollowing.set(filtered);
   }
@@ -139,8 +147,8 @@ export class FollowingPage implements OnInit, OnDestroy {
 
   navigateToProfile(userId: string) {
     this.dialog.open(UserProfileDialog, {
+      width: '348px',
       data: { userId },
-      panelClass: 'user-profile-dialog-panel',
     });
   }
 }

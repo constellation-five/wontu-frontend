@@ -79,8 +79,8 @@ export class PrivateChatPage implements OnDestroy {
     }
 
     this.dialog.open(UserProfileDialog, {
+      width: '348px',
       data: { userId },
-      panelClass: 'user-profile-dialog-panel',
     });
   }
 

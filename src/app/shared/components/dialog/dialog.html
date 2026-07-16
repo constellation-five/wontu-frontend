@@ -1,4 +1,12 @@
-<h2 mat-dialog-title>{{ resolvedTitle }}</h2>
+@if (resolvedTitle) {
+  <h2 mat-dialog-title>{{ resolvedTitle }}</h2>
+}
+
+@if (resolvedShowClose) {
+  <button mat-icon-button class="dialog-close-btn" mat-dialog-close>
+    <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+  </button>
+}
 
 @if (content) {
   <mat-dialog-content [innerHTML]="content"></mat-dialog-content>
@@ -8,32 +16,34 @@
   </mat-dialog-content>
 }
 
-<mat-dialog-actions align="end">
-  @for (button of resolvedButtons; track button.label) {
-    @if (isCallback(button.action)) {
-      <button
-        [matButton]="button.type"
-        [appButtonColor]="button.color ?? 'primary'"
-        (click)="invoke(button.action)"
-        [attr.cdkFocusInitial]="button.focus ? '' : null"
-      >
-        @if (button.icon) {
-          <mat-icon fontSet="material-symbols-outlined">{{ button.icon }}</mat-icon>
-        }
-        {{ button.label }}
-      </button>
-    } @else {
-      <button
-        [matButton]="button.type"
-        [appButtonColor]="button.color ?? 'primary'"
-        [mat-dialog-close]="button.action ?? ''"
-        [attr.cdkFocusInitial]="button.focus ? '' : null"
-      >
-        @if (button.icon) {
-          <mat-icon fontSet="material-symbols-outlined">{{ button.icon }}</mat-icon>
-        }
-        {{ button.label }}
-      </button>
+@if (resolvedButtons.length > 0) {
+  <mat-dialog-actions align="end">
+    @for (button of resolvedButtons; track button.label) {
+      @if (isCallback(button.action)) {
+        <button
+          [matButton]="button.type"
+          [appButtonColor]="button.color ?? 'primary'"
+          (click)="invoke(button.action)"
+          [attr.cdkFocusInitial]="button.focus ? '' : null"
+        >
+          @if (button.icon) {
+            <mat-icon fontSet="material-symbols-outlined">{{ button.icon }}</mat-icon>
+          }
+          {{ button.label }}
+        </button>
+      } @else {
+        <button
+          [matButton]="button.type"
+          [appButtonColor]="button.color ?? 'primary'"
+          [mat-dialog-close]="button.action ?? ''"
+          [attr.cdkFocusInitial]="button.focus ? '' : null"
+        >
+          @if (button.icon) {
+            <mat-icon fontSet="material-symbols-outlined">{{ button.icon }}</mat-icon>
+          }
+          {{ button.label }}
+        </button>
+      }
     }
-  }
-</mat-dialog-actions>
+  </mat-dialog-actions>
+}
