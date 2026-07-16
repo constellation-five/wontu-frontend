@@ -1,0 +1,65 @@
+@use '../../../../variables' as *;
+
+.chat-page {
+  width: 100%;
+}
+
+// Desktop: a single full-width pane, no sidebar (unlike the group chat page —
+// a private conversation has no members list to show).
+.pane.chat-pane {
+  width: 100%;
+  height: calc(100vh - 168px);
+  min-height: 480px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+
+  ::ng-deep .pane-title {
+    padding: var(--spacing-xl) var(--spacing-xl) 0;
+    margin-bottom: var(--spacing-sm);
+    flex-shrink: 0;
+  }
+
+  chat-thread {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+}
+
+// Mobile: full-bleed overlay covering the whole viewport, replacing the
+// app's normal chrome entirely (navbar already hides itself for non
+// top-level routes; the global top-bar/breadcrumbs are suppressed via
+// PageHeaderService.showHeader in the component).
+.chat-page.mobile-layout {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--mat-sys-surface-container-lowest);
+}
+
+.mobile-topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  flex-shrink: 0;
+  background-color: var(--mat-sys-surface-container);
+  box-shadow: var(--mat-sys-level2);
+}
+
+.mobile-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.mobile-thread {
+  flex: 1 1 auto;
+  min-height: 0;
+}

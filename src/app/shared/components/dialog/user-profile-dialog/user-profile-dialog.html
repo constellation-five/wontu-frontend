@@ -34,22 +34,34 @@
         </div>
       </div>
 
-      <button
-        [matButton]="user.is_following ? 'outlined' : 'filled'"
-        [appButtonSize]="'md'"
-        [disabled]="isProcessing()"
-        (click)="toggleFollow()"
-        [class.following-button]="user.is_following"
-        [class.follow-back-button]="!user.is_following"
-        class="follow-button">
-        @if (user.is_following) {
-          Following
-        } @else if (user.is_following_back) {
-          Follow Back
-        } @else {
-          Follow
-        }
-      </button>
+      <div class="actions">
+        <button
+          [matButton]="user.is_following ? 'outlined' : 'filled'"
+          [appButtonSize]="'md'"
+          [disabled]="isProcessing()"
+          (click)="toggleFollow()"
+          [class.following-button]="user.is_following"
+          [class.follow-back-button]="!user.is_following"
+          class="follow-button">
+          @if (user.is_following) {
+            Following
+          } @else if (user.is_following_back) {
+            Follow Back
+          } @else {
+            Follow
+          }
+        </button>
+
+        <button
+          matButton="outlined"
+          [appButtonSize]="'md'"
+          [disabled]="isOpeningChat()"
+          (click)="openChat()"
+          class="chat-button">
+          <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
+          Chat
+        </button>
+      </div>
     </div>
   }
 </div>

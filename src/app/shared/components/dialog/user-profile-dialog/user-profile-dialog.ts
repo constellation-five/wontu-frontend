@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { ButtonSizeDirective } from '../../../directives/button';
+import { AuthService } from '../../../../core/auth.service';
+import { ChatService } from '../../../../core/chat.service';
 
 interface UserProfile {
   user_id: string;
@@ -42,12 +45,16 @@ interface UserProfileResponse {
 })
 export class UserProfileDialog implements OnInit {
   private http = inject(HttpClient);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private chatService = inject(ChatService);
   private dialogRef = inject(MatDialogRef<UserProfileDialog>);
   data = inject<{ userId: string }>(MAT_DIALOG_DATA);
 
   profile = signal<UserProfile | null>(null);
   isLoading = signal(true);
   isProcessing = signal(false);
+  isOpeningChat = signal(false);
 
   ngOnInit() {
     this.loadProfile();
@@ -92,6 +99,26 @@ export class UserProfileDialog implements OnInit {
 
   close() {
     this.dialogRef.close();
+  }
+
+  openChat() {
+    const profile = this.profile();
+    if (!profile || this.isOpeningChat()) return;
+
+    if (profile.user_id === this.authService.user()?.user_id) {
+      this.dialogRef.close();
+      this.router.navigate(['/profile']);
+      return;
+    }
+
+    this.isOpeningChat.set(true);
+    this.chatService.findOrCreatePrivateConversation(profile.user_id).subscribe({
+      next: (conversation) => {
+        this.dialogRef.close();
+        this.router.navigate(['/chat', conversation.id]);
+      },
+      error: () => this.isOpeningChat.set(false),
+    });
   }
 
   formatNumber(num: number): string {
