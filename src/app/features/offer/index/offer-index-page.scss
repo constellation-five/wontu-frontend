@@ -23,15 +23,10 @@
 .offers-grid {
   display: grid;
   gap: var(--spacing-md);
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
 
-  @media (min-width: 481px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-lg) {
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-lg);
   }
 }
 
