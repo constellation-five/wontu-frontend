@@ -21,6 +21,7 @@ import { MainPageHeaderComponent } from '../../shared/components/main-page-heade
 import { LocationLookupService } from '../../core/location-lookup.service';
 import { LocationStateService } from '../../core/location-state.service';
 import { LocationPickerDialog } from '../../shared/components/location-picker-dialog/location-picker-dialog';
+import { RequestFormDialog } from './request-form-dialog/request-form-dialog';
 
 @Component({
   selector: 'request-page',
@@ -115,28 +116,35 @@ export class RequestPage {
       return;
     }
 
-    // Logika buka dialog ada di sini nantinya...
-    /*
-    const dialogRef = this.dialog.open(RequestCreateDialog, {
+    const dialogRef = this.dialog.open(RequestFormDialog, {
       width: '500px',
+      maxWidth: '95vw',
       data: { coords: this.userLocationCoordinates() }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.fetchRequests(this.searchQuery()); // Refresh data kalau berhasil create
+        this.fetchRequests(this.searchQuery()); 
       }
-    */
-    console.log('Open Create Request');
+    });
   }
 
   // --- CARD FUNCTION ---
   onEditRequest(req: RequestItem) {
-    if (!this.user()) {
-      this.router.navigate(['/signin']); 
-      return;
-    }
-    this.router.navigate(['/offers/create'], { queryParams: { requestId: req.request_id } });
+    const dialogRef = this.dialog.open(RequestFormDialog, {
+      width: '500px',
+      maxWidth: '95vw',
+      data: { 
+        request: req, 
+        coords: this.userLocationCoordinates() 
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.fetchRequests(this.searchQuery(), true); 
+      }
+    });
   }
 
   onCreateOffer(req: RequestItem) {
