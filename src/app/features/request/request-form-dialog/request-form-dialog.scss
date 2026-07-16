@@ -1,0 +1,30 @@
+@use '../../../../variables' as *;
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.datetime-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  margin-top: var(--spacing-xs);
+}
+
+.datetime-group-label {
+  margin-bottom: var(--spacing-3xs);
+}
+
+.datetime-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-xs);
+}
