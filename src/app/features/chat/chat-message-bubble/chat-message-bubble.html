@@ -1,0 +1,61 @@
+@if (message().type === 'system') {
+  <div class="system-message">
+    <span class="mat-font-body-sm mat-text-on-surface-variant">
+      {{ message().metadata?.description }}
+    </span>
+  </div>
+} @else {
+  <div class="message-row" [class.own]="isOwn()">
+    @if (!isOwn()) {
+      <button class="avatar-button" type="button" (click)="onAvatarClick()">
+        @if (message().sender?.avatar) {
+          <img [src]="message().sender!.avatar" [alt]="message().sender!.name" class="avatar" />
+        } @else {
+          <div class="avatar-placeholder mat-bg-primary mat-text-on-primary">
+            {{ message().sender?.name?.charAt(0)?.toUpperCase() }}
+          </div>
+        }
+      </button>
+    }
+
+    <div class="bubble-column">
+      @if (showInfo()) {
+        <div class="message-meta">
+          <span class="meta-name mat-font-label-sm mat-text-on-surface">
+            {{ isOwn() ? 'You' : message().sender?.name }}
+          </span>
+          <span class="meta-time mat-font-label-sm mat-text-on-surface-variant">
+            @if (message().created_at) {
+              {{ message().created_at | naturalDateTime: undefined : false : timeTick.now() }}
+            } @else {
+              Sending
+            }
+          </span>
+          @if (targetLabel()) {
+            <span class="meta-scope mat-font-label-sm mat-text-secondary"
+              >({{ targetLabel() }})</span
+            >
+          }
+        </div>
+      }
+
+      <div
+        class="bubble mat-corner-md"
+        [class.own-bubble]="isOwn() && !isScoped()"
+        [class.scoped-bubble]="isScoped()"
+      >
+        @if (message().image_url) {
+          <img 
+            [src]="message().image_url" 
+            alt="Attachment" 
+            class="bubble-image clickable-image" 
+            (click)="openImagePreview()"
+          />
+        }
+        @if (message().body) {
+          <p class="bubble-text mat-font-body-md">{{ message().body }}</p>
+        }
+      </div>
+    </div>
+  </div>
+}

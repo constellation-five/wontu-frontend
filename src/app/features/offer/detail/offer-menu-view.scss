@@ -3,27 +3,61 @@
 :host {
   display: block;
   width: 100%;
+  padding-bottom: 16px;
 }
 
-// Content Layout: single column (same order as mobile) below $breakpoint-lg
-// — including the $breakpoint-md–lg tier, which keeps the desktop chrome
-// but not the two-column split — then 1fr + fixed-width aside from there up.
-.content-layout {
-  display: grid;
-  gap: var(--spacing-lg);
-  grid-template-columns: 1fr;
+.menu-view {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mobile-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
 
   @media (min-width: $breakpoint-lg) {
-    grid-template-columns: 1fr 400px;
-    gap: var(--spacing-xl);
+    display: none;
   }
 }
 
-// Items Section (Left)
-.items-section {
+.tablet-only-cart {
+  display: none;
+
+  @media (min-width: $breakpoint-md) {
+    display: block;
+  }
+}
+
+.desktop-layout {
+  display: none;
+
+  @media (min-width: $breakpoint-lg) {
+    display: block;
+  }
+}
+
+.content-layout {
+  display: grid;
+  gap: var(--spacing-xl);
+  grid-template-columns: 1fr 400px;
+}
+
+.left-section {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  gap: var(--spacing-lg);
+  min-width: 0;
+}
+
+.right-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  position: sticky;
+  top: var(--spacing-lg);
+  align-self: flex-start;
+  max-height: calc(100vh - var(--spacing-xl) * 2);
 }
 
 .items-grid {
@@ -34,21 +68,6 @@
 
   @media (min-width: $breakpoint-lg) {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  }
-}
-
-// Sidebar (Right) - Hidden below $breakpoint-lg (cart access is via the FAB
-// instead, same as on mobile)
-.sidebar {
-  display: none;
-
-  @media (min-width: $breakpoint-lg) {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-lg);
-    position: sticky;
-    align-self: flex-start;
-    max-height: calc(100vh - var(--spacing-xl) * 2);
   }
 }
 
@@ -77,9 +96,22 @@
 
 .seller-section {
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
   align-items: center;
-  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.seller-profile-clickable {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+  border-radius: var(--mat-sys-corner-medium);
+  padding: var(--spacing-xs);
+  margin: calc(-1 * var(--spacing-xs));
 }
 
 .seller-avatar {
@@ -206,7 +238,7 @@
   z-index: 1001;
   box-shadow: var(--mat-sys-level4);
 
-  @media (min-width: $breakpoint-lg) {
+  @media (min-width: $breakpoint-md) {
     display: none !important;
   }
 

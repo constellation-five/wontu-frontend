@@ -1,0 +1,69 @@
+@use '../../../../variables' as *;
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.chat-page {
+  width: 100%;
+}
+
+// Desktop: normal page content, two panes side by side.
+.content-layout {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: 240px 1fr;
+  height: calc(100vh - 168px);
+  min-height: 480px;
+}
+
+.sidebar {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.pane.chat-pane {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+
+  ::ng-deep .pane-title {
+    padding: var(--spacing-xl) var(--spacing-xl) 0;
+    margin-bottom: var(--spacing-sm);
+    flex-shrink: 0;
+  }
+
+  // The projected <chat-thread> needs to be an explicit flex item (not just
+  // height:100%) so it actually claims the remaining space below the pane
+  // title instead of collapsing. Its own display/flex-direction are set
+  // internally by the component — only its sizing as a flex item belongs here.
+  chat-thread {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+}
+
+// Mobile: full-bleed overlay covering the whole viewport, replacing the
+// app's normal chrome entirely (navbar already hides itself for non
+// top-level routes; the global top-bar/breadcrumbs are suppressed via
+// PageHeaderService.showHeader in the component).
+.chat-page.mobile-layout {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--mat-sys-surface-container-lowest);
+  padding-top: 56px;
+}
+
+
+.mobile-thread {
+  flex: 1 1 auto;
+  min-height: 0;
+}

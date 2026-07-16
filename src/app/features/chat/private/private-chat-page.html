@@ -1,0 +1,10 @@
+<div class="chat-page" [class.mobile-layout]="breakpointService.isMobile()">
+  @if (breakpointService.isMobile()) {
+
+    <chat-thread class="mobile-thread" [isGroup]="false" (avatarClick)="onAvatarClick($event)" />
+  } @else {
+    <app-pane class="chat-pane">
+      <chat-thread [isGroup]="false" (avatarClick)="onAvatarClick($event)" />
+    </app-pane>
+  }
+</div>

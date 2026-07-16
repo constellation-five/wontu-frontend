@@ -1,0 +1,26 @@
+@if (isLoading()) {
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+} @else if (offer(); as offer) {
+  <div class="chat-page" [class.mobile-layout]="breakpointService.isMobile()">
+    @if (breakpointService.isMobile()) {
+
+      <chat-thread class="mobile-thread" [isGroup]="true" (avatarClick)="onMemberClick($event)" />
+    } @else {
+      <div class="content-layout">
+        <app-pane title="Chat Information" class="sidebar">
+          <chat-information-pane
+            [owner]="chatService.conversation()?.owner ?? null"
+            [participants]="chatService.conversation()?.participants ?? []"
+            (memberClick)="onMemberClick($event)"
+          />
+        </app-pane>
+
+        <app-pane class="chat-pane">
+          <chat-thread [isGroup]="true" (avatarClick)="onMemberClick($event)" />
+        </app-pane>
+      </div>
+    }
+  </div>
+}

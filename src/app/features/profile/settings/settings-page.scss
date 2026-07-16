@@ -1,35 +1,12 @@
 @use '../../../../variables' as *;
 
-.mobile-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 var(--spacing-sm);
-  z-index: 101;
-  box-shadow: var(--mat-sys-level1);
-  background-color: var(--mat-sys-surface);
+:host {
+  display: block;
+  height: 100%;
 
-  .back-button {
-    position: absolute;
-    left: var(--spacing-sm);
+  app-pane {
+    height: 100%;
   }
-
-  .mobile-title {
-    margin: 0;
-    font: var(--mat-sys-title-medium);
-    text-align: center;
-  }
-}
-
-.mobile-wrapper {
-  padding: 64px var(--spacing-md) 80px; // 64px top for header, 80px bottom for navbar
-  background-color: var(--mat-sys-background);
-  min-height: 100vh;
 }
 
 .settings-container {
@@ -41,6 +18,11 @@
 .page-title {
   margin: 0 0 var(--spacing-lg) 0;
   font: var(--mat-sys-title-large);
+  display: none;
+
+  @media (min-width: $breakpoint-md) {
+    display: block;
+  }
 }
 
 .settings-section {
@@ -97,13 +79,12 @@
 .notification-item {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--spacing-2xl);
+  align-items: center;
+  gap: var(--spacing-md);
 
-  @media (max-width: $breakpoint-md) {
-    flex-direction: row;
-    gap: var(--spacing-md);
-    align-items: center;
+  @media (min-width: $breakpoint-md) {
+    align-items: flex-start;
+    gap: var(--spacing-2xl);
   }
 }
 
@@ -112,9 +93,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+  min-width: 0;
 
-  @media (max-width: $breakpoint-md) {
-    min-width: 0;
+  @media (min-width: $breakpoint-md) {
+    min-width: auto;
   }
 }
 
@@ -124,9 +106,10 @@
 
 .notification-desc {
   margin: 0;
+  display: none;
 
-  @media (max-width: $breakpoint-md) {
-    display: none;
+  @media (min-width: $breakpoint-md) {
+    display: block;
   }
 }
 
@@ -162,17 +145,17 @@
     .mdc-switch__icons {
       display: none;
     }
-    
+
     // Remove border/outline on track
     .mdc-switch__track {
       border: none;
-      
+
       &::before,
       &::after {
         border: none;
       }
     }
-    
+
     // Ensure white circle is visible
     .mdc-switch__handle::after {
       background: white;
@@ -181,11 +164,11 @@
 }
 
 .language-select {
-  max-width: 300px;
+  max-width: 100%;
   margin-top: var(--spacing-xs);
 
-  @media (max-width: $breakpoint-md) {
-    max-width: 100%;
+  @media (min-width: $breakpoint-md) {
+    max-width: 300px;
   }
 
   ::ng-deep {

@@ -160,13 +160,12 @@ app-search-bar {
 
 .requests-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
-  gap: 16px; 
+  gap: var(--spacing-md);
   margin-top: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
 
-  @media (min-width: $breakpoint-md) {
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 24px; // Jarak dilebarin lagi buat layar besar
+  @media (min-width: $breakpoint-lg) {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

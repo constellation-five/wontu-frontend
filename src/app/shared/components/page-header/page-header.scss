@@ -1,20 +1,35 @@
 @use '../../../../variables' as *;
 
+// Mobile-first: the unconditional rules below are the mobile layout: no
+// breadcrumb, centered/smaller title, extra top padding. Desktop is layered
+// on top via min-width so there's never a fractional-width gap between this
+// and the min-width: $breakpoint-md cutoff used everywhere else (navbar,
+// top/bottom bars) — a paired max-width query one pixel below $breakpoint-md
+// can fail to match at a non-integer width, leaving both "mobile" and
+// "desktop" unmatched at once.
 .page-header {
-  padding: var(--spacing-sm) 0;
+  padding: var(--spacing-3xl) 0 var(--spacing-sm);
   margin-bottom: var(--spacing-xl);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+
+  @media (min-width: $breakpoint-md) {
+    padding-top: var(--spacing-sm);
+  }
 }
 
 .breadcrumb {
-  display: flex;
+  display: none;
   align-items: center;
   gap: var(--spacing-2xs);
   flex-wrap: wrap;
   font: var(--mat-sys-label-medium);
   color: var(--mat-sys-on-surface-variant);
+
+  @media (min-width: $breakpoint-md) {
+    display: flex;
+  }
 
   .breadcrumb-link {
     color: inherit;
@@ -32,20 +47,11 @@
 
 .page-title {
   margin: 0;
-  font: var(--mat-sys-headline-large);
-}
+  text-align: center;
+  font: var(--mat-sys-headline-small);
 
-/* Mobile adjustments */
-@media (max-width: $breakpoint-md) {
-  .page-header {
-    padding-top: var(--spacing-3xl);
-  }
-  .breadcrumb {
-    display: none;
-  }
-
-  .page-title {
-    text-align: center;
-    font: var(--mat-sys-headline-small);
+  @media (min-width: $breakpoint-md) {
+    text-align: left;
+    font: var(--mat-sys-headline-large);
   }
 }

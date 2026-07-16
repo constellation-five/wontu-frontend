@@ -17,9 +17,17 @@
       calc(var(--page-spacer-lg) + 168px);
   }
 
+  // Mobile default for these modifiers. They're higher-specificity than the
+  // plain .layout-body rule above, so without an explicit min-width reset
+  // they'd also win over the desktop margin at desktop widths — restore the
+  // desktop bottom margin explicitly rather than relying on a paired
+  // max-width query (which can leave a fractional-width gap against the
+  // min-width: $breakpoint-md cutoff used everywhere else).
   &.no-bottom-margin {
-    @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-      margin-bottom: var(--page-spacer-sm);
+    margin-bottom: var(--page-spacer-sm);
+
+    @media (min-width: $breakpoint-md) {
+      margin-bottom: var(--page-spacer-lg);
     }
   }
 
@@ -27,8 +35,19 @@
   // mobile, wherever it's actually in use — it's fixed-position, so without
   // this the last bit of page content would render underneath it.
   &.action-bar-margin {
-    @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-      margin-bottom: 84px;
+    margin-bottom: calc(var(--page-spacer-sm) + 72px);
+
+    @media (min-width: $breakpoint-md) {
+      margin-bottom: var(--page-spacer-lg);
+    }
+  }
+
+
+  &.solid-top-bar-margin {
+    margin-top: calc(var(--page-spacer-sm) + 56px);
+
+    @media (min-width: $breakpoint-md) {
+      margin-top: var(--page-spacer-lg);
     }
   }
 }

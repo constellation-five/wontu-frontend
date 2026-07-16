@@ -4,15 +4,17 @@
     <!-- 1. Seller Info (No Title) -->
     <app-pane title="" class="mobile-seller-pane">
       <div class="seller-section">
-        <img [src]="offer().seller.avatar" [alt]="offer().seller.name" class="seller-avatar" />
-        <div class="seller-info">
-          <div class="seller-name mat-font-body-md mat-text-on-surface">
-            {{ offer().seller.name }}
-          </div>
-          <div class="seller-rating">
-            <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
-            <span class="mat-font-label-md mat-text-on-surface">4.9</span>
-            <span class="mat-font-body-sm mat-text-on-surface-variant">(100+)</span>
+        <div class="seller-profile-clickable" (click)="openSellerProfile.emit(offer().seller_id)">
+          <img [src]="offer().seller.avatar" [alt]="offer().seller.name" class="seller-avatar" />
+          <div class="seller-info">
+            <div class="seller-name mat-font-body-md mat-text-on-surface">
+              {{ offer().seller.name }}
+            </div>
+            <div class="seller-rating">
+              <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
+              <span class="mat-font-label-md mat-text-on-surface">4.9</span>
+              <span class="mat-font-body-sm mat-text-on-surface-variant">(100+)</span>
+            </div>
           </div>
         </div>
         <!-- The fixed mobile bottom bar covers this below $breakpoint-md; from
@@ -192,15 +194,17 @@
         <!-- Offer Information Pane -->
         <app-pane>
           <div class="seller-section">
-            <img [src]="offer().seller.avatar" [alt]="offer().seller.name" class="seller-avatar" />
-            <div class="seller-info">
-              <div class="seller-name mat-font-body-md mat-text-on-surface">
-                {{ offer().seller.name }}
-              </div>
-              <div class="seller-rating">
-                <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
-                <span class="mat-font-label-md mat-text-on-surface">4.9</span>
-                <span class="mat-font-body-sm mat-text-on-surface-variant">(100+)</span>
+            <div class="seller-profile-clickable" (click)="openSellerProfile.emit(offer().seller_id)">
+              <img [src]="offer().seller.avatar" [alt]="offer().seller.name" class="seller-avatar" />
+              <div class="seller-info">
+                <div class="seller-name mat-font-body-md mat-text-on-surface">
+                  {{ offer().seller.name }}
+                </div>
+                <div class="seller-rating">
+                  <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
+                  <span class="mat-font-label-md mat-text-on-surface">4.9</span>
+                  <span class="mat-font-body-sm mat-text-on-surface-variant">(100+)</span>
+                </div>
               </div>
             </div>
             <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">

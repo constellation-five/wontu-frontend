@@ -3,23 +3,7 @@
 :host {
   display: block;
   width: 100%;
-}
-
-.filter-button {
-  flex-shrink: 0;
-
-  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-    --mdc-icon-button-state-layer-size: 40px;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-
-    mat-icon {
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
-    }
-  }
+  padding-bottom: 92px;
 }
 
 .filter-menu-content {
@@ -39,18 +23,10 @@
 .offers-grid {
   display: grid;
   gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
 
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 481px) and (max-width: calc(#{$breakpoint-md} - 1px)) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-lg) {
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--spacing-lg);
   }
 }
 
@@ -75,12 +51,8 @@
 .create-offer-fab {
   position: fixed;
   right: var(--spacing-xl);
-  bottom: var(--spacing-xl);
+  bottom: calc(var(--spacing-xl) + 80px);
   z-index: 999;
-
-  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-    bottom: calc(var(--spacing-xl) + 80px);
-  }
 
   @media (min-width: $breakpoint-md) {
     display: none;

@@ -5,7 +5,27 @@
   /* Default: Mobile styles (from bottom-navbar) */
   display: none;
 
-  /* Desktop: Tablet & above (from side-navbar) */
+  &.mobile-top-level-page {
+    display: block;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    background-color: var(--mat-sys-surface-container);
+    box-shadow: var(--mat-sys-level2);
+    padding: var(--spacing-sm) var(--spacing-sm);
+  }
+
+  &.hidden {
+    display: none !important;
+  }
+
+  /* Desktop: Tablet & above (from side-navbar) — explicitly reset every
+     mobile-only class combination back to the rail look, since .hidden and
+     .mobile-top-level-page above are higher-specificity than this plain
+     :host rule and would otherwise still win at desktop widths. */
   @media (min-width: $breakpoint-md) {
     display: block;
     position: fixed;
@@ -20,24 +40,17 @@
     background-color: var(--mat-sys-surface-container);
     box-shadow: var(--mat-sys-level2);
     padding: var(--spacing-xl) var(--spacing-md);
-  }
 
-  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
     &.mobile-top-level-page {
-      display: block;
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 1000;
-      width: 100%;
-      background-color: var(--mat-sys-surface-container);
-      box-shadow: var(--mat-sys-level2);
-      padding: var(--spacing-sm) var(--spacing-sm);
+      bottom: auto;
+      left: auto;
+      right: auto;
+      width: 168px;
+      padding: var(--spacing-xl) var(--spacing-md);
     }
 
     &.hidden {
-      display: none !important;
+      display: block !important;
     }
   }
 }

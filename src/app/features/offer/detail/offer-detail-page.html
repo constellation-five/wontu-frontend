@@ -22,6 +22,7 @@
     (cancelOrder)="openCancelOrderDialog()"
     (completePayment)="completePayment()"
     (proofOfPaymentChange)="onProofOfPaymentChange($event)"
+    (openSellerProfile)="openSellerProfile($event)"
   />
 } @else {
   <app-offer-menu-view
@@ -37,5 +38,6 @@
     (placeOrder)="onPlaceOrder()"
     (openChat)="openChat()"
     (navigateToMobileCart)="navigateToMobileCart()"
+    (openSellerProfile)="openSellerProfile($event)"
   />
 }

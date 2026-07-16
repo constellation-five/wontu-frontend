@@ -1,0 +1,179 @@
+@use '@angular/material' as mat;
+@use '../../../../variables' as *;
+
+// display/flex-direction live here (not in a parent page's stylesheet) so
+// this component always lays out correctly regardless of who embeds it —
+// callers should only ever need to set `flex: 1 1 auto; min-height: 0;` on
+// the <chat-thread> host to size it within their own flex container.
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+}
+
+.chat-thread {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+.messages-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-xl) var(--spacing-md) var(--spacing-md);
+
+  // Spacing between messages is per-item so grouped messages (no repeated
+  // header) can sit closer together than messages that start a new group.
+  > * + * {
+    margin-top: var(--spacing-sm);
+  }
+
+  > chat-message-bubble.grouped {
+    margin-top: 2px;
+  }
+}
+
+.loading-container,
+.empty-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 120px;
+}
+
+.closed-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2xs);
+  padding: var(--spacing-sm);
+  color: var(--mat-sys-on-surface-variant);
+  border-top: 1px solid var(--mat-sys-outline-variant);
+}
+
+.composer {
+  padding: var(--spacing-sm);
+  flex-shrink: 0;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--mat-sys-surface-container);
+
+  @media (min-width: $breakpoint-md) {
+    padding: var(--spacing-sm) var(--spacing-xl);
+  }
+}
+
+.image-preview {
+  position: relative;
+  display: inline-block;
+  margin-bottom: var(--spacing-xs);
+
+  img {
+    max-height: 96px;
+    border-radius: var(--mat-sys-corner-small);
+    display: block;
+  }
+
+  .remove-image-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--mat-sys-surface-container-highest);
+    --mdc-icon-button-icon-size: 16px;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+  }
+}
+
+// Mobile default: scope selector sits on its own row above the message bar,
+// left-aligned and sized to its own content (not stretched). Desktop puts
+// everything back on a single row.
+.composer-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-xs);
+
+  @media (min-width: $breakpoint-md) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.scope-field {
+  flex-shrink: 0;
+  align-self: flex-start;
+  width: 120px;
+
+  @media (min-width: $breakpoint-md) {
+    align-self: auto;
+  }
+
+  @include mat.form-field-overrides(
+    (
+      container-height: 40px,
+      container-vertical-padding: 8px,
+    )
+  );
+
+  @include mat.select-overrides(
+    (
+      trigger-text-size: var(--mat-sys-body-medium-size),
+    )
+  );
+}
+
+.message-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-width: 0;
+
+  @media (min-width: $breakpoint-md) {
+    flex: 1 1 auto;
+  }
+}
+
+.message-bar {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-2xs);
+  border: 1px solid var(--mat-sys-outline);
+  border-radius: var(--mat-sys-corner-small);
+
+  &:focus-within {
+    border-color: var(--mat-sys-primary);
+  }
+}
+
+.text-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  background: none;
+  color: var(--mat-sys-on-surface);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.attach-btn {
+  flex-shrink: 0;
+}
+
+.send-btn {
+  flex-shrink: 0;
+}

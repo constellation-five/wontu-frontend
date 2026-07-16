@@ -1,19 +1,5 @@
-@if (isMobile()) {
-  <header class="mobile-header mat-bg-surface">
-    <button mat-icon-button (click)="goBack()" class="back-button">
-      <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
-    </button>
-    <h1 class="mobile-title mat-title-medium mat-text-on-surface">Payment</h1>
-  </header>
-}
-
-<div [class.mobile-wrapper]="isMobile()">
-  <app-pane>
-    @if (isMobile()) {
-      <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-medium);">Payment Methods</h2>
-    } @else {
-      <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-large);">Payment Methods</h2>
-    }
+<app-pane>
+  <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-large);">Payment Methods</h2>
 
   @if (isLoading()) {
     <div class="loading-state">Loading data...</div>
@@ -51,4 +37,3 @@
     </div>
   }
 </app-pane>
-</div>

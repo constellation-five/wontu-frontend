@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Navbar } from '../components/navbar/navbar';
 import { PageHeaderComponent } from '../components/page-header/page-header';
 import { TopBarComponent } from '../components/top-bar/top-bar';
@@ -21,8 +22,9 @@ import { BottomBarService } from '../../core/bottom-bar.service';
       class="layout-body"
       [class.no-bottom-margin]="shouldHideBottomBar() && !hasBottomActionBar()"
       [class.action-bar-margin]="hasBottomActionBar()"
+      [class.solid-top-bar-margin]="pageHeaderService.showHeader() && pageHeaderService.forceTopBarSolid()"
     >
-      @if (pageHeaderService.showHeader()) {
+      @if (pageHeaderService.showHeader() && !pageHeaderService.hideDesktopHeader()) {
         <app-page-header />
       }
       <router-outlet />
@@ -48,7 +50,10 @@ export class MainLayout {
 
   constructor() {
     this.router.events
-      .pipe(filter((event: any) => event instanceof NavigationEnd))
+      .pipe(
+        filter((event: any) => event instanceof NavigationEnd),
+        takeUntilDestroyed()
+      )
       .subscribe(() => {
         const route = this.router.routerState.root;
         let child = route;

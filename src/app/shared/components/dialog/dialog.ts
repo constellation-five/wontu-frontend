@@ -15,9 +15,10 @@ export interface DialogButton {
 }
 
 export interface DialogData {
-  title: string;
-  content: string; // bisa HTML
-  buttons: DialogButton[];
+  title?: string;
+  content?: string; // bisa HTML
+  buttons?: DialogButton[];
+  showClose?: boolean;
 }
 
 @Component({
@@ -25,12 +26,14 @@ export interface DialogData {
   standalone: true,
   imports: [MatDialogModule, MatButtonModule, MatIconModule, ButtonColorDirective],
   templateUrl: './dialog.html',
+  styleUrl: './dialog.scss',
 })
 export class DialogComponent {
   private readonly data = inject<DialogData>(MAT_DIALOG_DATA, { optional: true });
 
   readonly title = input<string>();
   readonly buttons = input<DialogButton[]>();
+  readonly showClose = input<boolean>();
 
   get resolvedTitle(): string {
     return this.title() ?? this.data?.title ?? '';
@@ -42,6 +45,10 @@ export class DialogComponent {
 
   get content(): string | undefined {
     return this.data?.content;
+  }
+
+  get resolvedShowClose(): boolean {
+    return this.showClose() ?? this.data?.showClose ?? false;
   }
 
   isCallback(action: DialogButton['action']): action is () => void {

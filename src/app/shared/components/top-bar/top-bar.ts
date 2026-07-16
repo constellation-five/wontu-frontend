@@ -12,7 +12,7 @@ import { MatMenuModule } from '@angular/material/menu';
   standalone: true,
   imports: [CommonModule, MatIconModule, MatButtonModule, MatMenuModule, MatDialogModule],
   template: `
-    <div class="top-bar" [class.scrolled]="scrolled()">
+    <div class="top-bar" [class.scrolled]="scrolled() || pageHeader.forceTopBarSolid()">
       <button matIconButton class="back-btn" (click)="onBack()">
         <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
       </button>
@@ -26,6 +26,11 @@ import { MatMenuModule } from '@angular/material/menu';
             <button mat-menu-item (click)="item.action()">{{ item.label }}</button>
           }
         </mat-menu>
+      }
+      @if (pageHeader.infoAction(); as infoAction) {
+        <button matIconButton class="info-btn" (click)="infoAction.action()">
+          <mat-icon fontSet="material-symbols-outlined">{{ infoAction.icon || 'info' }}</mat-icon>
+        </button>
       }
     </div>
   `,
@@ -44,6 +49,12 @@ export class TopBarComponent {
   }
 
   onBack() {
+    const customBack = this.pageHeader.customBackAction();
+    if (customBack) {
+      customBack();
+      return;
+    }
+
     const currentUrl = this.router.url;
 
     const crumbs = this.pageHeader.breadcrumbs();

@@ -16,12 +16,14 @@ import { PaymentMethodData } from '../../../shared/components/payment-method-car
 import { DialogComponent } from '../../../shared/components/dialog/dialog';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { AuthService } from '../../../core/auth.service';
+import { ChatService } from '../../../core/chat.service';
 import { OfferService, Offer, OfferItem, CheckoutItem, MyOrder } from '../../../core/offer.service';
 import { EditNotesDialog } from './edit-notes-dialog';
 import { environment } from '../../../../environments/environment';
 import { OfferMenuView } from './offer-menu-view';
 import { OfferCheckoutView } from './offer-checkout-view';
 import ManageOfferPage from '../manage/manage-offer-page';
+import { UserProfileDialog } from '../../../shared/components/dialog/user-profile-dialog/user-profile-dialog';
 
 type OfferDetailView = 'menu' | 'checkout';
 
@@ -39,6 +41,7 @@ export class OfferPage implements OnDestroy {
   private readonly http = inject(HttpClient);
   private readonly offerService = inject(OfferService);
   private readonly authService = inject(AuthService);
+  private readonly chatService = inject(ChatService);
   private readonly dialog = inject(MatDialog);
   protected readonly pageHeader = inject(PageHeaderService);
 
@@ -404,11 +407,27 @@ export class OfferPage implements OnDestroy {
     });
   }
 
+  /**
+   * Potential buyers who haven't joined yet can't see the offer's group
+   * chat, so they get a private 1:1 with the seller instead. The seller and
+   * anyone who's already joined go straight to the group chat.
+   */
   openChat() {
     const offer = this.offer();
     if (!offer) return;
 
-    this.router.navigate(['/offers', offer.offer_id, 'chat']);
+    if (this.isSeller() || this.myOrder() !== null) {
+      this.router.navigate(['/offers', offer.offer_id, 'chat']);
+      return;
+    }
+
+    this.chatService.findOrCreatePrivateConversation(offer.seller_id).subscribe({
+      next: (conversation) => this.router.navigate(['/chat', conversation.id]),
+      error: (err) => {
+        console.error('Failed to open chat:', err);
+        alert('Failed to open chat. Please try again.');
+      },
+    });
   }
 
   private uploadedProofUrl = signal<string | null>(null);
@@ -562,5 +581,11 @@ export class OfferPage implements OnDestroy {
         this.saveCartToLocalStorage(offerId);
       }
     }
+  }
+
+  openSellerProfile(userId: string) {
+    this.dialog.open(UserProfileDialog, {
+      data: { userId },
+    });
   }
 }

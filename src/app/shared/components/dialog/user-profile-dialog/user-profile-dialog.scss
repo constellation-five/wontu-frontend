@@ -2,27 +2,8 @@
 
 .profile-dialog {
   position: relative;
-  padding: var(--spacing-2xl);
-  width: 510px;
-  background-color: var(--mat-sys-surface-container-lowest) !important;
-  overflow: hidden;
-
-  @media (max-width: $breakpoint-md) {
-    width: 100%;
-    max-width: 510px;
-    padding: var(--spacing-xl);
-  }
-}
-
-.close-button {
-  position: absolute;
-  top: var(--spacing-md);
-  right: var(--spacing-md);
-  color: var(--mat-sys-on-surface-variant);
-
-  &:hover {
-    background-color: var(--mat-sys-surface-container-high);
-  }
+  width: 100%;
+  max-width: 510px;
 }
 
 .loading-state {
@@ -71,15 +52,15 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   padding: var(--spacing-md) var(--spacing-lg);
   background-color: var(--mat-sys-surface-container-lowest) !important;
   border-radius: var(--mat-sys-corner-large);
   box-shadow: var(--mat-sys-level1);
 
-  @media (max-width: $breakpoint-md) {
-    width: 100%;
-    max-width: 300px;
+  @media (min-width: $breakpoint-md) {
+    width: 300px;
   }
 }
 
@@ -99,13 +80,16 @@
   margin: 0;
 }
 
+.actions {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
 .follow-button {
   min-width: 200px;
-
-  @media (max-width: $breakpoint-md) {
-    width: 100%;
-    max-width: 300px;
-  }
 
   &.following-button {
     background-color: var(--mat-sys-surface-container-lowest) !important;
@@ -117,4 +101,11 @@
     background-color: var(--mat-sys-primary) !important;
     color: var(--mat-sys-on-primary) !important;
   }
+}
+
+.chat-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2xs);
 }

@@ -20,4 +20,10 @@
   @media (min-width: $breakpoint-md) {
     display: none;
   }
+
+  ::ng-deep {
+    button {
+      width: 100%;
+    }
+  }
 }

@@ -1,15 +1,5 @@
-@if (isMobile()) {
-  <header class="mobile-header mat-bg-surface">
-    <button mat-icon-button (click)="goBack()" class="back-button">
-      <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
-    </button>
-    <h1 class="mobile-title mat-title-large mat-text-on-surface">Account</h1>
-  </header>
-}
-
-<div [class.mobile-wrapper]="isMobile()">
-  <app-pane [class.mobile-pane]="isMobile()">
-    <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-large);">Account</h2>
+<app-pane>
+  <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-large);">Account</h2>
   
   @if (personalInfo(); as info) {
         <div class="account-container">
@@ -114,6 +104,5 @@
             </p>
           </section>
         </div>
-      }
-  </app-pane>
-</div>
+  }
+</app-pane>

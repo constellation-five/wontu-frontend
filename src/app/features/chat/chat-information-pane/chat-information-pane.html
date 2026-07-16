@@ -1,0 +1,33 @@
+<div class="section">
+  <h3 class="section-title mat-font-label-lg mat-text-on-surface-variant">Seller</h3>
+  @if (owner(); as owner) {
+    <button class="member-row" type="button" (click)="memberClick.emit(owner.user_id)">
+      @if (owner.avatar) {
+        <img [src]="owner.avatar" [alt]="owner.name" class="avatar" />
+      } @else {
+        <div class="avatar-placeholder mat-bg-primary mat-text-on-primary">
+          {{ owner.name.charAt(0).toUpperCase() }}
+        </div>
+      }
+      <span class="member-name mat-font-body-md mat-text-on-surface">{{ owner.name }}</span>
+    </button>
+  }
+</div>
+
+<div class="section">
+  <h3 class="section-title mat-font-label-lg mat-text-on-surface-variant">Members</h3>
+  @for (member of members(); track member.user_id) {
+    <button class="member-row" type="button" (click)="memberClick.emit(member.user_id)">
+      @if (member.avatar) {
+        <img [src]="member.avatar" [alt]="member.name" class="avatar" />
+      } @else {
+        <div class="avatar-placeholder mat-bg-primary mat-text-on-primary">
+          {{ member.name.charAt(0).toUpperCase() }}
+        </div>
+      }
+      <span class="member-name mat-font-body-md mat-text-on-surface">{{ member.name }}</span>
+    </button>
+  } @empty {
+    <p class="empty-label mat-font-body-sm mat-text-on-surface-variant">No members yet.</p>
+  }
+</div>

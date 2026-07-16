@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, NgTemplateOutlet } from '@angular/common';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card';
 import { CounterField } from '../../../shared/components/counter-field/counter-field';
 import { PaneComponent } from '../../../shared/components/pane/pane';
@@ -21,6 +21,7 @@ import { Offer, OfferItem, CheckoutItem } from '../../../core/offer.service';
     CartItemCard,
     ButtonSizeDirective,
     DecimalPipe,
+    NgTemplateOutlet,
   ],
   templateUrl: './offer-menu-view.html',
   styleUrls: ['./offer-menu-view.scss'],
@@ -40,6 +41,7 @@ export class OfferMenuView {
   readonly editCartItemNotes = output<CheckoutItem>();
   readonly placeOrder = output<void>();
   readonly openChat = output<void>();
+  readonly openSellerProfile = output<string>();
   readonly navigateToMobileCart = output<void>();
 
   isItemInCart(itemId: number): boolean {

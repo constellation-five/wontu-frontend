@@ -16,6 +16,18 @@
   margin: 0;
 }
 
+::ng-deep .dialog-close-btn {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  color: var(--mat-sys-on-surface-variant);
+  z-index: 10;
+
+  &:hover {
+    background-color: var(--mat-sys-surface-container-high);
+  }
+}
+
 .dialog-content {
   width: 100%;
   flex-grow: 1;
@@ -40,7 +52,7 @@
   height: 40px;
   padding: 0 var(--spacing-md);
   border-radius: var(--mat-sys-corner-full);
-  
+
   mat-icon {
     margin: 0;
     font-size: 20px;

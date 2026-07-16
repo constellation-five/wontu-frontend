@@ -55,8 +55,7 @@
   align-items: center;
   gap: var(--spacing-sm);
   overflow: hidden;
-  flex: 1000 1000 auto;
-  min-width: 160px;
+  flex: 1 1 auto;
 }
 
 .buyer-avatar {
@@ -71,7 +70,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  min-width: 0;
 }
 
 .panel-description {
@@ -79,21 +77,15 @@
   align-items: center;
   gap: var(--spacing-sm);
   overflow: hidden;
-  flex: 1 1 170px;
-  max-width: 170px;
-  min-width: 56px;
-  container-type: inline-size;
 }
 
 .count {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  min-width: 0;
-  flex-shrink: 1;
   display: none;
 
-  @container (min-width: 160px) {
+  @media (min-width: $breakpoint-sm) {
     display: inline;
   }
 }

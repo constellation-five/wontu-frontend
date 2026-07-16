@@ -93,7 +93,6 @@ export class PaymentMethod implements OnInit {
       PaymentMethodData | 'deleted'
     >(PaymentMethodFormDialog, {
       width: this.isMobile() ? '370px' : '540px',
-      maxWidth: '90vw',
       data: { method },
     });
 

@@ -12,6 +12,11 @@ export interface MenuItem {
   action: () => void;
 }
 
+export interface InfoAction {
+  icon?: string;
+  action: () => void;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -20,6 +25,10 @@ export class PageHeaderService {
   breadcrumbs = signal<BreadcrumbItem[]>([]);
   showHeader = signal<boolean>(true);
   menuItems = signal<MenuItem[]>([]);
+  infoAction = signal<InfoAction | null>(null);
+  hideDesktopHeader = signal<boolean>(false);
+  forceTopBarSolid = signal<boolean>(false);
+  customBackAction = signal<(() => void) | null>(null);
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -35,6 +44,8 @@ export class PageHeaderService {
         this.title.set(routeData.title);
         this.breadcrumbs.set(routeData.breadcrumbs);
       }
+      this.hideDesktopHeader.set(routeData.hideDesktopHeader);
+      this.forceTopBarSolid.set(routeData.forceTopBarSolid);
     });
   }
 
@@ -46,14 +57,22 @@ export class PageHeaderService {
     this.breadcrumbs.set(breadcrumbs);
   }
 
+  setInfoAction(action: InfoAction | null) {
+    this.infoAction.set(action);
+  }
+
   private buildRouteData(route: ActivatedRoute): {
     title: string;
     breadcrumbs: BreadcrumbItem[];
     hideHeader: boolean;
+    hideDesktopHeader: boolean;
+    forceTopBarSolid: boolean;
   } {
     let currentRoute: ActivatedRoute | null = route;
     let title = '';
     let hideHeader = false;
+    let hideDesktopHeader = false;
+    let forceTopBarSolid = false;
     let url = '';
     const breadcrumbs: BreadcrumbItem[] = [];
 
@@ -87,11 +106,19 @@ export class PageHeaderService {
         if (data?.['hideHeader']) {
           hideHeader = true;
         }
+
+        if (data?.['hideDesktopHeader']) {
+          hideDesktopHeader = true;
+        }
+
+        if (data?.['forceTopBarSolid']) {
+          forceTopBarSolid = true;
+        }
       }
 
       currentRoute = currentRoute.firstChild;
     }
 
-    return { title, breadcrumbs, hideHeader };
+    return { title, breadcrumbs, hideHeader, hideDesktopHeader, forceTopBarSolid };
   }
 }

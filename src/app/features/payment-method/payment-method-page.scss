@@ -1,39 +1,21 @@
 @use '../../../_variables' as *;
 
-.mobile-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 var(--spacing-sm);
-  z-index: 101;
-  box-shadow: var(--mat-sys-level1);
-  background-color: var(--mat-sys-surface);
+:host {
+  display: block;
+  height: 100%;
 
-  .back-button {
-    position: absolute;
-    left: var(--spacing-sm);
+  app-pane {
+    height: 100%;
   }
-
-  .mobile-title {
-    margin: 0;
-    font: var(--mat-sys-title-medium);
-    text-align: center;
-  }
-}
-
-.mobile-wrapper {
-  padding: 64px var(--spacing-md) 80px; // 64px top for header, 80px bottom for navbar
-  background-color: var(--mat-sys-background);
-  min-height: 100vh;
 }
 
 .page-title {
   margin: 0 0 var(--spacing-sm) 0; // 12px gap to content below
+  display: none;
+
+  @media (min-width: $breakpoint-md) {
+    display: block;
+  }
 }
 
 .payment-methods-content {
@@ -115,7 +97,7 @@
       // Keep subscript wrapper but reduce its height when empty
       .mat-mdc-form-field-subscript-wrapper {
         min-height: 0;
-        
+
         &:empty {
           display: none;
         }

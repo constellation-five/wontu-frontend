@@ -17,6 +17,10 @@
     )
   );
 
+  &[disabled] {
+    background-color: color-mix(in srgb, var(--mat-sys-on-surface) 12%, transparent);
+  }
+
   &.btn-color-error {
     background-color: var(--mat-sys-error);
     @include mat.icon-button-overrides(

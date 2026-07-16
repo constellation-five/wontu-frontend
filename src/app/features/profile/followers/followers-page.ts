@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit, OnDestroy, inject, signal, HostListener } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  OnDestroy,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +20,7 @@ import { PaneComponent } from '../../../shared/components/pane/pane';
 import { AuthService } from '../../../core/auth.service';
 import { ButtonSizeDirective } from '../../../shared/directives/button/button-size';
 import { UserProfileDialog } from '../../../shared/components/dialog/user-profile-dialog';
-import { BREAKPOINTS } from '../../../core/constants';
+import { PageHeaderService } from '../../../core/page-header.service';
 
 interface Follower {
   user_id: string;
@@ -63,30 +70,27 @@ export class FollowersPage implements OnInit, OnDestroy {
   filteredFollowers = signal<Follower[]>([]);
   searchQuery = signal('');
   isLoading = signal(true);
-  isMobile = signal(false);
-  
+  private pageHeader = inject(PageHeaderService);
+
   private profileUpdatedListener = () => this.fetchFollowers();
 
-  @HostListener('window:resize')
-  onResize() {
-    this.checkMobile();
-  }
-
   ngOnInit() {
-    this.checkMobile();
+    this.pageHeader.setTitle('Followers');
+    this.pageHeader.setBreadcrumbs([
+      { label: 'Profile', route: '/profile' },
+      { label: 'Followers', route: '/profile/followers' },
+    ]);
     this.fetchFollowers();
-    
+
     // Listen for profile updates from dialog
     window.addEventListener('profile-updated', this.profileUpdatedListener);
   }
-  
+
   ngOnDestroy() {
     window.removeEventListener('profile-updated', this.profileUpdatedListener);
   }
 
-  checkMobile() {
-    this.isMobile.set(window.innerWidth <= BREAKPOINTS.MD);
-  }
+
 
   goBack() {
     this.router.navigate(['/profile']);
@@ -118,7 +122,7 @@ export class FollowersPage implements OnInit, OnDestroy {
     }
 
     const filtered = this.followers().filter((follower) =>
-      follower.name.toLowerCase().includes(query.toLowerCase())
+      follower.name.toLowerCase().includes(query.toLowerCase()),
     );
     this.filteredFollowers.set(filtered);
   }
@@ -142,7 +146,7 @@ export class FollowersPage implements OnInit, OnDestroy {
         .post(
           `${environment.api}/profile/${follower.user_id}/follow`,
           {},
-          { withCredentials: true }
+          { withCredentials: true },
         )
         .subscribe({
           next: () => {
@@ -157,8 +161,8 @@ export class FollowersPage implements OnInit, OnDestroy {
 
   navigateToProfile(userId: string) {
     this.dialog.open(UserProfileDialog, {
+      width: '348px',
       data: { userId },
-      panelClass: 'user-profile-dialog-panel',
     });
   }
 }
