@@ -15,6 +15,14 @@
             <span class="mat-font-body-sm mat-text-on-surface-variant">(100+)</span>
           </div>
         </div>
+        <!-- The fixed mobile bottom bar covers this below $breakpoint-md; from
+        there up it's hidden, so this pane needs its own Chat button. -->
+        <div class="tablet-only-action">
+          <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
+            <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
+            <span>Chat</span>
+          </button>
+        </div>
       </div>
     </app-pane>
 
@@ -43,6 +51,32 @@
         <span class="mat-font-body-lg mat-text-on-surface text-bold">
           Rp {{ totalPrice() | number: '1.0-0' }}
         </span>
+      </div>
+
+      <!-- The fixed mobile bottom bar covers these below $breakpoint-md; from
+      there up it's hidden, so this pane needs its own inline actions. -->
+      <div class="tablet-only-action">
+        @if (!isOfferClosed()) {
+          <div class="cart-actions">
+            <button
+              matButton="outlined"
+              appButtonColor="error"
+              class="cancel-order-btn"
+              (click)="cancelOrder.emit()"
+            >
+              <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
+              <span>Cancel order</span>
+            </button>
+            <button matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
+              <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+              <span>Edit order</span>
+            </button>
+          </div>
+        } @else {
+          <div class="offer-closed-message mat-font-body-sm mat-text-on-surface-variant">
+            Offer has been closed. No further changes allowed.
+          </div>
+        }
       </div>
     </app-pane>
 

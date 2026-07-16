@@ -5,12 +5,15 @@
   width: 100%;
 }
 
+// Single column (same order as mobile) below $breakpoint-lg — including the
+// $breakpoint-md–lg tier, which keeps the desktop chrome but not the
+// two-column split — then 2 equal columns from there up.
 .content-layout {
   display: grid;
   gap: var(--spacing-lg);
   grid-template-columns: 1fr;
 
-  @media (min-width: $breakpoint-md) {
+  @media (min-width: $breakpoint-lg) {
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-xl);
   }

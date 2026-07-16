@@ -118,6 +118,24 @@
     padding-bottom: 0;
   }
 
+  // Below $breakpoint-md, the fixed mobile bottom bar already covers these
+  // actions. From $breakpoint-md up there's no top/bottom bar at all (even
+  // in the single-column tier below $breakpoint-lg), so the pane itself
+  // needs to show them inline instead.
+  .tablet-only-action {
+    display: none;
+
+    @media (min-width: $breakpoint-md) {
+      display: block;
+    }
+  }
+
+  .cart-total + .tablet-only-action {
+    @media (min-width: $breakpoint-md) {
+      margin-top: var(--spacing-md);
+    }
+  }
+
   .offer-closed-message {
     text-align: center;
     padding: 16px;
@@ -131,14 +149,16 @@
     align-items: center;
   }
 
-  /* Mobile Layout - Mobile only */
+  /* Single-column layout: true mobile, and the desktop-chrome-but-1-column
+  tier between $breakpoint-md and $breakpoint-lg — same markup and
+  component order as mobile throughout, just without the fixed top/bottom
+  bars from $breakpoint-md up (see .tablet-only-action above). */
   .mobile-layout {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
-    padding: var(--spacing-md);
 
-    @media (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-lg) {
       display: none;
     }
   }
@@ -150,30 +170,20 @@
     }
   }
 
-  /* Desktop Layout - 769px and up */
+  /* Two-column desktop layout - $breakpoint-lg and up only */
   .desktop-layout {
     display: none;
 
-    @media (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-lg) {
       display: block;
-      padding: var(--spacing-lg);
+      padding: var(--spacing-xl);
     }
   }
 
-  // Content Layout: 1 column on mobile, 1fr + fixed-width aside from md/lg up
   .content-layout {
     display: grid;
-    gap: var(--spacing-lg);
-    grid-template-columns: 1fr;
-
-    @media (min-width: $breakpoint-md) {
-      grid-template-columns: 1fr 320px;
-      gap: var(--spacing-xl);
-    }
-
-    @media (min-width: $breakpoint-lg) {
-      grid-template-columns: 1fr 400px;
-    }
+    gap: var(--spacing-xl);
+    grid-template-columns: 1fr 400px;
   }
 
   /* Mobile Bottom Action Bar - < 768px only */
@@ -316,7 +326,7 @@
     gap: var(--spacing-lg);
     min-width: 0;
 
-    @media (min-width: $breakpoint-md) {
+    @media (min-width: $breakpoint-lg) {
       position: sticky;
       top: var(--spacing-lg);
     }
