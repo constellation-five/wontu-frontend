@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { tap, finalize } from 'rxjs';
+import { tap, finalize, map } from 'rxjs';
 
 export interface RequestItem {
   request_id: number;
@@ -71,7 +71,8 @@ export class RequestService {
 
   // GET SINGLE REQUEST
   getRequestById(id: number) {
-    return this.http.get<{ status: string; data: RequestItem }>(`${environment.api}/requests/${id}`);
+    return this.http.get<{ status: string; data: RequestItem }>(`${environment.api}/requests/${id}`)
+    .pipe(map(response => response.data));
   }
 
   // CREATE
