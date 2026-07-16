@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -60,6 +67,10 @@ export class OfferChatPage implements OnDestroy {
     // global top-bar/breadcrumbs, so the global header is only shown on desktop.
     effect(() => {
       this.pageHeaderService.showHeader.set(!this.breakpointService.isMobile());
+    });
+
+    effect(() => {
+      this.pageHeaderService.setTitle(this.offer()?.merchant_name ?? 'Chat');
     });
   }
 
