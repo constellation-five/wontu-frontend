@@ -93,15 +93,14 @@
   border-radius: var(--mat-sys-corner-medium);
   background-color: var(--mat-sys-surface-container-lowest);
   transition: background-color 0.2s;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-sm);
+
+  @media (min-width: $breakpoint-md) {
+    gap: var(--spacing-lg);
+  }
 
   &:hover {
     background-color: var(--mat-sys-surface-container-low);
-  }
-
-  @media (max-width: $breakpoint-md) {
-    gap: var(--spacing-sm);
-    flex-wrap: nowrap;
   }
 }
 
@@ -154,30 +153,28 @@
 
 .mutual-section {
   display: flex;
-  flex-direction: column;
+  // Mobile default: only show text, no avatars
+  flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
   gap: var(--spacing-xs);
-  flex: 1;
+  flex: 0;
   text-align: center;
 
-  @media (max-width: $breakpoint-md) {
-    // Mobile: only show text, no avatars
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: var(--spacing-xs);
-    flex: 0;
+  @media (min-width: $breakpoint-md) {
+    flex-direction: column;
+    flex: 1;
   }
 }
 
 .mutual-avatars {
-  display: flex;
+  display: none;
   position: relative;
   height: 32px;
 
-  @media (max-width: $breakpoint-md) {
-    // Hide avatars on mobile
-    display: none;
+  @media (min-width: $breakpoint-md) {
+    // Show avatars on desktop
+    display: flex;
   }
 }
 
@@ -227,20 +224,21 @@
 
 .mutual-text {
   margin: 0;
+  // Hidden on mobile, shown on desktop
+  display: none;
 
-  @media (max-width: $breakpoint-md) {
-    // Hide desktop mutual text on mobile
-    display: none;
+  @media (min-width: $breakpoint-md) {
+    display: block;
   }
 }
 
 .mutual-text-mobile {
   margin: 0;
-  display: none; // Hidden on desktop
+  // Shown on mobile, hidden on desktop
+  display: block;
 
-  @media (max-width: $breakpoint-md) {
-    // Show only on mobile
-    display: block;
+  @media (min-width: $breakpoint-md) {
+    display: none;
   }
 }
 

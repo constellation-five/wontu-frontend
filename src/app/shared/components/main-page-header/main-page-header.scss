@@ -15,7 +15,11 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--spacing-md);
-  padding-top: var(--spacing-sm);
+  padding-top: var(--spacing-3xl);
+
+  @media (min-width: $breakpoint-md) {
+    padding-top: var(--spacing-sm);
+  }
 }
 
 .title-location {
@@ -26,7 +30,11 @@
 
 .page-title {
   margin: 0;
-  font: var(--mat-sys-headline-large);
+  font: var(--mat-sys-headline-small);
+
+  @media (min-width: $breakpoint-md) {
+    font: var(--mat-sys-headline-large);
+  }
 }
 
 .mat-mdc-button.location-button {
@@ -48,6 +56,35 @@
   gap: var(--spacing-xs);
   margin-top: var(--spacing-2xl);
   margin-bottom: var(--spacing-2xl);
+
+  // Mobile default: sticky search bar that turns solid once scrolled past.
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  padding: var(--spacing-xs) var(--page-spacer-sm);
+  margin-left: calc(var(--page-spacer-sm) * -1);
+  margin-right: calc(var(--page-spacer-sm) * -1);
+  transition: all 0.2s ease-in-out;
+  background: transparent;
+
+  &.stuck {
+    background: var(--mat-sys-surface-container);
+    box-shadow: var(--mat-sys-level2);
+  }
+
+  @media (min-width: $breakpoint-md) {
+    position: static;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    transition: none;
+    background: none;
+
+    &.stuck {
+      background: none;
+      box-shadow: none;
+    }
+  }
 }
 
 .search-bar {
@@ -56,32 +93,5 @@
 
   @media (min-width: $breakpoint-md) {
     max-width: 540px;
-  }
-}
-
-/* Mobile adjustments */
-@media (max-width: $breakpoint-md) {
-  .title-row {
-    padding-top: var(--spacing-3xl);
-  }
-
-  .page-title {
-    font: var(--mat-sys-headline-small);
-  }
-
-  .search-filter-row {
-    position: sticky;
-    top: 0;
-    z-index: 1100;
-    padding: var(--spacing-xs) var(--page-spacer-sm);
-    margin-left: calc(var(--page-spacer-sm) * -1);
-    margin-right: calc(var(--page-spacer-sm) * -1);
-    transition: all 0.2s ease-in-out;
-    background: transparent;
-
-    &.stuck {
-      background: var(--mat-sys-surface-container);
-      box-shadow: var(--mat-sys-level2);
-    }
   }
 }

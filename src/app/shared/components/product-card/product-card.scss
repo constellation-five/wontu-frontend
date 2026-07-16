@@ -42,12 +42,10 @@
     object-fit: cover;
   }
 
+  height: 160px;
+
   @media (min-width: $breakpoint-md) {
     height: 180px;
-  }
-
-  @media (max-width: calc(#{$breakpoint-md} - 1px)) {
-    height: 160px;
   }
 }
 

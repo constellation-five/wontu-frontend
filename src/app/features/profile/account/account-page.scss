@@ -77,12 +77,12 @@
 
 .field-input {
   flex: 1;
-  max-width: 400px;
+  max-width: 100%;
 
-  @media (max-width: $breakpoint-md) {
-    max-width: 100%;
+  @media (min-width: $breakpoint-md) {
+    max-width: 400px;
   }
-  
+
   // For readonly input
   &:has(input[readonly]) {
     input {

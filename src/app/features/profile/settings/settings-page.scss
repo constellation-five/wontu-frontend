@@ -97,13 +97,12 @@
 .notification-item {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--spacing-2xl);
+  align-items: center;
+  gap: var(--spacing-md);
 
-  @media (max-width: $breakpoint-md) {
-    flex-direction: row;
-    gap: var(--spacing-md);
-    align-items: center;
+  @media (min-width: $breakpoint-md) {
+    align-items: flex-start;
+    gap: var(--spacing-2xl);
   }
 }
 
@@ -112,9 +111,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+  min-width: 0;
 
-  @media (max-width: $breakpoint-md) {
-    min-width: 0;
+  @media (min-width: $breakpoint-md) {
+    min-width: auto;
   }
 }
 
@@ -124,9 +124,10 @@
 
 .notification-desc {
   margin: 0;
+  display: none;
 
-  @media (max-width: $breakpoint-md) {
-    display: none;
+  @media (min-width: $breakpoint-md) {
+    display: block;
   }
 }
 
@@ -181,11 +182,11 @@
 }
 
 .language-select {
-  max-width: 300px;
+  max-width: 100%;
   margin-top: var(--spacing-xs);
 
-  @media (max-width: $breakpoint-md) {
-    max-width: 100%;
+  @media (min-width: $breakpoint-md) {
+    max-width: 300px;
   }
 
   ::ng-deep {

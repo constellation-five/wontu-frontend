@@ -2,15 +2,15 @@
 
 .profile-dialog {
   position: relative;
-  padding: var(--spacing-2xl);
-  width: 510px;
+  padding: var(--spacing-xl);
+  width: 100%;
+  max-width: 510px;
   background-color: var(--mat-sys-surface-container-lowest) !important;
   overflow: hidden;
 
-  @media (max-width: $breakpoint-md) {
-    width: 100%;
-    max-width: 510px;
-    padding: var(--spacing-xl);
+  @media (min-width: $breakpoint-md) {
+    padding: var(--spacing-2xl);
+    width: 510px;
   }
 }
 
@@ -71,15 +71,15 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   padding: var(--spacing-md) var(--spacing-lg);
   background-color: var(--mat-sys-surface-container-lowest) !important;
   border-radius: var(--mat-sys-corner-large);
   box-shadow: var(--mat-sys-level1);
 
-  @media (max-width: $breakpoint-md) {
-    width: 100%;
-    max-width: 300px;
+  @media (min-width: $breakpoint-md) {
+    width: 300px;
   }
 }
 
@@ -101,10 +101,12 @@
 
 .follow-button {
   min-width: 200px;
+  width: 100%;
+  max-width: 300px;
 
-  @media (max-width: $breakpoint-md) {
-    width: 100%;
-    max-width: 300px;
+  @media (min-width: $breakpoint-md) {
+    width: auto;
+    max-width: none;
   }
 
   &.following-button {
