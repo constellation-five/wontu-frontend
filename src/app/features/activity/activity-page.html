@@ -1,9 +1,9 @@
-<div class="history-page">
+<div class="activity-page">
   <app-pane>
     @if (orders().length === 0 && offers().length === 0) {
       <div class="empty-state">
         <mat-icon class="empty-icon">receipt_long</mat-icon>
-        <h3>No Order History</h3>
+        <h3>No Order Activity</h3>
         <p class="mat-body-medium">You haven't placed any orders yet.</p>
         <button mat-flat-button appButtonSize="md" [routerLink]="['/offers']">
           Browse Offers
@@ -11,7 +11,7 @@
       </div>
     } @else {
       @if (offers().length > 0) {
-        <div class="history-header">
+        <div class="activity-header">
           <h2 class="mat-title-large">Your Offers</h2>
         </div>
 
@@ -48,7 +48,7 @@
       }
 
       @if (orders().length > 0) {
-        <div class="history-header">
+        <div class="activity-header">
           <h2 class="mat-title-large">Your Orders</h2>
         </div>
 

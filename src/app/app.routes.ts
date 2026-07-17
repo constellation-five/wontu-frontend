@@ -3,7 +3,7 @@ import { MainLayout } from './shared/layouts/main-layout';
 import { OFFER_ROUTES } from './features/offer/offer.routes';
 import { CHAT_ROUTES } from './features/chat/chat.routes';
 import { REQUEST_ROUTES } from './features/request/request.routes';
-import { HISTORY_ROUTES } from './features/history/history.routes';
+import { ACTIVITY_ROUTES } from './features/activity/activity.routes';
 import { PROFILE_ROUTES } from './features/profile/profile.routes';
 import { AUTH_ROUTES } from './features/auth/auth.routes';
 
@@ -17,7 +17,7 @@ export const routes: Routes = [
       ...OFFER_ROUTES,
       ...CHAT_ROUTES,
       ...REQUEST_ROUTES,
-      ...HISTORY_ROUTES,
+      ...ACTIVITY_ROUTES,
       ...PROFILE_ROUTES,
     ],
   },

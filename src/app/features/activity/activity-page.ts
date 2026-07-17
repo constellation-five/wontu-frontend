@@ -8,7 +8,7 @@ import { PageHeaderService } from '../../core/page-header.service';
 import { Offer, OfferService } from '../../core/offer.service';
 import { ButtonSizeDirective } from '../../shared/directives/button';
 
-interface HistoryOrder {
+interface ActivityOrder {
   offerId: number;
   merchantName: string;
   totalItems: number;
@@ -25,7 +25,7 @@ interface HistoryOrder {
 
 type SellerOfferStatus = 'open' | 'closed' | 'arrived';
 
-interface HistoryOffer {
+interface ActivityOffer {
   offerId: number;
   merchantName: string;
   category: string;
@@ -35,7 +35,7 @@ interface HistoryOffer {
 }
 
 @Component({
-  selector: 'history-page',
+  selector: 'activity-page',
   standalone: true,
   imports: [
     MatIconModule,
@@ -46,29 +46,29 @@ interface HistoryOffer {
     DatePipe,
     RouterLink,
   ],
-  templateUrl: './history-page.html',
-  styleUrls: ['./history-page.scss'],
+  templateUrl: './activity-page.html',
+  styleUrls: ['./activity-page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HistoryPage {
+export class ActivityPage {
   private readonly router = inject(Router);
   protected readonly pageHeader = inject(PageHeaderService);
   private readonly offerService = inject(OfferService);
 
-  orders = signal<HistoryOrder[]>([]);
-  offers = signal<HistoryOffer[]>([]);
+  orders = signal<ActivityOrder[]>([]);
+  offers = signal<ActivityOffer[]>([]);
 
   constructor() {
-    this.pageHeader.setTitle('Order History');
-    this.pageHeader.setBreadcrumbs([{ label: 'Order History' }]);
-    this.loadOrderHistory();
+    this.pageHeader.setTitle('Order Activity');
+    this.pageHeader.setBreadcrumbs([{ label: 'Order Activity' }]);
+    this.loadOrderActivity();
     this.loadMyOffers();
   }
 
-  private loadOrderHistory() {
+  private loadOrderActivity() {
     this.offerService.getMyOrders().subscribe({
       next: (res) => {
-        const orders: HistoryOrder[] = (res.data || []).map((order) => {
+        const orders: ActivityOrder[] = (res.data || []).map((order) => {
           const items = order.items.map((checkoutItem) => ({
             itemName: checkoutItem.item.item_name || 'Unknown Item',
             quantity: checkoutItem.quantity || 0,
@@ -96,7 +96,7 @@ export class HistoryPage {
         this.orders.set(orders);
       },
       error: (err) => {
-        console.error('Failed to load order history:', err);
+        console.error('Failed to load order activity:', err);
       },
     });
   }
@@ -117,14 +117,14 @@ export class HistoryPage {
     }
   }
 
-  viewOrderDetail(order: HistoryOrder) {
+  viewOrderDetail(order: ActivityOrder) {
     this.router.navigate(['/offers', order.offerId]);
   }
 
   private loadMyOffers() {
     this.offerService.getMyOffers().subscribe({
       next: (res) => {
-        const offers: HistoryOffer[] = (res.data || []).map((offer: Offer) => ({
+        const offers: ActivityOffer[] = (res.data || []).map((offer: Offer) => ({
           offerId: offer.offer_id,
           merchantName: offer.merchant_name,
           category: offer.category,
@@ -165,7 +165,7 @@ export class HistoryPage {
     }
   }
 
-  viewOfferDetail(offer: HistoryOffer) {
+  viewOfferDetail(offer: ActivityOffer) {
     this.router.navigate(['/offers', offer.offerId]);
   }
 }
