@@ -8,6 +8,7 @@ import {
   ViewChild,
   ViewContainerRef,
   computed,
+  effect,
   inject,
   input,
   signal,
@@ -33,6 +34,7 @@ import { BottomBar } from '../../../shared/components/bottom-bar/bottom-bar';
 import { ButtonSizeDirective, ButtonColorDirective } from '../../../shared/directives/button';
 import { BottomBarService } from '../../../core/bottom-bar.service';
 import { PageHeaderService } from '../../../core/page-header.service';
+import { EchoService } from '../../../core/echo.service';
 import { OfferService, Offer, OfferOrder, CheckoutItem } from '../../../core/offer.service';
 
 @Component({
@@ -62,6 +64,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
   private readonly snackBar = inject(MatSnackBar);
   private readonly bottomBarService = inject(BottomBarService);
   private readonly pageHeader = inject(PageHeaderService);
+  private readonly echoService = inject(EchoService);
 
   @ViewChild('actionsTpl') private actionsTpl!: TemplateRef<unknown>;
   private readonly viewContainerRef = inject(ViewContainerRef);
@@ -72,6 +75,23 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
   readonly paymentMethods = signal<PaymentMethodData[]>([]);
   readonly isLoading = signal(true);
   readonly isActionInProgress = signal(false);
+
+  private initialized = false;
+
+  constructor() {
+    // Keep the local offer signal in sync with the parent's input signal.
+    // This ensures real-time updates from the parent's Echo listener propagate here.
+    // On subsequent changes (after init), also reload the orders list.
+    effect(() => {
+      const latest = this.offerInput();
+      if (latest) {
+        this.offer.set(latest);
+        if (this.initialized) {
+          this.loadOrders();
+        }
+      }
+    });
+  }
 
   readonly isClosed = computed(() => this.offer().closed_at != null);
   readonly isArrived = computed(() => this.offer().arrived_at != null);
@@ -105,8 +125,6 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
   ngOnInit() {
     this.offer.set(this.offerInput());
 
-    // Set after NavigationEnd's own route-title-derived breadcrumb rebuild,
-    // not in the constructor, so this doesn't get immediately overwritten.
     this.pageHeader.setTitle(this.offer().merchant_name);
     this.pageHeader.setBreadcrumbs([
       { label: 'Offers', route: '/offers' },
@@ -115,6 +133,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
 
     this.loadOrders();
     this.loadPaymentMethods();
+    this.initialized = true;
   }
 
   private ownPortal!: TemplatePortal;
@@ -207,7 +226,9 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
         console.error('Failed to confirm payment:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to confirm payment: ${msg}${status}`, 'Close', { duration: 5000 });
+        this.snackBar.open(`Failed to confirm payment: ${msg}${status}`, 'Close', {
+          duration: 5000,
+        });
       },
     });
   }
@@ -250,7 +271,9 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
         console.error('Failed to mark items as arrived:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to mark items as arrived: ${msg}${status}`, 'Close', { duration: 5000 });
+        this.snackBar.open(`Failed to mark items as arrived: ${msg}${status}`, 'Close', {
+          duration: 5000,
+        });
       },
     });
   }

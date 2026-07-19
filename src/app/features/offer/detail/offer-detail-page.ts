@@ -7,6 +7,7 @@ import {
   untracked,
   ChangeDetectionStrategy,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpEventType } from '@angular/common/http';
@@ -20,6 +21,7 @@ import { DialogComponent } from '../../../shared/components/dialog/dialog';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { AuthService } from '../../../core/auth.service';
 import { ChatService } from '../../../core/chat.service';
+import { EchoService } from '../../../core/echo.service';
 import { OfferService, Offer, OfferItem, CheckoutItem, MyOrder } from '../../../core/offer.service';
 import { EditNotesDialog } from './edit-notes-dialog';
 import { environment } from '../../../../environments/environment';
@@ -38,13 +40,14 @@ type OfferDetailView = 'menu' | 'checkout';
   styleUrls: ['./offer-detail-page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferPage implements OnDestroy {
+export class OfferPage implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly http = inject(HttpClient);
   private readonly offerService = inject(OfferService);
   private readonly authService = inject(AuthService);
   private readonly chatService = inject(ChatService);
+  private readonly echoService = inject(EchoService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   protected readonly pageHeader = inject(PageHeaderService);
@@ -139,6 +142,28 @@ export class OfferPage implements OnDestroy {
       return;
     }
 
+    this.loadOfferData(offerId);
+  }
+
+  ngOnInit(): void {
+    const offerId = this.route.snapshot.paramMap.get('id');
+    if (offerId) {
+      this.echoService.listenToOfferUpdates(offerId, () => {
+        this.loadOfferData(offerId);
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    const offerId = this.route.snapshot.paramMap.get('id');
+    if (offerId) {
+      this.echoService.leaveOfferChannel(offerId);
+    }
+    window.removeEventListener('beforeunload', this.cleanupOrphanedProofBound);
+    this.cleanupOrphanedProof();
+  }
+
+  private loadOfferData(offerId: string): void {
     forkJoin({
       offer: this.offerService.getOfferById(offerId),
       order: this.authService.user()
@@ -489,10 +514,7 @@ export class OfferPage implements OnDestroy {
 
   private uploadedProofUrl = signal<string | null>(null);
 
-  ngOnDestroy() {
-    window.removeEventListener('beforeunload', this.cleanupOrphanedProofBound);
-    this.cleanupOrphanedProof();
-  }
+  // cleanup is now handled in ngOnDestroy
 
   /** Deletes a picked-and-uploaded-but-never-submitted proof file, so reloading/navigating away doesn't leave it orphaned on the server. */
   private cleanupOrphanedProof() {
