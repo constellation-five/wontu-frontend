@@ -1,0 +1,15 @@
+<app-dialog [title]="'Rate ' + data.merchantName" [buttons]="buttons()">
+  <div class="stars-container">
+    @for (star of [1,2,3,4,5]; track star) {
+      <mat-icon
+        fontSet="material-symbols-outlined"
+        [class.filled]="star <= (hoverRating() || rating())"
+        (mouseenter)="setHover(star)"
+        (mouseleave)="setHover(0)"
+        (click)="setRating(star)"
+      >
+        star
+      </mat-icon>
+    }
+  </div>
+</app-dialog>

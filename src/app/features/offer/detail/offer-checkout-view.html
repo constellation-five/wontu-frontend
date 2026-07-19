@@ -34,6 +34,18 @@
           </button>
         </div>
       </div>
+
+      @if (offer().arrived_at && !offer().seller.has_rated_seller) {
+        <button
+          matButton="filled"
+          appButtonSize="sm"
+          class="rating-action-btn tablet-only-action"
+          (click)="openRating.emit()"
+        >
+          <mat-icon fontSet="material-symbols-outlined">star</mat-icon>
+          <span>Give rating</span>
+        </button>
+      }
     </app-pane>
 
     <!-- 2. Progress -->
@@ -121,7 +133,7 @@
         @if (!myOrder()?.payment_submitted_at) {
           <button
             matButton="filled"
-            appButtonSize="md"
+            appButtonSize="sm"
             class="complete-payment-btn"
             [disabled]="!proofOfPayment() || uploadProgress() !== null"
             (click)="completePayment.emit()"
@@ -231,6 +243,18 @@
               <span>Chat</span>
             </button>
           </div>
+
+          @if (offer().arrived_at && !offer().seller.has_rated_seller) {
+            <button
+              matButton="filled"
+              appButtonSize="sm"
+              class="rating-action-btn"
+              (click)="openRating.emit()"
+            >
+              <mat-icon fontSet="material-symbols-outlined">star</mat-icon>
+              <span>Give rating</span>
+            </button>
+          }
         </app-pane>
 
         <!-- Cart Pane -->
@@ -280,6 +304,12 @@
 
   <!-- Mobile Bottom Action Bar -->
   <div class="mobile-bottom-bar">
+    @if (offer().arrived_at && !offer().seller.has_rated_seller) {
+      <button matButton="filled" appButtonSize="sm" (click)="openRating.emit()" style="width: 100%">
+        <mat-icon fontSet="material-symbols-outlined">star</mat-icon>
+        <span>Give rating</span>
+      </button>
+    }
     <button matButton="tonal" appButtonSize="sm" class="chat-action-btn" (click)="openChat.emit()">
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
       <span>Chat</span>

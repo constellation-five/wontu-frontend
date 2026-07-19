@@ -43,6 +43,7 @@ export interface Offer {
     avatar: string;
     received_ratings_avg_rating?: number;
     received_ratings_count?: number;
+    has_rated_seller?: boolean;
   };
 }
 

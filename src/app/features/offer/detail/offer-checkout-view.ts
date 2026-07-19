@@ -53,6 +53,7 @@ export class OfferCheckoutView {
   readonly completePayment = output<void>();
   readonly proofOfPaymentChange = output<File | null>();
   readonly openSellerProfile = output<string>();
+  readonly openRating = output<void>();
 
   formatDate(dateString: string): string {
     const date = new Date(dateString);
