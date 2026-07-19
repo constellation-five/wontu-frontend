@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal, computed } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { EchoService } from './echo.service';
 
@@ -49,6 +50,7 @@ function toAppNotification(raw: ApiNotification): AppNotification {
 export class NotificationService {
   private readonly http = inject(HttpClient);
   private readonly echoService = inject(EchoService);
+  private readonly router = inject(Router);
 
   private readonly _notifications = signal<AppNotification[]>([]);
   private readonly _unreadCount = signal<number>(0);
@@ -84,6 +86,16 @@ export class NotificationService {
 
       if (this.listLoaded) {
         this._notifications.update((prev) => [notification, ...prev]);
+      }
+
+      // Do not display the toast if the user is already viewing the target chat room
+      const currentPath = this.router.url.split('?')[0];
+      if (
+        notification.actionUrl &&
+        notification.actionUrl.endsWith('/chat') &&
+        currentPath === notification.actionUrl
+      ) {
+        return;
       }
 
       this.pushToast(notification);
