@@ -193,6 +193,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
     if (order.is_confirmed) return;
     this.offerService.confirmPayment(this.offer().offer_id, order.offer_buyer_id).subscribe({
       next: (res) => {
+        this.snackBar.open('Payment confirmed successfully.', 'Close', { duration: 3000 });
         this.orders.update((orders) =>
           orders.map((o) =>
             o.offer_buyer_id === order.offer_buyer_id ? { ...o, is_confirmed: true } : o,
@@ -204,9 +205,9 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
       },
       error: (err) => {
         console.error('Failed to confirm payment:', err);
-        this.snackBar.open('Failed to confirm payment. Please try again.', 'Close', {
-          duration: 3000,
-        });
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to confirm payment: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }
@@ -222,12 +223,15 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
     this.offerService.closeOfferNow(this.offer().offer_id).subscribe({
       next: (res) => {
         this.isActionInProgress.set(false);
+        this.snackBar.open('Offer closed successfully.', 'Close', { duration: 3000 });
         this.offer.set(res.offer ?? { ...this.offer(), closed_at: new Date().toISOString() });
       },
       error: (err) => {
         this.isActionInProgress.set(false);
         console.error('Failed to close offer:', err);
-        this.snackBar.open('Failed to close offer. Please try again.', 'Close', { duration: 3000 });
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to close offer: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }
@@ -238,14 +242,15 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
     this.offerService.markItemsArrived(this.offer().offer_id).subscribe({
       next: (res) => {
         this.isActionInProgress.set(false);
+        this.snackBar.open('Items marked as arrived.', 'Close', { duration: 3000 });
         this.offer.set(res.offer ?? { ...this.offer(), arrived_at: new Date().toISOString() });
       },
       error: (err) => {
         this.isActionInProgress.set(false);
         console.error('Failed to mark items as arrived:', err);
-        this.snackBar.open('Failed to mark items as arrived. Please try again.', 'Close', {
-          duration: 3000,
-        });
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to mark items as arrived: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }
@@ -286,12 +291,15 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
 
   private deleteOffer() {
     this.offerService.deleteOffer(this.offer().offer_id).subscribe({
-      next: () => this.router.navigate(['/offers']),
+      next: () => {
+        this.snackBar.open('Offer deleted successfully.', 'Close', { duration: 3000 });
+        this.router.navigate(['/offers']);
+      },
       error: (err) => {
         console.error('Failed to delete offer:', err);
-        this.snackBar.open('Failed to delete offer. Please try again.', 'Close', {
-          duration: 3000,
-        });
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to delete offer: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }

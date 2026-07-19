@@ -111,8 +111,8 @@
         [disabled]="cartItems().length === 0"
         (click)="placeOrder.emit()"
       >
-        <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-        Place order
+        <mat-icon fontSet="material-symbols-outlined">{{ isEditingOrder() ? 'save' : 'check' }}</mat-icon>
+        {{ isEditingOrder() ? 'Save order' : 'Place order' }}
       </button>
     </div>
   </app-pane>

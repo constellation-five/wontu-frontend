@@ -396,19 +396,16 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
 
     request$.subscribe({
       next: (res) => {
+        this.snackBar.open(this.existingOffer ? 'Offer saved successfully.' : 'Offer created successfully.', 'Close', { duration: 3000 });
         this.isSubmitting.set(false);
         const offerId = res.offer?.offer_id ?? this.existingOffer?.offer_id;
         this.router.navigate(['/offers', offerId]);
       },
       error: (err) => {
         this.isSubmitting.set(false);
-        this.snackBar.open(
-          err.error?.message || 'Failed to save offer. Please try again.',
-          'Close',
-          {
-            duration: 3000,
-          },
-        );
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to save offer: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }

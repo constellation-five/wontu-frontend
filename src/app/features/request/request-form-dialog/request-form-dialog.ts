@@ -186,13 +186,15 @@ export class RequestFormDialog {
       next: () => {
         this.isSubmitting.set(false);
         this.dialogRef.close(true); 
-        const successMsg = this.isEditMode ? 'Request updated successfully' : 'Request published successfully';
+        const successMsg = this.isEditMode ? 'Request saved successfully.' : 'Request created successfully.';
         this.snackBar.open(successMsg, 'Close', { duration: 3000 });
       },
       error: (err) => {
         console.error('API Error:', err);
         this.isSubmitting.set(false);
-        this.snackBar.open(err.error?.message || 'Failed to save request.', 'Close', { duration: 3000 });
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to save request: ${msg}${status}`, 'Close', { duration: 5000 });
       }
     });
   }

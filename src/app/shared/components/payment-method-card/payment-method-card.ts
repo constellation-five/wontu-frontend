@@ -24,7 +24,14 @@ export interface PaymentMethodData {
 @Component({
   selector: 'payment-method-card',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatCardModule, MatCheckboxModule, MatIconModule, BankLogo],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatIconModule,
+    BankLogo,
+  ],
   templateUrl: './payment-method-card.html',
   styleUrl: './payment-method-card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,7 +53,7 @@ export class PaymentMethodCard {
 
   copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {
-      this.snackBar.open('Copied to clipboard!', 'Close', {
+      this.snackBar.open('Copied to clipboard.', 'Close', {
         duration: 3000,
       });
     });

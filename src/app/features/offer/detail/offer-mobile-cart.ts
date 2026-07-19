@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PaneComponent } from '../../../shared/components/pane/pane';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { AuthService } from '../../../core/auth.service';
@@ -40,6 +41,7 @@ export class OfferMobileCart {
   private readonly pageHeader = inject(PageHeaderService);
   private readonly authService = inject(AuthService);
   private readonly offerService = inject(OfferService);
+  private readonly snackBar = inject(MatSnackBar);
 
   offer = signal<Offer | null>(null);
   cart = signal<Map<number, CheckoutItem>>(new Map());
@@ -297,12 +299,15 @@ export class OfferMobileCart {
     // is always a fresh order, never an edit of an existing one.
     this.offerService.placeOrder(offer.offer_id, items).subscribe({
       next: () => {
+        this.snackBar.open('Order placed successfully.', 'Close', { duration: 3000 });
         this.clearCartFromLocalStorage(offer.offer_id);
         this.router.navigate(['/offers', offer.offer_id]);
       },
       error: (err) => {
         console.error('Failed to place order:', err);
-        alert('Failed to place order. Please try again.');
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to place order: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }

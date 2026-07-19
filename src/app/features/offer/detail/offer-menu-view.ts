@@ -28,6 +28,7 @@ import { Offer, OfferItem, CheckoutItem } from '../../../core/offer.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OfferMenuView {
+  readonly isEditingOrder = input<boolean>(false);
   readonly offer = input.required<Offer>();
   readonly sortedItems = input.required<OfferItem[]>();
   readonly cartItems = input.required<CheckoutItem[]>();

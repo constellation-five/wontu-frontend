@@ -119,7 +119,7 @@ export class AccountPage implements OnInit {
         this.isEditingName.set(false);
         
         // Show success snackbar
-        this.snackBar.open('Profile updated successfully', 'Close', {
+        this.snackBar.open('Profile updated successfully.', 'Close', {
           duration: 3000,
         });
         
@@ -129,7 +129,12 @@ export class AccountPage implements OnInit {
           window.dispatchEvent(new Event('profile-updated'));
         });
       },
-      error: () => this.isSaving.set(false),
+      error: (err) => {
+        this.isSaving.set(false);
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to update profile: ${msg}${status}`, 'Close', { duration: 5000 });
+      },
     });
   }
 

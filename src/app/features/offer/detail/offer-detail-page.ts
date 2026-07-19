@@ -62,7 +62,7 @@ export class OfferPage implements OnDestroy {
   // Whether the backend already has a placed order for this offer. Backed by
   // the server (fetched on load, updated after place/replace/cancel) rather
   // than any local cache, since the order itself only really exists there.
-  private hasPlacedOrder = signal(false);
+  protected hasPlacedOrder = signal(false);
 
   // The buyer's order metadata (status/timestamps) for this offer, if any.
   // Separate from `cart`, which only tracks the item quantities/notes.
@@ -369,18 +369,28 @@ export class OfferPage implements OnDestroy {
 
     if (this.hasPlacedOrder()) {
       this.offerService.replaceOrder(offer.offer_id, items).subscribe({
-        next: () => this.finishPlacingOrder(offer),
+        next: () => {
+          this.snackBar.open('Order saved successfully.', 'Close', { duration: 3000 });
+          this.finishPlacingOrder(offer);
+        },
         error: (err) => {
           console.error('Failed to replace order:', err);
-          alert(err.error?.message || 'Failed to update order. Please try again.');
+          const msg = err.error?.message || 'Please try again.';
+          const status = err.status ? ` (${err.status})` : '';
+          this.snackBar.open(`Failed to save order: ${msg}${status}`, 'Close', { duration: 5000 });
         },
       });
     } else {
       this.offerService.placeOrder(offer.offer_id, items).subscribe({
-        next: () => this.finishPlacingOrder(offer),
+        next: () => {
+          this.snackBar.open('Order placed successfully.', 'Close', { duration: 3000 });
+          this.finishPlacingOrder(offer);
+        },
         error: (err) => {
           console.error('Failed to place order:', err);
-          alert(err.error?.message || 'Failed to place order. Please try again.');
+          const msg = err.error?.message || 'Please try again.';
+          const status = err.status ? ` (${err.status})` : '';
+          this.snackBar.open(`Failed to place order: ${msg}${status}`, 'Close', { duration: 5000 });
         },
       });
     }
@@ -439,12 +449,15 @@ export class OfferPage implements OnDestroy {
 
     this.offerService.cancelOrder(offer.offer_id).subscribe({
       next: () => {
+        this.snackBar.open('Order cancelled successfully.', 'Close', { duration: 3000 });
         this.clearCartFromLocalStorage(String(offer.offer_id));
         this.router.navigate(['/offers']);
       },
       error: (err) => {
         console.error('Failed to cancel order:', err);
-        alert('Failed to cancel order');
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to cancel order: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }
@@ -467,7 +480,9 @@ export class OfferPage implements OnDestroy {
       next: (conversation) => this.router.navigate(['/chat', conversation.id]),
       error: (err) => {
         console.error('Failed to open chat:', err);
-        alert('Failed to open chat. Please try again.');
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to open chat: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }
@@ -511,7 +526,11 @@ export class OfferPage implements OnDestroy {
         console.error('Failed to upload proof of payment:', err);
         this.uploadProgress.set(null);
         this.proofOfPayment.set(null);
-        alert('Failed to upload proof of payment. Please try again.');
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to upload proof of payment: ${msg}${status}`, 'Close', {
+          duration: 5000,
+        });
       },
     });
   }
@@ -529,6 +548,7 @@ export class OfferPage implements OnDestroy {
     // the file card stays displayed in the payment proof section.
     this.offerService.submitPayment(offerId, proofUrl).subscribe({
       next: () => {
+        this.snackBar.open('Payment submitted successfully.', 'Close', { duration: 3000 });
         this.offerService.getMyOrder(offerId).subscribe({
           next: (res) => this.myOrder.set(res.data),
           error: (err) => console.error('Failed to refresh order status:', err),
@@ -536,7 +556,11 @@ export class OfferPage implements OnDestroy {
       },
       error: (err) => {
         console.error('Failed to submit payment:', err);
-        alert('Failed to submit proof of payment. Please try again.');
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to submit payment: ${msg}${status}`, 'Close', {
+          duration: 5000,
+        });
       },
     });
   }
