@@ -3,6 +3,8 @@ import {
   inject,
   signal,
   computed,
+  effect,
+  untracked,
   ChangeDetectionStrategy,
   OnDestroy,
 } from '@angular/core';
@@ -10,7 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { forkJoin, of, catchError } from 'rxjs';
 import { TimelineItem } from '../../../shared/components/timeline-bar/timeline-bar';
 import { PaymentMethodData } from '../../../shared/components/payment-method-card/payment-method-card';
 import { DialogComponent } from '../../../shared/components/dialog/dialog';
@@ -43,6 +46,7 @@ export class OfferPage implements OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly chatService = inject(ChatService);
   private readonly dialog = inject(MatDialog);
+  private readonly snackBar = inject(MatSnackBar);
   protected readonly pageHeader = inject(PageHeaderService);
 
   offer = signal<Offer | null>(null);
@@ -116,6 +120,17 @@ export class OfferPage implements OnDestroy {
   private readonly cleanupOrphanedProofBound = () => this.cleanupOrphanedProof();
 
   constructor() {
+    effect(() => {
+      if (!this.authService.user()) {
+        const currentView = untracked(() => this.view());
+        if (currentView === 'checkout') {
+          this.view.set('menu');
+          this.myOrder.set(null);
+          this.hasPlacedOrder.set(false);
+        }
+      }
+    });
+
     window.addEventListener('beforeunload', this.cleanupOrphanedProofBound);
 
     const offerId = this.route.snapshot.paramMap.get('id');
@@ -126,7 +141,9 @@ export class OfferPage implements OnDestroy {
 
     forkJoin({
       offer: this.offerService.getOfferById(offerId),
-      order: this.offerService.getMyOrder(+offerId),
+      order: this.authService.user()
+        ? this.offerService.getMyOrder(+offerId).pipe(catchError(() => of({ data: null })))
+        : of({ data: null }),
     }).subscribe({
       next: ({ offer, order: orderRes }) => {
         this.offer.set(offer);
@@ -155,10 +172,28 @@ export class OfferPage implements OnDestroy {
           this.hasPlacedOrder.set(true);
           this.myOrder.set(order);
           this.loadPaymentMethods();
+
+          if (
+            this.authService.user() &&
+            sessionStorage.getItem(`autoPlaceOrder_${offerId}`) === 'true'
+          ) {
+            sessionStorage.removeItem(`autoPlaceOrder_${offerId}`);
+            this.snackBar.open('You already have an existing order in this offer.', 'Close', {
+              duration: 5000,
+            });
+          }
         } else {
           this.loadDraftCart(offerId);
           this.updateCartItemsWithFreshData(offer);
           this.isLoading.set(false);
+
+          if (
+            this.authService.user() &&
+            sessionStorage.getItem(`autoPlaceOrder_${offerId}`) === 'true'
+          ) {
+            sessionStorage.removeItem(`autoPlaceOrder_${offerId}`);
+            this.onPlaceOrder();
+          }
         }
       },
       error: (err) => {
@@ -318,6 +353,13 @@ export class OfferPage implements OnDestroy {
   onPlaceOrder() {
     const offer = this.offer();
     if (!offer || this.totalItems() === 0) return;
+
+    if (!this.authService.user()) {
+      sessionStorage.setItem('authReturnUrl', this.router.url);
+      sessionStorage.setItem(`autoPlaceOrder_${offer.offer_id}`, 'true');
+      this.router.navigate(['/signin']);
+      return;
+    }
 
     const items = this.cartItems().map((cartItem) => ({
       item_id: cartItem.item.item_id,

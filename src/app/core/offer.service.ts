@@ -41,6 +41,8 @@ export interface Offer {
     user_id?: string;
     name: string;
     avatar: string;
+    received_ratings_avg_rating?: number;
+    received_ratings_count?: number;
   };
 }
 
