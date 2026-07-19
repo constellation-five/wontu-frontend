@@ -24,8 +24,10 @@
           </div>
           <div class="seller-rating">
             <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
-            <span class="mat-font-label-md mat-text-on-surface">4.9</span>
-            <span class="mat-font-body-sm mat-text-on-surface-variant">(100+)</span>
+            <span class="mat-font-label-md mat-text-on-surface">{{ offer().seller.received_ratings_avg_rating ? (offer().seller.received_ratings_avg_rating | number: '1.1-1') : 'New' }}</span>
+            @if (offer().seller.received_ratings_count) {
+              <span class="mat-font-body-sm mat-text-on-surface-variant">({{ offer().seller.received_ratings_count }})</span>
+            }
           </div>
         </div>
       </div>
@@ -109,8 +111,8 @@
         [disabled]="cartItems().length === 0"
         (click)="placeOrder.emit()"
       >
-        <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-        Place order
+        <mat-icon fontSet="material-symbols-outlined">{{ isEditingOrder() ? 'save' : 'check' }}</mat-icon>
+        {{ isEditingOrder() ? 'Save order' : 'Place order' }}
       </button>
     </div>
   </app-pane>

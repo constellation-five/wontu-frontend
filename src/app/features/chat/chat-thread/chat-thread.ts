@@ -30,6 +30,7 @@ interface ScopeOption {
 interface DisplayMessage {
   message: ChatMessage;
   showInfo: boolean;
+  isLastInGroup: boolean;
 }
 
 const ALL_MEMBERS = '';
@@ -132,7 +133,7 @@ export class ChatThread implements AfterViewChecked {
 
     for (const message of msgs) {
       if (message.type === 'system') {
-        result.push({ message, showInfo: false });
+        result.push({ message, showInfo: false, isLastInGroup: true });
         prevSenderId = undefined;
         prevScope = null;
         prevTimestamp = null;
@@ -152,7 +153,7 @@ export class ChatThread implements AfterViewChecked {
 
       const showInfo = contextChanged || tooLongSincePrev || tooLongSinceInfo;
 
-      result.push({ message, showInfo });
+      result.push({ message, showInfo, isLastInGroup: false });
 
       if (showInfo) {
         lastInfoShownAt = timestamp;
@@ -160,6 +161,14 @@ export class ChatThread implements AfterViewChecked {
       prevSenderId = senderId;
       prevScope = scope;
       prevTimestamp = timestamp;
+    }
+
+    for (let i = 0; i < result.length; i++) {
+      if (i === result.length - 1) {
+        result[i].isLastInGroup = true;
+      } else {
+        result[i].isLastInGroup = result[i + 1].showInfo || result[i + 1].message.type === 'system';
+      }
     }
 
     return result;

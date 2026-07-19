@@ -1,5 +1,10 @@
 @if (message().type === 'system') {
   <div class="system-message">
+    @if (message().created_at) {
+      <span class="mat-font-label-sm mat-text-on-surface-variant">
+        {{ message().created_at | naturalDateTime: undefined : false : timeTick.now() }}
+      </span>
+    }
     <span class="mat-font-body-sm mat-text-on-surface-variant">
       {{ message().metadata?.description }}
     </span>
@@ -7,7 +12,12 @@
 } @else {
   <div class="message-row" [class.own]="isOwn()">
     @if (!isOwn()) {
-      <button class="avatar-button" type="button" (click)="onAvatarClick()">
+      <button 
+        class="avatar-button" 
+        type="button" 
+        (click)="onAvatarClick()"
+        [style.visibility]="isLastInGroup() ? 'visible' : 'hidden'"
+      >
         @if (message().sender?.avatar) {
           <img [src]="message().sender!.avatar" [alt]="message().sender!.name" class="avatar" />
         } @else {

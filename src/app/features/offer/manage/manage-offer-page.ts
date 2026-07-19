@@ -8,6 +8,7 @@ import {
   ViewChild,
   ViewContainerRef,
   computed,
+  effect,
   inject,
   input,
   signal,
@@ -33,6 +34,7 @@ import { BottomBar } from '../../../shared/components/bottom-bar/bottom-bar';
 import { ButtonSizeDirective, ButtonColorDirective } from '../../../shared/directives/button';
 import { BottomBarService } from '../../../core/bottom-bar.service';
 import { PageHeaderService } from '../../../core/page-header.service';
+import { EchoService } from '../../../core/echo.service';
 import { OfferService, Offer, OfferOrder, CheckoutItem } from '../../../core/offer.service';
 
 @Component({
@@ -62,6 +64,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
   private readonly snackBar = inject(MatSnackBar);
   private readonly bottomBarService = inject(BottomBarService);
   private readonly pageHeader = inject(PageHeaderService);
+  private readonly echoService = inject(EchoService);
 
   @ViewChild('actionsTpl') private actionsTpl!: TemplateRef<unknown>;
   private readonly viewContainerRef = inject(ViewContainerRef);
@@ -73,12 +76,30 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
   readonly isLoading = signal(true);
   readonly isActionInProgress = signal(false);
 
+  private initialized = false;
+
+  constructor() {
+    // Keep the local offer signal in sync with the parent's input signal.
+    // This ensures real-time updates from the parent's Echo listener propagate here.
+    // On subsequent changes (after init), also reload the orders list.
+    effect(() => {
+      const latest = this.offerInput();
+      if (latest) {
+        this.offer.set(latest);
+        if (this.initialized) {
+          this.loadOrders();
+        }
+      }
+    });
+  }
+
   readonly isClosed = computed(() => this.offer().closed_at != null);
   readonly isArrived = computed(() => this.offer().arrived_at != null);
 
   readonly currentStep = computed(() => {
     const offer = this.offer();
     const orders = this.orders();
+    
     if (offer.arrived_at != null) return 3;
     if (
       offer.payments_confirmed_at != null ||
@@ -96,17 +117,15 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
       { label: 'Offer opened', time: offer.created_at },
       // Falls back to the seller's originally planned schedule until the
       // actual event happens (closed_at/arrived_at are only set then).
-      { label: 'Offer closed', time: offer.closed_at ?? offer.closing_time },
+      { label: offer.closed_at ? 'Offer closed' : 'Offer closes', time: offer.closed_at ?? offer.closing_time },
       { label: 'Payments confirmed', time: offer.payments_confirmed_at ?? undefined },
-      { label: 'Items arrived', time: offer.arrived_at ?? offer.arrival_time },
+      { label: offer.arrived_at ? 'Items arrived' : 'Items arrive', time: offer.arrived_at ?? offer.arrival_time },
     ];
   });
 
   ngOnInit() {
     this.offer.set(this.offerInput());
 
-    // Set after NavigationEnd's own route-title-derived breadcrumb rebuild,
-    // not in the constructor, so this doesn't get immediately overwritten.
     this.pageHeader.setTitle(this.offer().merchant_name);
     this.pageHeader.setBreadcrumbs([
       { label: 'Offers', route: '/offers' },
@@ -115,6 +134,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
 
     this.loadOrders();
     this.loadPaymentMethods();
+    this.initialized = true;
   }
 
   private ownPortal!: TemplatePortal;
@@ -193,6 +213,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
     if (order.is_confirmed) return;
     this.offerService.confirmPayment(this.offer().offer_id, order.offer_buyer_id).subscribe({
       next: (res) => {
+        this.snackBar.open('Payment confirmed successfully.', 'Close', { duration: 3000 });
         this.orders.update((orders) =>
           orders.map((o) =>
             o.offer_buyer_id === order.offer_buyer_id ? { ...o, is_confirmed: true } : o,
@@ -204,8 +225,10 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
       },
       error: (err) => {
         console.error('Failed to confirm payment:', err);
-        this.snackBar.open('Failed to confirm payment. Please try again.', 'Close', {
-          duration: 3000,
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to confirm payment: ${msg}${status}`, 'Close', {
+          duration: 5000,
         });
       },
     });
@@ -222,12 +245,15 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
     this.offerService.closeOfferNow(this.offer().offer_id).subscribe({
       next: (res) => {
         this.isActionInProgress.set(false);
+        this.snackBar.open('Offer closed successfully.', 'Close', { duration: 3000 });
         this.offer.set(res.offer ?? { ...this.offer(), closed_at: new Date().toISOString() });
       },
       error: (err) => {
         this.isActionInProgress.set(false);
         console.error('Failed to close offer:', err);
-        this.snackBar.open('Failed to close offer. Please try again.', 'Close', { duration: 3000 });
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to close offer: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }
@@ -238,13 +264,16 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
     this.offerService.markItemsArrived(this.offer().offer_id).subscribe({
       next: (res) => {
         this.isActionInProgress.set(false);
+        this.snackBar.open('Items marked as arrived.', 'Close', { duration: 3000 });
         this.offer.set(res.offer ?? { ...this.offer(), arrived_at: new Date().toISOString() });
       },
       error: (err) => {
         this.isActionInProgress.set(false);
         console.error('Failed to mark items as arrived:', err);
-        this.snackBar.open('Failed to mark items as arrived. Please try again.', 'Close', {
-          duration: 3000,
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to mark items as arrived: ${msg}${status}`, 'Close', {
+          duration: 5000,
         });
       },
     });
@@ -286,12 +315,15 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
 
   private deleteOffer() {
     this.offerService.deleteOffer(this.offer().offer_id).subscribe({
-      next: () => this.router.navigate(['/offers']),
+      next: () => {
+        this.snackBar.open('Offer deleted successfully.', 'Close', { duration: 3000 });
+        this.router.navigate(['/offers']);
+      },
       error: (err) => {
         console.error('Failed to delete offer:', err);
-        this.snackBar.open('Failed to delete offer. Please try again.', 'Close', {
-          duration: 3000,
-        });
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to delete offer: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }

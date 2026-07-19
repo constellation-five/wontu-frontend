@@ -4,8 +4,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PaneComponent } from '../../../shared/components/pane/pane';
 import { PageHeaderService } from '../../../core/page-header.service';
+import { AuthService } from '../../../core/auth.service';
 import { Offer, CheckoutItem, OfferService } from '../../../core/offer.service';
 import { ButtonSizeDirective } from '../../../shared/directives/button';
 import { IconButtonVariantDirective } from '../../../shared/directives/button/icon-button-variant';
@@ -13,6 +15,7 @@ import { EditNotesDialog } from './edit-notes-dialog';
 import { DialogComponent } from '../../../shared/components/dialog/dialog';
 import { DecimalPipe } from '@angular/common';
 import { CounterField } from '../../../shared/components/counter-field/counter-field';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-offer-mobile-cart',
@@ -36,7 +39,9 @@ export class OfferMobileCart {
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
   private readonly pageHeader = inject(PageHeaderService);
+  private readonly authService = inject(AuthService);
   private readonly offerService = inject(OfferService);
+  private readonly snackBar = inject(MatSnackBar);
 
   offer = signal<Offer | null>(null);
   cart = signal<Map<number, CheckoutItem>>(new Map());
@@ -64,8 +69,12 @@ export class OfferMobileCart {
       // restore from. This page is only for building a draft cart before an
       // order is placed, so if one already exists for this offer, send the
       // user to the real order view instead of a stale "browsing" cart.
-      this.offerService.getMyOrder(+offerId).subscribe({
-        next: (res) => {
+      const checkOrder: any = this.authService.user() 
+        ? this.offerService.getMyOrder(+offerId) 
+        : of({ data: null });
+        
+      checkOrder.subscribe({
+        next: (res: any) => {
           if (res.data && res.data.items.length > 0) {
             this.router.navigate(['/offers', offerId]);
             return;
@@ -109,6 +118,10 @@ export class OfferMobileCart {
           { label: 'Cart' },
         ]);
         this.isLoading.set(false);
+        if (this.authService.user() && sessionStorage.getItem(`autoPlaceOrder_${id}`) === 'true') {
+          sessionStorage.removeItem(`autoPlaceOrder_${id}`);
+          this.onPlaceOrder();
+        }
       },
       error: (err) => {
         console.error('Failed to load offer:', err);
@@ -268,6 +281,13 @@ export class OfferMobileCart {
     const offer = this.offer();
     if (!offer || this.totalItems() === 0) return;
 
+    if (!this.authService.user()) {
+      sessionStorage.setItem('authReturnUrl', this.router.url);
+      sessionStorage.setItem(`autoPlaceOrder_${offer.offer_id}`, 'true');
+      this.router.navigate(['/signin']);
+      return;
+    }
+
     const items = this.cartItems().map((cartItem) => ({
       item_id: cartItem.item.item_id,
       quantity: cartItem.quantity,
@@ -279,12 +299,15 @@ export class OfferMobileCart {
     // is always a fresh order, never an edit of an existing one.
     this.offerService.placeOrder(offer.offer_id, items).subscribe({
       next: () => {
+        this.snackBar.open('Order placed successfully.', 'Close', { duration: 3000 });
         this.clearCartFromLocalStorage(offer.offer_id);
         this.router.navigate(['/offers', offer.offer_id]);
       },
       error: (err) => {
         console.error('Failed to place order:', err);
-        alert('Failed to place order. Please try again.');
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to place order: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }

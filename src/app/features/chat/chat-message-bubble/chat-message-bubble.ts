@@ -29,6 +29,8 @@ export class ChatMessageBubble {
   targetLabel = input<string | null>(null);
   /** Whether to show the name/time/scope header above this message (grouping is handled by the parent). */
   showInfo = input(true);
+  /** Whether this is the last message in a grouped sequence, controlling avatar visibility. */
+  isLastInGroup = input(true);
 
   avatarClick = output<string>();
 

@@ -65,6 +65,18 @@ export class EchoService {
       .listen('.chat.message', handler);
   }
 
+  listenToOfferUpdates(offerId: string | number, handler: (data: unknown) => void): void {
+    this.getEcho()
+      .channel(`offers.${offerId}`)
+      .listen('.OfferUpdated', handler);
+  }
+
+  leaveOfferChannel(offerId: string | number): void {
+    if (this.echo) {
+      this.echo.leave(`offers.${offerId}`);
+    }
+  }
+
   disconnect(): void {
     if (this.echo) {
       this.echo.disconnect();

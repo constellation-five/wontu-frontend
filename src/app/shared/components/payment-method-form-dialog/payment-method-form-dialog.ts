@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../../../../environments/environment';
 import { ButtonSizeDirective, ButtonColorDirective } from '../../directives/button';
 import { DialogComponent } from '../dialog/dialog';
@@ -49,6 +50,7 @@ export class PaymentMethodFormDialog {
   );
   private readonly data = inject<PaymentMethodFormDialogData>(MAT_DIALOG_DATA, { optional: true });
   private readonly fb = inject(FormBuilder);
+  private readonly snackBar = inject(MatSnackBar);
 
   readonly isEditMode = !!this.data?.method;
   readonly isSaving = signal(false);
@@ -79,10 +81,14 @@ export class PaymentMethodFormDialog {
 
     request$.subscribe({
       next: (res) => {
+        this.snackBar.open('Payment method saved successfully.', 'Close', { duration: 3000 });
         this.isSaving.set(false);
         this.dialogRef.close(res.data);
       },
-      error: () => {
+      error: (err) => {
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to save payment method: ${msg}${status}`, 'Close', { duration: 5000 });
         this.isSaving.set(false);
       },
     });
@@ -114,7 +120,15 @@ export class PaymentMethodFormDialog {
 
   private confirmDelete(id: number) {
     this.http.delete(`${environment.api}/payment-methods/${id}`, { withCredentials: true }).subscribe({
-      next: () => this.dialogRef.close('deleted'),
+      next: () => {
+        this.snackBar.open('Payment method deleted successfully.', 'Close', { duration: 3000 });
+        this.dialogRef.close('deleted');
+      },
+      error: (err) => {
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to delete payment method: ${msg}${status}`, 'Close', { duration: 5000 });
+      },
     });
   }
 }

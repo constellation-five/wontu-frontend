@@ -26,6 +26,7 @@
   />
 } @else {
   <app-offer-menu-view
+    [isEditingOrder]="hasPlacedOrder()"
     [offer]="offer()!"
     [sortedItems]="sortedItems()"
     [cartItems]="cartItems()"

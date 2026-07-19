@@ -3,20 +3,25 @@ import {
   inject,
   signal,
   computed,
+  effect,
+  untracked,
   ChangeDetectionStrategy,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { forkJoin, of, catchError } from 'rxjs';
 import { TimelineItem } from '../../../shared/components/timeline-bar/timeline-bar';
 import { PaymentMethodData } from '../../../shared/components/payment-method-card/payment-method-card';
 import { DialogComponent } from '../../../shared/components/dialog/dialog';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { AuthService } from '../../../core/auth.service';
 import { ChatService } from '../../../core/chat.service';
+import { EchoService } from '../../../core/echo.service';
 import { OfferService, Offer, OfferItem, CheckoutItem, MyOrder } from '../../../core/offer.service';
 import { EditNotesDialog } from './edit-notes-dialog';
 import { environment } from '../../../../environments/environment';
@@ -35,14 +40,16 @@ type OfferDetailView = 'menu' | 'checkout';
   styleUrls: ['./offer-detail-page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferPage implements OnDestroy {
+export class OfferPage implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly http = inject(HttpClient);
   private readonly offerService = inject(OfferService);
   private readonly authService = inject(AuthService);
   private readonly chatService = inject(ChatService);
+  private readonly echoService = inject(EchoService);
   private readonly dialog = inject(MatDialog);
+  private readonly snackBar = inject(MatSnackBar);
   protected readonly pageHeader = inject(PageHeaderService);
 
   offer = signal<Offer | null>(null);
@@ -58,7 +65,7 @@ export class OfferPage implements OnDestroy {
   // Whether the backend already has a placed order for this offer. Backed by
   // the server (fetched on load, updated after place/replace/cancel) rather
   // than any local cache, since the order itself only really exists there.
-  private hasPlacedOrder = signal(false);
+  protected hasPlacedOrder = signal(false);
 
   // The buyer's order metadata (status/timestamps) for this offer, if any.
   // Separate from `cart`, which only tracks the item quantities/notes.
@@ -75,8 +82,19 @@ export class OfferPage implements OnDestroy {
   };
   proofOfPayment = signal<File | null>(null);
   uploadProgress = signal<number | null>(null);
-  currentProgressStep = signal(0); // 0 = Offer joined
-  isOfferClosed = computed(() => this.offer()?.is_completed ?? false);
+  currentProgressStep = computed(() => {
+    const offer = this.offer();
+    const order = this.myOrder();
+    
+    if (offer && order) {
+      if (offer.arrived_at != null) return 4;
+      if (order.confirmed_at != null) return 3;
+      if (order.payment_submitted_at != null) return 2;
+      if (offer.closed_at != null) return 1;
+    }
+    return 0;
+  });
+  isOfferClosed = computed(() => this.offer()?.closed_at != null);
 
   progressItems = computed<TimelineItem[]>(() => {
     const offer = this.offer();
@@ -85,10 +103,10 @@ export class OfferPage implements OnDestroy {
       { label: 'Offer joined', time: order?.joined_at },
       // closed_at/arrived_at are the actual event times, set once the
       // seller acts; fall back to the seller's planned schedule until then.
-      { label: 'Offer closes', time: offer?.closed_at ?? offer?.closing_time },
+      { label: offer?.closed_at ? 'Offer closed' : 'Offer closes', time: offer?.closed_at ?? offer?.closing_time },
       { label: 'Payment made', time: order?.payment_submitted_at ?? undefined },
       { label: 'Payment confirmed', time: order?.confirmed_at ?? undefined },
-      { label: 'Items arrive', time: offer?.arrived_at ?? offer?.arrival_time },
+      { label: offer?.arrived_at ? 'Items arrived' : 'Items arrive', time: offer?.arrived_at ?? offer?.arrival_time },
     ];
   });
 
@@ -116,6 +134,17 @@ export class OfferPage implements OnDestroy {
   private readonly cleanupOrphanedProofBound = () => this.cleanupOrphanedProof();
 
   constructor() {
+    effect(() => {
+      if (!this.authService.user()) {
+        const currentView = untracked(() => this.view());
+        if (currentView === 'checkout') {
+          this.view.set('menu');
+          this.myOrder.set(null);
+          this.hasPlacedOrder.set(false);
+        }
+      }
+    });
+
     window.addEventListener('beforeunload', this.cleanupOrphanedProofBound);
 
     const offerId = this.route.snapshot.paramMap.get('id');
@@ -124,9 +153,33 @@ export class OfferPage implements OnDestroy {
       return;
     }
 
+    this.loadOfferData(offerId);
+  }
+
+  ngOnInit(): void {
+    const offerId = this.route.snapshot.paramMap.get('id');
+    if (offerId) {
+      this.echoService.listenToOfferUpdates(offerId, () => {
+        this.loadOfferData(offerId);
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    const offerId = this.route.snapshot.paramMap.get('id');
+    if (offerId) {
+      this.echoService.leaveOfferChannel(offerId);
+    }
+    window.removeEventListener('beforeunload', this.cleanupOrphanedProofBound);
+    this.cleanupOrphanedProof();
+  }
+
+  private loadOfferData(offerId: string): void {
     forkJoin({
       offer: this.offerService.getOfferById(offerId),
-      order: this.offerService.getMyOrder(+offerId),
+      order: this.authService.user()
+        ? this.offerService.getMyOrder(+offerId).pipe(catchError(() => of({ data: null })))
+        : of({ data: null }),
     }).subscribe({
       next: ({ offer, order: orderRes }) => {
         this.offer.set(offer);
@@ -155,10 +208,28 @@ export class OfferPage implements OnDestroy {
           this.hasPlacedOrder.set(true);
           this.myOrder.set(order);
           this.loadPaymentMethods();
+
+          if (
+            this.authService.user() &&
+            sessionStorage.getItem(`autoPlaceOrder_${offerId}`) === 'true'
+          ) {
+            sessionStorage.removeItem(`autoPlaceOrder_${offerId}`);
+            this.snackBar.open('You already have an existing order in this offer.', 'Close', {
+              duration: 5000,
+            });
+          }
         } else {
           this.loadDraftCart(offerId);
           this.updateCartItemsWithFreshData(offer);
           this.isLoading.set(false);
+
+          if (
+            this.authService.user() &&
+            sessionStorage.getItem(`autoPlaceOrder_${offerId}`) === 'true'
+          ) {
+            sessionStorage.removeItem(`autoPlaceOrder_${offerId}`);
+            this.onPlaceOrder();
+          }
         }
       },
       error: (err) => {
@@ -319,6 +390,13 @@ export class OfferPage implements OnDestroy {
     const offer = this.offer();
     if (!offer || this.totalItems() === 0) return;
 
+    if (!this.authService.user()) {
+      sessionStorage.setItem('authReturnUrl', this.router.url);
+      sessionStorage.setItem(`autoPlaceOrder_${offer.offer_id}`, 'true');
+      this.router.navigate(['/signin']);
+      return;
+    }
+
     const items = this.cartItems().map((cartItem) => ({
       item_id: cartItem.item.item_id,
       quantity: cartItem.quantity,
@@ -327,18 +405,28 @@ export class OfferPage implements OnDestroy {
 
     if (this.hasPlacedOrder()) {
       this.offerService.replaceOrder(offer.offer_id, items).subscribe({
-        next: () => this.finishPlacingOrder(offer),
+        next: () => {
+          this.snackBar.open('Order saved successfully.', 'Close', { duration: 3000 });
+          this.finishPlacingOrder(offer);
+        },
         error: (err) => {
           console.error('Failed to replace order:', err);
-          alert(err.error?.message || 'Failed to update order. Please try again.');
+          const msg = err.error?.message || 'Please try again.';
+          const status = err.status ? ` (${err.status})` : '';
+          this.snackBar.open(`Failed to save order: ${msg}${status}`, 'Close', { duration: 5000 });
         },
       });
     } else {
       this.offerService.placeOrder(offer.offer_id, items).subscribe({
-        next: () => this.finishPlacingOrder(offer),
+        next: () => {
+          this.snackBar.open('Order placed successfully.', 'Close', { duration: 3000 });
+          this.finishPlacingOrder(offer);
+        },
         error: (err) => {
           console.error('Failed to place order:', err);
-          alert(err.error?.message || 'Failed to place order. Please try again.');
+          const msg = err.error?.message || 'Please try again.';
+          const status = err.status ? ` (${err.status})` : '';
+          this.snackBar.open(`Failed to place order: ${msg}${status}`, 'Close', { duration: 5000 });
         },
       });
     }
@@ -397,12 +485,15 @@ export class OfferPage implements OnDestroy {
 
     this.offerService.cancelOrder(offer.offer_id).subscribe({
       next: () => {
+        this.snackBar.open('Order cancelled successfully.', 'Close', { duration: 3000 });
         this.clearCartFromLocalStorage(String(offer.offer_id));
         this.router.navigate(['/offers']);
       },
       error: (err) => {
         console.error('Failed to cancel order:', err);
-        alert('Failed to cancel order');
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to cancel order: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }
@@ -425,17 +516,16 @@ export class OfferPage implements OnDestroy {
       next: (conversation) => this.router.navigate(['/chat', conversation.id]),
       error: (err) => {
         console.error('Failed to open chat:', err);
-        alert('Failed to open chat. Please try again.');
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to open chat: ${msg}${status}`, 'Close', { duration: 5000 });
       },
     });
   }
 
   private uploadedProofUrl = signal<string | null>(null);
 
-  ngOnDestroy() {
-    window.removeEventListener('beforeunload', this.cleanupOrphanedProofBound);
-    this.cleanupOrphanedProof();
-  }
+  // cleanup is now handled in ngOnDestroy
 
   /** Deletes a picked-and-uploaded-but-never-submitted proof file, so reloading/navigating away doesn't leave it orphaned on the server. */
   private cleanupOrphanedProof() {
@@ -469,7 +559,11 @@ export class OfferPage implements OnDestroy {
         console.error('Failed to upload proof of payment:', err);
         this.uploadProgress.set(null);
         this.proofOfPayment.set(null);
-        alert('Failed to upload proof of payment. Please try again.');
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to upload proof of payment: ${msg}${status}`, 'Close', {
+          duration: 5000,
+        });
       },
     });
   }
@@ -487,6 +581,7 @@ export class OfferPage implements OnDestroy {
     // the file card stays displayed in the payment proof section.
     this.offerService.submitPayment(offerId, proofUrl).subscribe({
       next: () => {
+        this.snackBar.open('Payment submitted successfully.', 'Close', { duration: 3000 });
         this.offerService.getMyOrder(offerId).subscribe({
           next: (res) => this.myOrder.set(res.data),
           error: (err) => console.error('Failed to refresh order status:', err),
@@ -494,7 +589,11 @@ export class OfferPage implements OnDestroy {
       },
       error: (err) => {
         console.error('Failed to submit payment:', err);
-        alert('Failed to submit proof of payment. Please try again.');
+        const msg = err.error?.message || 'Please try again.';
+        const status = err.status ? ` (${err.status})` : '';
+        this.snackBar.open(`Failed to submit payment: ${msg}${status}`, 'Close', {
+          duration: 5000,
+        });
       },
     });
   }
