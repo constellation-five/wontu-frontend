@@ -97,6 +97,11 @@ export class SettingsPage implements OnInit {
       label: 'Social',
       description: 'Someone follows your profile.',
     },
+    {
+      id: 'chat-messages',
+      label: 'Chat messages',
+      description: 'You receive a new direct or group chat message.',
+    },
   ];
 
   notificationSettings = signal<NotificationSetting[]>([]);
