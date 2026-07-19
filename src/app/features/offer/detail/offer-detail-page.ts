@@ -94,7 +94,7 @@ export class OfferPage implements OnInit, OnDestroy {
     }
     return 0;
   });
-  isOfferClosed = computed(() => this.offer()?.is_completed ?? false);
+  isOfferClosed = computed(() => this.offer()?.closed_at != null);
 
   progressItems = computed<TimelineItem[]>(() => {
     const offer = this.offer();
