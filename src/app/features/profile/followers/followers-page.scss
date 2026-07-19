@@ -1,5 +1,14 @@
 @use '../../../../variables' as *;
 
+:host {
+  display: block;
+  height: 100%;
+
+  app-pane {
+    height: 100%;
+  }
+}
+
 .page-title {
   margin: 0;
   display: none;
@@ -158,7 +167,7 @@
   border: 2px solid var(--mat-sys-surface-container-lowest);
   object-fit: cover;
   position: relative;
-  
+
   &:not(:first-child) {
     margin-left: -12px;
   }
@@ -175,7 +184,7 @@
   font-size: 14px;
   font-weight: 600;
   position: relative;
-  
+
   &:not(:first-child) {
     margin-left: calc(var(--spacing-sm) * -1);
   }
