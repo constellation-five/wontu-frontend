@@ -15,6 +15,7 @@
           [currentUserId]="currentUserId()"
           [targetLabel]="targetLabelFor(entry.message.target_user_id)"
           [showInfo]="entry.showInfo"
+          [isLastInGroup]="entry.isLastInGroup"
           (avatarClick)="onAvatarClick($event)"
         />
       }
