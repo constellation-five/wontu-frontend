@@ -82,7 +82,18 @@ export class OfferPage implements OnInit, OnDestroy {
   };
   proofOfPayment = signal<File | null>(null);
   uploadProgress = signal<number | null>(null);
-  currentProgressStep = signal(0); // 0 = Offer joined
+  currentProgressStep = computed(() => {
+    const offer = this.offer();
+    const order = this.myOrder();
+    
+    if (offer && order) {
+      if (offer.arrived_at != null) return 4;
+      if (order.confirmed_at != null) return 3;
+      if (order.payment_submitted_at != null) return 2;
+      if (offer.closed_at != null) return 1;
+    }
+    return 0;
+  });
   isOfferClosed = computed(() => this.offer()?.is_completed ?? false);
 
   progressItems = computed<TimelineItem[]>(() => {
@@ -92,10 +103,10 @@ export class OfferPage implements OnInit, OnDestroy {
       { label: 'Offer joined', time: order?.joined_at },
       // closed_at/arrived_at are the actual event times, set once the
       // seller acts; fall back to the seller's planned schedule until then.
-      { label: 'Offer closes', time: offer?.closed_at ?? offer?.closing_time },
+      { label: offer?.closed_at ? 'Offer closed' : 'Offer closes', time: offer?.closed_at ?? offer?.closing_time },
       { label: 'Payment made', time: order?.payment_submitted_at ?? undefined },
       { label: 'Payment confirmed', time: order?.confirmed_at ?? undefined },
-      { label: 'Items arrive', time: offer?.arrived_at ?? offer?.arrival_time },
+      { label: offer?.arrived_at ? 'Items arrived' : 'Items arrive', time: offer?.arrived_at ?? offer?.arrival_time },
     ];
   });
 

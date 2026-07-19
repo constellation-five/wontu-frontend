@@ -99,6 +99,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
   readonly currentStep = computed(() => {
     const offer = this.offer();
     const orders = this.orders();
+    
     if (offer.arrived_at != null) return 3;
     if (
       offer.payments_confirmed_at != null ||
@@ -116,9 +117,9 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
       { label: 'Offer opened', time: offer.created_at },
       // Falls back to the seller's originally planned schedule until the
       // actual event happens (closed_at/arrived_at are only set then).
-      { label: 'Offer closed', time: offer.closed_at ?? offer.closing_time },
+      { label: offer.closed_at ? 'Offer closed' : 'Offer closes', time: offer.closed_at ?? offer.closing_time },
       { label: 'Payments confirmed', time: offer.payments_confirmed_at ?? undefined },
-      { label: 'Items arrived', time: offer.arrived_at ?? offer.arrival_time },
+      { label: offer.arrived_at ? 'Items arrived' : 'Items arrive', time: offer.arrived_at ?? offer.arrival_time },
     ];
   });
 
