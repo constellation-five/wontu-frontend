@@ -71,7 +71,7 @@
                   [ngClass]="follower.is_following ? 'btn-following' : 'btn-follow-back'"
                   (click)="toggleFollow(follower)"
                 >
-                  {{ follower.is_following ? 'Following' : 'Follow Back' }}
+                  @if(follower.is_following){<ng-container i18n>Following</ng-container>}@else{<ng-container i18n>Follow Back</ng-container>}
                 </button>
               </div>
             }

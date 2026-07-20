@@ -7,13 +7,13 @@ export const CHAT_ROUTES: Routes = [
   {
     path: 'offers/:id/chat',
     component: OfferChatPage,
-    title: 'Chat',
+    title: $localize`Chat`,
     data: { hideBottomBar: true },
   },
   {
     path: 'chat/:conversationId',
     component: PrivateChatPage,
-    title: 'Chat',
+    title: $localize`Chat`,
     canActivate: [authGuard],
     data: { hideBottomBar: true },
   },

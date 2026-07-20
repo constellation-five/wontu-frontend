@@ -81,9 +81,9 @@ export class OfferChatPage implements OnDestroy {
         this.offer.set(data);
 
         this.pageHeaderService.setBreadcrumbs([
-          { label: 'Offers', route: '/offers' },
+          { label: $localize`Offers`, route: '/offers' },
           { label: data.merchant_name, route: `/offers/${data.offer_id}` },
-          { label: 'Chat' },
+          { label: $localize`Chat` },
         ]);
 
         this.chatService.openOfferConversation(data.offer_id);

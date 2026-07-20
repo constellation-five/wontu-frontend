@@ -30,7 +30,7 @@
           matInput
           [formField]="form.username"
           i18n-placeholder
-          placeholder="Enter a unique username"
+          i18n-placeholder placeholder="Enter a unique username"
         />
         <mat-hint i18n>*required</mat-hint>
         @if (form.username().invalid() && form.username().touched()) {
@@ -39,7 +39,7 @@
       </mat-form-field>
 
       <div class="form-actions">
-        <button
+        <button i18n
           matButton="filled"
           appButtonSize="md"
           type="submit"

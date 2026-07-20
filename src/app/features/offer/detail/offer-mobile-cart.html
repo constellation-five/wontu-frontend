@@ -29,7 +29,7 @@
           </div>
           <div class="seller-rating">
             <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
-            <span class="mat-font-label-md mat-text-on-surface">{{ offer()!.seller.received_ratings_avg_rating ? (offer()!.seller.received_ratings_avg_rating | number: '1.1-1') : 'New' }}</span>
+            <span class="mat-font-label-md mat-text-on-surface">@if (offer()!.seller.received_ratings_avg_rating) {{{ offer()!.seller.received_ratings_avg_rating | number: '1.1-1' }}} @else {<ng-container i18n>New</ng-container>}</span>
             @if (offer()!.seller.received_ratings_count) {
               <span class="mat-font-body-sm mat-text-on-surface-variant">({{ offer()!.seller.received_ratings_count }})</span>
             }
@@ -63,7 +63,7 @@
                     Rp {{ +cartItem.item.item_price | number: '1.0-0' }}
                   </div>
                   <div class="cart-item-controls">
-                    <button
+                    <button i18n
                       matIconButton
                       appButtonSize="xs"
                       appIconButtonVariant="outlined"
@@ -104,7 +104,7 @@
 
     <!-- Fixed Bottom Button -->
     <div class="bottom-button-container">
-      <button
+      <button i18n
         matButton="filled"
         appButtonSize="sm"
         class="place-order-btn"

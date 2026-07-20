@@ -7,7 +7,7 @@
         class="preview-image clickable-image" 
         (click)="openImagePreview()"
       />
-      <button matIconButton type="button" (click)="clear()" class="remove-file-btn">
+      <button i18n matIconButton type="button" (click)="clear()" class="remove-file-btn">
         <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
       </button>
     </div>
@@ -18,7 +18,7 @@
         Browse
       </button>
       <p class="mat-font-body-sm mat-text-on-surface-variant" i18n>or drag here to upload</p>
-      <p class="mat-font-body-sm mat-text-on-surface-variant">
+      <p class="mat-font-body-sm mat-text-on-surface-variant" i18n>
         Format: {{ accept() }} | Max. {{ maxSizeMb() }} MB
       </p>
       <input

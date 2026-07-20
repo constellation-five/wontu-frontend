@@ -5,7 +5,7 @@ export const PAYMENT_METHOD_ROUTES: Routes = [
   {
     path: 'payment-method',
     component: PaymentMethod,
-    title: 'Payment Methods',
+    title: $localize`Payment Methods`,
     data: { forceTopBarSolid: true },
   },
 ];

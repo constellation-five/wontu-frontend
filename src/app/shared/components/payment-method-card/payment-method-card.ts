@@ -53,7 +53,7 @@ export class PaymentMethodCard {
 
   copyToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(() => {
-      this.snackBar.open('Copied to clipboard.', 'Close', {
+      this.snackBar.open($localize`Copied to clipboard.`, $localize`Close`, {
         duration: 3000,
       });
     });

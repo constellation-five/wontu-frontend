@@ -19,12 +19,12 @@
         <div class="account-number-section">
           <div class="account-number-box">
             <span class="account-label mat-font-label-sm mat-text-on-surface-variant"
-              >Account Number</span
+              i18n>Account Number</span
             >
             <span class="account-number mat-font-body-md mat-text-on-surface">{{
               method().account_number
             }}</span>
-            <button
+            <button i18n
               mat-icon-button
               class="copy-button"
               (click)="copyToClipboard(method().account_number); $event.stopPropagation()"
@@ -43,7 +43,7 @@
           (click)="$event.stopPropagation()"
         ></mat-checkbox>
       } @else if (showEdit()) {
-        <button mat-icon-button class="edit-button" (click)="edit.emit(method())">
+        <button i18n mat-icon-button class="edit-button" (click)="edit.emit(method())">
           <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
         </button>
       }

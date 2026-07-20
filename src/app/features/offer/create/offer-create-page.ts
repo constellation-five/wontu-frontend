@@ -119,10 +119,10 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
   });
 
   readonly form = form(this.model, (f) => {
-    required(f.category, { message: 'Category is required' });
-    required(f.merchant_name, { message: 'Merchant name is required' });
-    required(f.closing_date, { message: 'Closing date is required' });
-    required(f.arrival_date, { message: 'Arrival date is required' });
+    required(f.category, { message: $localize`Category is required` });
+    required(f.merchant_name, { message: $localize`Merchant name is required` });
+    required(f.closing_date, { message: $localize`Closing date is required` });
+    required(f.arrival_date, { message: $localize`Arrival date is required` });
   });
 
   readonly canSubmit = computed(
@@ -136,10 +136,10 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     // Set after NavigationEnd (which runs its own route-title-derived
     // breadcrumb rebuild) rather than in the constructor, so this doesn't
     // get immediately overwritten back to just "Create Offer".
-    this.pageHeader.setTitle(this.isEditMode ? 'Edit Offer' : 'Create Offer');
+    this.pageHeader.setTitle(this.isEditMode ? $localize`Edit Offer` : $localize`Create Offer`);
     this.pageHeader.setBreadcrumbs([
-      { label: 'Offers', route: '/offers' },
-      { label: this.isEditMode ? 'Edit Offer' : 'Create Offer' },
+      { label: $localize`Offers`, route: '/offers' },
+      { label: this.isEditMode ? $localize`Edit Offer` : $localize`Create Offer` },
     ]);
 
     this.route.queryParams.subscribe((params) => {
@@ -349,7 +349,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
 
     const m = this.model();
     if (!m.closing_date || !m.arrival_date) {
-      this.snackBar.open('Please fill in the closing and arrival dates.', 'Close', {
+      this.snackBar.open($localize`Please fill in the closing and arrival dates.`, $localize`Close`, {
         duration: 3000,
       });
       return;
@@ -362,7 +362,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     const arrivalDateOnly = this.startOfDay(m.arrival_date);
 
     if (arrivalDateOnly.getTime() < closingDateOnly.getTime()) {
-      this.snackBar.open('Items must arrive on or after the offer closing date.', 'Close', {
+      this.snackBar.open($localize`Items must arrive on or after the offer closing date.`, $localize`Close`, {
         duration: 3000,
       });
       return;
@@ -374,9 +374,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
       m.arrival_time_of_day &&
       m.arrival_time_of_day < m.closing_time_of_day
     ) {
-      this.snackBar.open(
-        'On the same day, items must arrive at or after the offer closing time.',
-        'Close',
+      this.snackBar.open($localize`On the same day, items must arrive at or after the offer closing time.`, $localize`Close`,
         { duration: 3000 },
       );
       return;
@@ -412,7 +410,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
 
     request$.subscribe({
       next: (res) => {
-        this.snackBar.open(this.existingOffer ? 'Offer saved successfully.' : 'Offer created successfully.', 'Close', { duration: 3000 });
+        this.snackBar.open(this.existingOffer ? 'Offer saved successfully.' : 'Offer created successfully.', $localize`Close`, { duration: 3000 });
         this.isSubmitting.set(false);
         const offerId = res.offer?.offer_id ?? this.existingOffer?.offer_id;
         this.router.navigate(['/offers', offerId]);
@@ -421,7 +419,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
         this.isSubmitting.set(false);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to save offer: ${msg}${status}`, 'Close', { duration: 5000 });
+        this.snackBar.open(`Failed to save offer: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       },
     });
   }

@@ -12,14 +12,19 @@
 
         <mat-form-field appearance="outline">
           <mat-label i18n>Merchant</mat-label>
-          <input matInput [formField]="form.merchant_name" i18n-placeholder placeholder="Merchant name" />
+          <input
+            matInput
+            [formField]="form.merchant_name"
+            i18n-placeholder
+            placeholder="Merchant name"
+          />
           @if (form.merchant_name().invalid() && form.merchant_name().touched()) {
             <mat-error>{{ form.merchant_name().errors()[0]?.message }}</mat-error>
           }
         </mat-form-field>
 
         <div class="datetime-group">
-          <span class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant"
+          <span i18n class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant"
             >Offer closes at</span
           >
           <div class="datetime-row">
@@ -37,7 +42,7 @@
         </div>
 
         <div class="datetime-group">
-          <span class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant"
+          <span i18n class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant"
             >Items arrive at</span
           >
           <div class="datetime-row">
@@ -72,11 +77,14 @@
       } @else {
         <div class="empty-items-container">
           <img src="assets/img/wontusad.svg" i18n-alt alt="No payment methods" />
-          <p class="mat-font-body-md mat-text-on-surface-variant" i18n>You have no payment methods.</p>
+          <p class="mat-font-body-md mat-text-on-surface-variant" i18n>
+            You have no payment methods.
+          </p>
         </div>
       }
 
       <button
+        i18n
         matButton="tonal"
         appButtonSize="sm"
         class="add-payment-method-btn"
@@ -108,7 +116,8 @@
                 appButtonSize="xs"
                 appIconButtonVariant="outlined"
                 (click)="openEditItemDialog(item)"
-                i18n-aria-label aria-label="Edit item"
+                i18n-aria-label
+                aria-label="Edit item"
               >
                 <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
               </button>
@@ -129,6 +138,7 @@
       }
 
       <button
+        i18n
         matButton="tonal"
         appButtonSize="sm"
         class="add-item-btn"
@@ -139,6 +149,7 @@
       </button>
 
       <button
+        
         matButton="filled"
         appButtonSize="md"
         class="submit-btn desktop-only"
@@ -148,7 +159,7 @@
         @if (isSubmitting()) {
           <mat-spinner diameter="20"></mat-spinner>
         } @else {
-          {{ isEditMode ? 'Save changes' : 'Create offer' }}
+          @if(isEditMode){<ng-container i18n>Save changes</ng-container>}@else{<ng-container i18n>Create offer</ng-container>}
         }
       </button>
     </app-pane>
@@ -159,6 +170,7 @@
 
 <ng-template #actionsTpl>
   <button
+    
     matButton="filled"
     appButtonSize="sm"
     class="submit-btn"
@@ -168,7 +180,7 @@
     @if (isSubmitting()) {
       <mat-spinner diameter="20"></mat-spinner>
     } @else {
-      {{ isEditMode ? 'Save changes' : 'Create offer' }}
+      @if(isEditMode){<ng-container i18n>Save changes</ng-container>}@else{<ng-container i18n>Create offer</ng-container>}
     }
   </button>
 </ng-template>

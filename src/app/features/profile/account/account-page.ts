@@ -69,10 +69,10 @@ export class AccountPage implements OnInit {
 
 
   ngOnInit() {
-    this.pageHeader.setTitle('Account');
+    this.pageHeader.setTitle($localize`Account`);
     this.pageHeader.setBreadcrumbs([
-      { label: 'Profile', route: '/profile' },
-      { label: 'Account', route: '/profile/account' },
+      { label: $localize`Profile`, route: '/profile' },
+      { label: $localize`Account`, route: '/profile/account' },
     ]);
     this.fetchPersonalInfo();
   }
@@ -119,7 +119,7 @@ export class AccountPage implements OnInit {
         this.isEditingName.set(false);
         
         // Show success snackbar
-        this.snackBar.open('Profile updated successfully.', 'Close', {
+        this.snackBar.open($localize`Profile updated successfully.`, $localize`Close`, {
           duration: 3000,
         });
         
@@ -133,7 +133,7 @@ export class AccountPage implements OnInit {
         this.isSaving.set(false);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to update profile: ${msg}${status}`, 'Close', { duration: 5000 });
+        this.snackBar.open(`Failed to update profile: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       },
     });
   }

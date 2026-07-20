@@ -81,8 +81,8 @@ export class AddEditItemDialog implements AfterViewInit, OnDestroy {
   readonly existingImageUrl = this.data.item?.image_url ?? null;
 
   readonly form = form(this.model, (f) => {
-    required(f.item_name, { message: 'Item name is required' });
-    required(f.item_price, { message: 'Price is required' });
+    required(f.item_name, { message: $localize`Item name is required` });
+    required(f.item_price, { message: $localize`Price is required` });
   });
 
   private ownPortal: TemplatePortal | null = null;
@@ -149,11 +149,11 @@ export class AddEditItemDialog implements AfterViewInit, OnDestroy {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '540px',
       data: {
-        title: 'Delete Item',
-        content: 'Are you sure you want to delete this item?',
+        title: $localize`Delete Item`,
+        content: $localize`Are you sure you want to delete this item?`,
         buttons: [
-          { label: 'Cancel', type: 'outlined', focus: true },
-          { label: 'Delete', icon: 'delete', type: 'filled', action: 'delete', color: 'error' },
+          { label: $localize`Cancel`, type: 'outlined', focus: true },
+          { label: $localize`Delete`, icon: 'delete', type: 'filled', action: 'delete', color: 'error' },
         ],
       },
     });

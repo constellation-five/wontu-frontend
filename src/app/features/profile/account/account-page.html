@@ -26,7 +26,7 @@
                   }
                 </mat-form-field>
                 @if (isEditingName()) {
-                  <button
+                  <button i18n
                     matButton="filled"
                     appButtonSize="sm"
                     appButtonColor="primary"
@@ -37,7 +37,7 @@
                     Save
                   </button>
                 } @else {
-                  <button
+                  <button i18n
                     mat-icon-button
                     (click)="enableNameEdit()"
                     class="edit-btn"
@@ -75,7 +75,7 @@
                     Save
                   </button>
                 } @else {
-                  <button
+                  <button i18n
                     mat-icon-button
                     (click)="enableUsernameEdit()"
                     class="edit-btn"
@@ -99,7 +99,7 @@
               <input matInput [value]="info.email" readonly>
             </mat-form-field>
 
-            <p class="created-at mat-font-body-sm mat-text-on-surface-variant">
+            <p class="created-at mat-font-body-sm mat-text-on-surface-variant" i18n>
               This account was created on {{ formatDate(info.created_at) }}.
             </p>
           </section>

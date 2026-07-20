@@ -81,8 +81,8 @@ export class OfferShowPage {
   });
 
   constructor() {
-    this.pageHeader.setTitle('Offers');
-    this.pageHeader.setBreadcrumbs([{ label: 'Offers', route: '/offers' }]);
+    this.pageHeader.setTitle($localize`Offers`);
+    this.pageHeader.setBreadcrumbs([{ label: $localize`Offers`, route: '/offers' }]);
 
     if (!this.userLocationCoordinates()) {
       this.detectCurrentLocation();

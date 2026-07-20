@@ -55,7 +55,7 @@ export class PaymentMethod implements OnInit {
   }
 
   ngOnInit() {
-    this.pageHeader.setTitle('Payment Methods');
+    this.pageHeader.setTitle($localize`Payment Methods`);
     this.fetchPaymentMethods();
     this.checkMobile();
   }

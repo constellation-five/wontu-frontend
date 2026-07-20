@@ -43,6 +43,7 @@ export class RequestFormDialog {
 
   readonly existingRequest = this.data.request;
   readonly isEditMode = !!this.existingRequest;
+  readonly dialogTitle = this.isEditMode ? $localize`Edit Request` : $localize`Create Request`;
   readonly isSubmitting = signal(false);
 
   readonly model = signal({
@@ -53,9 +54,9 @@ export class RequestFormDialog {
   });
 
   readonly form = form(this.model, (f) => {
-    required(f.category, { message: 'Category is required' });
-    required(f.item_name, { message: 'Name is required' });
-    required(f.arrival_date, { message: 'Arrival date is required' });
+    required(f.category, { message: $localize`Category is required` });
+    required(f.item_name, { message: $localize`Name is required` });
+    required(f.arrival_date, { message: $localize`Arrival date is required` });
   });
 
   readonly canSubmit = computed(() => !this.form().invalid());
@@ -66,7 +67,7 @@ export class RequestFormDialog {
     // Delete Button
     if (this.isEditMode) {
       btns.push({
-        label: 'Delete',
+        label: $localize`Delete`,
         icon: 'delete',
         type: 'outlined',
         color: 'error', 
@@ -77,14 +78,14 @@ export class RequestFormDialog {
 
     // Cancel Button
     btns.push({ 
-      label: 'Cancel', 
+      label: $localize`Cancel`, 
       type: 'outlined', 
       action: () => this.dialogRef.close() 
     });
 
     // Create / Edit Button
     btns.push({
-      label: this.isEditMode ? 'Edit Request' : 'Create Request',
+      label: this.isEditMode ? $localize`Edit Request` : $localize`Create Request`,
       icon: !this.isEditMode ? 'check' : undefined,
       type: 'filled',
       color: 'primary',
@@ -123,12 +124,12 @@ export class RequestFormDialog {
     this.requestService.deleteRequest(this.existingRequest.request_id).subscribe({
       next: () => {
         this.isSubmitting.set(false);
-        this.snackBar.open('Request deleted successfully', 'Close', { duration: 3000 });
+        this.snackBar.open($localize`Request deleted successfully`, $localize`Close`, { duration: 3000 });
         this.dialogRef.close(true);
       },
       error: (err) => {
         this.isSubmitting.set(false);
-        this.snackBar.open(err.error?.message || 'Failed to delete request.', 'Close', { duration: 3000 });
+        this.snackBar.open(err.error?.message || 'Failed to delete request.', $localize`Close`, { duration: 3000 });
       }
     });
   }
@@ -148,14 +149,14 @@ export class RequestFormDialog {
     const today = this.startOfDay(now);
 
     if (arrivalDateOnly.getTime() < today.getTime()) {
-      this.snackBar.open('Arrival date cannot be in the past.', 'Close', { duration: 3000 });
+      this.snackBar.open($localize`Arrival date cannot be in the past.`, $localize`Close`, { duration: 3000 });
       return;
     }
 
     if (arrivalDateOnly.getTime() === today.getTime() && m.arrival_time_of_day) {
       const [hours, minutes] = m.arrival_time_of_day.split(':').map(Number);
       if (hours < now.getHours() || (hours === now.getHours() && minutes < now.getMinutes())) {
-        this.snackBar.open('Arrival time cannot be in the past.', 'Close', { duration: 3000 });
+        this.snackBar.open($localize`Arrival time cannot be in the past.`, $localize`Close`, { duration: 3000 });
         return;
       }
     }
@@ -164,7 +165,7 @@ export class RequestFormDialog {
     const currentUserCoords = this.locationState.userLocationCoordinates();
 
     if (!currentUserCoords) {
-      this.snackBar.open('Please set your location first before creating a request.', 'Close', { duration: 3000 });
+      this.snackBar.open($localize`Please set your location first before creating a request.`, $localize`Close`, { duration: 3000 });
       return;
     }
 
@@ -187,14 +188,14 @@ export class RequestFormDialog {
         this.isSubmitting.set(false);
         this.dialogRef.close(true); 
         const successMsg = this.isEditMode ? 'Request saved successfully.' : 'Request created successfully.';
-        this.snackBar.open(successMsg, 'Close', { duration: 3000 });
+        this.snackBar.open(successMsg, $localize`Close`, { duration: 3000 });
       },
       error: (err) => {
         console.error('API Error:', err);
         this.isSubmitting.set(false);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to save request: ${msg}${status}`, 'Close', { duration: 5000 });
+        this.snackBar.open(`Failed to save request: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       }
     });
   }

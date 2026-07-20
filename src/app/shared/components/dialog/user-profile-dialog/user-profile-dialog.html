@@ -38,7 +38,7 @@
         </div>
 
         <div class="actions">
-          <button
+          <button i18n
             [matButton]="user.is_following ? 'outlined' : 'filled'"
             [appButtonSize]="'sm'"
             [disabled]="isProcessing()"
@@ -56,7 +56,7 @@
             }
           </button>
 
-          <button
+          <button i18n
             matButton="tonal"
             [appButtonSize]="'sm'"
             [disabled]="isOpeningChat()"

@@ -88,8 +88,8 @@ export class RequestPage {
   });
 
   constructor() {
-    this.pageHeader.setTitle('Requests');
-    this.pageHeader.setBreadcrumbs([{ label: 'Requests', route: '/requests' }]);
+    this.pageHeader.setTitle($localize`Requests`);
+    this.pageHeader.setBreadcrumbs([{ label: $localize`Requests`, route: '/requests' }]);
 
     if (!this.userLocationCoordinates()) {
       this.detectCurrentLocation();

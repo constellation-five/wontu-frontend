@@ -21,10 +21,11 @@
         <mat-error>{{ form.item_price().errors()[0]?.message }}</mat-error>
       }
     </mat-form-field>
-    <app-counter-field label="Quantity" [(value)]="slot" [min]="1" />
+    <app-counter-field i18n-label label="Quantity" [(value)]="slot" [min]="1" />
   </div>
 
   <app-file-drop-upload
+    i18n-label
     label="Item image"
     [existingUrl]="existingImageUrl"
     [uploading]="isUploading()"
@@ -39,6 +40,7 @@
   <div class="dialog-footer" [class.hide-inline]="dialogContext?.isMobile()">
     @if (isEdit) {
       <button
+        i18n
         matButton="outlined"
         appButtonColor="error"
         appButtonSize="md"
@@ -55,7 +57,11 @@
       [disabled]="form().invalid() || isUploading()"
       (click)="submit()"
     >
-      {{ isEdit ? 'Save item' : 'Add item' }}
+      @if (isEdit) {
+        <ng-container i18n>Save item</ng-container>
+      } @else {
+        <ng-container i18n>Add item</ng-container>
+      }
     </button>
   </div>
 </div>
@@ -67,6 +73,10 @@
     [disabled]="form().invalid() || isUploading()"
     (click)="submit()"
   >
-    {{ isEdit ? 'Save item' : 'Add item' }}
+    @if (isEdit) {
+      <ng-container i18n>Save item</ng-container>
+    } @else {
+      <ng-container i18n>Add item</ng-container>
+    }
   </button>
 </ng-template>

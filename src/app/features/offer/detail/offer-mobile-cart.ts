@@ -92,11 +92,11 @@ export class OfferMobileCart implements OnDestroy {
       return;
     }
 
-    this.pageHeader.setTitle('Cart');
+    this.pageHeader.setTitle($localize`Cart`);
     this.pageHeader.setBreadcrumbs([
-      { label: 'Offers', route: '/offers' },
+      { label: $localize`Offers`, route: '/offers' },
       { label: this.offer()?.merchant_name || 'Offer', route: `/offers/${this.offer()?.offer_id}` },
-      { label: 'Cart' },
+      { label: $localize`Cart` },
     ]);
 
     // Auto-redirect to offer-detail when resizing to desktop
@@ -122,9 +122,9 @@ export class OfferMobileCart implements OnDestroy {
         this.offer.set(offer);
         this.pageHeader.setTitle(offer.merchant_name);
         this.pageHeader.setBreadcrumbs([
-          { label: 'Offers', route: '/offers' },
+          { label: $localize`Offers`, route: '/offers' },
           { label: offer.merchant_name, route: `/offers/${offer.offer_id}` },
-          { label: 'Cart' },
+          { label: $localize`Cart` },
         ]);
         this.isLoading.set(false);
         if (this.authService.user() && sessionStorage.getItem(`autoPlaceOrder_${id}`) === 'true') {
@@ -308,7 +308,7 @@ export class OfferMobileCart implements OnDestroy {
     // is always a fresh order, never an edit of an existing one.
     this.offerService.placeOrder(offer.offer_id, items).subscribe({
       next: () => {
-        this.snackBar.open('Order placed successfully.', 'Close', { duration: 3000 });
+        this.snackBar.open($localize`Order placed successfully.`, $localize`Close`, { duration: 3000 });
         this.clearCartFromLocalStorage(offer.offer_id);
         this.router.navigate(['/offers', offer.offer_id]);
       },
@@ -316,7 +316,7 @@ export class OfferMobileCart implements OnDestroy {
         console.error('Failed to place order:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to place order: ${msg}${status}`, 'Close', { duration: 5000 });
+        this.snackBar.open(`Failed to place order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       },
     });
   }
@@ -326,16 +326,16 @@ export class OfferMobileCart implements OnDestroy {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '540px',
       data: {
-        title: 'Remove Item',
-        content: 'Are you sure you want to remove this item from your cart?',
+        title: $localize`Remove Item`,
+        content: $localize`Are you sure you want to remove this item from your cart?`,
         buttons: [
           {
-            label: 'Cancel',
+            label: $localize`Cancel`,
             type: 'outlined',
             focus: true,
           },
           {
-            label: 'Remove',
+            label: $localize`Remove`,
             icon: 'delete',
             type: 'filled',
             action: 'delete',

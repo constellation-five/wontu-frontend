@@ -11,7 +11,7 @@
       (keyup.enter)="confirmLocation()"
     />
     @if (locationInput()) {
-      <button matIconButton matSuffix appButtonSize="compact" type="button" (click)="clearInput()">
+      <button i18n matIconButton matSuffix appButtonSize="compact" type="button" (click)="clearInput()">
         <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
       </button>
     }
@@ -64,6 +64,6 @@
     [disabled]="!locationInput().trim() || isVerifying()"
     (click)="confirmLocation()"
   >
-    {{ isVerifying() ? 'Verifying...' : 'Confirm Location' }}
+    @if(isVerifying()){<ng-container i18n>Verifying...</ng-container>}@else{<ng-container i18n>Confirm Location</ng-container>}
   </button>
 </mat-dialog-actions>

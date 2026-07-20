@@ -29,25 +29,25 @@
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{
               formatNumber(user.followers_count)
             }}</span>
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant" i18n>Followers</span>
+            <span i18n class="stat-label mat-font-body-sm mat-text-on-surface-variant">Followers</span>
           </a>
           <a routerLink="/profile/following" class="stat-item">
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{
               formatNumber(user.following_count)
             }}</span>
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant" i18n>Following</span>
+            <span i18n class="stat-label mat-font-body-sm mat-text-on-surface-variant">Following</span>
           </a>
-          <button (click)="openRatingDialog()" class="stat-item stat-button">
+          <button i18n (click)="openRatingDialog()" class="stat-item stat-button">
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface"
               >{{ user.average_rating }}/5</span
             >
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant" i18n>Rating</span>
+            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant">Rating</span>
           </button>
         </div>
 
         <!-- Menu Items -->
         <nav class="menu">
-          <button
+          <button i18n
             (click)="navigateToSubpage('')"
             [class.active]="currentRoute() === 'account'"
             class="menu-item mat-font-label-lg mat-text-on-surface"
@@ -56,7 +56,7 @@
             Account
           </button>
 
-          <button
+          <button i18n
             (click)="navigateToSubpage('payment-method')"
             [class.active]="currentRoute() === 'payment'"
             class="menu-item mat-font-label-lg mat-text-on-surface"
@@ -65,7 +65,7 @@
             Payment Methods
           </button>
 
-          <button
+          <button i18n
             (click)="navigateToSubpage('settings')"
             [class.active]="currentRoute() === 'settings'"
             class="menu-item mat-font-label-lg mat-text-on-surface"
@@ -74,11 +74,11 @@
             Settings
           </button>
 
-          <button (click)="logout()" class="menu-item mat-font-label-lg logout-btn">
+          <button i18n (click)="logout()" class="menu-item mat-font-label-lg logout-btn">
             <mat-icon class="menu-icon logout-icon" fontSet="material-symbols-outlined"
               >logout</mat-icon
             >
-            <span class="logout-text" i18n>Sign out</span>
+            <span class="logout-text">Sign out</span>
           </button>
         </nav>
       }

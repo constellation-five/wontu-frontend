@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{ isEditMode ? 'Edit Payment Method' : 'Add Payment Method' }}</h2>
+<h2 mat-dialog-title>@if(isEditMode){<ng-container i18n>Edit Payment Method</ng-container>}@else{<ng-container i18n>Add Payment Method</ng-container>}</h2>
 
 <mat-dialog-content>
   <form [formGroup]="form" class="method-form">
@@ -37,7 +37,7 @@
 
 <mat-dialog-actions>
   @if (isEditMode) {
-    <button
+    <button i18n
       type="button"
       matButton="outlined"
       appButtonSize="sm"
@@ -46,7 +46,7 @@
       (click)="openDeleteConfirm()"
     >
       <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
-      <span i18n>Delete</span>
+      <span>Delete</span>
     </button>
   }
 
@@ -54,7 +54,7 @@
 
   <button type="button" matButton="outlined" appButtonSize="sm" mat-dialog-close i18n>Cancel</button>
 
-  <button
+  <button 
     matButton="filled"
     appButtonSize="sm"
     appButtonColor="primary"
@@ -62,6 +62,6 @@
     (click)="save()"
   >
     <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-    <span>{{ isEditMode ? 'Confirm' : 'Add Method' }}</span>
+    <span>@if(isEditMode){<ng-container i18n>Confirm</ng-container>}@else{<ng-container i18n>Add Method</ng-container>}</span>
   </button>
 </mat-dialog-actions>

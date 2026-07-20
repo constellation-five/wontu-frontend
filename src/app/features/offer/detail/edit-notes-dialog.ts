@@ -19,7 +19,7 @@ export class EditNotesDialog {
   notes: string = this.data?.notes || '';
 
   readonly buttons: DialogButton[] = [
-    { label: 'Cancel', type: 'outlined', action: () => this.dialogRef.close() },
-    { label: 'Save', type: 'filled', focus: true, action: () => this.dialogRef.close(this.notes) },
+    { label: $localize`Cancel`, type: 'outlined', action: () => this.dialogRef.close() },
+    { label: $localize`Save`, type: 'filled', focus: true, action: () => this.dialogRef.close(this.notes) },
   ];
 }

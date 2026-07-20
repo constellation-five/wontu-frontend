@@ -12,11 +12,7 @@
             </div>
             <div class="seller-rating">
               <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
-              <span class="mat-font-label-md mat-text-on-surface">{{
-                offer().seller.received_ratings_avg_rating
-                  ? (offer().seller.received_ratings_avg_rating | number: '1.1-1')
-                  : 'New'
-              }}</span>
+              <span class="mat-font-label-md mat-text-on-surface">@if (offer().seller.received_ratings_avg_rating) {{{ offer().seller.received_ratings_avg_rating | number: '1.1-1' }}} @else {<ng-container i18n>New</ng-container>}</span>
               @if (offer().seller.received_ratings_count) {
                 <span class="mat-font-body-sm mat-text-on-surface-variant"
                   >({{ offer().seller.received_ratings_count }})</span
@@ -28,9 +24,9 @@
         <!-- The fixed mobile bottom bar covers this below $breakpoint-md; from
         there up it's hidden, so this pane needs its own Chat button. -->
         <div class="tablet-only-action">
-          <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
+          <button i18n matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
             <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-            <span i18n>Chat</span>
+            <span>Chat</span>
           </button>
         </div>
       </div>
@@ -69,7 +65,7 @@
       }
 
       <div class="cart-total">
-        <span class="mat-font-body-lg mat-text-on-surface" i18n>Total</span>
+        <span class="mat-font-body-lg mat-text-on-surface">Total</span>
         <span class="mat-font-body-lg mat-text-on-surface text-bold">
           Rp {{ totalPrice() | number: '1.0-0' }}
         </span>
@@ -80,18 +76,18 @@
       <div class="tablet-only-action">
         @if (!isOfferClosed()) {
           <div class="cart-actions">
-            <button
+            <button i18n
               matButton="outlined"
               appButtonColor="error"
               class="cancel-order-btn"
               (click)="cancelOrder.emit()"
             >
               <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-              <span i18n>Cancel order</span>
+              <span>Cancel order</span>
             </button>
-            <button matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
+            <button i18n matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
               <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-              <span i18n>Edit order</span>
+              <span>Edit order</span>
             </button>
           </div>
         }
@@ -123,7 +119,7 @@
             <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
           } @else {
             <app-file-drop-upload
-              label="Proof of payment"
+              i18n-label label="Proof of payment"
               [file]="proofOfPayment()"
               (fileChange)="proofOfPaymentChange.emit($event)"
             />
@@ -131,7 +127,7 @@
         </div>
 
         @if (!myOrder()?.payment_submitted_at) {
-          <button
+          <button i18n
             matButton="filled"
             appButtonSize="sm"
             class="complete-payment-btn"
@@ -182,7 +178,7 @@
                 <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
               } @else {
                 <app-file-drop-upload
-                  label="Proof of payment"
+                  i18n-label label="Proof of payment"
                   [file]="proofOfPayment()"
                   (fileChange)="proofOfPaymentChange.emit($event)"
                 />
@@ -190,7 +186,7 @@
             </div>
 
             @if (!myOrder()?.payment_submitted_at) {
-              <button
+              <button i18n
                 matButton="filled"
                 appButtonSize="md"
                 class="complete-payment-btn"
@@ -238,9 +234,9 @@
                 </div>
               </div>
             </div>
-            <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
+            <button i18n matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
               <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-              <span i18n>Chat</span>
+              <span>Chat</span>
             </button>
           </div>
 
@@ -274,25 +270,25 @@
 
           <div class="cart-footer">
             <div class="cart-total">
-              <span class="mat-font-body-lg mat-text-on-surface" i18n>Total</span>
+              <span class="mat-font-body-lg mat-text-on-surface">Total</span>
               <span class="mat-font-body-lg mat-text-on-surface text-bold">
                 Rp {{ totalPrice() | number: '1.0-0' }}
               </span>
             </div>
             @if (!isOfferClosed()) {
               <div class="cart-actions">
-                <button
+                <button i18n
                   matButton="outlined"
                   appButtonColor="error"
                   class="cancel-order-btn"
                   (click)="cancelOrder.emit()"
                 >
                   <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-                  <span i18n>Cancel order</span>
+                  <span>Cancel order</span>
                 </button>
-                <button matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
+                <button i18n matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
                   <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-                  <span i18n>Edit order</span>
+                  <span>Edit order</span>
                 </button>
               </div>
             }
@@ -310,13 +306,13 @@
         <span>Give rating</span>
       </button>
     }
-    <button matButton="tonal" appButtonSize="sm" class="chat-action-btn" (click)="openChat.emit()">
+    <button i18n matButton="tonal" appButtonSize="sm" class="chat-action-btn" (click)="openChat.emit()">
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-      <span i18n>Chat</span>
+      <span>Chat</span>
     </button>
     @if (!isOfferClosed()) {
       <div class="bottom-actions-row">
-        <button
+        <button i18n
           matButton="outlined"
           appButtonSize="sm"
           appButtonColor="error"
@@ -324,16 +320,16 @@
           (click)="cancelOrder.emit()"
         >
           <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-          <span i18n>Cancel order</span>
+          <span>Cancel order</span>
         </button>
-        <button
+        <button i18n
           matButton="tonal"
           appButtonSize="sm"
           class="edit-action-btn"
           (click)="editOrder.emit()"
         >
           <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-          <span i18n>Edit order</span>
+          <span>Edit order</span>
         </button>
       </div>
     }

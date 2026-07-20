@@ -5,7 +5,7 @@ export const REQUEST_ROUTES: Routes = [
   {
     path: 'requests',
     component: RequestPage,
-    title: 'Requests',
+    title: $localize`Requests`,
     data: { hideHeader: true },
   },
 ];

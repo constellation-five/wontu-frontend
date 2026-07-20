@@ -12,7 +12,7 @@
 } @else {
   <div class="message-row" [class.own]="isOwn()">
     @if (!isOwn()) {
-      <button 
+      <button i18n 
         class="avatar-button" 
         type="button" 
         (click)="onAvatarClick()"
