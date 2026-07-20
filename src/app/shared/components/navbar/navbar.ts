@@ -19,7 +19,7 @@ export type NavLink = {
 export const NAV_LINKS: readonly NavLink[] = [
   { label: 'Offers', path: '/offers', icon: 'shopping_bag' },
   { label: 'Requests', path: '/requests', icon: 'concierge' },
-  { label: 'History', path: '/history', icon: 'receipt_long' },
+  { label: 'Activity', path: '/activity', icon: 'receipt_long' },
   { label: 'Profile', path: '/profile', icon: 'account_circle' },
 ];
 
