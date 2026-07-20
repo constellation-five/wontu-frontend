@@ -1569,7 +1569,7 @@
       </trans-unit>
       <trans-unit id="5533265487125982584" datatype="html">
         <source>Stock: <x id="PH" equiv-text="remaining" /> left</source>
-        <target>Stok: <x id="PH" equiv-text="remaining" /> tersisa</target>
+        <target>Stok: <x id="PH" equiv-text="remaining" /></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.ts</context>
           <context context-type="linenumber">66</context>
@@ -1619,7 +1619,7 @@
       </trans-unit>
       <trans-unit id="8952191148884594625" datatype="html">
         <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;" />check<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;" /> Place order </source>
-        <target><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;" />check<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;" /> Place order </target>
+        <target><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;" />check<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;" /> Buat pesanan </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.html</context>
           <context context-type="linenumber">114,116</context>
@@ -1683,7 +1683,7 @@
       </trans-unit>
       <trans-unit id="7816388157456408950" datatype="html">
         <source>Stock: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}" /> left</source>
-        <target>Stok: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}" /> tersisa</target>
+        <target>Stok: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}" /></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
           <context context-type="linenumber">49,50</context>
