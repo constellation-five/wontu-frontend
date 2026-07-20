@@ -79,7 +79,10 @@ export class ActivityPage {
     const showOffer = this.filterOffer();
     
     return this.combinedItems().filter(item => {
-      const matchesSearch = item.merchantName.toLowerCase().includes(search);
+      const matchesSearch = item.merchantName.toLowerCase().includes(search) ||
+                            item.locationLabel.toLowerCase().includes(search) ||
+                            item.statusText.toLowerCase().includes(search) ||
+                            item.dateStr.toLowerCase().includes(search);
       const matchesTab = item.isHistory === isHistoryTab;
       const matchesType = (item.type === 'Order' && showOrder) || (item.type === 'Offer' && showOffer);
       return matchesSearch && matchesTab && matchesType;

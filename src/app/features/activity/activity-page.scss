@@ -86,14 +86,18 @@
   }
 
   .header-badge { 
-    flex: 0.5; 
+    width: 80px;
+    flex-shrink: 0;
     padding-left: var(--spacing-sm);
   }
-  .header-time { flex: 1; }
-  .header-merchant { flex: 2; }
-  .header-location { flex: 2; }
-  .header-status { flex: 1.2; }
-  .header-action { flex-shrink: 0; }
+  .header-time { flex: 1.3; }
+  .header-merchant { flex: 1.8; }
+  .header-location { flex: 1.8; }
+  .header-status { flex: 1; }
+  .header-action { 
+    width: 90px;
+    flex-shrink: 0; 
+  }
 }
 
 @media (max-width: $breakpoint-md) {
