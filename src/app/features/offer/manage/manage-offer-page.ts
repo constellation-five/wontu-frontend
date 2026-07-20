@@ -189,11 +189,11 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
   paymentStatusLabel(order: OfferOrder): string {
     switch (this.paymentStatus(order)) {
       case 'confirmed':
-        return 'Confirmed';
+        return $localize`Confirmed`;
       case 'pending':
-        return 'Pending confirmation';
+        return $localize`Pending confirmation`;
       default:
-        return 'Not paid';
+        return $localize`Not paid`;
     }
   }
 

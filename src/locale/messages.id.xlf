@@ -516,7 +516,7 @@
       </trans-unit>
       <trans-unit id="6534056417716630629" datatype="html">
         <source>Everyone</source>
-        <target>Semua orang</target>
+        <target>Semua</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/chat/chat-thread/chat-thread.ts</context>
           <context context-type="linenumber">98</context>
@@ -1972,7 +1972,7 @@
         <source>
           <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;" />visibility<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;" /> Proof of payment </source>
         <target>
-          <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;" />visibility<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;" /> Proof of payment </target>
+          <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;" />visibility<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;" /> Bukti pembayaran </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
           <context context-type="linenumber">49,51</context>
@@ -1982,7 +1982,7 @@
         <source>
           <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;" />check<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;" /> Confirm payment </source>
         <target>
-          <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;" />check<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;" /> Confirm payment </target>
+          <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;" />check<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;" /> Konfirmasi pembayaran </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
           <context context-type="linenumber">54,56</context>
@@ -2088,7 +2088,7 @@
       </trans-unit>
       <trans-unit id="6385169825143481642" datatype="html">
         <source>Payments confirmed</source>
-        <target>Pembayaran dikonfirmasi</target>
+        <target>Pembayaran terkonfirmasi</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.ts</context>
           <context context-type="linenumber">121</context>
@@ -4093,6 +4093,18 @@
       <trans-unit id="935187492052582731" datatype="html">
         <source>Submit</source>
         <target>Kirim</target>
+      </trans-unit>
+      <trans-unit id="1902234206836707099" datatype="html">
+        <source>Confirmed</source>
+        <target>Terkonfirmasi</target>
+      </trans-unit>
+      <trans-unit id="4207250831262170342" datatype="html">
+        <source>Pending confirmation</source>
+        <target>Menunggu konfirmasi</target>
+      </trans-unit>
+      <trans-unit id="5762273925855727581" datatype="html">
+        <source>Not paid</source>
+        <target>Belum dibayar</target>
       </trans-unit>
     </body>
   </file>
