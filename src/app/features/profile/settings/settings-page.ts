@@ -105,12 +105,12 @@ export class SettingsPage implements OnInit {
   ];
 
   notificationSettings = signal<NotificationSetting[]>([]);
-  selectedLanguage = signal('english');
+  selectedLanguage = signal('en');
   darkMode = signal(false);
 
   languages = [
-    { value: 'english', label: 'English' },
-    { value: 'indonesian', label: 'Indonesian' },
+    { value: 'en', label: 'English' },
+    { value: 'id', label: 'Indonesian' },
   ];
 
   loadSettings() {
@@ -179,7 +179,28 @@ export class SettingsPage implements OnInit {
   }
 
   changeLanguage(language: string) {
+    if (this.selectedLanguage() === language) return;
     this.selectedLanguage.set(language);
-    this.saveSettings();
+    
+    const notifications: Record<string, { push: boolean; email: boolean }> = {};
+    this.notificationSettings().forEach(setting => {
+      notifications[setting.id] = { push: setting.push, email: setting.email };
+    });
+
+    const data = {
+      notifications,
+      language: this.selectedLanguage(),
+      dark_mode: this.darkMode(),
+    };
+
+    this.http.put<SettingsResponse>(`${environment.api}/settings`, data, { withCredentials: true }).subscribe({
+      next: () => {
+        if (language === 'id') {
+          window.location.href = '/id/';
+        } else {
+          window.location.href = '/';
+        }
+      }
+    });
   }
 }

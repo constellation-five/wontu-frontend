@@ -13,10 +13,20 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "en",
+        "locales": {
+          "id": {
+            "translation": "src/locale/messages.id.xlf",
+            "baseHref": "/id/"
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "localize": true,
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -30,7 +40,8 @@
                 "output": "/assets"
               }
             ],
-            "styles": ["src/material-theme.scss"]
+            "styles": ["src/material-theme.scss"],
+            "polyfills": ["@angular/localize/init"]
           },
           "configurations": {
             "production": {

@@ -1,16 +1,18 @@
 import { HttpInterceptorFn, HttpXsrfTokenExtractor } from '@angular/common/http';
-import { inject } from '@angular/core';
+import { inject, LOCALE_ID } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 export const credentialsInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.url.startsWith(environment.api)) {
     const tokenExtractor = inject(HttpXsrfTokenExtractor);
     const token = tokenExtractor.getToken();
+    const locale = inject(LOCALE_ID);
 
     let cloned = req.clone({
       withCredentials: true,
       setHeaders: {
         Accept: 'application/json',
+        'Accept-Language': locale,
       },
     });
 
