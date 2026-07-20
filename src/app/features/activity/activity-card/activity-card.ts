@@ -22,6 +22,7 @@ export class ActivityCardComponent {
   imageUrl = input<string>('');
   totalPrice = input<number>(0);
   isHistory = input<boolean>(false);
+  isRated = input<boolean>(false);
   
   rateClick = output<void>();
 

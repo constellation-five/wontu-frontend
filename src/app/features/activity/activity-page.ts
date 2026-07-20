@@ -8,11 +8,13 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { NaturalDateTimePipe } from '../../shared/pipes/natural-date-time.pipe';
-import { RatingDialog } from '../profile/rating/rating-dialog';
+import { GiveRatingDialog } from '../../shared/components/give-rating-dialog/give-rating-dialog';
 import { SegmentedControlComponent } from '../../shared/components/segmented-control/segmented-control';
 import { PageHeaderService } from '../../core/page-header.service';
 import { LocationStateService } from '../../core/location-state.service';
 import { Offer, OfferService } from '../../core/offer.service';
+import { ProfileService } from '../../core/profile.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MainPageHeaderComponent } from '../../shared/components/main-page-header/main-page-header';
 import { ActivityCardComponent } from './activity-card/activity-card';
 
@@ -20,6 +22,7 @@ interface ActivityItem {
   id: number;
   type: 'Order' | 'Offer';
   merchantName: string;
+  merchantId?: string;
   locationLabel: string;
   dateStr: string;
   timestamp: number;
@@ -28,6 +31,7 @@ interface ActivityItem {
   imageUrl: string;
   isHistory: boolean;
   totalPrice: number;
+  isRated?: boolean;
 }
 
 @Component({
@@ -52,6 +56,8 @@ export class ActivityPage {
   protected readonly pageHeader = inject(PageHeaderService);
   private readonly locationState = inject(LocationStateService);
   private readonly offerService = inject(OfferService);
+  private readonly profileService = inject(ProfileService);
+  private readonly snackBar = inject(MatSnackBar);
   private readonly dialog = inject(MatDialog);
   private readonly datePipe = new DatePipe('en-US');
   private readonly naturalPipe = new NaturalDateTimePipe();
@@ -125,6 +131,7 @@ export class ActivityPage {
             id: order.offer_id,
             type: 'Order',
             merchantName: order.merchant_name,
+            merchantId: order.merchant_id,
             locationLabel: order.location_label || '',
             dateStr: finalDateStr,
             timestamp: orderDate.getTime(),
@@ -132,7 +139,8 @@ export class ActivityPage {
             statusColor: status.color,
             imageUrl,
             isHistory: status.isHistory,
-            totalPrice
+            totalPrice,
+            isRated: order.is_rated
           };
         });
         this.orders.set(mappedOrders);
@@ -190,7 +198,7 @@ export class ActivityPage {
     if (order.arrived_at) return { text: 'Items arrive', color: 'var(--mat-sys-success)', isHistory: true };
     if (order.is_confirmed) return { text: 'Payment confirmed', color: '#E68A00', isHistory: false };
     if (order.payment_submitted_at) return { text: 'Payment made', color: '#E68A00', isHistory: false };
-    if (order.closed_at) return { text: 'Offer closes', color: 'var(--mat-sys-error)', isHistory: true };
+    if (order.closed_at) return { text: 'Offer closed', color: '#E68A00', isHistory: false };
     return { text: 'Offer joined', color: '#E68A00', isHistory: false };
   }
 
@@ -198,7 +206,7 @@ export class ActivityPage {
   private getOfferStatus(offer: Offer) {
     if (offer.arrived_at) return { text: 'Items arrived', color: 'var(--mat-sys-success)', isHistory: true };
     if (offer.payments_confirmed_at) return { text: 'Payments confirmed', color: '#E68A00', isHistory: false };
-    if (offer.closed_at) return { text: 'Offer closed', color: '#E68A00', isHistory: true };
+    if (offer.closed_at) return { text: 'Offer closed', color: '#E68A00', isHistory: false };
     return { text: 'Offer opened', color: '#E68A00', isHistory: false };
   }
 
@@ -207,10 +215,31 @@ export class ActivityPage {
   }
   
   openRatingDialog(item: ActivityItem) {
-    this.dialog.open(RatingDialog, {
+    if (!item.merchantId) return;
+
+    const dialogRef = this.dialog.open(GiveRatingDialog, {
       width: '90%',
       maxWidth: '400px',
-      panelClass: 'rating-dialog-panel'
+      panelClass: 'give-rating-dialog-panel',
+      data: {
+        merchantName: item.merchantName
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.rating) {
+        this.profileService.rateSeller(item.merchantId!, result.rating, item.id).subscribe({
+          next: () => {
+            this.snackBar.open('Rating submitted successfully', 'Close', { duration: 3000 });
+            this.orders.update(orders => 
+              orders.map(o => o.id === item.id && o.type === 'Order' ? { ...o, isRated: true } : o)
+            );
+          },
+          error: (err) => {
+            this.snackBar.open(err.error?.message || 'Failed to submit rating', 'Close', { duration: 3000 });
+          }
+        });
+      }
     });
   }
 }

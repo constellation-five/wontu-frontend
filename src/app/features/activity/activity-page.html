@@ -67,6 +67,7 @@
           [imageUrl]="item.imageUrl"
           [totalPrice]="item.totalPrice"
           [isHistory]="item.isHistory"
+          [isRated]="item.isRated || false"
           (cardClick)="viewDetail(item)"
           (rateClick)="openRatingDialog(item)"
         />
