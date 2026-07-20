@@ -17,14 +17,14 @@
           [checked]="filterFood()"
           (change)="filterFood.set($event.checked)"
           class="filter-checkbox"
-        >
+         i18n>
           Food
         </mat-checkbox>
         <mat-checkbox
           [checked]="filterOther()"
           (change)="filterOther.set($event.checked)"
           class="filter-checkbox"
-        >
+         i18n>
           Other
         </mat-checkbox>
       </div>
@@ -35,7 +35,7 @@
 <!-- Offers Grid -->
 @if (isLoading()) {
   <div class="loading-container">
-    <p class="mat-font-body-lg mat-text-on-surface-variant">Loading offers...</p>
+    <p class="mat-font-body-lg mat-text-on-surface-variant" i18n>Loading offers...</p>
   </div>
 } @else if (filteredOffers().length > 0) {
   <div class="offers-grid">
@@ -56,7 +56,7 @@
           appIconButtonVariant="tonal"
           cardAction
           (click)="onCardClick(offer.offer_id)"
-          aria-label="View Offer"
+          i18n-aria-label aria-label="View Offer"
         >
           <mat-icon fontSet="material-symbols-outlined">arrow_forward</mat-icon>
         </button>
@@ -66,12 +66,12 @@
 } @else {
   <div class="empty-state">
     <mat-icon fontSet="material-symbols-outlined" class="empty-icon">inbox</mat-icon>
-    <p class="mat-font-body-lg mat-text-on-surface-variant">No offers available</p>
+    <p class="mat-font-body-lg mat-text-on-surface-variant" i18n>No offers available</p>
   </div>
 }
 
 <!-- Floating Create Offer Button (Mobile only) -->
-<button matFab (click)="openCreateOffer()" class="create-offer-fab" aria-label="Create Offer">
+<button matFab (click)="openCreateOffer()" class="create-offer-fab" i18n-aria-label aria-label="Create Offer">
   <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
 </button>
 
@@ -81,7 +81,7 @@
   extended
   (click)="openCreateOffer()"
   class="create-offer-fab-desktop"
-  aria-label="Create Offer"
+  i18n-aria-label aria-label="Create Offer"
 >
   <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
   Create Offer

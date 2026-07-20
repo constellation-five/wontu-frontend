@@ -4,7 +4,7 @@
       <app-timeline-bar [items]="timelineItems()" [currentStep]="currentStep()" />
     </app-pane>
 
-    <app-pane title="Customers">
+    <app-pane i18n-title title="Customers">
       @if (orders().length > 0) {
         <mat-accordion multi>
           @for (order of orders(); track order.offer_buyer_id) {
@@ -61,11 +61,11 @@
           }
         </mat-accordion>
       } @else if (!isLoading()) {
-        <p class="mat-font-body-md mat-text-on-surface-variant">No customers have joined yet.</p>
+        <p class="mat-font-body-md mat-text-on-surface-variant" i18n>No customers have joined yet.</p>
       }
     </app-pane>
 
-    <app-pane title="Payment Methods">
+    <app-pane i18n-title title="Payment Methods">
       @if (paymentMethods().length > 0) {
         <div class="payment-methods-list">
           @for (method of paymentMethods(); track method.payment_method_id) {
@@ -73,7 +73,7 @@
           }
         </div>
       } @else {
-        <p class="mat-font-body-md mat-text-on-surface-variant">No payment methods enabled.</p>
+        <p class="mat-font-body-md mat-text-on-surface-variant" i18n>No payment methods enabled.</p>
       }
     </app-pane>
   </div>
@@ -115,7 +115,7 @@
       </div>
     </app-pane>
 
-    <app-pane title="Item Summary" class="item-summary-pane">
+    <app-pane i18n-title title="Item Summary" class="item-summary-pane">
       <div class="items-list">
         @for (item of offer().items; track item.item_id) {
           <app-cart-item-card

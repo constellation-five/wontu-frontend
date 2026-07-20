@@ -1,11 +1,11 @@
 <div class="item-dialog">
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Item link (optional)</mat-label>
-    <input matInput [formField]="form.item_url" placeholder="https://..." />
+    <mat-label i18n>Item link (optional)</mat-label>
+    <input matInput [formField]="form.item_url" i18n-placeholder placeholder="https://..." />
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Item name</mat-label>
+    <mat-label i18n>Item name</mat-label>
     <input matInput [formField]="form.item_name" />
     @if (form.item_name().invalid() && form.item_name().touched()) {
       <mat-error>{{ form.item_name().errors()[0]?.message }}</mat-error>
@@ -14,8 +14,8 @@
 
   <div class="price-quantity">
     <mat-form-field appearance="outline" class="price">
-      <mat-label>Price</mat-label>
-      <span matTextPrefix>Rp&nbsp;</span>
+      <mat-label i18n>Price</mat-label>
+      <span matTextPrefix i18n>Rp&nbsp;</span>
       <input matInput type="number" [formField]="form.item_price" />
       @if (form.item_price().invalid() && form.item_price().touched()) {
         <mat-error>{{ form.item_price().errors()[0]?.message }}</mat-error>

@@ -1,5 +1,5 @@
 <div class="section">
-  <h3 class="section-title mat-font-label-lg mat-text-on-surface-variant">Seller</h3>
+  <h3 class="section-title mat-font-label-lg mat-text-on-surface-variant" i18n>Seller</h3>
   @if (owner(); as owner) {
     <button class="member-row" type="button" (click)="memberClick.emit(owner.user_id)">
       @if (owner.avatar) {
@@ -15,7 +15,7 @@
 </div>
 
 <div class="section">
-  <h3 class="section-title mat-font-label-lg mat-text-on-surface-variant">Members</h3>
+  <h3 class="section-title mat-font-label-lg mat-text-on-surface-variant" i18n>Members</h3>
   @for (member of members(); track member.user_id) {
     <button class="member-row" type="button" (click)="memberClick.emit(member.user_id)">
       @if (member.avatar) {
@@ -28,6 +28,6 @@
       <span class="member-name mat-font-body-md mat-text-on-surface">{{ member.name }}</span>
     </button>
   } @empty {
-    <p class="empty-label mat-font-body-sm mat-text-on-surface-variant">No members yet.</p>
+    <p class="empty-label mat-font-body-sm mat-text-on-surface-variant" i18n>No members yet.</p>
   }
 </div>

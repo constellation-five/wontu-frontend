@@ -14,10 +14,10 @@
   } @else {
     <div class="upload-area" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
       <mat-icon fontSet="material-symbols-outlined" class="upload-icon">note_add</mat-icon>
-      <button matButton="tonal" appButtonSize="xs" type="button" (click)="fileInput.click()">
+      <button matButton="tonal" appButtonSize="xs" type="button" (click)="fileInput.click()" i18n>
         Browse
       </button>
-      <p class="mat-font-body-sm mat-text-on-surface-variant">or drag here to upload</p>
+      <p class="mat-font-body-sm mat-text-on-surface-variant" i18n>or drag here to upload</p>
       <p class="mat-font-body-sm mat-text-on-surface-variant">
         Format: {{ accept() }} | Max. {{ maxSizeMb() }} MB
       </p>

@@ -5,7 +5,7 @@
   [matMenuTriggerFor]="notificationMenu"
   class="notification-button"
   (menuOpened)="onPanelOpen()"
-  aria-label="Open notifications"
+  i18n-aria-label aria-label="Open notifications"
 >
   <mat-icon
     fontSet="material-symbols-outlined"
@@ -39,7 +39,7 @@
       [tabIndex]="notificationService.notifications().length === 0 ? -1 : 0"
       matTooltip="Clear all"
       (click)="onClearAll()"
-      aria-label="Clear all notifications"
+      i18n-aria-label aria-label="Clear all notifications"
     >
       <mat-icon fontSet="material-symbols-outlined">delete_sweep</mat-icon>
     </button>

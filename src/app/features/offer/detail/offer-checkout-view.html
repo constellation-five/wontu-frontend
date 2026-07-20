@@ -30,7 +30,7 @@
         <div class="tablet-only-action">
           <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
             <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-            <span>Chat</span>
+            <span i18n>Chat</span>
           </button>
         </div>
       </div>
@@ -54,7 +54,7 @@
     </app-pane>
 
     <!-- 3. Cart (No Buttons) -->
-    <app-pane title="Cart">
+    <app-pane i18n-title title="Cart">
       @if (cartItems().length > 0) {
         <div class="cart-items-container">
           @for (item of cartItems(); track item.item.item_id) {
@@ -63,13 +63,13 @@
         </div>
       } @else {
         <div class="empty-cart-container">
-          <img src="assets/img/wontusad.svg" alt="Empty cart" class="empty-cart-icon" />
-          <p class="mat-font-body-md mat-text-on-surface-variant">You have no items.</p>
+          <img src="assets/img/wontusad.svg" i18n-alt alt="Empty cart" class="empty-cart-icon" />
+          <p class="mat-font-body-md mat-text-on-surface-variant" i18n>You have no items.</p>
         </div>
       }
 
       <div class="cart-total">
-        <span class="mat-font-body-lg mat-text-on-surface">Total</span>
+        <span class="mat-font-body-lg mat-text-on-surface" i18n>Total</span>
         <span class="mat-font-body-lg mat-text-on-surface text-bold">
           Rp {{ totalPrice() | number: '1.0-0' }}
         </span>
@@ -87,11 +87,11 @@
               (click)="cancelOrder.emit()"
             >
               <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-              <span>Cancel order</span>
+              <span i18n>Cancel order</span>
             </button>
             <button matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
               <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-              <span>Edit order</span>
+              <span i18n>Edit order</span>
             </button>
           </div>
         }
@@ -99,7 +99,7 @@
     </app-pane>
 
     <!-- 4. Payment Methods -->
-    <app-pane title="Payment Methods">
+    <app-pane i18n-title title="Payment Methods">
       @if (paymentMethods().length > 0) {
         <div class="payment-methods-list">
           @for (method of paymentMethods(); track method.payment_method_id) {
@@ -114,7 +114,7 @@
 
       <!-- Proof of Payment -->
       <div class="proof-section">
-        <h3 class="mat-font-title-md mat-text-on-surface proof-title">Proof of payment</h3>
+        <h3 class="mat-font-title-md mat-text-on-surface proof-title" i18n>Proof of payment</h3>
 
         <div class="proof-upload-container">
           @if (myOrder()?.payment_submitted_at) {
@@ -157,7 +157,7 @@
         </app-pane>
 
         <!-- Payment Pane -->
-        <app-pane title="Payment">
+        <app-pane i18n-title title="Payment">
           <!-- Payment Methods List -->
           @if (paymentMethods().length > 0) {
             <div class="payment-methods-list">
@@ -173,7 +173,7 @@
 
           <!-- Proof of Payment Section -->
           <div class="proof-section">
-            <h3 class="mat-font-title-md mat-text-on-surface proof-title">Proof of payment</h3>
+            <h3 class="mat-font-title-md mat-text-on-surface proof-title" i18n>Proof of payment</h3>
 
             <div class="proof-upload-container">
               @if (myOrder()?.payment_submitted_at) {
@@ -240,7 +240,7 @@
             </div>
             <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
               <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-              <span>Chat</span>
+              <span i18n>Chat</span>
             </button>
           </div>
 
@@ -258,7 +258,7 @@
         </app-pane>
 
         <!-- Cart Pane -->
-        <app-pane title="Cart">
+        <app-pane i18n-title title="Cart">
           @if (cartItems().length > 0) {
             <div class="cart-items-container">
               @for (item of cartItems(); track item.item.item_id) {
@@ -267,14 +267,14 @@
             </div>
           } @else {
             <div class="empty-cart-container">
-              <img src="assets/img/wontusad.svg" alt="Empty cart" class="empty-cart-icon" />
-              <p class="mat-font-body-md mat-text-on-surface-variant">You have no items.</p>
+              <img src="assets/img/wontusad.svg" i18n-alt alt="Empty cart" class="empty-cart-icon" />
+              <p class="mat-font-body-md mat-text-on-surface-variant" i18n>You have no items.</p>
             </div>
           }
 
           <div class="cart-footer">
             <div class="cart-total">
-              <span class="mat-font-body-lg mat-text-on-surface">Total</span>
+              <span class="mat-font-body-lg mat-text-on-surface" i18n>Total</span>
               <span class="mat-font-body-lg mat-text-on-surface text-bold">
                 Rp {{ totalPrice() | number: '1.0-0' }}
               </span>
@@ -288,11 +288,11 @@
                   (click)="cancelOrder.emit()"
                 >
                   <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-                  <span>Cancel order</span>
+                  <span i18n>Cancel order</span>
                 </button>
                 <button matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
                   <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-                  <span>Edit order</span>
+                  <span i18n>Edit order</span>
                 </button>
               </div>
             }
@@ -312,7 +312,7 @@
     }
     <button matButton="tonal" appButtonSize="sm" class="chat-action-btn" (click)="openChat.emit()">
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-      <span>Chat</span>
+      <span i18n>Chat</span>
     </button>
     @if (!isOfferClosed()) {
       <div class="bottom-actions-row">
@@ -324,7 +324,7 @@
           (click)="cancelOrder.emit()"
         >
           <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-          <span>Cancel order</span>
+          <span i18n>Cancel order</span>
         </button>
         <button
           matButton="tonal"
@@ -333,7 +333,7 @@
           (click)="editOrder.emit()"
         >
           <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-          <span>Edit order</span>
+          <span i18n>Edit order</span>
         </button>
       </div>
     }

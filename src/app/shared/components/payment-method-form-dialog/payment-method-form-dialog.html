@@ -3,33 +3,33 @@
 <mat-dialog-content>
   <form [formGroup]="form" class="method-form">
     <mat-form-field appearance="outline">
-      <mat-label>Bank Name</mat-label>
+      <mat-label i18n>Bank Name</mat-label>
       <mat-select formControlName="bank_name">
-        <mat-option value="Bank Central Asia">Bank Central Asia</mat-option>
-        <mat-option value="Bank Negara Indonesia">Bank Negara Indonesia</mat-option>
-        <mat-option value="Bank Rakyat Indonesia">Bank Rakyat Indonesia</mat-option>
-        <mat-option value="Bank Mandiri">Bank Mandiri</mat-option>
+        <mat-option value="Bank Central Asia" i18n>Bank Central Asia</mat-option>
+        <mat-option value="Bank Negara Indonesia" i18n>Bank Negara Indonesia</mat-option>
+        <mat-option value="Bank Rakyat Indonesia" i18n>Bank Rakyat Indonesia</mat-option>
+        <mat-option value="Bank Mandiri" i18n>Bank Mandiri</mat-option>
       </mat-select>
       @if (form.get('bank_name')?.hasError('required') && form.get('bank_name')?.touched) {
-        <mat-error>Bank name is required</mat-error>
+        <mat-error i18n>Bank name is required</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Account Name</mat-label>
-      <input matInput formControlName="account_name" placeholder="Enter Account Name" />
+      <mat-label i18n>Account Name</mat-label>
+      <input matInput formControlName="account_name" i18n-placeholder placeholder="Enter Account Name" />
       @if (form.get('account_name')?.hasError('required') && form.get('account_name')?.touched) {
-        <mat-error>Account name is required</mat-error>
+        <mat-error i18n>Account name is required</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Account Number</mat-label>
-      <input matInput type="tel" formControlName="account_number" placeholder="Enter Account Number" />
+      <mat-label i18n>Account Number</mat-label>
+      <input matInput type="tel" formControlName="account_number" i18n-placeholder placeholder="Enter Account Number" />
       @if (form.get('account_number')?.hasError('required') && form.get('account_number')?.touched) {
-        <mat-error>Account number is required</mat-error>
+        <mat-error i18n>Account number is required</mat-error>
       } @else if (form.get('account_number')?.hasError('pattern') && form.get('account_number')?.touched) {
-        <mat-error>Account number must contain only numbers</mat-error>
+        <mat-error i18n>Account number must contain only numbers</mat-error>
       }
     </mat-form-field>
   </form>
@@ -46,13 +46,13 @@
       (click)="openDeleteConfirm()"
     >
       <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
-      <span>Delete</span>
+      <span i18n>Delete</span>
     </button>
   }
 
   <div class="spacer"></div>
 
-  <button type="button" matButton="outlined" appButtonSize="sm" mat-dialog-close>Cancel</button>
+  <button type="button" matButton="outlined" appButtonSize="sm" mat-dialog-close i18n>Cancel</button>
 
   <button
     matButton="filled"

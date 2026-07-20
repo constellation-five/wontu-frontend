@@ -1,7 +1,7 @@
 <div class="rating-dialog">
   <!-- Header -->
   <div class="dialog-header">
-    <h2 class="dialog-title mat-font-headline-sm mat-text-on-surface">Customer Ratings</h2>
+    <h2 class="dialog-title mat-font-headline-sm mat-text-on-surface" i18n>Customer Ratings</h2>
     <button class="close-btn" (click)="close()">
       <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
     </button>
@@ -9,7 +9,7 @@
 
   <!-- Content -->
   @if (isLoading()) {
-    <div class="loading-state mat-font-body-md mat-text-on-surface-variant">Loading...</div>
+    <div class="loading-state mat-font-body-md mat-text-on-surface-variant" i18n>Loading...</div>
   } @else if (ratingData(); as data) {
     <div class="rating-content">
       <!-- Average Rating Display -->
@@ -49,7 +49,7 @@
       </div>
     </div>
   } @else {
-    <div class="empty-state mat-font-body-md mat-text-on-surface-variant">
+    <div class="empty-state mat-font-body-md mat-text-on-surface-variant" i18n>
       No rating data available
     </div>
   }

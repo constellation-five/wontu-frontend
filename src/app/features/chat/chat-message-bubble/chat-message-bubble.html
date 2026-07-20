@@ -32,13 +32,17 @@
       @if (showInfo()) {
         <div class="message-meta">
           <span class="meta-name mat-font-label-sm mat-text-on-surface">
-            {{ isOwn() ? 'You' : message().sender?.name }}
+            @if (isOwn()) {
+              <span i18n>You</span>
+            } @else {
+              {{ message().sender?.name }}
+            }
           </span>
           <span class="meta-time mat-font-label-sm mat-text-on-surface-variant">
             @if (message().created_at) {
               {{ message().created_at | naturalDateTime: undefined : false : timeTick.now() }}
             } @else {
-              Sending
+              <span i18n>Sending</span>
             }
           </span>
           @if (targetLabel()) {
@@ -57,7 +61,7 @@
         @if (message().image_url) {
           <img 
             [src]="message().image_url" 
-            alt="Attachment" 
+            i18n-alt i18n-alt alt="Attachment" 
             class="bubble-image clickable-image" 
             (click)="openImagePreview()"
           />

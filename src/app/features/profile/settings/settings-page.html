@@ -1,11 +1,11 @@
 <app-pane>
-  <h2 class="page-title mat-title-large mat-text-on-surface">Settings</h2>
+  <h2 class="page-title mat-title-large mat-text-on-surface" i18n>Settings</h2>
 
   <div class="settings-container">
     <!-- Notification Settings Section -->
     <section class="settings-section">
-      <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface">Notification Settings</h3>
-      <p class="section-desc mat-font-body-sm mat-text-on-surface-variant">
+      <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface" i18n>Notification Settings</h3>
+      <p class="section-desc mat-font-body-sm mat-text-on-surface-variant" i18n>
         We may still send you important notifications about your account outside of your notification settings.
       </p>
 
@@ -14,8 +14,8 @@
         <div class="notification-header">
           <div class="header-spacer"></div>
           <div class="header-toggles">
-            <span class="header-label mat-font-body-md mat-text-on-surface-variant">Push</span>
-            <span class="header-label mat-font-body-md mat-text-on-surface-variant">Email</span>
+            <span class="header-label mat-font-body-md mat-text-on-surface-variant" i18n>Push</span>
+            <span class="header-label mat-font-body-md mat-text-on-surface-variant" i18n>Email</span>
           </div>
         </div>
 
@@ -47,13 +47,13 @@
 
     <!-- Language Settings Section -->
     <section class="settings-section">
-      <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface">Language Settings</h3>
+      <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface" i18n>Language Settings</h3>
       
       <mat-form-field appearance="outline" class="language-select">
         <mat-select
           [value]="selectedLanguage()"
           (selectionChange)="changeLanguage($event.value)"
-          placeholder="Select Language"
+          i18n-placeholder placeholder="Select Language"
         >
           @for (lang of languages; track lang.value) {
             <mat-option [value]="lang.value">{{ lang.label }}</mat-option>
@@ -65,7 +65,7 @@
     <!-- Dark Mode Section -->
     <section class="settings-section">
       <div class="dark-mode-header">
-        <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface">Dark Mode</h3>
+        <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface" i18n>Dark Mode</h3>
         <mat-slide-toggle
           [checked]="darkMode()"
           (change)="toggleDarkMode()"
@@ -73,7 +73,7 @@
           class="dark-mode-toggle"
         ></mat-slide-toggle>
       </div>
-      <p class="section-desc mat-font-body-sm mat-text-on-surface-variant">
+      <p class="section-desc mat-font-body-sm mat-text-on-surface-variant" i18n>
         Switch to a darker theme to reduce eye strain in low-light environments.
       </p>
     </section>

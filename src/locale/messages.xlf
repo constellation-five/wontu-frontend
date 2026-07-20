@@ -1,0 +1,1281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="6660523544159958649" datatype="html">
+        <source>Wontu Logo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/auth/auth-layout.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4768749765465246664" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/auth/complete-sign-up-page.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
+          <context context-type="linenumber">18,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8953033926734869941" datatype="html">
+        <source>Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/auth/complete-sign-up-page.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3133908433450242842" datatype="html">
+        <source>Your display name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/auth/complete-sign-up-page.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5248717555542428023" datatype="html">
+        <source>Username</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/auth/complete-sign-up-page.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8375100250906616361" datatype="html">
+        <source>Enter a unique username</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/auth/complete-sign-up-page.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1371673157993746391" datatype="html">
+        <source>*required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/auth/complete-sign-up-page.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7203320122205058413" datatype="html">
+        <source> Sign up </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/auth/complete-sign-up-page.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2517285658005471643" datatype="html">
+        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>login<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Sign in with Google </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/auth/sign-in-page.html</context>
+          <context context-type="linenumber">3,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6967248691718982330" datatype="html">
+        <source> By signing in, you agree to our <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/terms&quot;&gt;"/>Terms of Service<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> and <x id="START_LINK_1" equiv-text="&lt;a routerLink=&quot;/privacy&quot;&gt;"/>Privacy Policy<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/auth/sign-in-page.html</context>
+          <context context-type="linenumber">8,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6788358286201282167" datatype="html">
+        <source>Chat Information</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-info-dialog/chat-info-dialog.html</context>
+          <context context-type="linenumber">1,3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/group/offer-chat-page.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7819314041543176992" datatype="html">
+        <source>Close</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-info-dialog/chat-info-dialog.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6545950307584910634" datatype="html">
+        <source>Seller</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-information-pane/chat-information-pane.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4691887509600985309" datatype="html">
+        <source>Members</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-information-pane/chat-information-pane.html</context>
+          <context context-type="linenumber">18,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5999408820615397556" datatype="html">
+        <source>No members yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-information-pane/chat-information-pane.html</context>
+          <context context-type="linenumber">31,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="720557322859638078" datatype="html">
+        <source>You</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-message-bubble/chat-message-bubble.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5548366871187814561" datatype="html">
+        <source>Sending</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-message-bubble/chat-message-bubble.html</context>
+          <context context-type="linenumber">45,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3829669008932370621" datatype="html">
+        <source>Attachment</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-message-bubble/chat-message-bubble.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2810733317007070279" datatype="html">
+        <source>No messages yet. Say hello!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-thread/chat-thread.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="265872179561961102" datatype="html">
+        <source>Selected attachment</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-thread/chat-thread.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5566643888542162556" datatype="html">
+        <source>Remove attachment</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-thread/chat-thread.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7303761131714824582" datatype="html">
+        <source>Send to</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-thread/chat-thread.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4208646958955323520" datatype="html">
+        <source>Type a message</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-thread/chat-thread.html</context>
+          <context context-type="linenumber">73,74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2851884518340083917" datatype="html">
+        <source>Attach image</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-thread/chat-thread.html</context>
+          <context context-type="linenumber">86,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6490688569532630280" datatype="html">
+        <source>Send</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/chat/chat-thread/chat-thread.html</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5638468918316147565" datatype="html">
+        <source>No Order History</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/history/history-page.html</context>
+          <context context-type="linenumber">6,7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5737442884029512995" datatype="html">
+        <source>You haven&apos;t placed any orders yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/history/history-page.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5723175525829747808" datatype="html">
+        <source> Browse Offers </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/history/history-page.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3420407076689629547" datatype="html">
+        <source>Your Offers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/history/history-page.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9021467478245593474" datatype="html">
+        <source> Manage Offer </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/history/history-page.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1826669351966120226" datatype="html">
+        <source>Your Orders</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/history/history-page.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5286620359229393771" datatype="html">
+        <source> View Details </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/history/history-page.html</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6100138174240016562" datatype="html">
+        <source>Item link (optional)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3246467004668431059" datatype="html">
+        <source>https://...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7711245667123213632" datatype="html">
+        <source>Item name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8894377483833272091" datatype="html">
+        <source>Price</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7210559991153582529" datatype="html">
+        <source>Rp </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3490413854487460802" datatype="html">
+        <source>Offer Information</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1806667489382256324" datatype="html">
+        <source>Category</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3442817686340943129" datatype="html">
+        <source>Food</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8693603235657020323" datatype="html">
+        <source>Other</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8421927253335404579" datatype="html">
+        <source>Merchant</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3924943363782543039" datatype="html">
+        <source>Merchant name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3973931101896534797" datatype="html">
+        <source>Date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8497528947328199741" datatype="html">
+        <source>Time</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="836313109940247225" datatype="html">
+        <source>Payment Methods</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">90,91</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
+          <context context-type="linenumber">68,69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/payment-method/payment-method-page.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4496332663920624461" datatype="html">
+        <source>No payment methods</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">74,75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7972068564753270287" datatype="html">
+        <source>You have no payment methods.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">75,76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5802735201456620000" datatype="html">
+        <source>Item Summary</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">92,93</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5324147361912094446" datatype="html">
+        <source>Edit item</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">111,112</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="559616104966742986" datatype="html">
+        <source>No items</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">126,127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5394188582994379137" datatype="html">
+        <source>No items added yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">127,128</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3275239776547622459" datatype="html">
+        <source>Add Notes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/edit-notes-dialog.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8104421162933956065" datatype="html">
+        <source>Notes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/edit-notes-dialog.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8947499733306539209" datatype="html">
+        <source>Add your notes here...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/edit-notes-dialog.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2299187798995800780" datatype="html">
+        <source>Chat</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">231,232</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">285,286</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4398863504443682316" datatype="html">
+        <source>Cart</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">238</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3536475133437570546" datatype="html">
+        <source>Empty cart</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">246</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.html</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6070836254344695075" datatype="html">
+        <source>You have no items.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">55,56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">247,248</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3448462145758383019" datatype="html">
+        <source>Total</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">60,61</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">253,254</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
+          <context context-type="linenumber">102,103</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.html</context>
+          <context context-type="linenumber">97,98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6250742806431534479" datatype="html">
+        <source>Cancel order</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">267,268</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">297,298</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5144500553106830489" datatype="html">
+        <source>Edit order</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">82,83</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">271,272</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">306,307</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4882758884531066374" datatype="html">
+        <source>Proof of payment</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">105,107</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">164,166</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4892553839051604445" datatype="html">
+        <source>Payment</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">148,149</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3876817882764149340" datatype="html">
+        <source>Offer closes at</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7362380391516850942" datatype="html">
+        <source>Items arrive at</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6165610455390034144" datatype="html">
+        <source>You have no items yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
+          <context context-type="linenumber">96,97</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.html</context>
+          <context context-type="linenumber">91,92</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1541035388696902116" datatype="html">
+        <source>View Cart</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
+          <context context-type="linenumber">151,153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2839169248416475627" datatype="html">
+        <source> Food </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-page.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8605967835704545279" datatype="html">
+        <source> Other </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-page.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8811587903787462970" datatype="html">
+        <source>Loading offers...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8541799753078327638" datatype="html">
+        <source>View Offer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="367330087185946084" datatype="html">
+        <source>No offers available</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
+          <context context-type="linenumber">69,70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8475504322225170376" datatype="html">
+        <source>Create Offer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
+          <context context-type="linenumber">74,75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
+          <context context-type="linenumber">84,86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8634025124141616528" datatype="html">
+        <source>Customers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="404947696695291150" datatype="html">
+        <source>No customers have joined yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4798777550477579659" datatype="html">
+        <source>No payment methods enabled.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
+          <context context-type="linenumber">76,77</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8069236030483721351" datatype="html">
+        <source>Loading data...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/payment-method/payment-method-page.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4627725927234237190" datatype="html">
+        <source>No Data</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/payment-method/payment-method-page.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1856824875131290705" datatype="html">
+        <source>No payment methods yet.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/payment-method/payment-method-page.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7116797168952748212" datatype="html">
+        <source>Add some!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/payment-method/payment-method-page.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1933914522140491059" datatype="html">
+        <source>Add payment method</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/payment-method/payment-method-page.html</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4086606389696938932" datatype="html">
+        <source>Account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4915431133669985304" datatype="html">
+        <source>Profile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="813005065795574681" datatype="html">
+        <source> This information will be displayed publicly so be careful what you share. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6411448806393999934" datatype="html">
+        <source>Enter name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3833692663709091545" datatype="html">
+        <source>Name is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3620188369327429839" datatype="html">
+        <source> Save </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5762208451608373302" datatype="html">
+        <source>Enter username</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3702338872876040900" datatype="html">
+        <source>Username is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3465962430409924123" datatype="html">
+        <source>Personal Information</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">92,93</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8288999479592178985" datatype="html">
+        <source> This information is only displayed to you. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3967269098753656610" datatype="html">
+        <source>Email address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4914577418256256836" datatype="html">
+        <source>Followers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/followers/followers-page.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3894950702316166331" datatype="html">
+        <source>Loading...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/followers/followers-page.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/following/following-page.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/rating/rating-dialog.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4580988005648117665" datatype="html">
+        <source>Search</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/followers/followers-page.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/following/following-page.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6744074839912035158" datatype="html">
+        <source> No followers found </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/followers/followers-page.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8726138323871139597" datatype="html">
+        <source>Following</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/following/following-page.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2078315663370643770" datatype="html">
+        <source> Following </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/following/following-page.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8521071615839750104" datatype="html">
+        <source> No following found </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/following/following-page.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3706222784708785028" datatype="html">
+        <source>Rating</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
+          <context context-type="linenumber">44,45</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2949848596707725099" datatype="html">
+        <source>Sign out</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
+          <context context-type="linenumber">81,82</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/navbar/navbar.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4562415420394460770" datatype="html">
+        <source>Customer Ratings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/rating/rating-dialog.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4573950527554944695" datatype="html">
+        <source> No rating data available </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/rating/rating-dialog.html</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4930506384627295710" datatype="html">
+        <source>Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1622181844113244655" datatype="html">
+        <source>Notification Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
+          <context context-type="linenumber">7,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7428526922812784790" datatype="html">
+        <source> We may still send you important notifications about your account outside of your notification settings. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
+          <context context-type="linenumber">9,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7501722761944013926" datatype="html">
+        <source>Push</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
+          <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="568789094614378234" datatype="html">
+        <source>Language Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
+          <context context-type="linenumber">50,51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="487077452159084336" datatype="html">
+        <source>Select Language</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
+          <context context-type="linenumber">56,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3279636347259347513" datatype="html">
+        <source>Dark Mode</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
+          <context context-type="linenumber">68,69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="614869592036089518" datatype="html">
+        <source> Switch to a darker theme to reduce eye strain in low-light environments. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7808678925665188385" datatype="html">
+        <source>Edit Request</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-card/request-card.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1424077203662340191" datatype="html">
+        <source> Create offer </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-card/request-card.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3591764106361364907" datatype="html">
+        <source> Item arrive at </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5499053678003162181" datatype="html">
+        <source>Loading requests...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-page.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6925034527714873714" datatype="html">
+        <source>Ongoing</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-page.html</context>
+          <context context-type="linenumber">43,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7040288612202036661" datatype="html">
+        <source>Others</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-page.html</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8369364791381337013" datatype="html">
+        <source>No requests available</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-page.html</context>
+          <context context-type="linenumber">90,91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7519001245347792187" datatype="html">
+        <source>Create Request</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-page.html</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-page.html</context>
+          <context context-type="linenumber">102,103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5093913984358284289" datatype="html">
+        <source> Browse </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/file-drop-upload/file-drop-upload.html</context>
+          <context context-type="linenumber">18,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6526705227262475509" datatype="html">
+        <source>or drag here to upload</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/file-drop-upload/file-drop-upload.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5095379865862868675" datatype="html">
+        <source>Choose Your Location</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/location-picker-dialog/location-picker-dialog.html</context>
+          <context context-type="linenumber">1,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1785004293511605671" datatype="html">
+        <source>Search for a building or address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/location-picker-dialog/location-picker-dialog.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5784148293777218417" datatype="html">
+        <source>Loading map...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/location-picker-dialog/location-picker-dialog.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2159130950882492111" datatype="html">
+        <source>Cancel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/location-picker-dialog/location-picker-dialog.html</context>
+          <context context-type="linenumber">58,59</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">55,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1348774649041038169" datatype="html">
+        <source>Navigation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/navbar/navbar.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4550958265168690830" datatype="html">
+        <source>Logo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/navbar/navbar.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6525109356951792180" datatype="html">
+        <source>Avatar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/navbar/navbar.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5207635742003539443" datatype="html">
+        <source>Sign in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/navbar/navbar.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1953071641502692330" datatype="html">
+        <source>Open notifications</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/notification-bell/notification-bell.html</context>
+          <context context-type="linenumber">8,10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8399299127439161302" datatype="html">
+        <source>Clear all notifications</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/notification-bell/notification-bell.html</context>
+          <context context-type="linenumber">42,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8348072798509355617" datatype="html">
+        <source>Dismiss notification</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/notification-stack/notification-stack.html</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5851560788527570644" datatype="html">
+        <source>Notifications</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/notification-toast/notification-toast.html</context>
+          <context context-type="linenumber">1,2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3702927094547371840" datatype="html">
+        <source>Bank Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6080044852595835173" datatype="html">
+        <source>Bank Central Asia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8140436812650500499" datatype="html">
+        <source>Bank Negara Indonesia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1487997335956252834" datatype="html">
+        <source>Bank Rakyat Indonesia</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1192620998408453713" datatype="html">
+        <source>Bank Mandiri</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2226300862840574002" datatype="html">
+        <source>Bank name is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8295307499209125996" datatype="html">
+        <source>Account Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="35787440066853795" datatype="html">
+        <source>Enter Account Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">20,21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4701177159602320759" datatype="html">
+        <source>Account name is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6424164076261744306" datatype="html">
+        <source>Account Number</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1979939281076662240" datatype="html">
+        <source>Enter Account Number</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1720395894229362332" datatype="html">
+        <source>Account number is required</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4937898518313451065" datatype="html">
+        <source>Account number must contain only numbers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7022070615528435141" datatype="html">
+        <source>Delete</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3643866539136239218" datatype="html">
+        <source>Clear search</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/search-bar/search-bar.html</context>
+          <context context-type="linenumber">17,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5259580604136479408" datatype="html">
+        <source>Preview image</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/upload-file-card/upload-file-card.html</context>
+          <context context-type="linenumber">19,21</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

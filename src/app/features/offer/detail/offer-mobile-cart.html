@@ -5,16 +5,16 @@
 } @else {
   <div class="mobile-cart-container">
     <!-- Offer Information Pane -->
-    <app-pane title="Offer Information">
+    <app-pane i18n-title title="Offer Information">
       <div class="info-rows">
         <div class="info-row">
-          <span class="mat-font-body-md mat-text-on-surface-variant">Offer closes at</span>
+          <span class="mat-font-body-md mat-text-on-surface-variant" i18n>Offer closes at</span>
           <span class="mat-font-body-md mat-text-on-surface text-bold">
             {{ formatDate(offer()!.closing_time) }}
           </span>
         </div>
         <div class="info-row">
-          <span class="mat-font-body-md mat-text-on-surface-variant">Items arrive at</span>
+          <span class="mat-font-body-md mat-text-on-surface-variant" i18n>Items arrive at</span>
           <span class="mat-font-body-md mat-text-on-surface text-bold">
             {{ formatDate(offer()!.arrival_time) }}
           </span>
@@ -39,7 +39,7 @@
     </app-pane>
 
     <!-- Cart Pane -->
-    <app-pane title="Cart">
+    <app-pane i18n-title title="Cart">
       @if (cartItems().length > 0) {
         <div class="cart-items-container">
           @for (cartItem of cartItems(); track cartItem.item.item_id) {
@@ -87,14 +87,14 @@
         </div>
       } @else {
         <div class="empty-cart-container">
-          <img src="assets/img/wontusad.svg" alt="Empty cart" class="empty-cart-icon" />
-          <p class="mat-font-body-md mat-text-on-surface-variant">You have no items yet.</p>
+          <img src="assets/img/wontusad.svg" i18n-alt alt="Empty cart" class="empty-cart-icon" />
+          <p class="mat-font-body-md mat-text-on-surface-variant" i18n>You have no items yet.</p>
         </div>
       }
 
       <div class="cart-footer">
         <div class="cart-total">
-          <span class="mat-font-body-lg mat-text-on-surface">Total</span>
+          <span class="mat-font-body-lg mat-text-on-surface" i18n>Total</span>
           <span class="mat-font-body-lg mat-text-on-surface text-bold">
             Rp {{ totalPrice() | number: '1.0-0' }}
           </span>

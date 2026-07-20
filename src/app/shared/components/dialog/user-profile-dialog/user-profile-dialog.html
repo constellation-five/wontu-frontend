@@ -1,7 +1,7 @@
 <app-dialog [showClose]="true">
   <div class="profile-dialog">
     @if (isLoading()) {
-      <div class="loading-state">Loading...</div>
+      <div class="loading-state" i18n>Loading...</div>
     } @else if (profile(); as user) {
       <div class="profile-content">
         <div class="avatar-container">
@@ -21,19 +21,19 @@
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{
               formatNumber(user.followers_count)
             }}</span>
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant">Followers</span>
+            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant" i18n>Followers</span>
           </div>
           <div class="stat-item">
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{
               formatNumber(user.following_count)
             }}</span>
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant">Following</span>
+            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant" i18n>Following</span>
           </div>
           <div class="stat-item">
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface"
               >{{ user.average_rating }}/5</span
             >
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant">Rating</span>
+            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant" i18n>Rating</span>
           </div>
         </div>
 
