@@ -79,7 +79,7 @@ export class SettingsPage implements OnInit {
       id: 'offer-lifecycle',
       label: $localize`Offer status changes`,
       description:
-        "One of your offers closes automatically — either it reached its closing time or sold out.",
+        $localize`One of your offers closes automatically — either it reached its closing time or sold out.`,
     },
     {
       id: 'offer-updates',
@@ -124,7 +124,7 @@ export class SettingsPage implements OnInit {
           push: res.data.notifications[meta.id]?.push ?? false,
           email: res.data.notifications[meta.id]?.email ?? false,
         }));
-        
+
         this.notificationSettings.set(settings);
         this.selectedLanguage.set(res.data.language);
         this.darkMode.set(res.data.dark_mode);
@@ -181,7 +181,7 @@ export class SettingsPage implements OnInit {
   changeLanguage(language: string) {
     if (this.selectedLanguage() === language) return;
     this.selectedLanguage.set(language);
-    
+
     const notifications: Record<string, { push: boolean; email: boolean }> = {};
     this.notificationSettings().forEach(setting => {
       notifications[setting.id] = { push: setting.push, email: setting.email };

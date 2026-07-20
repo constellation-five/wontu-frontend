@@ -2373,6 +2373,13 @@
           <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="7375049972194124744" datatype="html">
+        <source>One of your offers closes automatically — either it reached its closing time or sold out.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4958579596055337200" datatype="html">
         <source>Offer updates</source>
         <context-group purpose="location">
