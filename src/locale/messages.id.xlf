@@ -4070,6 +4070,30 @@
         </context-group>
         <target>Mengirim sebuah gambar</target>
       </trans-unit>
+      <trans-unit id="3511663237991552175" datatype="html">
+        <source>Rate <x id="PH" equiv-text="this.data.merchantName"/></source>
+        <target>Nilai <x id="PH" equiv-text="this.data.merchantName"/></target>
+      </trans-unit>
+      <trans-unit id="9026083618139453880" datatype="html">
+        <source>Later</source>
+        <target>Nanti</target>
+      </trans-unit>
+      <trans-unit id="1014381678648847909" datatype="html">
+        <source>Give rating</source>
+        <target>Beri nilai</target>
+      </trans-unit>
+      <trans-unit id="4541746726086383583" datatype="html">
+        <source>Rating submitted successfully.</source>
+        <target>Nilai berhasil dikirim.</target>
+      </trans-unit>
+      <trans-unit id="3163968800091833485" datatype="html">
+        <source>Failed to submit rating: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <target>Gagal mengirim nilai: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></target>
+      </trans-unit>
+      <trans-unit id="935187492052582731" datatype="html">
+        <source>Submit</source>
+        <target>Kirim</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

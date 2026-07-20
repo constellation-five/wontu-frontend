@@ -744,7 +744,7 @@ export class OfferPage implements OnInit, OnDestroy {
       } else if (result && result.rating) {
         this.profileService.rateSeller(currentOffer.seller_id, result.rating, currentOffer.offer_id).subscribe({
           next: () => {
-            this.snackBar.open('Rating submitted successfully.', 'Close', { duration: 3000 });
+            this.snackBar.open($localize`Rating submitted successfully.`, $localize`Close`, { duration: 3000 });
             const updatedOffer = this.offer();
             if (updatedOffer) {
                this.offer.update(o => o ? {
@@ -757,7 +757,7 @@ export class OfferPage implements OnInit, OnDestroy {
             console.error('Failed to submit rating:', err);
             const msg = err.error?.message || 'Please try again.';
             const status = err.status ? ` (${err.status})` : '';
-            this.snackBar.open(`Failed to submit rating: ${msg}${status}`, 'Close', { duration: 5000 });
+            this.snackBar.open($localize`Failed to submit rating: ${msg}${status}`, $localize`Close`, { duration: 5000 });
           }
         });
       }

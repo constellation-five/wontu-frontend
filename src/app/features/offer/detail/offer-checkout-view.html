@@ -12,7 +12,13 @@
             </div>
             <div class="seller-rating">
               <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
-              <span class="mat-font-label-md mat-text-on-surface">@if (offer().seller.received_ratings_avg_rating) {{{ offer().seller.received_ratings_avg_rating | number: '1.1-1' }}} @else {<ng-container i18n>New</ng-container>}</span>
+              <span class="mat-font-label-md mat-text-on-surface">
+                @if (offer().seller.received_ratings_avg_rating) {
+                  {{ offer().seller.received_ratings_avg_rating | number: '1.1-1' }}
+                } @else {
+                  <ng-container i18n>New</ng-container>
+                }
+              </span>
               @if (offer().seller.received_ratings_count) {
                 <span class="mat-font-body-sm mat-text-on-surface-variant"
                   >({{ offer().seller.received_ratings_count }})</span
@@ -24,7 +30,13 @@
         <!-- The fixed mobile bottom bar covers this below $breakpoint-md; from
         there up it's hidden, so this pane needs its own Chat button. -->
         <div class="tablet-only-action">
-          <button i18n matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
+          <button
+            i18n
+            matButton="tonal"
+            appButtonSize="sm"
+            class="chat-btn"
+            (click)="openChat.emit()"
+          >
             <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
             <span>Chat</span>
           </button>
@@ -39,7 +51,7 @@
           (click)="openRating.emit()"
         >
           <mat-icon fontSet="material-symbols-outlined">star</mat-icon>
-          <span>Give rating</span>
+          <span i18n>Give rating</span>
         </button>
       }
     </app-pane>
@@ -76,7 +88,8 @@
       <div class="tablet-only-action">
         @if (!isOfferClosed()) {
           <div class="cart-actions">
-            <button i18n
+            <button
+              i18n
               matButton="outlined"
               appButtonColor="error"
               class="cancel-order-btn"
@@ -119,7 +132,8 @@
             <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
           } @else {
             <app-file-drop-upload
-              i18n-label label="Proof of payment"
+              i18n-label
+              label="Proof of payment"
               [file]="proofOfPayment()"
               (fileChange)="proofOfPaymentChange.emit($event)"
             />
@@ -127,7 +141,8 @@
         </div>
 
         @if (!myOrder()?.payment_submitted_at) {
-          <button i18n
+          <button
+            i18n
             matButton="filled"
             appButtonSize="sm"
             class="complete-payment-btn"
@@ -178,7 +193,8 @@
                 <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
               } @else {
                 <app-file-drop-upload
-                  i18n-label label="Proof of payment"
+                  i18n-label
+                  label="Proof of payment"
                   [file]="proofOfPayment()"
                   (fileChange)="proofOfPaymentChange.emit($event)"
                 />
@@ -186,7 +202,8 @@
             </div>
 
             @if (!myOrder()?.payment_submitted_at) {
-              <button i18n
+              <button
+                i18n
                 matButton="filled"
                 appButtonSize="md"
                 class="complete-payment-btn"
@@ -234,7 +251,13 @@
                 </div>
               </div>
             </div>
-            <button i18n matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
+            <button
+              i18n
+              matButton="tonal"
+              appButtonSize="sm"
+              class="chat-btn"
+              (click)="openChat.emit()"
+            >
               <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
               <span>Chat</span>
             </button>
@@ -248,7 +271,7 @@
               (click)="openRating.emit()"
             >
               <mat-icon fontSet="material-symbols-outlined">star</mat-icon>
-              <span>Give rating</span>
+              <span i18n>Give rating</span>
             </button>
           }
         </app-pane>
@@ -263,7 +286,12 @@
             </div>
           } @else {
             <div class="empty-cart-container">
-              <img src="assets/img/wontusad.svg" i18n-alt alt="Empty cart" class="empty-cart-icon" />
+              <img
+                src="assets/img/wontusad.svg"
+                i18n-alt
+                alt="Empty cart"
+                class="empty-cart-icon"
+              />
               <p class="mat-font-body-md mat-text-on-surface-variant" i18n>You have no items.</p>
             </div>
           }
@@ -277,7 +305,8 @@
             </div>
             @if (!isOfferClosed()) {
               <div class="cart-actions">
-                <button i18n
+                <button
+                  i18n
                   matButton="outlined"
                   appButtonColor="error"
                   class="cancel-order-btn"
@@ -303,16 +332,23 @@
     @if (offer().arrived_at && !offer().seller.has_rated_seller) {
       <button matButton="filled" appButtonSize="sm" (click)="openRating.emit()" style="width: 100%">
         <mat-icon fontSet="material-symbols-outlined">star</mat-icon>
-        <span>Give rating</span>
+        <span i18n>Give rating</span>
       </button>
     }
-    <button i18n matButton="tonal" appButtonSize="sm" class="chat-action-btn" (click)="openChat.emit()">
+    <button
+      i18n
+      matButton="tonal"
+      appButtonSize="sm"
+      class="chat-action-btn"
+      (click)="openChat.emit()"
+    >
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
       <span>Chat</span>
     </button>
     @if (!isOfferClosed()) {
       <div class="bottom-actions-row">
-        <button i18n
+        <button
+          i18n
           matButton="outlined"
           appButtonSize="sm"
           appButtonColor="error"
@@ -322,7 +358,8 @@
           <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
           <span>Cancel order</span>
         </button>
-        <button i18n
+        <button
+          i18n
           matButton="tonal"
           appButtonSize="sm"
           class="edit-action-btn"
