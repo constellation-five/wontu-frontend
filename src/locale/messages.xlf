@@ -90,7 +90,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3702338872876040900" datatype="html">
@@ -270,31 +270,31 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">127</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">132</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">151</context>
+          <context context-type="linenumber">152</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">159</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">167</context>
+          <context context-type="linenumber">168</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">190</context>
+          <context context-type="linenumber">191</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">197</context>
+          <context context-type="linenumber">198</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/file-drop-upload/file-drop-upload.ts</context>
@@ -719,7 +719,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/location-picker-dialog/location-picker-dialog.html</context>
@@ -742,7 +742,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.ts</context>
@@ -988,7 +988,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6558374382497746845" datatype="html">
@@ -1013,7 +1013,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8363146500432625198" datatype="html">
@@ -1077,6 +1077,27 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
           <context context-type="linenumber">362</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="334812786102206501" datatype="html">
+        <source>Offer saved successfully.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
+          <context context-type="linenumber">397</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6389112316856539015" datatype="html">
+        <source>Offer created successfully.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
+          <context context-type="linenumber">397</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5616911200648703788" datatype="html">
+        <source>Failed to save offer: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
+          <context context-type="linenumber">406</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3275239776547622459" datatype="html">
@@ -1352,6 +1373,13 @@
           <context context-type="linenumber">415</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="693715295477533448" datatype="html">
+        <source>Failed to save order: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-detail-page.ts</context>
+          <context context-type="linenumber">422</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8116121691960501697" datatype="html">
         <source>Order placed successfully.</source>
         <context-group purpose="location">
@@ -1361,6 +1389,17 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.ts</context>
           <context context-type="linenumber">302</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5780501965611343747" datatype="html">
+        <source>Failed to place order: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-detail-page.ts</context>
+          <context context-type="linenumber">435</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.ts</context>
+          <context context-type="linenumber">310</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5748392478962189166" datatype="html">
@@ -1398,11 +1437,39 @@
           <context context-type="linenumber">494</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1482918523934311083" datatype="html">
+        <source>Failed to cancel order: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-detail-page.ts</context>
+          <context context-type="linenumber">502</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7720788867999995278" datatype="html">
+        <source>Failed to open chat: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-detail-page.ts</context>
+          <context context-type="linenumber">527</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1311312876031436330" datatype="html">
+        <source>Failed to upload proof of payment: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-detail-page.ts</context>
+          <context context-type="linenumber">570</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="2160781358568926315" datatype="html">
         <source>Payment submitted successfully.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-detail-page.ts</context>
           <context context-type="linenumber">590</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8909139562859401275" datatype="html">
+        <source>Failed to submit payment: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-detail-page.ts</context>
+          <context context-type="linenumber">600</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7958041240750560294" datatype="html">
@@ -1740,6 +1807,13 @@
           <context context-type="linenumber">216</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="675972361557133769" datatype="html">
+        <source>Failed to confirm payment: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.ts</context>
+          <context context-type="linenumber">230</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="709865212230757059" datatype="html">
         <source>Offer closed successfully.</source>
         <context-group purpose="location">
@@ -1747,11 +1821,25 @@
           <context context-type="linenumber">248</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="7339268570098638232" datatype="html">
+        <source>Failed to close offer: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.ts</context>
+          <context context-type="linenumber">256</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="3588713433666932136" datatype="html">
         <source>Items marked as arrived.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.ts</context>
           <context context-type="linenumber">267</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1507619129361954391" datatype="html">
+        <source>Failed to mark items as arrived: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.ts</context>
+          <context context-type="linenumber">275</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9017409648936405698" datatype="html">
@@ -1780,6 +1868,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.ts</context>
           <context context-type="linenumber">319</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6941253652460492288" datatype="html">
+        <source>Failed to delete offer: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.ts</context>
+          <context context-type="linenumber">326</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6222596161301984019" datatype="html">
@@ -1947,6 +2042,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/account/account-page.ts</context>
           <context context-type="linenumber">122</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5490121321914003927" datatype="html">
+        <source>Failed to update profile: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.ts</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4914577418256256836" datatype="html">
@@ -2349,7 +2451,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
+          <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1424077203662340191" datatype="html">
@@ -2357,13 +2463,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-card/request-card.html</context>
           <context context-type="linenumber">47,48</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="187187500641108332" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ isEditMode ? &apos;Edit Request&apos; : &apos;Create Request&apos; }}"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.html</context>
-          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3591764106361364907" datatype="html">
@@ -2377,7 +2476,11 @@
         <source>Create Request</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-page.html</context>
@@ -2396,28 +2499,56 @@
         <source>Request deleted successfully</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2402847858801084197" datatype="html">
+        <source>Failed to delete request.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
+          <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2969719251439688537" datatype="html">
         <source>Arrival date cannot be in the past.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">151</context>
+          <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="721331496931181918" datatype="html">
         <source>Arrival time cannot be in the past.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">159</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1197534265603089524" datatype="html">
         <source>Please set your location first before creating a request.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">167</context>
+          <context context-type="linenumber">168</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8715152149916249985" datatype="html">
+        <source>Request saved successfully.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
+          <context context-type="linenumber">190</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7881849855733918421" datatype="html">
+        <source>Request created successfully.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
+          <context context-type="linenumber">190</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5453242926626726291" datatype="html">
+        <source>Failed to save request: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
+          <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2398407606701767789" datatype="html">
@@ -2464,8 +2595,8 @@
           <context context-type="linenumber">43,44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="367244073978197034" datatype="html">
-        <source>For <x id="INTERPOLATION" equiv-text="{{ req.arrival_time | naturalDateTime }}"/></source>
+      <trans-unit id="1865347317606860963" datatype="html">
+        <source>Untuk <x id="INTERPOLATION" equiv-text="{{ req.arrival_time | naturalDateTime }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-page.html</context>
           <context context-type="linenumber">48,49</context>
@@ -2547,6 +2678,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/file-drop-upload/file-drop-upload.ts</context>
           <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4017821052526352917" datatype="html">
+        <source>File size too large. Maximum size is <x id="PH" equiv-text="this.maxSizeMb()"/> MB.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/file-drop-upload/file-drop-upload.ts</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5095379865862868675" datatype="html">
@@ -2823,6 +2961,13 @@
           <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="6666103912096373536" datatype="html">
+        <source>Failed to save payment method: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="3578635596030866851" datatype="html">
         <source>Delete Payment Method</source>
         <context-group purpose="location">
@@ -2842,6 +2987,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.ts</context>
           <context context-type="linenumber">123</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5162153884435520830" datatype="html">
+        <source>Failed to delete payment method: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.ts</context>
+          <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="805021073728944072" datatype="html">
