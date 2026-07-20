@@ -65,6 +65,9 @@ export interface MyOrder {
 export interface MyOrderSummary extends MyOrder {
   offer_id: number;
   merchant_name: string;
+  location_label: string | null;
+  closed_at: string | null;
+  arrived_at: string | null;
   created_at: string;
 }
 
