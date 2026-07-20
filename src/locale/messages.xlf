@@ -2,6 +2,356 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
+      <trans-unit id="sys.offer_closed.title" datatype="html">
+        <source>Offer Closed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sys.offer_closed.desc" datatype="html">
+        <source>The <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer has been closed by the seller and is no longer accepting orders.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sys.items_arrived.title" datatype="html">
+        <source>Items Have Arrived</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sys.items_arrived.desc" datatype="html">
+        <source>The items for the <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer have arrived. This chat will close to new messages on <x id="PH_1" equiv-text="params[&apos;chat_closes_at&apos;]"/>.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sys.buyer_joined.title" datatype="html">
+        <source>Buyer Joined</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sys.buyer_joined.desc" datatype="html">
+        <source><x id="PH" equiv-text="params[&apos;user_name&apos;]"/> joined the <x id="PH_1" equiv-text="params[&apos;merchant_name&apos;]"/> offer.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sys.offer_completed.title" datatype="html">
+        <source>Offer Completed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sys.offer_completed.desc" datatype="html">
+        <source>The <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer has been marked as completed.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sys.buyer_left.title" datatype="html">
+        <source>Buyer Left</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sys.buyer_left.desc" datatype="html">
+        <source><x id="PH" equiv-text="params[&apos;user_name&apos;]"/> left the <x id="PH_1" equiv-text="params[&apos;merchant_name&apos;]"/> offer.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sys.offer_updated.title" datatype="html">
+        <source>Offer Updated</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="sys.offer_updated.desc" datatype="html">
+        <source>The <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer was updated by the seller.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.buyer_joined.title" datatype="html">
+        <source>New Buyer Joined</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.buyer_joined.desc" datatype="html">
+        <source><x id="PH" equiv-text="params[&apos;buyer_name&apos;]"/> joined your <x id="PH_1" equiv-text="params[&apos;merchant_name&apos;]"/> offer.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.buyer_removed.title" datatype="html">
+        <source>Your Order Was Removed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.buyer_removed.desc" datatype="html">
+        <source>Your order in the <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer was removed because the seller reduced the available stock (<x id="PH_1" equiv-text="params[&apos;items&apos;]"/>).</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.items_arrived.title" datatype="html">
+        <source>Items Have Arrived</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.items_arrived.desc" datatype="html">
+        <source>The items for the <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer you joined have arrived.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_auto_closed_sold_out.title" datatype="html">
+        <source>Offer Sold Out and Closed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_auto_closed_sold_out.desc" datatype="html">
+        <source>Your <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer reached its closing time fully sold out and has been closed automatically.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_closed.title" datatype="html">
+        <source>Offer Closed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_closed.desc" datatype="html">
+        <source>The <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer you joined has been closed.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_completed.title" datatype="html">
+        <source>Offer Complete!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_completed.desc" datatype="html">
+        <source>The <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer is now complete. Please proceed with payment.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_deleted.title" datatype="html">
+        <source>Offer Deleted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_deleted.desc" datatype="html">
+        <source>The <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer you joined was deleted by the seller. Your order has been cancelled.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_sold_out.title" datatype="html">
+        <source>Offer Sold Out</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_sold_out.desc" datatype="html">
+        <source>Your <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer sold out before its closing time and has been closed automatically.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.order_cancelled.title" datatype="html">
+        <source>Order Cancelled</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.order_cancelled.desc" datatype="html">
+        <source><x id="PH" equiv-text="params[&apos;buyer_name&apos;]"/> cancelled their order in your <x id="PH_1" equiv-text="params[&apos;merchant_name&apos;]"/> offer.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.order_placed.title" datatype="html">
+        <source>New Order Placed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.order_placed.desc" datatype="html">
+        <source><x id="PH" equiv-text="params[&apos;buyer_name&apos;]"/> placed an order in your <x id="PH_1" equiv-text="params[&apos;merchant_name&apos;]"/> offer.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.order_updated.title" datatype="html">
+        <source>Order Updated</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.order_updated.desc" datatype="html">
+        <source><x id="PH" equiv-text="params[&apos;buyer_name&apos;]"/> updated their order in your <x id="PH_1" equiv-text="params[&apos;merchant_name&apos;]"/> offer.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.payment_confirmed.title" datatype="html">
+        <source>Payment Confirmed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.payment_confirmed.desc" datatype="html">
+        <source>Your payment for the <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer has been confirmed by the seller.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.payment_proof.title" datatype="html">
+        <source>Payment Proof Uploaded</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.payment_proof.desc" datatype="html">
+        <source><x id="PH" equiv-text="params[&apos;buyer_name&apos;]"/> uploaded a payment proof for your <x id="PH_1" equiv-text="params[&apos;merchant_name&apos;]"/> offer.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.user_followed.title" datatype="html">
+        <source>New Follower</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.user_followed.desc" datatype="html">
+        <source><x id="PH" equiv-text="params[&apos;follower_name&apos;]"/> started following you.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">111</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.item_adjusted.title" datatype="html">
+        <source>Your Order Was Adjusted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.item_adjusted.desc" datatype="html">
+        <source>The seller reduced available stock for &apos;<x id="PH" equiv-text="params[&apos;itemName&apos;]"/>&apos; in the <x id="PH_1" equiv-text="params[&apos;merchant_name&apos;]"/> offer, so your quantity was adjusted to <x id="PH_2" equiv-text="params[&apos;newQuantity&apos;]"/>.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_edited_disruptive.title" datatype="html">
+        <source>Important Offer Changes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_edited_disruptive.desc" datatype="html">
+        <source>The <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer you joined was changed in ways that may affect your order. Please review.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_edited.title" datatype="html">
+        <source>Offer Updated</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_edited.desc" datatype="html">
+        <source>The <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer you joined was updated by the seller.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">126</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_closing_reached.title" datatype="html">
+        <source>Offer Closed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_closing_reached.desc" datatype="html">
+        <source>Your <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer&apos;s closing time was reached and it has been closed automatically, not fully sold out.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.new_chat_message.title" datatype="html">
+        <source>New message from <x id="PH" equiv-text="params[&apos;sender&apos;]"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">135</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.new_chat_message.sent_image" datatype="html">
+        <source>Sent an image</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">137</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6660523544159958649" datatype="html">
         <source>Wontu Logo</source>
         <context-group purpose="location">

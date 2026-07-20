@@ -3,6 +3,7 @@ import { Injectable, inject, signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { EchoService } from './echo.service';
+import { MessageTemplateService } from './message-template.service';
 
 export type NotificationType = 'info' | 'success' | 'warning' | 'error';
 
@@ -24,8 +25,10 @@ export interface ToastItem {
 
 interface ApiNotification {
   id: string;
-  title: string;
-  description: string;
+  template_key?: string;
+  params?: Record<string, any>;
+  title?: string;
+  description?: string;
   icon: string;
   type: NotificationType;
   action_url?: string;
@@ -33,11 +36,20 @@ interface ApiNotification {
   created_at: string;
 }
 
-function toAppNotification(raw: ApiNotification): AppNotification {
+function toAppNotification(raw: ApiNotification, messageTemplateService: MessageTemplateService): AppNotification {
+  let title = raw.title ?? 'Notification';
+  let description = raw.description ?? '';
+
+  if (raw.template_key) {
+    const resolved = messageTemplateService.resolveTemplate(raw.template_key, raw.params);
+    title = resolved.title;
+    description = resolved.description;
+  }
+
   return {
     id: raw.id,
-    title: raw.title,
-    description: raw.description,
+    title,
+    description,
     icon: raw.icon,
     type: raw.type,
     actionUrl: raw.action_url,
@@ -51,6 +63,7 @@ export class NotificationService {
   private readonly http = inject(HttpClient);
   private readonly echoService = inject(EchoService);
   private readonly router = inject(Router);
+  private readonly messageTemplateService = inject(MessageTemplateService);
 
   private readonly _notifications = signal<AppNotification[]>([]);
   private readonly _unreadCount = signal<number>(0);
@@ -71,10 +84,23 @@ export class NotificationService {
 
     this.echoService.listenToUserNotifications(userId, (data: unknown) => {
       const raw = data as Record<string, unknown>;
+      
+      let title = (raw['title'] as string) ?? 'Notification';
+      let description = (raw['description'] as string) ?? '';
+      
+      if (raw['template_key']) {
+        const resolved = this.messageTemplateService.resolveTemplate(
+          raw['template_key'] as string,
+          (raw['params'] as Record<string, any>) ?? {}
+        );
+        title = resolved.title;
+        description = resolved.description;
+      }
+
       const notification: AppNotification = {
         id: raw['id'] as string,
-        title: raw['title'] as string,
-        description: raw['description'] as string,
+        title,
+        description,
         icon: (raw['icon'] as string) ?? 'notifications',
         type: (raw['notification_type'] as NotificationType) ?? 'info',
         actionUrl: raw['action_url'] as string | undefined,
@@ -109,7 +135,7 @@ export class NotificationService {
       .get<ApiNotification[]>(`${environment.api}/notifications`)
       .subscribe({
         next: (notifications) => {
-          this._notifications.set(notifications.map(toAppNotification));
+          this._notifications.set(notifications.map(n => toAppNotification(n, this.messageTemplateService)));
           this._isLoading.set(false);
           this.listLoaded = true;
           if (this._unreadCount() > 0) {
