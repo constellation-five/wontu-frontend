@@ -29,6 +29,8 @@ import { OfferMenuView } from './offer-menu-view';
 import { OfferCheckoutView } from './offer-checkout-view';
 import ManageOfferPage from '../manage/manage-offer-page';
 import { UserProfileDialog } from '../../../shared/components/dialog/user-profile-dialog/user-profile-dialog';
+import { ProfileService } from '../../../core/profile.service';
+import { GiveRatingDialog } from '../../../shared/components/give-rating-dialog/give-rating-dialog';
 
 type OfferDetailView = 'menu' | 'checkout';
 
@@ -51,6 +53,7 @@ export class OfferPage implements OnInit, OnDestroy {
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   protected readonly pageHeader = inject(PageHeaderService);
+  private readonly profileService = inject(ProfileService);
 
   offer = signal<Offer | null>(null);
   cart = signal<Map<number, CheckoutItem>>(new Map());
@@ -133,7 +136,34 @@ export class OfferPage implements OnInit, OnDestroy {
   // Bound once so add/removeEventListener target the same reference.
   private readonly cleanupOrphanedProofBound = () => this.cleanupOrphanedProof();
 
+  private previousArrivedAt: string | null = null;
+  private isRatingDialogOpen = false;
+
   constructor() {
+    effect(() => {
+      const offer = this.offer();
+      const order = this.myOrder();
+      
+      if (offer && order) {
+        const arrivedAt = offer.arrived_at;
+        const isArrived = arrivedAt !== null;
+        const hasRated = offer.seller.has_rated_seller;
+        const offerId = offer.offer_id.toString();
+        
+        const dismissedLater = localStorage.getItem(`dismissed_rating_${offerId}`) === 'true';
+        
+        if (isArrived && !hasRated && !dismissedLater) {
+          const realTimeTransition = this.previousArrivedAt === null && arrivedAt !== null;
+          
+          if (realTimeTransition || this.view() === 'checkout') {
+            untracked(() => this.openRatingDialog(offer));
+          }
+        }
+        
+        this.previousArrivedAt = arrivedAt;
+      }
+    });
+
     effect(() => {
       if (!this.authService.user()) {
         const currentView = untracked(() => this.view());
@@ -685,6 +715,46 @@ export class OfferPage implements OnInit, OnDestroy {
   openSellerProfile(userId: string) {
     this.dialog.open(UserProfileDialog, {
       data: { userId },
+    });
+  }
+
+  openRatingDialog(offer?: Offer) {
+    if (this.isRatingDialogOpen) return;
+    const currentOffer = offer ?? this.offer();
+    if (!currentOffer) return;
+
+    this.isRatingDialogOpen = true;
+    const dialogRef = this.dialog.open(GiveRatingDialog, {
+      width: '400px',
+      data: { merchantName: currentOffer.merchant_name }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.isRatingDialogOpen = false;
+      const offerId = currentOffer.offer_id.toString();
+      
+      if (result === 'later') {
+        localStorage.setItem(`dismissed_rating_${offerId}`, 'true');
+      } else if (result && result.rating) {
+        this.profileService.rateSeller(currentOffer.seller_id, result.rating, currentOffer.offer_id).subscribe({
+          next: () => {
+            this.snackBar.open('Rating submitted successfully.', 'Close', { duration: 3000 });
+            const updatedOffer = this.offer();
+            if (updatedOffer) {
+               this.offer.update(o => o ? {
+                 ...o,
+                 seller: { ...o.seller, has_rated_seller: true }
+               } : null);
+            }
+          },
+          error: (err) => {
+            console.error('Failed to submit rating:', err);
+            const msg = err.error?.message || 'Please try again.';
+            const status = err.status ? ` (${err.status})` : '';
+            this.snackBar.open(`Failed to submit rating: ${msg}${status}`, 'Close', { duration: 5000 });
+          }
+        });
+      }
     });
   }
 }

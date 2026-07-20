@@ -1,0 +1,19 @@
+.stars-container {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-lg) 0;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    color: var(--mat-sys-outline);
+    user-select: none;
+
+    &.filled {
+      color: var(--mat-sys-secondary);
+      font-variation-settings: 'FILL' 1;
+    }
+  }
+}
