@@ -88,7 +88,7 @@ export class PaymentMethodFormDialog {
       error: (err) => {
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to save payment method: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to save payment method: ${msg}${status}`, $localize`Close`, { duration: 5000 });
         this.isSaving.set(false);
       },
     });
@@ -126,7 +126,7 @@ export class PaymentMethodFormDialog {
       error: (err) => {
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to delete payment method: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to delete payment method: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       },
     });
   }

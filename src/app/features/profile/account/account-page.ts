@@ -133,7 +133,7 @@ export class AccountPage implements OnInit {
         this.isSaving.set(false);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to update profile: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to update profile: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       },
     });
   }

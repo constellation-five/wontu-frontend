@@ -129,7 +129,7 @@ export class RequestFormDialog {
       },
       error: (err) => {
         this.isSubmitting.set(false);
-        this.snackBar.open(err.error?.message || 'Failed to delete request.', $localize`Close`, { duration: 3000 });
+        this.snackBar.open(err.error?.message || $localize`Failed to delete request.`, $localize`Close`, { duration: 3000 });
       }
     });
   }
@@ -187,7 +187,7 @@ export class RequestFormDialog {
       next: () => {
         this.isSubmitting.set(false);
         this.dialogRef.close(true); 
-        const successMsg = this.isEditMode ? 'Request saved successfully.' : 'Request created successfully.';
+        const successMsg = this.isEditMode ? $localize`Request saved successfully.` : $localize`Request created successfully.`;
         this.snackBar.open(successMsg, $localize`Close`, { duration: 3000 });
       },
       error: (err) => {
@@ -195,7 +195,7 @@ export class RequestFormDialog {
         this.isSubmitting.set(false);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to save request: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to save request: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       }
     });
   }

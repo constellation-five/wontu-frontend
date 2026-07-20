@@ -227,7 +227,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
         console.error('Failed to confirm payment:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to confirm payment: ${msg}${status}`, $localize`Close`, {
+        this.snackBar.open($localize`Failed to confirm payment: ${msg}${status}`, $localize`Close`, {
           duration: 5000,
         });
       },
@@ -253,7 +253,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
         console.error('Failed to close offer:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to close offer: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to close offer: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       },
     });
   }
@@ -272,7 +272,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
         console.error('Failed to mark items as arrived:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to mark items as arrived: ${msg}${status}`, $localize`Close`, {
+        this.snackBar.open($localize`Failed to mark items as arrived: ${msg}${status}`, $localize`Close`, {
           duration: 5000,
         });
       },
@@ -323,7 +323,7 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
         console.error('Failed to delete offer:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to delete offer: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to delete offer: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       },
     });
   }

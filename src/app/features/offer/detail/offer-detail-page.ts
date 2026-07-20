@@ -449,7 +449,7 @@ export class OfferPage implements OnInit, OnDestroy {
           console.error('Failed to replace order:', err);
           const msg = err.error?.message || 'Please try again.';
           const status = err.status ? ` (${err.status})` : '';
-          this.snackBar.open(`Failed to save order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+          this.snackBar.open($localize`Failed to save order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
         },
       });
     } else {
@@ -462,7 +462,7 @@ export class OfferPage implements OnInit, OnDestroy {
           console.error('Failed to place order:', err);
           const msg = err.error?.message || 'Please try again.';
           const status = err.status ? ` (${err.status})` : '';
-          this.snackBar.open(`Failed to place order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+          this.snackBar.open($localize`Failed to place order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
         },
       });
     }
@@ -529,7 +529,7 @@ export class OfferPage implements OnInit, OnDestroy {
         console.error('Failed to cancel order:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to cancel order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to cancel order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       },
     });
   }
@@ -554,7 +554,7 @@ export class OfferPage implements OnInit, OnDestroy {
         console.error('Failed to open chat:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to open chat: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to open chat: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       },
     });
   }
@@ -597,7 +597,7 @@ export class OfferPage implements OnInit, OnDestroy {
         this.proofOfPayment.set(null);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to upload proof of payment: ${msg}${status}`, $localize`Close`, {
+        this.snackBar.open($localize`Failed to upload proof of payment: ${msg}${status}`, $localize`Close`, {
           duration: 5000,
         });
       },
@@ -627,7 +627,7 @@ export class OfferPage implements OnInit, OnDestroy {
         console.error('Failed to submit payment:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to submit payment: ${msg}${status}`, $localize`Close`, {
+        this.snackBar.open($localize`Failed to submit payment: ${msg}${status}`, $localize`Close`, {
           duration: 5000,
         });
       },

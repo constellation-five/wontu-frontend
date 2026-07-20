@@ -86,7 +86,7 @@ export class FileDropUpload {
 
     const maxSize = this.maxSizeMb() * 1024 * 1024;
     if (file.size > maxSize) {
-      this.snackBar.open(`File size too large. Maximum size is ${this.maxSizeMb()} MB.`, $localize`Close`, {
+      this.snackBar.open($localize`File size too large. Maximum size is ${this.maxSizeMb()} MB.`, $localize`Close`, {
         duration: 3000,
       });
       return;

@@ -316,7 +316,7 @@ export class OfferMobileCart implements OnDestroy {
         console.error('Failed to place order:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to place order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to place order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       },
     });
   }
