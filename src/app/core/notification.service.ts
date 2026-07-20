@@ -27,8 +27,6 @@ interface ApiNotification {
   id: string;
   template_key?: string;
   params?: Record<string, any>;
-  title?: string;
-  description?: string;
   icon: string;
   type: NotificationType;
   action_url?: string;
@@ -37,8 +35,8 @@ interface ApiNotification {
 }
 
 function toAppNotification(raw: ApiNotification, messageTemplateService: MessageTemplateService): AppNotification {
-  let title = raw.title ?? 'Notification';
-  let description = raw.description ?? '';
+  let title = 'Notification';
+  let description = '';
 
   if (raw.template_key) {
     const resolved = messageTemplateService.resolveTemplate(raw.template_key, raw.params);
@@ -85,8 +83,8 @@ export class NotificationService {
     this.echoService.listenToUserNotifications(userId, (data: unknown) => {
       const raw = data as Record<string, unknown>;
       
-      let title = (raw['title'] as string) ?? 'Notification';
-      let description = (raw['description'] as string) ?? '';
+      let title = 'Notification';
+      let description = '';
       
       if (raw['template_key']) {
         const resolved = this.messageTemplateService.resolveTemplate(
