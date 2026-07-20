@@ -1,98 +1,76 @@
+<app-main-page-header
+  pageTitle="Activity"
+  [location]="userLocation()"
+  [searchValue]="searchQuery()"
+  searchPlaceholder="Search"
+  (searchValueChange)="searchQuery.set($event)"
+>
+  <ng-container searchPrefix>
+    <div class="desktop-tabs">
+      <app-segmented-control 
+        [options]="['History', 'Ongoing']" 
+        [value]="activeTab()" 
+        (valueChange)="onTabChange($event)">
+      </app-segmented-control>
+    </div>
+  </ng-container>
+
+  <ng-container filterActions>
+    <button mat-icon-button [matMenuTriggerFor]="filterMenu">
+      <mat-icon fontSet="material-symbols-outlined">filter_list</mat-icon>
+    </button>
+    <mat-menu #filterMenu="matMenu">
+      <div class="filter-menu-content" (click)="$event.stopPropagation()">
+        <mat-checkbox [checked]="filterOrder()" (change)="filterOrder.set($event.checked)" class="filter-checkbox">Order</mat-checkbox>
+        <mat-checkbox [checked]="filterOffer()" (change)="filterOffer.set($event.checked)" class="filter-checkbox">Offer</mat-checkbox>
+      </div>
+    </mat-menu>
+  </ng-container>
+</app-main-page-header>
+
 <div class="activity-page">
-  <app-pane>
-    @if (orders().length === 0 && offers().length === 0) {
+  <div class="tabs-container mobile-tabs">
+    <app-segmented-control 
+      [options]="['History', 'Ongoing']" 
+      [value]="activeTab()" 
+      (valueChange)="onTabChange($event)">
+    </app-segmented-control>
+  </div>
+
+  <div class="activity-list">
+    @if (filteredItems().length === 0) {
       <div class="empty-state">
-        <mat-icon class="empty-icon">receipt_long</mat-icon>
-        <h3>No Order Activity</h3>
-        <p class="mat-body-medium">You haven't placed any orders yet.</p>
-        <button mat-flat-button appButtonSize="md" [routerLink]="['/offers']">
-          Browse Offers
-        </button>
+        <mat-icon class="empty-icon" fontSet="material-symbols-outlined">receipt_long</mat-icon>
+        <p class="mat-body-large">No activity found.</p>
       </div>
     } @else {
-      @if (offers().length > 0) {
-        <div class="activity-header">
-          <h2 class="mat-title-large">Your Offers</h2>
+      <!-- Desktop Header Row -->
+      <div class="desktop-header mat-font-label-lg mat-text-on-surface-variant">
+        <div class="header-desktop-columns">
+          <div class="header-badge"></div>
+          <div class="header-time">{{ activeTab() === 'History' ? 'Date & Time' : 'Time' }}</div>
+          <div class="header-merchant">Merchant</div>
+          <div class="header-location">Location</div>
+          <div class="header-status">{{ activeTab() === 'History' ? 'Total' : 'Status' }}</div>
         </div>
+        <div class="header-action"></div>
+      </div>
 
-        <div class="orders-list offers-list">
-          @for (offer of offers(); track offer.offerId) {
-            <div class="order-card" (click)="viewOfferDetail(offer)">
-              <div class="order-header">
-                <div class="offer-thumb-row">
-                  @if (offer.imageUrl) {
-                    <img [src]="offer.imageUrl" [alt]="offer.merchantName" class="offer-thumb" />
-                  }
-                  <div class="order-info">
-                    <h3 class="mat-title-medium">{{ offer.merchantName }}</h3>
-                    <p class="mat-body-small order-date">{{ offer.category }} &middot; {{ offer.itemCount }} items</p>
-                  </div>
-                </div>
-                <div class="order-status" [style.color]="getOfferStatusColor(offer.status)">
-                  <mat-icon>storefront</mat-icon>
-                  <span class="mat-label-medium">{{ getOfferStatusLabel(offer.status) }}</span>
-                </div>
-              </div>
-
-              <div class="order-footer">
-                <button
-                  mat-flat-button
-                  appButtonSize="sm"
-                  (click)="viewOfferDetail(offer); $event.stopPropagation()">
-                  Manage Offer
-                </button>
-              </div>
-            </div>
-          }
-        </div>
-      }
-
-      @if (orders().length > 0) {
-        <div class="activity-header">
-          <h2 class="mat-title-large">Your Orders</h2>
-        </div>
-
-        <div class="orders-list">
-          @for (order of orders(); track order.offerId) {
-            <div class="order-card" (click)="viewOrderDetail(order)">
-              <div class="order-header">
-                <div class="order-info">
-                  <h3 class="mat-title-medium">{{ order.merchantName }}</h3>
-                  <p class="mat-body-small order-date">
-                    {{ order.orderDate | date: 'dd/MM/yyyy, hh:mm a' }}
-                  </p>
-                </div>
-                <div class="order-status" [style.color]="getStatusColor(order.status)">
-                  <mat-icon>check_circle</mat-icon>
-                  <span class="mat-label-medium">{{ getStatusLabel(order.status) }}</span>
-                </div>
-              </div>
-
-              <div class="order-items">
-                @for (item of order.items; track item.itemName) {
-                  <div class="order-item">
-                    <span class="mat-body-medium">{{ item.quantity }}x {{ item.itemName }}</span>
-                    <span class="mat-body-medium item-price">Rp {{ item.price | number: '1.0-0' }}</span>
-                  </div>
-                }
-              </div>
-
-              <div class="order-footer">
-                <div class="order-summary">
-                  <span class="mat-body-medium">{{ order.totalItems }} items</span>
-                  <span class="mat-title-medium total-price">Rp {{ order.totalPrice | number: '1.0-0' }}</span>
-                </div>
-                <button
-                  mat-flat-button
-                  appButtonSize="sm"
-                  (click)="viewOrderDetail(order); $event.stopPropagation()">
-                  View Details
-                </button>
-              </div>
-            </div>
-          }
-        </div>
+      @for (item of filteredItems(); track item.id) {
+        <app-activity-card
+          [type]="item.type"
+          [merchantName]="item.merchantName"
+          [locationLabel]="item.locationLabel"
+          [date]="item.dateStr"
+          [statusText]="item.statusText"
+          [statusColor]="item.statusColor"
+          [imageUrl]="item.imageUrl"
+          [totalPrice]="item.totalPrice"
+          [isHistory]="item.isHistory"
+          (cardClick)="viewDetail(item)"
+          (rateClick)="openRatingDialog(item)"
+        />
       }
     }
-  </app-pane>
+  </div>
 </div>
