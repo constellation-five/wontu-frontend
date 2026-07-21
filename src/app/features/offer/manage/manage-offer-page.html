@@ -39,29 +39,33 @@
                 <span class="mat-font-body-lg mat-text-on-surface text-bold">
                   Total: Rp {{ orderTotal(order) | number: '1.0-0' }}
                 </span>
-                <div class="order-actions">
-                  <button
-                    matButton="outlined"
-                    appButtonSize="sm"
-                    [disabled]="!order.payment_proof_url"
-                    (click)="viewProofOfPayment(order)"
-                  >
-                    <mat-icon fontSet="material-symbols-outlined">visibility</mat-icon>
-                    <span i18n>Proof of payment</span>
-                  </button>
-                  @if (!order.is_confirmed) {
-                    <button matButton="filled" appButtonSize="sm" (click)="confirmPayment(order)">
-                      <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-                      <span i18n>Confirm payment</span>
+                @if (isClosed()) {
+                  <div class="order-actions">
+                    <button
+                      matButton="outlined"
+                      appButtonSize="sm"
+                      [disabled]="!order.payment_proof_url"
+                      (click)="viewProofOfPayment(order)"
+                    >
+                      <mat-icon fontSet="material-symbols-outlined">visibility</mat-icon>
+                      <span i18n>Proof of payment</span>
                     </button>
-                  }
-                </div>
+                    @if (!order.is_confirmed) {
+                      <button matButton="filled" appButtonSize="sm" (click)="confirmPayment(order)">
+                        <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+                        <span i18n>Confirm payment</span>
+                      </button>
+                    }
+                  </div>
+                }
               </div>
             </mat-expansion-panel>
           }
         </mat-accordion>
       } @else if (!isLoading()) {
-        <p class="mat-font-body-md mat-text-on-surface-variant" i18n>No customers have joined yet.</p>
+        <p class="mat-font-body-md mat-text-on-surface-variant" i18n>
+          No customers have joined yet.
+        </p>
       }
     </app-pane>
 
@@ -152,7 +156,7 @@
 <ng-template #actionsTpl>
   @if (!isClosed()) {
     <button
-      matButton="tonal"
+      matButton="filled"
       appButtonSize="sm"
       (click)="closeOfferNow()"
       [disabled]="isActionInProgress()"
@@ -167,7 +171,7 @@
   } @else {
     @if (!isArrived()) {
       <button
-        matButton="tonal"
+        matButton="filled"
         appButtonSize="sm"
         (click)="markItemsArrived()"
         [disabled]="isActionInProgress() || isArrived()"

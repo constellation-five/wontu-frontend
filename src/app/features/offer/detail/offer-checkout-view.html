@@ -30,12 +30,7 @@
         <!-- The fixed mobile bottom bar covers this below $breakpoint-md; from
         there up it's hidden, so this pane needs its own Chat button. -->
         <div class="tablet-only-action">
-          <button
-            matButton="tonal"
-            appButtonSize="sm"
-            class="chat-btn"
-            (click)="openChat.emit()"
-          >
+          <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
             <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
             <span i18n>Chat</span>
           </button>
@@ -113,44 +108,42 @@
             <payment-method-card [method]="method" [showEdit]="false" />
           }
         </div>
-      } @else {
-        <div class="payment-methods-list">
-          <payment-method-card [method]="dummyPaymentMethod()" [showEdit]="false" />
-        </div>
       }
 
       <!-- Proof of Payment -->
-      <div class="proof-section">
-        <h3 class="mat-font-title-md mat-text-on-surface proof-title" i18n>Proof of payment</h3>
+      @if (isOfferClosed()) {
+        <div class="proof-section">
+          <h3 class="mat-font-title-md mat-text-on-surface proof-title" i18n>Proof of payment</h3>
 
-        <div class="proof-upload-container">
-          @if (myOrder()?.payment_submitted_at) {
-            <app-upload-file-card [remoteUrl]="myOrder()!.payment_proof_url" />
-          } @else if (proofOfPayment(); as file) {
-            <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
-          } @else {
-            <app-file-drop-upload
-              i18n-label
-              label="Proof of payment"
-              [file]="proofOfPayment()"
-              (fileChange)="proofOfPaymentChange.emit($event)"
-            />
+          <div class="proof-upload-container">
+            @if (myOrder()?.payment_submitted_at) {
+              <app-upload-file-card [remoteUrl]="myOrder()!.payment_proof_url" />
+            } @else if (proofOfPayment(); as file) {
+              <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
+            } @else {
+              <app-file-drop-upload
+                i18n-label
+                label="Proof of payment"
+                [file]="proofOfPayment()"
+                (fileChange)="proofOfPaymentChange.emit($event)"
+              />
+            }
+          </div>
+
+          @if (!myOrder()?.payment_submitted_at) {
+            <button
+              matButton="filled"
+              appButtonSize="sm"
+              class="complete-payment-btn"
+              [disabled]="!proofOfPayment() || uploadProgress() !== null"
+              (click)="completePayment.emit()"
+            >
+              <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+              <span i18n>Submit payment</span>
+            </button>
           }
         </div>
-
-        @if (!myOrder()?.payment_submitted_at) {
-          <button
-            matButton="filled"
-            appButtonSize="sm"
-            class="complete-payment-btn"
-            [disabled]="!proofOfPayment() || uploadProgress() !== null"
-            (click)="completePayment.emit()"
-          >
-            <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-            <span i18n>Submit payment</span>
-          </button>
-        }
-      </div>
+      }
     </app-pane>
   </div>
 
@@ -173,44 +166,44 @@
                 <payment-method-card [method]="method" [showEdit]="false" />
               }
             </div>
-          } @else {
-            <div class="payment-methods-list">
-              <payment-method-card [method]="dummyPaymentMethod()" [showEdit]="false" />
-            </div>
           }
 
-          <!-- Proof of Payment Section -->
-          <div class="proof-section">
-            <h3 class="mat-font-title-md mat-text-on-surface proof-title" i18n>Proof of payment</h3>
+          @if (isOfferClosed()) {
+            <!-- Proof of Payment Section -->
+            <div class="proof-section">
+              <h3 class="mat-font-title-md mat-text-on-surface proof-title" i18n>
+                Proof of payment
+              </h3>
 
-            <div class="proof-upload-container">
-              @if (myOrder()?.payment_submitted_at) {
-                <app-upload-file-card [remoteUrl]="myOrder()!.payment_proof_url" />
-              } @else if (proofOfPayment(); as file) {
-                <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
-              } @else {
-                <app-file-drop-upload
-                  i18n-label
-                  label="Proof of payment"
-                  [file]="proofOfPayment()"
-                  (fileChange)="proofOfPaymentChange.emit($event)"
-                />
+              <div class="proof-upload-container">
+                @if (myOrder()?.payment_submitted_at) {
+                  <app-upload-file-card [remoteUrl]="myOrder()!.payment_proof_url" />
+                } @else if (proofOfPayment(); as file) {
+                  <app-upload-file-card [file]="file" [uploadProgress]="uploadProgress()" />
+                } @else {
+                  <app-file-drop-upload
+                    i18n-label
+                    label="Proof of payment"
+                    [file]="proofOfPayment()"
+                    (fileChange)="proofOfPaymentChange.emit($event)"
+                  />
+                }
+              </div>
+
+              @if (!myOrder()?.payment_submitted_at) {
+                <button
+                  matButton="filled"
+                  appButtonSize="md"
+                  class="complete-payment-btn"
+                  [disabled]="!proofOfPayment() || uploadProgress() !== null"
+                  (click)="completePayment.emit()"
+                >
+                  <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+                  <span i18n>Submit payment</span>
+                </button>
               }
             </div>
-
-            @if (!myOrder()?.payment_submitted_at) {
-              <button
-                matButton="filled"
-                appButtonSize="md"
-                class="complete-payment-btn"
-                [disabled]="!proofOfPayment() || uploadProgress() !== null"
-                (click)="completePayment.emit()"
-              >
-                <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-                <span i18n>Submit payment</span>
-              </button>
-            }
-          </div>
+          }
         </app-pane>
       </div>
 
@@ -234,11 +227,13 @@
                 </div>
                 <div class="seller-rating">
                   <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
-                  <span class="mat-font-label-md mat-text-on-surface">{{
-                    offer().seller.received_ratings_avg_rating
-                      ? (offer().seller.received_ratings_avg_rating | number: '1.1-1')
-                      : 'New'
-                  }}</span>
+                  <span class="mat-font-label-md mat-text-on-surface">
+                    @if (offer().seller.received_ratings_avg_rating) {
+                      {{ offer().seller.received_ratings_avg_rating | number: '1.1-1' }}
+                    } @else {
+                      <ng-container i18n>New</ng-container>
+                    }
+                  </span>
                   @if (offer().seller.received_ratings_count) {
                     <span class="mat-font-body-sm mat-text-on-surface-variant"
                       >({{ offer().seller.received_ratings_count }})</span
@@ -247,12 +242,7 @@
                 </div>
               </div>
             </div>
-            <button
-              matButton="tonal"
-              appButtonSize="sm"
-              class="chat-btn"
-              (click)="openChat.emit()"
-            >
+            <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
               <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
               <span i18n>Chat</span>
             </button>
@@ -329,12 +319,7 @@
         <span i18n>Give rating</span>
       </button>
     }
-    <button
-      matButton="tonal"
-      appButtonSize="sm"
-      class="chat-action-btn"
-      (click)="openChat.emit()"
-    >
+    <button matButton="tonal" appButtonSize="sm" class="chat-action-btn" (click)="openChat.emit()">
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
       <span i18n>Chat</span>
     </button>

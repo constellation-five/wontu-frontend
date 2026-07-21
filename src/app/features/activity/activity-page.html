@@ -60,7 +60,7 @@
   } @else {
     <div class="tabs-container mobile-tabs">
       <app-segmented-control
-        [options]="['History', 'Ongoing']"
+        [options]="tabOptions"
         [value]="activeTab()"
         (valueChange)="onTabChange($event)"
       >

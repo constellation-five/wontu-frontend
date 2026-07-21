@@ -149,23 +149,24 @@ export class OfferPage implements OnInit, OnDestroy {
     effect(() => {
       const offer = this.offer();
       const order = this.myOrder();
-      
+
       if (offer && order) {
         const arrivedAt = offer.arrived_at;
         const isArrived = arrivedAt !== null;
         const hasRated = offer.seller.has_rated_seller;
         const offerId = offer.offer_id.toString();
-        
+
         const dismissedLater = localStorage.getItem(`dismissed_rating_${offerId}`) === 'true';
-        
+
+        console.log(isArrived, hasRated, dismissedLater, this.previousArrivedAt, arrivedAt);
         if (isArrived && !hasRated && !dismissedLater) {
           const realTimeTransition = this.previousArrivedAt === null && arrivedAt !== null;
-          
+
           if (realTimeTransition || this.view() === 'checkout') {
             untracked(() => this.openRatingDialog(offer));
           }
         }
-        
+
         this.previousArrivedAt = arrivedAt;
       }
     });
@@ -250,9 +251,13 @@ export class OfferPage implements OnInit, OnDestroy {
             sessionStorage.getItem(`autoPlaceOrder_${offerId}`) === 'true'
           ) {
             sessionStorage.removeItem(`autoPlaceOrder_${offerId}`);
-            this.snackBar.open($localize`You already have an existing order in this offer.`, $localize`Close`, {
-              duration: 5000,
-            });
+            this.snackBar.open(
+              $localize`You already have an existing order in this offer.`,
+              $localize`Close`,
+              {
+                duration: 5000,
+              },
+            );
           }
         } else {
           this.loadDraftCart(offerId);
@@ -442,27 +447,35 @@ export class OfferPage implements OnInit, OnDestroy {
     if (this.hasPlacedOrder()) {
       this.offerService.replaceOrder(offer.offer_id, items).subscribe({
         next: () => {
-          this.snackBar.open($localize`Order saved successfully.`, $localize`Close`, { duration: 3000 });
+          this.snackBar.open($localize`Order saved successfully.`, $localize`Close`, {
+            duration: 3000,
+          });
           this.finishPlacingOrder(offer);
         },
         error: (err) => {
           console.error('Failed to replace order:', err);
           const msg = err.error?.message || 'Please try again.';
           const status = err.status ? ` (${err.status})` : '';
-          this.snackBar.open($localize`Failed to save order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+          this.snackBar.open($localize`Failed to save order: ${msg}${status}`, $localize`Close`, {
+            duration: 5000,
+          });
         },
       });
     } else {
       this.offerService.placeOrder(offer.offer_id, items).subscribe({
         next: () => {
-          this.snackBar.open($localize`Order placed successfully.`, $localize`Close`, { duration: 3000 });
+          this.snackBar.open($localize`Order placed successfully.`, $localize`Close`, {
+            duration: 3000,
+          });
           this.finishPlacingOrder(offer);
         },
         error: (err) => {
           console.error('Failed to place order:', err);
           const msg = err.error?.message || 'Please try again.';
           const status = err.status ? ` (${err.status})` : '';
-          this.snackBar.open($localize`Failed to place order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+          this.snackBar.open($localize`Failed to place order: ${msg}${status}`, $localize`Close`, {
+            duration: 5000,
+          });
         },
       });
     }
@@ -521,7 +534,9 @@ export class OfferPage implements OnInit, OnDestroy {
 
     this.offerService.cancelOrder(offer.offer_id).subscribe({
       next: () => {
-        this.snackBar.open($localize`Order cancelled successfully.`, $localize`Close`, { duration: 3000 });
+        this.snackBar.open($localize`Order cancelled successfully.`, $localize`Close`, {
+          duration: 3000,
+        });
         this.clearCartFromLocalStorage(String(offer.offer_id));
         this.router.navigate(['/offers']);
       },
@@ -529,7 +544,9 @@ export class OfferPage implements OnInit, OnDestroy {
         console.error('Failed to cancel order:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open($localize`Failed to cancel order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to cancel order: ${msg}${status}`, $localize`Close`, {
+          duration: 5000,
+        });
       },
     });
   }
@@ -554,7 +571,9 @@ export class OfferPage implements OnInit, OnDestroy {
         console.error('Failed to open chat:', err);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open($localize`Failed to open chat: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to open chat: ${msg}${status}`, $localize`Close`, {
+          duration: 5000,
+        });
       },
     });
   }
@@ -597,9 +616,13 @@ export class OfferPage implements OnInit, OnDestroy {
         this.proofOfPayment.set(null);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open($localize`Failed to upload proof of payment: ${msg}${status}`, $localize`Close`, {
-          duration: 5000,
-        });
+        this.snackBar.open(
+          $localize`Failed to upload proof of payment: ${msg}${status}`,
+          $localize`Close`,
+          {
+            duration: 5000,
+          },
+        );
       },
     });
   }
@@ -607,7 +630,7 @@ export class OfferPage implements OnInit, OnDestroy {
   completePayment() {
     const offer = this.offer();
     const proofUrl = this.uploadedProofUrl();
-    if (!offer || !proofUrl || this.uploadProgress() !== null) return;
+    if (!offer || !this.isOfferClosed() || !proofUrl || this.uploadProgress() !== null) return;
 
     this.submitPayment(offer.offer_id, proofUrl);
   }
@@ -615,9 +638,20 @@ export class OfferPage implements OnInit, OnDestroy {
   private submitPayment(offerId: number, proofUrl: string) {
     // Deliberately leave proofOfPayment/uploadedProofUrl set on success —
     // the file card stays displayed in the payment proof section.
+    if (!this.isOfferClosed()) {
+      this.snackBar.open(
+        $localize`Cannot submit payment yet. The offer is still open.`,
+        $localize`Close`,
+        { duration: 5000 },
+      );
+      return;
+    }
+
     this.offerService.submitPayment(offerId, proofUrl).subscribe({
       next: () => {
-        this.snackBar.open($localize`Payment submitted successfully.`, $localize`Close`, { duration: 3000 });
+        this.snackBar.open($localize`Payment submitted successfully.`, $localize`Close`, {
+          duration: 3000,
+        });
         this.offerService.getMyOrder(offerId).subscribe({
           next: (res) => this.myOrder.set(res.data),
           error: (err) => console.error('Failed to refresh order status:', err),
@@ -732,34 +766,46 @@ export class OfferPage implements OnInit, OnDestroy {
     this.isRatingDialogOpen = true;
     const dialogRef = this.dialog.open(GiveRatingDialog, {
       width: '400px',
-      data: { merchantName: currentOffer.merchant_name }
+      data: { merchantName: currentOffer.merchant_name },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       this.isRatingDialogOpen = false;
       const offerId = currentOffer.offer_id.toString();
-      
+
       if (result === 'later') {
         localStorage.setItem(`dismissed_rating_${offerId}`, 'true');
       } else if (result && result.rating) {
-        this.profileService.rateSeller(currentOffer.seller_id, result.rating, currentOffer.offer_id).subscribe({
-          next: () => {
-            this.snackBar.open($localize`Rating submitted successfully.`, $localize`Close`, { duration: 3000 });
-            const updatedOffer = this.offer();
-            if (updatedOffer) {
-               this.offer.update(o => o ? {
-                 ...o,
-                 seller: { ...o.seller, has_rated_seller: true }
-               } : null);
-            }
-          },
-          error: (err) => {
-            console.error('Failed to submit rating:', err);
-            const msg = err.error?.message || 'Please try again.';
-            const status = err.status ? ` (${err.status})` : '';
-            this.snackBar.open($localize`Failed to submit rating: ${msg}${status}`, $localize`Close`, { duration: 5000 });
-          }
-        });
+        this.profileService
+          .rateSeller(currentOffer.seller_id, result.rating, currentOffer.offer_id)
+          .subscribe({
+            next: () => {
+              this.snackBar.open($localize`Rating submitted successfully.`, $localize`Close`, {
+                duration: 3000,
+              });
+              const updatedOffer = this.offer();
+              if (updatedOffer) {
+                this.offer.update((o) =>
+                  o
+                    ? {
+                        ...o,
+                        seller: { ...o.seller, has_rated_seller: true },
+                      }
+                    : null,
+                );
+              }
+            },
+            error: (err) => {
+              console.error('Failed to submit rating:', err);
+              const msg = err.error?.message || 'Please try again.';
+              const status = err.status ? ` (${err.status})` : '';
+              this.snackBar.open(
+                $localize`Failed to submit rating: ${msg}${status}`,
+                $localize`Close`,
+                { duration: 5000 },
+              );
+            },
+          });
       }
     });
   }
