@@ -179,6 +179,22 @@
   }
 }
 
+.nav-signin {
+  @media (min-width: $breakpoint-md) {
+    display: none;
+  }
+
+  @include mat.list-overrides(
+    (
+      list-item-leading-icon-color: var(--mat-sys-primary),
+      list-item-hover-leading-icon-color: var(--mat-sys-primary),
+      list-item-label-text-color: var(--mat-sys-primary),
+      list-item-hover-label-text-color: var(--mat-sys-primary),
+      list-item-focus-label-text-color: var(--mat-sys-primary),
+    )
+  );
+}
+
 ::ng-deep .mdc-list-item__content {
   display: flex;
   flex: none !important;
