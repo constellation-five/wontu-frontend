@@ -296,6 +296,9 @@
       <trans-unit id="7819314041543176992" datatype="html">
         <source>Close</source>
       </trans-unit>
+      <trans-unit id="7824969275539419300" datatype="html">
+        <source>Close Offer Early</source>
+      </trans-unit>
       <trans-unit id="6545950307584910634" datatype="html">
         <source>Seller</source>
       </trans-unit>
@@ -725,6 +728,9 @@
       <trans-unit id="4915431133669985304" datatype="html">
         <source>Profile</source>
       </trans-unit>
+      <trans-unit id="4919212912488365412" datatype="html">
+        <source>Close offer</source>
+      </trans-unit>
       <trans-unit id="813005065795574681" datatype="html">
         <source> This information will be displayed publicly so be careful what you share. </source>
       </trans-unit>
@@ -1030,6 +1036,9 @@
       </trans-unit>
       <trans-unit id="8140436812650500499" datatype="html">
         <source>Bank Negara Indonesia</source>
+      </trans-unit>
+      <trans-unit id="8149292478155991775" datatype="html">
+        <source>Are you sure you want to close this offer early? Not all items have been sold out yet.</source>
       </trans-unit>
       <trans-unit id="1487997335956252834" datatype="html">
         <source>Bank Rakyat Indonesia</source>

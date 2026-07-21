@@ -8,6 +8,7 @@ import { PaneComponent } from '../../../shared/components/pane/pane';
 import { CartItemCard } from '../../../shared/components/cart-item-card/cart-item-card';
 import { ButtonSizeDirective } from '../../../shared/directives/button';
 import { Offer, OfferItem, CheckoutItem } from '../../../core/offer.service';
+import { NaturalDateTimePipe } from '../../../shared/pipes/natural-date-time.pipe';
 
 @Component({
   selector: 'app-offer-menu-view',
@@ -22,6 +23,7 @@ import { Offer, OfferItem, CheckoutItem } from '../../../core/offer.service';
     ButtonSizeDirective,
     DecimalPipe,
     NgTemplateOutlet,
+    NaturalDateTimePipe,
   ],
   templateUrl: './offer-menu-view.html',
   styleUrls: ['./offer-menu-view.scss'],
@@ -78,26 +80,6 @@ export class OfferMenuView {
 
   getItemStockVariant(item: OfferItem): 'default' | 'low' {
     return item.slot - item.current_slot > 5 ? 'default' : 'low';
-  }
-
-  formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return (
-      date.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      }) +
-      ', ' +
-      date
-        .toLocaleTimeString('en-GB', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true,
-        })
-        .replace('am', 'AM')
-        .replace('pm', 'PM')
-    );
   }
 
   onItemCounterChange(item: OfferItem, newValue: number, field: CounterField) {

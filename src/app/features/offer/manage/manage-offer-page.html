@@ -11,8 +11,8 @@
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title class="panel-title">
-                  <img [src]="order.buyer.avatar" [alt]="order.buyer.name" class="buyer-avatar" />
-                  <span class="buyer-name mat-font-title-md mat-text-on-surface">{{
+                  <img [src]="order.buyer.avatar" [alt]="order.buyer.name" class="buyer-avatar" (click)="openBuyerProfile(order.buyer.user_id, $event)" style="cursor: pointer;" />
+                  <span class="buyer-name mat-font-title-md mat-text-on-surface" (click)="openBuyerProfile(order.buyer.user_id, $event)" style="cursor: pointer;">{{
                     order.buyer.name
                   }}</span>
                 </mat-panel-title>

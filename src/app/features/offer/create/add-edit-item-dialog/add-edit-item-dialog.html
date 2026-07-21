@@ -37,7 +37,7 @@
       <button
         matButton="outlined"
         appButtonColor="error"
-        appButtonSize="md"
+        appButtonSize="sm"
         (click)="openDeleteConfirm()"
       >
         <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
@@ -98,4 +98,15 @@
       <ng-container i18n>Add item</ng-container>
     }
   </button>
+  @if (isEdit) {
+    <button
+      matButton="outlined"
+      appButtonColor="error"
+      appButtonSize="sm"
+      (click)="openDeleteConfirm()"
+    >
+      <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+      <ng-container i18n>Delete</ng-container>
+    </button>
+  }
 </ng-template>

@@ -227,9 +227,9 @@ export class SettingsPage implements OnInit {
       .subscribe({
         next: () => {
           if (language === 'id') {
-            window.location.href = '/id/';
+            window.location.href = '/id/profile/settings';
           } else {
-            window.location.href = '/';
+            window.location.href = '/profile/settings';
           }
         },
       });

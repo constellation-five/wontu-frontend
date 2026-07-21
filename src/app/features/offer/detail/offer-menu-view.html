@@ -4,13 +4,13 @@
       <div class="info-row">
         <span i18n class="mat-font-body-md mat-text-on-surface-variant">Offer closes at</span>
         <span class="mat-font-body-md mat-text-on-surface text-bold">
-          {{ formatDate(offer().closing_time) }}
+          {{ offer().closing_time | naturalDateTime }}
         </span>
       </div>
       <div class="info-row">
         <span i18n class="mat-font-body-md mat-text-on-surface-variant">Items arrive at</span>
         <span class="mat-font-body-md mat-text-on-surface text-bold">
-          {{ formatDate(offer().arrival_time) }}
+          {{ offer().arrival_time | naturalDateTime }}
         </span>
       </div>
     </div>

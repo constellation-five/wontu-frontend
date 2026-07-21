@@ -676,6 +676,7 @@ export class OfferPage implements OnInit, OnDestroy {
         offer: offer,
         cartItems: this.cartItems(),
         cart: Array.from(this.cart().entries()),
+        isEditingOrder: this.hasPlacedOrder(),
       },
     });
   }

@@ -12,6 +12,7 @@
   display: grid;
   gap: var(--spacing-lg);
   grid-template-columns: 1fr;
+  padding-bottom: 56px; // Space for mobile bottom bar
 
   @media (max-width: calc(#{$breakpoint-lg} - 1px)) {
     // Unwrap the two column containers below $breakpoint-lg so each pane

@@ -36,7 +36,7 @@
   </div>
 } @else if (filteredOffers().length > 0) {
   @if (ongoingOffers().length > 0) {
-    <app-ongoing-section title="Ongoing">
+    <app-ongoing-section i18n-title title="Ongoing">
       <div class="offers-grid">
         @for (offer of ongoingOffers(); track offer.offer_id) {
           <app-product-card

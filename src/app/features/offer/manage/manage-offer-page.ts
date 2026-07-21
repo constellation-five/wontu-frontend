@@ -29,6 +29,7 @@ import {
   PaymentMethodData,
 } from '../../../shared/components/payment-method-card/payment-method-card';
 import { DialogComponent } from '../../../shared/components/dialog/dialog';
+import { UserProfileDialog } from '../../../shared/components/dialog/user-profile-dialog/user-profile-dialog';
 import { ImagePreviewDialog } from '../../../shared/components/image-preview-dialog/image-preview-dialog';
 import { BottomBar } from '../../../shared/components/bottom-bar/bottom-bar';
 import { ButtonSizeDirective, ButtonColorDirective } from '../../../shared/directives/button';
@@ -241,6 +242,34 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
 
   closeOfferNow() {
     if (this.isActionInProgress()) return;
+    
+    const offer = this.offer();
+    const isSoldOut = offer.items.every(item => item.current_slot >= item.slot);
+    
+    if (!isSoldOut) {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '540px',
+        data: {
+          title: $localize`Close Offer Early`,
+          content: $localize`Are you sure you want to close this offer early? Not all items have been sold out yet.`,
+          buttons: [
+            { label: $localize`Cancel`, type: 'outlined', focus: true },
+            { label: $localize`Close offer`, type: 'filled', color: 'error', action: 'confirm' }
+          ]
+        }
+      });
+      
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'confirm') {
+          this.executeCloseOffer();
+        }
+      });
+    } else {
+      this.executeCloseOffer();
+    }
+  }
+
+  private executeCloseOffer() {
     this.isActionInProgress.set(true);
     this.offerService.closeOfferNow(this.offer().offer_id).subscribe({
       next: (res) => {
@@ -281,6 +310,16 @@ export default class ManageOfferPage implements OnInit, AfterViewInit, OnDestroy
 
   openChat() {
     this.router.navigate(['/offers', this.offer().offer_id, 'chat']);
+  }
+
+  openBuyerProfile(userId: string, event: Event) {
+    event.stopPropagation();
+    this.dialog.open(UserProfileDialog, {
+      data: { userId: userId },
+      width: '400px',
+      maxWidth: '90vw',
+      panelClass: 'user-profile-dialog-container',
+    });
   }
 
   editOffer() {
