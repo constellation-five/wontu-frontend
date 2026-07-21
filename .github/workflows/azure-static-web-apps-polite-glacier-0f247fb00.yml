@@ -32,13 +32,11 @@ jobs:
             const coredemo = require('@actions/core')
             return await coredemo.getIDToken()
           result-encoding: string
-      - name: Generate runtime env config
+      - name: Inject Environment Secrets
         run: |
-          cat > src/assets/env-config.js <<EOF
-          window.__env = {
-            googleMapsApiKey: '${{ secrets.GOOGLE_MAPS_API_KEY }}',
-          };
-          EOF
+          sed -i "s/REVERB_KEY_PLACEHOLDER/${{ secrets.REVERB_KEY }}/g" src/environments/environment.prod.ts
+          sed -i "s/VAPID_PUBLIC_KEY_PLACEHOLDER/${{ secrets.VAPID_PUBLIC_KEY }}/g" src/environments/environment.prod.ts
+          sed -i "s/GOOGLE_MAPS_API_KEY_PLACEHOLDER/${{ secrets.GOOGLE_MAPS_API_KEY }}/g" src/environments/environment.prod.ts
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:

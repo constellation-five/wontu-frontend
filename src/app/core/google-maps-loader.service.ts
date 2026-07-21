@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 declare global {
   interface Window {
@@ -19,9 +20,9 @@ export class GoogleMapsLoaderService {
 
     if (!this.loadPromise) {
       this.loadPromise = new Promise<void>((resolve, reject) => {
-        const apiKey = window.__env?.googleMapsApiKey;
+        const apiKey = environment.googleMapsApiKey;
         if (!apiKey) {
-          reject(new Error('Google Maps API key is not configured (src/assets/env-config.js).'));
+          reject(new Error('Google Maps API key is not configured in the environment.'));
           return;
         }
 

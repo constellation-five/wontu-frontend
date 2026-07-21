@@ -178,7 +178,6 @@ export class SettingsPage implements OnInit {
       }),
     );
     if (turnedOn) {
-      console.log('Requesting push notification subscription...');
       this.pushNotificationService.requestSubscriptionIfNeeded();
     }
     this.saveSettings();

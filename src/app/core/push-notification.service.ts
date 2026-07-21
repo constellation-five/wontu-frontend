@@ -20,7 +20,6 @@ export class PushNotificationService {
 
   public requestSubscriptionIfNeeded(): void {
     if (!this.swPush.isEnabled) {
-      console.log('Push notifications are not enabled in this browser.');
       return;
     }
 
