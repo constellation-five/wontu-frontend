@@ -1,0 +1,70 @@
+/* Mobile View Transitions */
+@media (max-width: 959px) {
+  html.vt-forward::view-transition-old(root) {
+    animation: 200ms cubic-bezier(0.4, 0, 0.2, 1) both slide-out-left;
+    z-index: 1;
+  }
+  html.vt-forward::view-transition-new(root) {
+    animation: 200ms cubic-bezier(0.4, 0, 0.2, 1) both slide-in-right;
+    z-index: 2;
+  }
+
+  html.vt-backward::view-transition-old(root) {
+    animation: 200ms cubic-bezier(0.4, 0, 0.2, 1) both slide-out-right;
+    z-index: 2;
+  }
+  html.vt-backward::view-transition-new(root) {
+    animation: 200ms cubic-bezier(0.4, 0, 0.2, 1) both slide-in-left;
+    z-index: 1;
+  }
+}
+
+/* Base fade transitions for desktop or non-directional */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+    box-shadow: -10px 0 20px rgba(0, 0, 0, 0.2);
+  }
+  to {
+    transform: translateX(0);
+    box-shadow: -10px 0 20px rgba(0, 0, 0, 0);
+  }
+}
+
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0);
+    filter: brightness(1);
+  }
+  to {
+    transform: translateX(-30%);
+    filter: brightness(0.7);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-30%);
+    filter: brightness(0.7);
+  }
+  to {
+    transform: translateX(0);
+    filter: brightness(1);
+  }
+}
+
+@keyframes slide-out-right {
+  from {
+    transform: translateX(0);
+    box-shadow: -10px 0 20px rgba(0, 0, 0, 0.2);
+  }
+  to {
+    transform: translateX(100%);
+    box-shadow: -10px 0 20px rgba(0, 0, 0, 0);
+  }
+}
