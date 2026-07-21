@@ -17,12 +17,33 @@ export class App implements OnInit {
   private readonly themeService = inject(ThemeService);
 
   ngOnInit() {
+    this.cleanupOtherServiceWorkers();
+
     const returnUrl = sessionStorage.getItem('authReturnUrl');
     if (returnUrl && this.auth.user()) {
       sessionStorage.removeItem('authReturnUrl');
       // Use navigateByUrl in next tick to avoid racing initial navigation
       setTimeout(() => {
         this.router.navigateByUrl(returnUrl);
+      });
+    }
+  }
+
+  private cleanupOtherServiceWorkers() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        const currentBaseHref = document.querySelector('base')?.getAttribute('href') || '/';
+        const expectedScope = new URL(currentBaseHref, window.location.origin).href;
+
+        for (const registration of registrations) {
+          if (registration.scope !== expectedScope) {
+            // Unsubscribe from push notifications before unregistering
+            registration.pushManager.getSubscription().then((sub) => {
+              if (sub) sub.unsubscribe();
+            });
+            registration.unregister();
+          }
+        }
       });
     }
   }
