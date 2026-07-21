@@ -50,12 +50,12 @@ jobs:
           pnpm run build
       - name: Ensure index.html exists in /browser
         run: |
-          mkdir -p dist/client/browser
-          cd dist/client/browser
+          mkdir -p dist/wontu-frontend/browser
+          cd dist/wontu-frontend/browser
           echo "<html></html>" > index.html
       - name: Copy staticwebapp.config.json to /browser folder
         run: |
-          cp staticwebapp.config.json dist/client/browser
+          cp staticwebapp.config.json dist/wontu-frontend/browser
       - name: Deploy
         id: deploy
         uses: Azure/static-web-apps-deploy@v1
@@ -64,9 +64,8 @@ jobs:
           action: 'upload'
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "./dist/wontu-frontend/browser"
+          app_location: './dist/wontu-frontend/browser'
           skip_app_build: true
-          github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
