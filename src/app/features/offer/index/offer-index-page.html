@@ -21,7 +21,7 @@
             (change)="toggleCategory(category)"
             class="filter-checkbox"
           >
-            {{ category | titlecase }}
+            {{ localizedCategories[$index] }}
           </mat-checkbox>
         }
       </div>
@@ -43,9 +43,11 @@
             [imageUrl]="offer.items[0]?.image_url || ''"
             [title]="offer.merchant_name || 'Unknown Merchant'"
             [category]="offer.category"
-            [subtitle]="'Arrives ' + (offer.arrival_time | naturalDateTime)"
+            i18n-subtitle
+            subtitle="'Arrives {{ offer.arrival_time | naturalDateTime }}'"
             [price]="getPriceRange(offer)"
-            [stockText]="'Stock: ' + getStockLeft(offer) + ' left'"
+            i18n-stockText
+            stockText="'Stock: {{ getStockLeft(offer) }} left'"
             [clickable]="true"
             (cardClick)="onCardClick(offer.offer_id)"
           >
@@ -55,6 +57,7 @@
               appIconButtonVariant="tonal"
               cardAction
               (click)="onCardClick(offer.offer_id)"
+              i18n-aria-label
               aria-label="View Offer"
             >
               <mat-icon fontSet="material-symbols-outlined">arrow_forward</mat-icon>
@@ -73,9 +76,11 @@
             [imageUrl]="offer.items[0]?.image_url || ''"
             [title]="offer.merchant_name || 'Unknown Merchant'"
             [category]="offer.category"
-            [subtitle]="'Arrives ' + (offer.arrival_time | naturalDateTime)"
+            i18n-subtitle
+            subtitle="'Arrives {{ offer.arrival_time | naturalDateTime }}'"
             [price]="getPriceRange(offer)"
-            [stockText]="'Stock: ' + getStockLeft(offer) + ' left'"
+            i18n-stockText
+            stockText="'Stock: {{ getStockLeft(offer) }} left'"
             [clickable]="true"
             (cardClick)="onCardClick(offer.offer_id)"
           >
@@ -85,6 +90,7 @@
               appIconButtonVariant="tonal"
               cardAction
               (click)="onCardClick(offer.offer_id)"
+              i18n-aria-label
               aria-label="View Offer"
             >
               <mat-icon fontSet="material-symbols-outlined">arrow_forward</mat-icon>

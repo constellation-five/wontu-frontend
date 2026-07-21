@@ -12,7 +12,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
-import { TitleCasePipe } from '@angular/common';
 import { AuthService } from '../../../core/auth.service';
 import { OfferService, Offer } from '../../../core/offer.service';
 import { PageHeaderService } from '../../../core/page-header.service';
@@ -39,7 +38,6 @@ import { OngoingSection } from '../../../shared/components/ongoing-section/ongoi
     MainPageHeaderComponent,
     IconButtonVariantDirective,
     OngoingSection,
-    TitleCasePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -60,7 +58,26 @@ export class OfferShowPage {
   readonly userLocationCoordinates = this.locationState.userLocationCoordinates;
 
   searchQuery = signal<string>('');
-  availableCategories = ['food', 'electronics', 'fashion', 'home', 'beauty', 'gaming', 'sports', 'other'];
+  availableCategories = [
+    'food',
+    'electronics',
+    'fashion',
+    'home',
+    'beauty',
+    'gaming',
+    'sports',
+    'other',
+  ];
+  localizedCategories = [
+    $localize`Food`,
+    $localize`Electronics`,
+    $localize`Fashion`,
+    $localize`Home`,
+    $localize`Beauty`,
+    $localize`Gaming`,
+    $localize`Sports`,
+    $localize`Other`,
+  ];
   selectedCategories = signal<Set<string>>(new Set(this.availableCategories));
 
   filteredOffers = computed(() => {

@@ -218,6 +218,10 @@
         <source>Rate</source>
         <target>Nilai</target>
       </trans-unit>
+      <trans-unit id="530314455755134933" datatype="html">
+        <source>&apos;Arrives <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/>&apos;</source>
+        <target>&apos;Tiba <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/>&apos;</target>
+      </trans-unit>
       <trans-unit id="5306473977542913614" datatype="html">
         <source>Activity</source>
         <target>Aktivitas</target>
@@ -249,6 +253,10 @@
       <trans-unit id="471816275243265264" datatype="html">
         <source>Location</source>
         <target>Lokasi</target>
+      </trans-unit>
+      <trans-unit id="3442817686340943129" datatype="html">
+        <source>Food</source>
+        <target>Makanan</target>
       </trans-unit>
       <trans-unit id="3448462145758383019" datatype="html">
         <source>Total</source>
@@ -394,6 +402,10 @@
         <source>No messages yet. Say hello!</source>
         <target>Belum ada pesan. Ucapkan halo!</target>
       </trans-unit>
+      <trans-unit id="2821179408673282599" datatype="html">
+        <source>Home</source>
+        <target>Peralatan Rumah</target>
+      </trans-unit>
       <trans-unit id="265872179561961102" datatype="html">
         <source>Selected attachment</source>
         <target>Lampiran terpilih</target>
@@ -441,6 +453,10 @@
       <trans-unit id="7711245667123213632" datatype="html">
         <source>Item name</source>
         <target>Nama item</target>
+      </trans-unit>
+      <trans-unit id="8859442952147146446" datatype="html">
+        <source>Fashion</source>
+        <target>Fashion</target>
       </trans-unit>
       <trans-unit id="8894377483833272091" datatype="html">
         <source>Price</source>
@@ -497,14 +513,6 @@
       <trans-unit id="1806667489382256324" datatype="html">
         <source>Category</source>
         <target>Kategori</target>
-      </trans-unit>
-      <trans-unit id="3442817686340943129" datatype="html">
-        <source>Food</source>
-        <target>Makanan</target>
-      </trans-unit>
-      <trans-unit id="8693603235657020323" datatype="html">
-        <source>Other</source>
-        <target>Lainnya</target>
       </trans-unit>
       <trans-unit id="3924943363782543039" datatype="html">
         <source>Merchant name</source>
@@ -569,6 +577,10 @@
       <trans-unit id="6225091667837832184" datatype="html">
         <source>Closing date is required</source>
         <target>Tanggal penutupan wajib diisi</target>
+      </trans-unit>
+      <trans-unit id="111491886885681450" datatype="html">
+        <source>Gaming</source>
+        <target>Gaming</target>
       </trans-unit>
       <trans-unit id="1117129819844428136" datatype="html">
         <source>Arrival date is required</source>
@@ -646,6 +658,10 @@
         <source>Cancel order</source>
         <target>Batalkan</target>
       </trans-unit>
+      <trans-unit id="513843037780139436" datatype="html">
+        <source>Sports</source>
+        <target>Olahraga</target>
+      </trans-unit>
       <trans-unit id="5144500553106830489" datatype="html">
         <source>Edit order</source>
         <target>Ubah pesanan</target>
@@ -674,6 +690,10 @@
         <source>Order saved successfully.</source>
         <target>Pesanan berhasil disimpan.</target>
       </trans-unit>
+      <trans-unit id="8693603235657020323" datatype="html">
+        <source>Other</source>
+        <target>Lainnya</target>
+      </trans-unit>
       <trans-unit id="693715295477533448" datatype="html">
         <source>Failed to save order: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
         <target>Gagal menyimpan pesanan: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></target>
@@ -689,6 +709,10 @@
       <trans-unit id="5720263553768468748" datatype="html">
         <source>Cannot submit payment yet. The offer is still open.</source>
         <target>Belum bisa mengirim pembayaran. Offer masih terbuka.</target>
+      </trans-unit>
+      <trans-unit id="574417854351861701" datatype="html">
+        <source>Bank Permata</source>
+        <target>Bank Permata</target>
       </trans-unit>
       <trans-unit id="5748392478962189166" datatype="html">
         <source>Cancel Order</source>
@@ -778,29 +802,9 @@
         <source>Search offers</source>
         <target>Cari offer</target>
       </trans-unit>
-      <trans-unit id="2839169248416475627" datatype="html">
-        <source> Food </source>
-        <target>Makanan</target>
-      </trans-unit>
-      <trans-unit id="8605967835704545279" datatype="html">
-        <source> Other </source>
-        <target>Lainnya</target>
-      </trans-unit>
       <trans-unit id="8811587903787462970" datatype="html">
         <source>Loading offers...</source>
         <target>Memuat offer...</target>
-      </trans-unit>
-      <trans-unit id="2625407669106231842" datatype="html">
-        <source>Arrives <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/></source>
-        <target>Tiba <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/></target>
-      </trans-unit>
-      <trans-unit id="7816388157456408950" datatype="html">
-        <source>Stock: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/> left</source>
-        <target>Stok: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/></target>
-      </trans-unit>
-      <trans-unit id="8541799753078327638" datatype="html">
-        <source>View Offer</source>
-        <target>Lihat Offer</target>
       </trans-unit>
       <trans-unit id="367330087185946084" datatype="html">
         <source>No offers available</source>
@@ -894,9 +898,17 @@
         <source>Offer deleted successfully.</source>
         <target>Offer berhasil dihapus.</target>
       </trans-unit>
+      <trans-unit id="6940967350863830242" datatype="html">
+        <source>Beauty</source>
+        <target>Kecantikan</target>
+      </trans-unit>
       <trans-unit id="6941253652460492288" datatype="html">
         <source>Failed to delete offer: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
         <target>Gagal menghapus offer: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></target>
+      </trans-unit>
+      <trans-unit id="6207213573619526977" datatype="html">
+        <source>Bank Danamon</source>
+        <target>Bank Danamon</target>
       </trans-unit>
       <trans-unit id="6222596161301984019" datatype="html">
         <source>Offer Detail</source>
@@ -993,6 +1005,10 @@
       <trans-unit id="8521071615839750104" datatype="html">
         <source> No following found </source>
         <target>Tidak ada following yang ditemukan</target>
+      </trans-unit>
+      <trans-unit id="8541799753078327638" datatype="html">
+        <source>View Offer</source>
+        <target>Lihat Offer</target>
       </trans-unit>
       <trans-unit id="3706222784708785028" datatype="html">
         <source>Rating</source>
@@ -1102,6 +1118,10 @@
         <source>Chat messages</source>
         <target>Pesan chat</target>
       </trans-unit>
+      <trans-unit id="1048017581244987170" datatype="html">
+        <source>&apos;Stock: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/> left&apos;</source>
+        <target>&apos;Stok: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/>&apos;</target>
+      </trans-unit>
       <trans-unit id="2778911758332098933" datatype="html">
         <source>You receive a new direct or group chat message.</source>
         <target>Anda menerima pesan chat langsung atau grup baru.</target>
@@ -1181,10 +1201,6 @@
       <trans-unit id="367244073978197034" datatype="html">
         <source>For <x id="INTERPOLATION" equiv-text="{{ req.arrival_time | naturalDateTime }}"/></source>
         <target>Untuk <x id="INTERPOLATION" equiv-text="{{ req.arrival_time | naturalDateTime }}"/></target>
-      </trans-unit>
-      <trans-unit id="7040288612202036661" datatype="html">
-        <source>Others</source>
-        <target>Lainnya</target>
       </trans-unit>
       <trans-unit id="8369364791381337013" datatype="html">
         <source>No requests available</source>
@@ -1350,6 +1366,10 @@
         <source>Confirm</source>
         <target>Konfirmasi</target>
       </trans-unit>
+      <trans-unit id="9199572989697360180" datatype="html">
+        <source>Electronics</source>
+        <target>Elektronik</target>
+      </trans-unit>
       <trans-unit id="7737064613891053547" datatype="html">
         <source>Add Method</source>
         <target>Tambah Metode</target>
@@ -1386,6 +1406,10 @@
         <source>Preview image</source>
         <target>Pratinjau gambar</target>
       </trans-unit>
+      <trans-unit id="5260727918851114394" datatype="html">
+        <source>GoPay</source>
+        <target>GoPay</target>
+      </trans-unit>
       <trans-unit id="4272436583644511364" datatype="html">
         <source>Just now</source>
         <target>Baru saja</target>
@@ -1409,6 +1433,10 @@
       <trans-unit id="4505265538899561311" datatype="html">
         <source>This <x id="PH" equiv-text="dayName"/></source>
         <target><x id="PH" equiv-text="dayName"/> ini</target>
+      </trans-unit>
+      <trans-unit id="4515810552479471481" datatype="html">
+        <source>OVO</source>
+        <target>OVO</target>
       </trans-unit>
       <trans-unit id="7103588127254721505" datatype="html">
         <source>Theme</source>
@@ -1443,20 +1471,20 @@
         <target>Pengguna lain membuat offer berdasarkan request yang Anda sukai.</target>
       </trans-unit>
       <trans-unit id="notif.following_new_offer.title" datatype="html">
-        <source>New Offer from <x id="PH" equiv-text="params['user_name']"/></source>
-        <target>Offer Baru dari <x id="PH" equiv-text="params['user_name']"/></target>
+        <source>New Offer from <x id="PH" equiv-text="params[&apos;user_name&apos;]"/></source>
+        <target>Offer Baru dari <x id="PH" equiv-text="params[&apos;user_name&apos;]"/></target>
       </trans-unit>
       <trans-unit id="notif.following_new_offer.desc" datatype="html">
-        <source><x id="PH" equiv-text="params['user_name']"/> just created a new offer: <x id="PH_1" equiv-text="params['offer_name']"/>.</source>
-        <target><x id="PH" equiv-text="params['user_name']"/> baru saja membuat offer baru: <x id="PH_1" equiv-text="params['offer_name']"/>.</target>
+        <source><x id="PH" equiv-text="params[&apos;user_name&apos;]"/> just created a new offer: <x id="PH_1" equiv-text="params[&apos;offer_name&apos;]"/>.</source>
+        <target><x id="PH" equiv-text="params[&apos;user_name&apos;]"/> baru saja membuat offer baru: <x id="PH_1" equiv-text="params[&apos;offer_name&apos;]"/>.</target>
       </trans-unit>
       <trans-unit id="notif.following_new_request.title" datatype="html">
-        <source>New Request from <x id="PH" equiv-text="params['user_name']"/></source>
-        <target>Request Baru dari <x id="PH" equiv-text="params['user_name']"/></target>
+        <source>New Request from <x id="PH" equiv-text="params[&apos;user_name&apos;]"/></source>
+        <target>Request Baru dari <x id="PH" equiv-text="params[&apos;user_name&apos;]"/></target>
       </trans-unit>
       <trans-unit id="notif.following_new_request.desc" datatype="html">
-        <source><x id="PH" equiv-text="params['user_name']"/> just created a new request: <x id="PH_1" equiv-text="params['request_name']"/>.</source>
-        <target><x id="PH" equiv-text="params['user_name']"/> baru saja membuat request baru: <x id="PH_1" equiv-text="params['request_name']"/>.</target>
+        <source><x id="PH" equiv-text="params[&apos;user_name&apos;]"/> just created a new request: <x id="PH_1" equiv-text="params[&apos;request_name&apos;]"/>.</source>
+        <target><x id="PH" equiv-text="params[&apos;user_name&apos;]"/> baru saja membuat request baru: <x id="PH_1" equiv-text="params[&apos;request_name&apos;]"/>.</target>
       </trans-unit>
       <trans-unit id="5581456603673044979" datatype="html">
         <source>Following new posts</source>

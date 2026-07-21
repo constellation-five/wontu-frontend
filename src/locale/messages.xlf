@@ -145,83 +145,42 @@
       </trans-unit>
       <trans-unit id="notif.offer_closing_reached.title" datatype="html">
         <source>Closing Time Reached</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">130</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notif.offer_closing_reached.desc" datatype="html">
         <source>Your <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer&apos;s closing time was reached. It was not fully sold out, so it will remain open until you manually close it.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">131</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notif.offer_created_from_liked_request.title" datatype="html">
         <source>New Offer from Liked Request</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">135</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notif.offer_created_from_liked_request.desc" datatype="html">
         <source>An offer for &apos;<x id="PH" equiv-text="params[&apos;request_title&apos;]"/>&apos; (<x id="PH_1" equiv-text="params[&apos;merchant_name&apos;]"/>) was created based on a request you liked.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">136</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notif.new_chat_message.title" datatype="html">
         <source>New message from <x id="PH" equiv-text="params[&apos;sender&apos;]"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">140</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notif.new_chat_message.sent_image" datatype="html">
         <source>Sent an image</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">142</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="pushNotification.blocked" datatype="html">
         <source>Push notifications are blocked in your browser settings. Please enable them to receive notifications.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/push-notification.service.ts</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notif.following_new_offer.title" datatype="html">
         <source>New Offer from <x id="PH" equiv-text="params[&apos;user_name&apos;]"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">142</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notif.following_new_offer.desc" datatype="html">
         <source><x id="PH" equiv-text="params[&apos;user_name&apos;]"/> just created a new offer: <x id="PH_1" equiv-text="params[&apos;offer_name&apos;]"/>.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">143</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notif.following_new_request.title" datatype="html">
         <source>New Request from <x id="PH" equiv-text="params[&apos;user_name&apos;]"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">147</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="notif.following_new_request.desc" datatype="html">
         <source><x id="PH" equiv-text="params[&apos;user_name&apos;]"/> just created a new request: <x id="PH_1" equiv-text="params[&apos;request_name&apos;]"/>.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">148</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="5639297788212274461" datatype="html">
         <source>Rate</source>
+      </trans-unit>
+      <trans-unit id="530314455755134933" datatype="html">
+        <source>&apos;Arrives <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/>&apos;</source>
       </trans-unit>
       <trans-unit id="5306473977542913614" datatype="html">
         <source>Activity</source>
@@ -246,6 +205,9 @@
       </trans-unit>
       <trans-unit id="471816275243265264" datatype="html">
         <source>Location</source>
+      </trans-unit>
+      <trans-unit id="3442817686340943129" datatype="html">
+        <source>Food</source>
       </trans-unit>
       <trans-unit id="3448462145758383019" datatype="html">
         <source>Total</source>
@@ -337,6 +299,9 @@
       <trans-unit id="6545950307584910634" datatype="html">
         <source>Seller</source>
       </trans-unit>
+      <trans-unit id="4661769511402241638" datatype="html">
+        <source>Another user creates an offer based on a request you liked.</source>
+      </trans-unit>
       <trans-unit id="4691887509600985309" datatype="html">
         <source>Members</source>
       </trans-unit>
@@ -354,6 +319,9 @@
       </trans-unit>
       <trans-unit id="2810733317007070279" datatype="html">
         <source>No messages yet. Say hello!</source>
+      </trans-unit>
+      <trans-unit id="2821179408673282599" datatype="html">
+        <source>Home</source>
       </trans-unit>
       <trans-unit id="265872179561961102" datatype="html">
         <source>Selected attachment</source>
@@ -390,6 +358,9 @@
       </trans-unit>
       <trans-unit id="7711245667123213632" datatype="html">
         <source>Item name</source>
+      </trans-unit>
+      <trans-unit id="8859442952147146446" datatype="html">
+        <source>Fashion</source>
       </trans-unit>
       <trans-unit id="8894377483833272091" datatype="html">
         <source>Price</source>
@@ -433,12 +404,6 @@
       <trans-unit id="1806667489382256324" datatype="html">
         <source>Category</source>
       </trans-unit>
-      <trans-unit id="3442817686340943129" datatype="html">
-        <source>Food</source>
-      </trans-unit>
-      <trans-unit id="8693603235657020323" datatype="html">
-        <source>Other</source>
-      </trans-unit>
       <trans-unit id="3924943363782543039" datatype="html">
         <source>Merchant name</source>
       </trans-unit>
@@ -469,6 +434,9 @@
       <trans-unit id="5324147361912094446" datatype="html">
         <source>Edit item</source>
       </trans-unit>
+      <trans-unit id="5581456603673044979" datatype="html">
+        <source>Following new posts</source>
+      </trans-unit>
       <trans-unit id="559616104966742986" datatype="html">
         <source>No items</source>
       </trans-unit>
@@ -486,6 +454,9 @@
       </trans-unit>
       <trans-unit id="6225091667837832184" datatype="html">
         <source>Closing date is required</source>
+      </trans-unit>
+      <trans-unit id="111491886885681450" datatype="html">
+        <source>Gaming</source>
       </trans-unit>
       <trans-unit id="1117129819844428136" datatype="html">
         <source>Arrival date is required</source>
@@ -544,6 +515,9 @@
       <trans-unit id="6250742806431534479" datatype="html">
         <source>Cancel order</source>
       </trans-unit>
+      <trans-unit id="513843037780139436" datatype="html">
+        <source>Sports</source>
+      </trans-unit>
       <trans-unit id="5144500553106830489" datatype="html">
         <source>Edit order</source>
       </trans-unit>
@@ -565,6 +539,9 @@
       <trans-unit id="865072421807704973" datatype="html">
         <source>Order saved successfully.</source>
       </trans-unit>
+      <trans-unit id="8693603235657020323" datatype="html">
+        <source>Other</source>
+      </trans-unit>
       <trans-unit id="693715295477533448" datatype="html">
         <source>Failed to save order: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
       </trans-unit>
@@ -576,6 +553,9 @@
       </trans-unit>
       <trans-unit id="5720263553768468748" datatype="html">
         <source>Cannot submit payment yet. The offer is still open.</source>
+      </trans-unit>
+      <trans-unit id="574417854351861701" datatype="html">
+        <source>Bank Permata</source>
       </trans-unit>
       <trans-unit id="5748392478962189166" datatype="html">
         <source>Cancel Order</source>
@@ -643,23 +623,8 @@
       <trans-unit id="3354327203668161014" datatype="html">
         <source>Search offers</source>
       </trans-unit>
-      <trans-unit id="2839169248416475627" datatype="html">
-        <source> Food </source>
-      </trans-unit>
-      <trans-unit id="8605967835704545279" datatype="html">
-        <source> Other </source>
-      </trans-unit>
       <trans-unit id="8811587903787462970" datatype="html">
         <source>Loading offers...</source>
-      </trans-unit>
-      <trans-unit id="2625407669106231842" datatype="html">
-        <source>Arrives <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/></source>
-      </trans-unit>
-      <trans-unit id="7816388157456408950" datatype="html">
-        <source>Stock: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/> left</source>
-      </trans-unit>
-      <trans-unit id="8541799753078327638" datatype="html">
-        <source>View Offer</source>
       </trans-unit>
       <trans-unit id="367330087185946084" datatype="html">
         <source>No offers available</source>
@@ -672,6 +637,9 @@
       </trans-unit>
       <trans-unit id="2549250509266547512" datatype="html">
         <source> No customers have joined yet. </source>
+      </trans-unit>
+      <trans-unit id="2576129612206714566" datatype="html">
+        <source>Someone you follow creates a new offer or request.</source>
       </trans-unit>
       <trans-unit id="4798777550477579659" datatype="html">
         <source>No payment methods enabled.</source>
@@ -730,8 +698,14 @@
       <trans-unit id="6254111697774024785" datatype="html">
         <source>Offer deleted successfully.</source>
       </trans-unit>
+      <trans-unit id="6940967350863830242" datatype="html">
+        <source>Beauty</source>
+      </trans-unit>
       <trans-unit id="6941253652460492288" datatype="html">
         <source>Failed to delete offer: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
+      </trans-unit>
+      <trans-unit id="6207213573619526977" datatype="html">
+        <source>Bank Danamon</source>
       </trans-unit>
       <trans-unit id="6222596161301984019" datatype="html">
         <source>Offer Detail</source>
@@ -769,6 +743,9 @@
       <trans-unit id="2486562954024066123" datatype="html">
         <source> Personal Information </source>
       </trans-unit>
+      <trans-unit id="8274339274386762503" datatype="html">
+        <source>Offers from liked requests</source>
+      </trans-unit>
       <trans-unit id="8288999479592178985" datatype="html">
         <source> This information is only displayed to you. </source>
       </trans-unit>
@@ -804,6 +781,9 @@
       </trans-unit>
       <trans-unit id="8521071615839750104" datatype="html">
         <source> No following found </source>
+      </trans-unit>
+      <trans-unit id="8541799753078327638" datatype="html">
+        <source>View Offer</source>
       </trans-unit>
       <trans-unit id="3706222784708785028" datatype="html">
         <source>Rating</source>
@@ -892,6 +872,9 @@
       <trans-unit id="1043007201408240983" datatype="html">
         <source>Chat messages</source>
       </trans-unit>
+      <trans-unit id="1048017581244987170" datatype="html">
+        <source>&apos;Stock: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/> left&apos;</source>
+      </trans-unit>
       <trans-unit id="2778911758332098933" datatype="html">
         <source>You receive a new direct or group chat message.</source>
       </trans-unit>
@@ -960,9 +943,6 @@
       </trans-unit>
       <trans-unit id="367244073978197034" datatype="html">
         <source>For <x id="INTERPOLATION" equiv-text="{{ req.arrival_time | naturalDateTime }}"/></source>
-      </trans-unit>
-      <trans-unit id="7040288612202036661" datatype="html">
-        <source>Others</source>
       </trans-unit>
       <trans-unit id="8369364791381337013" datatype="html">
         <source>No requests available</source>
@@ -1087,6 +1067,9 @@
       <trans-unit id="9178182467454450952" datatype="html">
         <source>Confirm</source>
       </trans-unit>
+      <trans-unit id="9199572989697360180" datatype="html">
+        <source>Electronics</source>
+      </trans-unit>
       <trans-unit id="7737064613891053547" datatype="html">
         <source>Add Method</source>
       </trans-unit>
@@ -1114,6 +1097,9 @@
       <trans-unit id="5259580604136479408" datatype="html">
         <source>Preview image</source>
       </trans-unit>
+      <trans-unit id="5260727918851114394" datatype="html">
+        <source>GoPay</source>
+      </trans-unit>
       <trans-unit id="4272436583644511364" datatype="html">
         <source>Just now</source>
       </trans-unit>
@@ -1131,6 +1117,9 @@
       </trans-unit>
       <trans-unit id="4505265538899561311" datatype="html">
         <source>This <x id="PH" equiv-text="dayName"/></source>
+      </trans-unit>
+      <trans-unit id="4515810552479471481" datatype="html">
+        <source>OVO</source>
       </trans-unit>
     </body>
   </file>
