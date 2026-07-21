@@ -44,7 +44,7 @@ __screenshots__/
 Thumbs.db
 
 # Runtime secrets (generated locally / injected by CI, never committed)
-/src/assets/env-config.js
+/src/environments/environment.dev.ts
 
 # Claude Code session lock files
 .claude/*.lock

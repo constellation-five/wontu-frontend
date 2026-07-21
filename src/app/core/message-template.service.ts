@@ -78,7 +78,7 @@ export class MessageTemplateService {
       case 'NOTIF_OFFER_SOLD_OUT_EARLY':
         return {
           title: $localize`:@@notif.offer_sold_out.title:Offer Sold Out`,
-          description: $localize`:@@notif.offer_sold_out.desc:Your ${params['merchant_name']} offer sold out before its closing time and has been closed automatically.`,
+          description: $localize`:@@notif.offer_sold_out.desc:Your ${params['merchant_name']} offer sold out early. It will be closed automatically when it reaches its closing time.`,
         };
       case 'NOTIF_ORDER_CANCELLED':
         return {
@@ -127,8 +127,13 @@ export class MessageTemplateService {
         };
       case 'NOTIF_OFFER_CLOSING_REACHED_NOT_SOLD_OUT':
         return {
-          title: $localize`:@@notif.offer_closing_reached.title:Offer Closed`,
-          description: $localize`:@@notif.offer_closing_reached.desc:Your ${params['merchant_name']} offer's closing time was reached and it has been closed automatically, not fully sold out.`,
+          title: $localize`:@@notif.offer_closing_reached.title:Closing Time Reached`,
+          description: $localize`:@@notif.offer_closing_reached.desc:Your ${params['merchant_name']} offer's closing time was reached. It was not fully sold out, so it will remain open until you manually close it.`,
+        };
+      case 'NOTIF_OFFER_CREATED_FROM_LIKED_REQUEST':
+        return {
+          title: $localize`:@@notif.offer_created_from_liked_request.title:New Offer from Liked Request`,
+          description: $localize`:@@notif.offer_created_from_liked_request.desc:An offer for '${params['request_title']}' (${params['merchant_name']}) was created based on a request you liked.`,
         };
       case 'NOTIF_NEW_CHAT_MESSAGE':
         return {
@@ -136,6 +141,16 @@ export class MessageTemplateService {
           description: params['is_image'] 
             ? $localize`:@@notif.new_chat_message.sent_image:Sent an image` 
             : params['preview'],
+        };
+      case 'NOTIF_FOLLOWING_NEW_OFFER':
+        return {
+          title: $localize`:@@notif.following_new_offer.title:New Offer from ${params['user_name']}`,
+          description: $localize`:@@notif.following_new_offer.desc:${params['user_name']} just created a new offer: ${params['offer_name']}.`,
+        };
+      case 'NOTIF_FOLLOWING_NEW_REQUEST':
+        return {
+          title: $localize`:@@notif.following_new_request.title:New Request from ${params['user_name']}`,
+          description: $localize`:@@notif.following_new_request.desc:${params['user_name']} just created a new request: ${params['request_name']}.`,
         };
       default:
         return { title: 'Notification', description: '' };

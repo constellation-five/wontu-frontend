@@ -11,6 +11,7 @@ import { PaneComponent } from '../../../shared/components/pane/pane';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { environment } from '../../../../environments/environment';
 import { ThemeService } from '../../../core/theme.service';
+import { PushNotificationService } from '../../../core/push-notification.service';
 
 interface NotificationSetting {
   id: string;
@@ -52,6 +53,7 @@ export class SettingsPage implements OnInit {
 
   private pageHeader = inject(PageHeaderService);
   private themeService = inject(ThemeService);
+  private pushNotificationService = inject(PushNotificationService);
   isLoading = signal(true);
 
   ngOnInit() {
@@ -74,20 +76,17 @@ export class SettingsPage implements OnInit {
     {
       id: 'new-orders',
       label: $localize`New orders & payments`,
-      description:
-        $localize`A buyer joins, places, updates, or cancels an order on one of your offers, or submits proof of payment.`,
+      description: $localize`A buyer joins, places, updates, or cancels an order on one of your offers, or submits proof of payment.`,
     },
     {
       id: 'offer-lifecycle',
       label: $localize`Offer status changes`,
-      description:
-        $localize`One of your offers closes automatically — either it reached its closing time or sold out.`,
+      description: $localize`One of your offers closes automatically — either it reached its closing time or sold out.`,
     },
     {
       id: 'offer-updates',
       label: $localize`Offer updates`,
-      description:
-        $localize`An offer you've joined is edited, closed, deleted, or completed, or your order on it is adjusted or removed.`,
+      description: $localize`An offer you've joined is edited, closed, deleted, or completed, or your order on it is adjusted or removed.`,
     },
     {
       id: 'order-status',
@@ -100,9 +99,19 @@ export class SettingsPage implements OnInit {
       description: $localize`Someone follows your profile.`,
     },
     {
+      id: 'liked-request-offers',
+      label: $localize`Offers from liked requests`,
+      description: $localize`Another user creates an offer based on a request you liked.`,
+    },
+    {
       id: 'chat-messages',
       label: $localize`Chat messages`,
       description: $localize`You receive a new direct or group chat message.`,
+    },
+    {
+      id: 'following-new-posts',
+      label: $localize`Following new posts`,
+      description: $localize`Someone you follow creates a new offer or request.`,
     },
   ];
 
@@ -168,9 +177,19 @@ export class SettingsPage implements OnInit {
   }
 
   togglePush(settingId: string) {
+    let turnedOn = false;
     this.notificationSettings.update((settings) =>
-      settings.map((s) => (s.id === settingId ? { ...s, push: !s.push } : s)),
+      settings.map((s) => {
+        if (s.id === settingId) {
+          if (!s.push) turnedOn = true;
+          return { ...s, push: !s.push };
+        }
+        return s;
+      }),
     );
+    if (turnedOn) {
+      this.pushNotificationService.requestSubscriptionIfNeeded();
+    }
     this.saveSettings();
   }
 
@@ -193,7 +212,7 @@ export class SettingsPage implements OnInit {
     localStorage.setItem('language', language);
 
     const notifications: Record<string, { push: boolean; email: boolean }> = {};
-    this.notificationSettings().forEach(setting => {
+    this.notificationSettings().forEach((setting) => {
       notifications[setting.id] = { push: setting.push, email: setting.email };
     });
 
@@ -203,14 +222,16 @@ export class SettingsPage implements OnInit {
       theme: this.theme(),
     };
 
-    this.http.put<SettingsResponse>(`${environment.api}/settings`, data, { withCredentials: true }).subscribe({
-      next: () => {
-        if (language === 'id') {
-          window.location.href = '/id/';
-        } else {
-          window.location.href = '/';
-        }
-      }
-    });
+    this.http
+      .put<SettingsResponse>(`${environment.api}/settings`, data, { withCredentials: true })
+      .subscribe({
+        next: () => {
+          if (language === 'id') {
+            window.location.href = '/id/';
+          } else {
+            window.location.href = '/';
+          }
+        },
+      });
   }
 }

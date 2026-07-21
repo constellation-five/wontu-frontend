@@ -7,21 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap"
       rel="stylesheet"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
       rel="stylesheet"
     />
-    <!-- Runtime config injected at build/deploy time, never committed with real values -->
-    <script src="assets/env-config.js"></script>
     <script>
-      (function() {
+      (function () {
         var lang = localStorage.getItem('language');
-        var isId = window.location.pathname.startsWith('/id/') || window.location.pathname === '/id';
+        var isId =
+          window.location.pathname.startsWith('/id/') || window.location.pathname === '/id';
         if (lang) {
           if (lang === 'id' && !isId) {
             window.location.replace('/id' + window.location.pathname + window.location.search);
@@ -35,8 +34,10 @@
         }
       })();
     </script>
+    <link rel="manifest" href="manifest.webmanifest" />
   </head>
   <body>
     <app-root></app-root>
+    <noscript>Please enable JavaScript to continue using this application.</noscript>
   </body>
 </html>

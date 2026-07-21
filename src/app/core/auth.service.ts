@@ -7,6 +7,7 @@ import { isProtectedRoute } from './routes.config';
 import { NotificationService } from './notification.service';
 import { ChatService } from './chat.service';
 import { ThemeService } from './theme.service';
+import { PushNotificationService } from './push-notification.service';
 
 export interface User {
   user_id: string;
@@ -27,6 +28,7 @@ export class AuthService {
   private readonly notificationService = inject(NotificationService);
   private readonly chatService = inject(ChatService);
   private readonly themeService = inject(ThemeService);
+  private readonly pushNotificationService = inject(PushNotificationService);
 
   private readonly state = signal<{
     user: User | null;
@@ -55,26 +57,32 @@ export class AuthService {
       })
       .pipe(
         switchMap((user) => {
-          return this.http.get<{ data: { theme: 'system' | 'light' | 'dark' } }>(`${environment.api}/settings`, { withCredentials: true }).pipe(
-            tap((res) => {
-              if (res.data && res.data.theme) {
-                this.themeService.setTheme(res.data.theme);
-              }
-            }),
-            map(() => user),
-            catchError(() => of(user))
-          );
+          return this.http
+            .get<{ data: { theme: 'system' | 'light' | 'dark' } }>(`${environment.api}/settings`, {
+              withCredentials: true,
+            })
+            .pipe(
+              tap((res) => {
+                if (res.data && res.data.theme) {
+                  this.themeService.setTheme(res.data.theme);
+                }
+              }),
+              map(() => user),
+              catchError(() => of(user)),
+            );
         }),
         tap((user) => {
           this.state.update((s) => ({ ...s, user, isLoading: false }));
           this.notificationService.initialize(user.user_id);
           this.chatService.initialize(user.user_id);
-          
+          this.pushNotificationService.requestSubscriptionIfNeeded();
+
           if (user.language) {
             const currentLang = localStorage.getItem('language');
             if (currentLang !== user.language) {
               localStorage.setItem('language', user.language);
-              const isId = window.location.pathname.startsWith('/id/') || window.location.pathname === '/id';
+              const isId =
+                window.location.pathname.startsWith('/id/') || window.location.pathname === '/id';
               if (user.language === 'id' && !isId) {
                 window.location.replace('/id' + window.location.pathname + window.location.search);
               } else if (user.language === 'en' && isId) {

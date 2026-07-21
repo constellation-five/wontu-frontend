@@ -99,6 +99,7 @@ export interface OfferItemInput {
 }
 
 export interface OfferInput {
+  based_on_request_id?: number;
   category: string;
   merchant_name: string;
   location_label?: string | null;
