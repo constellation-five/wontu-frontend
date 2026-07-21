@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies and build project
         run: |
           npm install -g pnpm
-          pnpm install --no-frozen-lockfile
+          pnpm install --no-frozen-lockfile --dangerously-allow-all-builds
           pnpm run build
       - name: Ensure index.html exists in /browser
         run: |
