@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { isProtectedRoute } from './routes.config';
 import { NotificationService } from './notification.service';
 import { ChatService } from './chat.service';
+import { ThemeService } from './theme.service';
 
 export interface User {
   user_id: string;
@@ -25,6 +26,7 @@ export class AuthService {
   private readonly router = inject(Router);
   private readonly notificationService = inject(NotificationService);
   private readonly chatService = inject(ChatService);
+  private readonly themeService = inject(ThemeService);
 
   private readonly state = signal<{
     user: User | null;
@@ -52,6 +54,17 @@ export class AuthService {
         },
       })
       .pipe(
+        switchMap((user) => {
+          return this.http.get<{ data: { theme: 'system' | 'light' | 'dark' } }>(`${environment.api}/settings`, { withCredentials: true }).pipe(
+            tap((res) => {
+              if (res.data && res.data.theme) {
+                this.themeService.setTheme(res.data.theme);
+              }
+            }),
+            map(() => user),
+            catchError(() => of(user))
+          );
+        }),
         tap((user) => {
           this.state.update((s) => ({ ...s, user, isLoading: false }));
           this.notificationService.initialize(user.user_id);

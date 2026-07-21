@@ -2974,14 +2974,6 @@
           <context context-type="linenumber">68,69</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="614869592036089518" datatype="html">
-        <source> Switch to a darker theme to reduce eye strain in low-light environments. </source>
-        <target>Beralih ke tema yang lebih gelap untuk mengurangi ketegangan mata di lingkungan minim cahaya.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
-          <context context-type="linenumber">77,78</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="454896397644108525" datatype="html">
         <source>New orders &amp; payments</source>
         <target>Pesanan &amp; pembayaran baru</target>
@@ -3728,6 +3720,46 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/pipes/natural-date-time.pipe.ts</context>
           <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7103588127254721505" datatype="html">
+        <source>Theme</source>
+        <target>Tema</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
+          <context context-type="linenumber">77,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5311528402610524112" datatype="html">
+        <source>Select Theme</source>
+        <target>Pilih Tema</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.html</context>
+          <context context-type="linenumber">84,85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6434435800257256684" datatype="html">
+        <source>System theme</source>
+        <target>Tema sistem</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="413116577994876478" datatype="html">
+        <source>Light</source>
+        <target>Terang</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
+          <context context-type="linenumber">120</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3892161059518616136" datatype="html">
+        <source>Dark</source>
+        <target>Gelap</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
+          <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
     </body>

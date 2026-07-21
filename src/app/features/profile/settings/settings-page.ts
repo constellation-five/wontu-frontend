@@ -26,7 +26,7 @@ interface SettingsResponse {
   data: {
     notifications: Record<string, { push: boolean; email: boolean }>;
     language: string;
-    dark_mode: boolean;
+    theme: 'system' | 'light' | 'dark';
   };
 }
 
@@ -108,11 +108,17 @@ export class SettingsPage implements OnInit {
 
   notificationSettings = signal<NotificationSetting[]>([]);
   selectedLanguage = signal('en');
-  darkMode = signal(false);
+  theme = signal<'system' | 'light' | 'dark'>('system');
 
   languages = [
     { value: 'en', label: $localize`English` },
     { value: 'id', label: $localize`Indonesian` },
+  ];
+
+  themes = [
+    { value: 'system', label: $localize`System theme` },
+    { value: 'light', label: $localize`Light` },
+    { value: 'dark', label: $localize`Dark` },
   ];
 
   loadSettings() {
@@ -131,7 +137,7 @@ export class SettingsPage implements OnInit {
 
           this.notificationSettings.set(settings);
           this.selectedLanguage.set(res.data.language);
-          this.darkMode.set(res.data.dark_mode);
+          this.theme.set(res.data.theme ?? 'system');
           this.isLoading.set(false);
         },
         error: () => {
@@ -153,7 +159,7 @@ export class SettingsPage implements OnInit {
     const data = {
       notifications,
       language: this.selectedLanguage(),
-      dark_mode: this.darkMode(),
+      theme: this.theme(),
     };
 
     this.http
@@ -175,9 +181,9 @@ export class SettingsPage implements OnInit {
     this.saveSettings();
   }
 
-  toggleDarkMode() {
-    this.darkMode.update((mode) => !mode);
-    this.themeService.setTheme(this.darkMode() ? 'dark' : 'light');
+  changeTheme(theme: 'system' | 'light' | 'dark') {
+    this.theme.set(theme);
+    this.themeService.setTheme(theme);
     this.saveSettings();
   }
 
@@ -194,7 +200,7 @@ export class SettingsPage implements OnInit {
     const data = {
       notifications,
       language: this.selectedLanguage(),
-      dark_mode: this.darkMode(),
+      theme: this.theme(),
     };
 
     this.http.put<SettingsResponse>(`${environment.api}/settings`, data, { withCredentials: true }).subscribe({

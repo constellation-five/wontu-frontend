@@ -91,8 +91,8 @@
   display: inline-block;
 }
 
-@media (prefers-color-scheme: dark) {
-  body[data-theme='system'] {
+::ng-deep body[data-theme='system'] {
+  @media (prefers-color-scheme: dark) {
     .light {
       display: none;
     }
@@ -102,7 +102,7 @@
   }
 }
 
-body[data-theme='dark'] {
+::ng-deep body[data-theme='dark'] {
   .light {
     display: none !important;
   }
@@ -111,7 +111,7 @@ body[data-theme='dark'] {
   }
 }
 
-body[data-theme='light'] {
+::ng-deep body[data-theme='light'] {
   .light {
     display: inline-block !important;
   }
