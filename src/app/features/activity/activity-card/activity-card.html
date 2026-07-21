@@ -33,7 +33,7 @@
     <div class="activity-action">
       @if (isHistory() && type() === 'Order' && !isRated()) {
         <button class="rate-button mat-font-body-md text-bold" (click)="onRateClick($event)">
-          Rate <mat-icon class="arrow-icon" fontSet="material-symbols-outlined">arrow_forward</mat-icon>
+          <span i18n>Rate</span> <mat-icon class="arrow-icon" fontSet="material-symbols-outlined">arrow_forward</mat-icon>
         </button>
       } @else {
         <mat-icon class="arrow-icon mat-text-on-surface" fontSet="material-symbols-outlined">arrow_forward</mat-icon>
@@ -70,7 +70,7 @@
         <span class="mobile-date mat-font-label-sm mat-text-on-surface-variant">{{ date() }}</span>
         @if (isHistory() && type() === 'Order' && !isRated()) {
           <button class="rate-button" (click)="onRateClick($event)">
-            <span class="mat-font-body-md text-bold mat-text-primary">Rate</span>
+            <span class="mat-font-body-md text-bold mat-text-primary" i18n>Rate</span>
             <mat-icon class="arrow-icon mat-text-primary" fontSet="material-symbols-outlined">arrow_forward</mat-icon>
           </button>
         } @else {

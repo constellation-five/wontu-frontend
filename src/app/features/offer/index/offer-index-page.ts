@@ -21,7 +21,7 @@ import { MainPageHeaderComponent } from '../../../shared/components/main-page-he
 import { LocationPickerDialog } from '../../../shared/components/location-picker-dialog/location-picker-dialog';
 import { IconButtonVariantDirective } from '../../../shared/directives/button';
 import { LocationLookupService } from '../../../core/location-lookup.service';
-import { LocationStateService } from '../../../core/location-state.service';
+import { LocationStateService, DEFAULT_LOCATION } from '../../../core/location-state.service';
 
 @Component({
   selector: 'offer-index',
@@ -139,7 +139,7 @@ export class OfferShowPage {
       width: '500px',
       data: {
         coords: this.userLocationCoordinates() ?? undefined,
-        label: this.userLocation() !== 'Choose your location' ? this.userLocation() : undefined,
+        label: this.userLocation() !== DEFAULT_LOCATION ? this.userLocation() : undefined,
       },
       disableClose: false,
     });
@@ -206,7 +206,7 @@ export class OfferShowPage {
   }
 
   openCurrentLocationInMaps() {
-    if (this.userLocation() !== 'Choose your location') {
+    if (this.userLocation() !== DEFAULT_LOCATION) {
       this.openLocationInMaps(this.userLocation());
     }
   }

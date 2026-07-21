@@ -36,7 +36,7 @@ import { ButtonSizeDirective, IconButtonVariantDirective } from '../../../shared
 import { BottomBarService } from '../../../core/bottom-bar.service';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { OfferService, Offer, OfferItemInput, OfferInput } from '../../../core/offer.service';
-import { LocationStateService } from '../../../core/location-state.service';
+import { LocationStateService, DEFAULT_LOCATION } from '../../../core/location-state.service';
 import { LocationLookupService } from '../../../core/location-lookup.service';
 import { ResponsiveDialogService } from '../../../shared/components/responsive-dialog/responsive-dialog.service';
 import {
@@ -173,7 +173,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
         this.locationLat = currentLocation.lat;
         this.locationLng = currentLocation.lng;
         const currentLabel = this.locationState.userLocation();
-        if (currentLabel !== 'Choose your location') {
+        if (currentLabel !== DEFAULT_LOCATION) {
           this.locationLabel = currentLabel;
         } else {
           this.locationLookup.resolvePlaceName(currentLocation).then(name => {

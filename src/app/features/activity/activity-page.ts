@@ -74,7 +74,8 @@ export class ActivityPage {
   filterOffer = signal<boolean>(true);
   
   isLoading = signal<boolean>(true);
-  activeTab = signal<'History' | 'Ongoing'>('Ongoing');
+  tabOptions = [$localize`History`, $localize`Ongoing`];
+  activeTab = signal<string>(this.tabOptions[1]);
 
   combinedItems = computed(() => {
     return [...this.orders(), ...this.offers()]
@@ -83,7 +84,7 @@ export class ActivityPage {
 
   filteredItems = computed(() => {
     const search = this.searchQuery().toLowerCase();
-    const isHistoryTab = this.activeTab() === 'History';
+    const isHistoryTab = this.activeTab() === this.tabOptions[0];
     const showOrder = this.filterOrder();
     const showOffer = this.filterOffer();
     
@@ -99,7 +100,7 @@ export class ActivityPage {
   });
 
   onTabChange(tab: string) {
-    this.activeTab.set(tab as 'History' | 'Ongoing');
+    this.activeTab.set(tab);
   }
 
   constructor() {
@@ -136,10 +137,10 @@ export class ActivityPage {
           } else {
              if (order.closed_at) { // Waiting to arrive
                 dateToUse = order.arrival_time ? new Date(order.arrival_time) : orderDate;
-                prefix = 'Arrives ';
+                prefix = $localize`Arrives `;
              } else { // Waiting to close
                 dateToUse = order.closing_time ? new Date(order.closing_time) : orderDate;
-                prefix = 'Closes ';
+                prefix = $localize`Closes `;
              }
           }
           
@@ -187,10 +188,10 @@ export class ActivityPage {
           } else {
              if (offer.closed_at) { // Waiting to arrive
                 dateToUse = offer.arrival_time ? new Date(offer.arrival_time) : offerDate;
-                prefix = 'Arrives ';
+                prefix = $localize`Arrives `;
              } else { // Waiting to close
                 dateToUse = offer.closing_time ? new Date(offer.closing_time) : offerDate;
-                prefix = 'Closes ';
+                prefix = $localize`Closes `;
              }
           }
 
@@ -216,7 +217,7 @@ export class ActivityPage {
         // Smart Default Tab: If no ongoing items, switch to History
         const hasOngoing = this.combinedItems().some(item => !item.isHistory);
         if (!hasOngoing) {
-          this.activeTab.set('History');
+          this.activeTab.set(this.tabOptions[0]);
         }
         this.isLoading.set(false);
       },
@@ -233,19 +234,19 @@ export class ActivityPage {
 
   // --- Status Mappings for Orders ---
   private getOrderStatus(order: any) {
-    if (order.arrived_at) return { text: 'Items arrive', color: 'var(--mat-sys-success)', isHistory: true };
-    if (order.is_confirmed) return { text: 'Payment confirmed', color: 'var(--mat-sys-secondary)', isHistory: false };
-    if (order.payment_submitted_at) return { text: 'Payment made', color: 'var(--mat-sys-secondary)', isHistory: false };
-    if (order.closed_at) return { text: 'Offer closed', color: 'var(--mat-sys-secondary)', isHistory: false };
-    return { text: 'Offer joined', color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (order.arrived_at) return { text: $localize`Items arrive`, color: 'var(--mat-sys-success)', isHistory: true };
+    if (order.is_confirmed) return { text: $localize`Payment confirmed`, color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (order.payment_submitted_at) return { text: $localize`Payment made`, color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (order.closed_at) return { text: $localize`Offer closed`, color: 'var(--mat-sys-secondary)', isHistory: false };
+    return { text: $localize`Offer joined`, color: 'var(--mat-sys-secondary)', isHistory: false };
   }
 
   // --- Status Mappings for Offers ---
   private getOfferStatus(offer: Offer) {
-    if (offer.arrived_at) return { text: 'Items arrived', color: 'var(--mat-sys-success)', isHistory: true };
-    if (offer.payments_confirmed_at) return { text: 'Payments confirmed', color: 'var(--mat-sys-secondary)', isHistory: false };
-    if (offer.closed_at) return { text: 'Offer closed', color: 'var(--mat-sys-secondary)', isHistory: false };
-    return { text: 'Offer opened', color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (offer.arrived_at) return { text: $localize`Items arrived`, color: 'var(--mat-sys-success)', isHistory: true };
+    if (offer.payments_confirmed_at) return { text: $localize`Payments confirmed`, color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (offer.closed_at) return { text: $localize`Offer closed`, color: 'var(--mat-sys-secondary)', isHistory: false };
+    return { text: $localize`Offer opened`, color: 'var(--mat-sys-secondary)', isHistory: false };
   }
 
   viewDetail(item: ActivityItem) {
