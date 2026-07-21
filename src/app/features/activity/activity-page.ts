@@ -12,12 +12,14 @@ import { NaturalDateTimePipe } from '../../shared/pipes/natural-date-time.pipe';
 import { GiveRatingDialog } from '../../shared/components/give-rating-dialog/give-rating-dialog';
 import { SegmentedControlComponent } from '../../shared/components/segmented-control/segmented-control';
 import { PageHeaderService } from '../../core/page-header.service';
-import { LocationStateService } from '../../core/location-state.service';
+import { LocationStateService, DEFAULT_LOCATION } from '../../core/location-state.service';
+import { LocationLookupService } from '../../core/location-lookup.service';
 import { Offer, OfferService } from '../../core/offer.service';
 import { ProfileService } from '../../core/profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MainPageHeaderComponent } from '../../shared/components/main-page-header/main-page-header';
 import { ActivityCardComponent } from './activity-card/activity-card';
+import { LocationPickerDialog } from '../../shared/components/location-picker-dialog/location-picker-dialog';
 
 interface ActivityItem {
   id: number;
@@ -57,6 +59,7 @@ export class ActivityPage {
   private readonly router = inject(Router);
   protected readonly pageHeader = inject(PageHeaderService);
   private readonly locationState = inject(LocationStateService);
+  private readonly locationLookup = inject(LocationLookupService);
   private readonly offerService = inject(OfferService);
   private readonly profileService = inject(ProfileService);
   private readonly snackBar = inject(MatSnackBar);
@@ -65,6 +68,7 @@ export class ActivityPage {
   private readonly naturalPipe = new NaturalDateTimePipe();
   
   readonly userLocation = this.locationState.userLocation;
+  readonly userLocationCoordinates = this.locationState.userLocationCoordinates;
 
   orders = signal<ActivityItem[]>([]);
   offers = signal<ActivityItem[]>([]);
@@ -105,7 +109,66 @@ export class ActivityPage {
 
   constructor() {
     this.pageHeader.setTitle('Activity');
+    
+    if (!this.userLocationCoordinates()) {
+      this.detectCurrentLocation();
+    }
+    
     this.loadData();
+  }
+
+  onChangeLocation() {
+    const dialogRef = this.dialog.open(LocationPickerDialog, {
+      width: '500px',
+      data: {
+        coords: this.userLocationCoordinates() ?? undefined,
+        label: this.userLocation() !== DEFAULT_LOCATION ? this.userLocation() : undefined,
+      },
+      disableClose: false,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.location) {
+        this.locationState.isManuallySet.set(true);
+        this.userLocation.set(result.location);
+        this.userLocationCoordinates.set(result.coords ?? null);
+      }
+    });
+  }
+
+  private detectCurrentLocation(retriesLeft = 2) {
+    if (!navigator.geolocation) {
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const coords = { lat: position.coords.latitude, lng: position.coords.longitude };
+        this.applyDetectedLocation(coords);
+      },
+      (error) => {
+        console.log('Geolocation error:', error);
+        if (error.code === error.POSITION_UNAVAILABLE && retriesLeft > 0) {
+          setTimeout(() => this.detectCurrentLocation(retriesLeft - 1), 2000);
+        }
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+    );
+  }
+
+  private async applyDetectedLocation(coords: { lat: number; lng: number }) {
+    if (this.locationState.isManuallySet()) {
+      return;
+    }
+
+    this.userLocationCoordinates.set(coords);
+
+    try {
+      this.userLocation.set(await this.locationLookup.resolvePlaceName(coords));
+    } catch (err) {
+      console.log('Location lookup error:', err);
+      this.userLocation.set(`${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`);
+    }
   }
 
   private loadData() {

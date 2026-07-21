@@ -6,6 +6,7 @@
   i18n-searchPlaceholder
   searchPlaceholder="Search"
   (searchValueChange)="searchQuery.set($event)"
+  (locationClick)="onChangeLocation()"
 >
   <ng-container searchPrefix>
     @if (!isLoading()) {
