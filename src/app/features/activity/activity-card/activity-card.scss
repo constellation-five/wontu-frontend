@@ -31,6 +31,15 @@
   overflow: hidden;
   background-color: var(--mat-sys-surface-variant);
   
+  &.no-image {
+    background-color: transparent;
+    
+    .activity-image {
+      object-fit: contain;
+      padding: var(--spacing-sm);
+    }
+  }
+
   .activity-image {
     width: 100%;
     height: 100%;
@@ -46,6 +55,10 @@
   .activity-image-wrapper {
     width: 80px;
     height: 60px;
+    
+    &.no-image .activity-image {
+      padding: var(--spacing-3xs);
+    }
   }
 
   .activity-desktop-columns {
@@ -137,16 +150,18 @@
   gap: var(--spacing-md);
 
   .activity-image-wrapper {
-    width: 124px;
-    height: 96px;
-    margin-top: var(--spacing-3xs);
+    width: 84px;
+    height: 84px;
+    aspect-ratio: 1 / 1;
+    margin-top: 0;
   }
 
   .mobile-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-2xs);
+    justify-content: center;
+    gap: var(--spacing-3xs);
     min-width: 0;
   }
 
