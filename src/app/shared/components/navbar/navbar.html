@@ -40,25 +40,27 @@
         </a>
       }
     }
-    <a
-      mat-list-item
-      routerLink="/signin"
-      routerLinkActive
-      #rla="routerLinkActive"
-      class="nav-item nav-signin"
-      [activated]="rla.isActive"
-      (click)="blurItem($event)"
-    >
-      <mat-icon
-        matListItemIcon
-        fontSet="material-symbols-outlined"
-        class="nav-icon"
-        [class.nav-icon-filled]="rla.isActive"
+    @if (!user()) {
+      <a
+        mat-list-item
+        routerLink="/signin"
+        routerLinkActive
+        #rla="routerLinkActive"
+        class="nav-item nav-signin"
+        [activated]="rla.isActive"
+        (click)="blurItem($event)"
       >
-        login
-      </mat-icon>
-      <span i18n class="auth-label">Sign in</span>
-    </a>
+        <mat-icon
+          matListItemIcon
+          fontSet="material-symbols-outlined"
+          class="nav-icon"
+          [class.nav-icon-filled]="rla.isActive"
+        >
+          login
+        </mat-icon>
+        <span i18n class="auth-label">Sign in</span>
+      </a>
+    }
   </mat-nav-list>
 
   <div class="auth-button-container">
