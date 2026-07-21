@@ -8,8 +8,8 @@ const BANK_LOGO_MAP: Record<string, string> = {
   'Bank Mandiri': 'mandiri.svg',
   'Bank Danamon': 'danamon.svg',
   'Bank Permata': 'permata.svg',
-  'Gopay': 'gopay.svg',
-  'Ovo': 'ovo.svg',
+  'GoPay': 'gopay.svg',
+  'OVO': 'ovo.svg',
 };
 
 @Component({
