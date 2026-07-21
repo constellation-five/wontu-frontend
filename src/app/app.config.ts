@@ -3,6 +3,7 @@ import {
   provideBrowserGlobalErrorListeners,
   inject,
   provideAppInitializer,
+  isDevMode,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -19,6 +20,7 @@ import { routes } from './app.routes';
 import { credentialsInterceptor } from './core/credentials.interceptor';
 
 import { OVERLAY_DEFAULT_CONFIG } from '@angular/cdk/overlay';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,5 +34,8 @@ export const appConfig: ApplicationConfig = {
       return auth.loadUser();
     }),
     { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } },
+    provideServiceWorker('ngsw-worker.js', {
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
 };

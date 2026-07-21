@@ -3762,6 +3762,10 @@
           <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="pushNotification.blocked" datatype="html">
+        <source>Push notifications are blocked in your browser settings. Please enable them to receive notifications.</source>
+        <target>Notifikasi push diblokir di pengaturan browser Anda. Harap aktifkan untuk menerima notifikasi.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

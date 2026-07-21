@@ -6,4 +6,5 @@ export const environment = {
     port: 8080,
     scheme: 'http',
   },
+  vapidPublicKey: 'BKSvdTc_tpkzlG9GtZ7ZW8QnTk50bUcoIUBBpvmxHQikTRf524Yqm6bL3UFKNv9_FZimt6zo_0VI-57zb42w150',
 };
