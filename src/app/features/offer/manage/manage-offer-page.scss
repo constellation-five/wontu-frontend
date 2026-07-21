@@ -55,15 +55,21 @@
   align-items: center;
   gap: var(--spacing-sm);
   overflow: hidden;
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  width: 0;
 }
 
 .buyer-avatar {
+  display: none;
   width: 32px;
   height: 32px;
   border-radius: var(--mat-sys-corner-full);
   object-fit: cover;
   flex-shrink: 0;
+
+  @media (min-width: $breakpoint-sm) {
+    display: inline;
+  }
 }
 
 .buyer-name {
@@ -77,6 +83,7 @@
   align-items: center;
   gap: var(--spacing-sm);
   overflow: hidden;
+  flex: 0 0 auto;
 }
 
 .count {
