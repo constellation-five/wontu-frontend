@@ -104,6 +104,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
   private locationLat = -6.2088;
   private locationLng = 106.8456;
   private locationLabel: string | null = null;
+  private basedOnRequestId?: number;
 
   readonly model = signal({
     category: (this.existingOffer?.category as string) ?? 'food',
@@ -145,6 +146,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     this.route.queryParams.subscribe((params) => {
       const requestId = params['requestId'];
       if (requestId && !this.isEditMode) {
+        this.basedOnRequestId = Number(requestId);
         this.fetchRequestData(requestId);
       }
     });
@@ -384,6 +386,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     const arrivalTime = this.combineDateTime(m.arrival_date, m.arrival_time_of_day);
 
     const payload: OfferInput = {
+      ...(this.basedOnRequestId ? { based_on_request_id: this.basedOnRequestId } : {}),
       category: m.category,
       merchant_name: m.merchant_name,
       location_label: this.locationLabel,

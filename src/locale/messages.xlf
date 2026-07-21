@@ -199,7 +199,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="notif.offer_sold_out.desc" datatype="html">
-        <source>Your <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer sold out before its closing time and has been closed automatically.</source>
+        <source>Your <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer sold out early. It will be closed automatically when it reaches its closing time.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
           <context context-type="linenumber">81</context>
@@ -332,31 +332,52 @@
         </context-group>
       </trans-unit>
       <trans-unit id="notif.offer_closing_reached.title" datatype="html">
-        <source>Offer Closed</source>
+        <source>Closing Time Reached</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
           <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="notif.offer_closing_reached.desc" datatype="html">
-        <source>Your <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer&apos;s closing time was reached and it has been closed automatically, not fully sold out.</source>
+        <source>Your <x id="PH" equiv-text="params[&apos;merchant_name&apos;]"/> offer&apos;s closing time was reached. It was not fully sold out, so it will remain open until you manually close it.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
           <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_created_from_liked_request.title" datatype="html">
+        <source>New Offer from Liked Request</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">135</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.offer_created_from_liked_request.desc" datatype="html">
+        <source>An offer for &apos;<x id="PH" equiv-text="params[&apos;request_title&apos;]"/>&apos; (<x id="PH_1" equiv-text="params[&apos;merchant_name&apos;]"/>) was created based on a request you liked.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="notif.new_chat_message.title" datatype="html">
         <source>New message from <x id="PH" equiv-text="params[&apos;sender&apos;]"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">140</context>
         </context-group>
       </trans-unit>
       <trans-unit id="notif.new_chat_message.sent_image" datatype="html">
         <source>Sent an image</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
-          <context context-type="linenumber">137</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="pushNotification.blocked" datatype="html">
+        <source>Push notifications are blocked in your browser settings. Please enable them to receive notifications.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/push-notification.service.ts</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5639297788212274461" datatype="html">
@@ -758,23 +779,23 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">352</context>
+          <context context-type="linenumber">354</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="linenumber">367</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">377</context>
+          <context context-type="linenumber">379</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">413</context>
+          <context context-type="linenumber">416</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">422</context>
+          <context context-type="linenumber">425</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-detail-page.ts</context>
@@ -1094,7 +1115,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">142</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-detail-page.ts</context>
@@ -1516,7 +1537,7 @@
         <source>Category is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">123</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
@@ -1527,21 +1548,21 @@
         <source>Merchant name is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6225091667837832184" datatype="html">
         <source>Closing date is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1117129819844428136" datatype="html">
         <source>Arrival date is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">126</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
@@ -1552,11 +1573,11 @@
         <source>Edit Offer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">140</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">143</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/offer.routes.ts</context>
@@ -1567,11 +1588,11 @@
         <source>Create Offer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">140</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">143</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
@@ -1594,42 +1615,42 @@
         <source>Please fill in the closing and arrival dates.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">352</context>
+          <context context-type="linenumber">354</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7834934585814920321" datatype="html">
         <source>Items must arrive on or after the offer closing date.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="linenumber">367</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4020138443819787558" datatype="html">
         <source>On the same day, items must arrive at or after the offer closing time.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">377</context>
+          <context context-type="linenumber">379</context>
         </context-group>
       </trans-unit>
       <trans-unit id="334812786102206501" datatype="html">
         <source>Offer saved successfully.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">413</context>
+          <context context-type="linenumber">416</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6389112316856539015" datatype="html">
         <source>Offer created successfully.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">413</context>
+          <context context-type="linenumber">416</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5616911200648703788" datatype="html">
         <source>Failed to save offer: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.ts</context>
-          <context context-type="linenumber">422</context>
+          <context context-type="linenumber">425</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3275239776547622459" datatype="html">
@@ -2379,7 +2400,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/navbar/navbar.ts</context>
@@ -2589,11 +2610,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2949848596707725099" datatype="html">
@@ -2717,21 +2738,21 @@
         <source>New orders &amp; payments</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8473428879471394150" datatype="html">
         <source>A buyer joins, places, updates, or cancels an order on one of your offers, or submits proof of payment.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9163445672828332126" datatype="html">
         <source>Offer status changes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7375049972194124744" datatype="html">
@@ -2752,84 +2773,98 @@
         <source>An offer you&apos;ve joined is edited, closed, deleted, or completed, or your order on it is adjusted or removed.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6681738558442750823" datatype="html">
         <source>Order status</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8101808473072133560" datatype="html">
         <source>Your payment is confirmed, or the items you ordered have arrived.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4579496777570550463" datatype="html">
         <source>Social</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8073685680388158351" datatype="html">
         <source>Someone follows your profile.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8274339274386762503" datatype="html">
+        <source>Offers from liked requests</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4661769511402241638" datatype="html">
+        <source>Another user creates an offer based on a request you liked.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1043007201408240983" datatype="html">
         <source>Chat messages</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2778911758332098933" datatype="html">
         <source>You receive a new direct or group chat message.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5866254605255506989" datatype="html">
         <source>English</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8312065814232621608" datatype="html">
         <source>Indonesian</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">115</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6434435800257256684" datatype="html">
         <source>System theme</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="413116577994876478" datatype="html">
         <source>Light</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3892161059518616136" datatype="html">
         <source>Dark</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7808678925665188385" datatype="html">
@@ -3387,9 +3422,6 @@
           <context context-type="sourcefile">src/app/shared/pipes/natural-date-time.pipe.ts</context>
           <context context-type="linenumber">46</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="pushNotification.blocked" datatype="html">
-        <source>Push notifications are blocked in your browser settings. Please enable them to receive notifications.</source>
       </trans-unit>
     </body>
   </file>

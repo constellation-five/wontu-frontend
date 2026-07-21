@@ -99,6 +99,11 @@ export class SettingsPage implements OnInit {
       description: $localize`Someone follows your profile.`,
     },
     {
+      id: 'liked-request-offers',
+      label: $localize`Offers from liked requests`,
+      description: $localize`Another user creates an offer based on a request you liked.`,
+    },
+    {
       id: 'chat-messages',
       label: $localize`Chat messages`,
       description: $localize`You receive a new direct or group chat message.`,
