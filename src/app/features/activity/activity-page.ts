@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
 import { NaturalDateTimePipe } from '../../shared/pipes/natural-date-time.pipe';
 import { GiveRatingDialog } from '../../shared/components/give-rating-dialog/give-rating-dialog';
@@ -45,6 +46,7 @@ interface ActivityItem {
     ActivityCardComponent,
     MatCheckboxModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     SegmentedControlComponent
   ],
   templateUrl: './activity-page.html',
@@ -71,6 +73,7 @@ export class ActivityPage {
   filterOrder = signal<boolean>(true);
   filterOffer = signal<boolean>(true);
   
+  isLoading = signal<boolean>(true);
   activeTab = signal<'History' | 'Ongoing'>('Ongoing');
 
   combinedItems = computed(() => {
@@ -105,6 +108,7 @@ export class ActivityPage {
   }
 
   private loadData() {
+    this.isLoading.set(true);
     forkJoin({
       ordersRes: this.offerService.getMyOrders(),
       offersRes: this.offerService.getMyOffers()
@@ -123,8 +127,23 @@ export class ActivityPage {
           }
           
           const status = this.getOrderStatus(order);
-          const prefix = status.isHistory ? '' : (order.closed_at ? 'Arrives ' : 'Closes ');
-          const rawDate = this.naturalPipe.transform(orderDate);
+          let dateToUse: Date;
+          let prefix = '';
+
+          if (status.isHistory) {
+             dateToUse = order.arrived_at ? new Date(order.arrived_at) : orderDate;
+             prefix = '';
+          } else {
+             if (order.closed_at) { // Waiting to arrive
+                dateToUse = order.arrival_time ? new Date(order.arrival_time) : orderDate;
+                prefix = 'Arrives ';
+             } else { // Waiting to close
+                dateToUse = order.closing_time ? new Date(order.closing_time) : orderDate;
+                prefix = 'Closes ';
+             }
+          }
+          
+          const rawDate = this.naturalPipe.transform(dateToUse);
           const finalDateStr = status.isHistory ? rawDate : prefix + rawDate.toLowerCase();
           
           return {
@@ -134,7 +153,7 @@ export class ActivityPage {
             merchantId: order.merchant_id,
             locationLabel: order.location_label || '',
             dateStr: finalDateStr,
-            timestamp: orderDate.getTime(),
+            timestamp: dateToUse.getTime(),
             statusText: status.text,
             statusColor: status.color,
             imageUrl,
@@ -159,8 +178,23 @@ export class ActivityPage {
           }
 
           const status = this.getOfferStatus(offer);
-          const prefix = status.isHistory ? '' : (offer.closed_at ? 'Arrives ' : 'Closes ');
-          const rawDate = this.naturalPipe.transform(offerDate);
+          let dateToUse: Date;
+          let prefix = '';
+
+          if (status.isHistory) {
+             dateToUse = offer.arrived_at ? new Date(offer.arrived_at) : offerDate;
+             prefix = '';
+          } else {
+             if (offer.closed_at) { // Waiting to arrive
+                dateToUse = offer.arrival_time ? new Date(offer.arrival_time) : offerDate;
+                prefix = 'Arrives ';
+             } else { // Waiting to close
+                dateToUse = offer.closing_time ? new Date(offer.closing_time) : offerDate;
+                prefix = 'Closes ';
+             }
+          }
+
+          const rawDate = this.naturalPipe.transform(dateToUse);
           const finalDateStr = status.isHistory ? rawDate : prefix + rawDate.toLowerCase();
 
           return {
@@ -169,7 +203,7 @@ export class ActivityPage {
             merchantName: offer.merchant_name,
             locationLabel: offer.location_label || '',
             dateStr: finalDateStr,
-            timestamp: offerDate.getTime(),
+            timestamp: dateToUse.getTime(),
             statusText: status.text,
             statusColor: status.color,
             imageUrl,
@@ -181,11 +215,15 @@ export class ActivityPage {
 
         // Smart Default Tab: If no ongoing items, switch to History
         const hasOngoing = this.combinedItems().some(item => !item.isHistory);
-        if (!hasOngoing && this.combinedItems().length > 0) {
+        if (!hasOngoing) {
           this.activeTab.set('History');
         }
+        this.isLoading.set(false);
       },
-      error: (err) => console.error('Failed to load activity data:', err),
+      error: (err) => {
+        console.error('Failed to load activity data:', err);
+        this.isLoading.set(false);
+      },
     });
   }
 
@@ -196,18 +234,18 @@ export class ActivityPage {
   // --- Status Mappings for Orders ---
   private getOrderStatus(order: any) {
     if (order.arrived_at) return { text: 'Items arrive', color: 'var(--mat-sys-success)', isHistory: true };
-    if (order.is_confirmed) return { text: 'Payment confirmed', color: '#E68A00', isHistory: false };
-    if (order.payment_submitted_at) return { text: 'Payment made', color: '#E68A00', isHistory: false };
-    if (order.closed_at) return { text: 'Offer closed', color: '#E68A00', isHistory: false };
-    return { text: 'Offer joined', color: '#E68A00', isHistory: false };
+    if (order.is_confirmed) return { text: 'Payment confirmed', color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (order.payment_submitted_at) return { text: 'Payment made', color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (order.closed_at) return { text: 'Offer closed', color: 'var(--mat-sys-secondary)', isHistory: false };
+    return { text: 'Offer joined', color: 'var(--mat-sys-secondary)', isHistory: false };
   }
 
   // --- Status Mappings for Offers ---
   private getOfferStatus(offer: Offer) {
     if (offer.arrived_at) return { text: 'Items arrived', color: 'var(--mat-sys-success)', isHistory: true };
-    if (offer.payments_confirmed_at) return { text: 'Payments confirmed', color: '#E68A00', isHistory: false };
-    if (offer.closed_at) return { text: 'Offer closed', color: '#E68A00', isHistory: false };
-    return { text: 'Offer opened', color: '#E68A00', isHistory: false };
+    if (offer.payments_confirmed_at) return { text: 'Payments confirmed', color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (offer.closed_at) return { text: 'Offer closed', color: 'var(--mat-sys-secondary)', isHistory: false };
+    return { text: 'Offer opened', color: 'var(--mat-sys-secondary)', isHistory: false };
   }
 
   viewDetail(item: ActivityItem) {

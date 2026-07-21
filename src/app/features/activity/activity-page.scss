@@ -28,6 +28,7 @@
 
 .desktop-tabs {
   display: none;
+  height: 48px !important;
   
   @media (min-width: $breakpoint-md) {
     display: block;
@@ -100,7 +101,7 @@
   }
 }
 
-@media (max-width: $breakpoint-md) {
+@media (max-width: $breakpoint-lg) {
   .desktop-header {
     display: none;
   }
