@@ -5,7 +5,7 @@
   grid-template-columns: 288px 1fr;
   gap: var(--spacing-lg);
 
-  @media (max-width: $breakpoint-lg) {
+  @media (max-width: $breakpoint-md) {
     grid-template-columns: 1fr;
     padding: 0;
   }
@@ -48,7 +48,7 @@
     padding: 0;
   }
 
-  @media (max-width: $breakpoint-lg) {
+  @media (max-width: $breakpoint-md) {
     min-height: auto;
     height: auto;
   }
