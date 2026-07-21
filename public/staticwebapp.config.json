@@ -1,10 +1,27 @@
 {
+  "trailingSlash": "auto",
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": [
-      "/assets/*",
-      "/*.{png,jpg,jpeg,gif,svg,webp,ico}",
-      "/*.{css,js,json,map}"
-    ]
-  }
+    "exclude": ["/*.{js,css,ico,json}", "/assets/*", "/id/*.{js,css,ico,json}", "/id/assets/*"]
+  },
+  "routes": [
+    {
+      "route": "/*.{js,css,ico,json}",
+      "headers": { "cache-control": "max-age=31536000" }
+    },
+    {
+      "route": "/id/*.{js,css,ico,json}",
+      "headers": { "cache-control": "max-age=31536000" }
+    },
+    {
+      "route": "/id/assets/*"
+    },
+    {
+      "route": "/assets/*"
+    },
+    {
+      "route": "/id/*",
+      "rewrite": "/id/index.html"
+    }
+  ]
 }

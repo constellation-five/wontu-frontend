@@ -181,6 +181,7 @@ export class SettingsPage implements OnInit {
   changeLanguage(language: string) {
     if (this.selectedLanguage() === language) return;
     this.selectedLanguage.set(language);
+    localStorage.setItem('language', language);
 
     const notifications: Record<string, { push: boolean; email: boolean }> = {};
     this.notificationSettings().forEach(setting => {
