@@ -168,6 +168,13 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
           image_url: item.image_url,
         })),
       );
+      this.offerService.getOfferPaymentMethods(this.existingOffer.offer_id).subscribe({
+        next: (res) => {
+          const enabledIds = res.data.map((m) => m.payment_method_id);
+          this.selectedPaymentMethodIds.set(enabledIds);
+        },
+        error: (err) => console.error('Failed to load offer payment methods:', err),
+      });
     } else {
       const currentLocation = this.locationState.userLocationCoordinates();
       if (currentLocation) {
