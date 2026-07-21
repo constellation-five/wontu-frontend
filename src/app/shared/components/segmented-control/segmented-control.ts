@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-segmented-control',
@@ -6,6 +7,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
     <div class="segmented-control">
       @for (option of options(); track option) {
         <button 
+          mat-button
           class="segment-btn mat-font-label-lg" 
           [class.active]="option === value()" 
           (click)="onSelect(option)">
@@ -16,6 +18,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
   `,
   styleUrls: ['./segmented-control.scss'],
   standalone: true,
+  imports: [MatButtonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SegmentedControlComponent {

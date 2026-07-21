@@ -7,23 +7,22 @@
   border-radius: var(--mat-sys-corner-full);
   padding: 0;
   width: fit-content;
+  height: 100%;
+  overflow: hidden;
 }
 
 .segment-btn {
   flex: 1;
-  border: none;
-  background: transparent;
-  padding: var(--spacing-xs) var(--spacing-xl);
-  border-radius: var(--mat-sys-corner-full);
-  font-weight: 500;
+  border-radius: var(--mat-sys-corner-full) !important;
+  box-shadow: none !important;
   color: var(--mat-sys-on-surface-variant);
-  cursor: pointer;
-  transition: all 0.2s ease;
   min-width: 160px;
+  height: 100%;
+  padding: var(--spacing-xs) var(--spacing-xl) !important;
 
   &.active {
-    background-color: var(--mat-sys-primary);
-    color: var(--mat-sys-on-primary);
+    background-color: var(--mat-sys-primary) !important;
+    color: var(--mat-sys-on-primary) !important;
   }
 }
 
