@@ -1,0 +1,23 @@
+@use '../../../../variables' as *;
+
+:host {
+  display: block;
+}
+
+.ongoing-wrapper {
+  background-color: var(--mat-sys-primary-container);
+  margin-left: calc(var(--page-spacer-sm) * -1);
+  margin-right: calc(var(--page-spacer-sm) * -1);
+  padding: var(--spacing-xl) var(--page-spacer-sm);
+  margin-bottom: var(--spacing-xl);
+  @media (min-width: $breakpoint-md) {
+    margin-left: calc(var(--page-spacer-lg) * -1);
+    margin-right: calc(var(--page-spacer-lg) * -1);
+    padding: var(--spacing-xl) var(--page-spacer-lg);
+  }
+}
+
+.section-title {
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--mat-sys-on-primary-container);
+}

@@ -7,6 +7,17 @@
   width: 100%;
   transition: all 0.2s ease;
   overflow: hidden;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: var(--mat-sys-level3);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: var(--mat-sys-level1);
+  }
 }
 
 .request-card-content {

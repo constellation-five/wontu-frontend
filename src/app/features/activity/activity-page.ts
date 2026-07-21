@@ -24,6 +24,7 @@ import { LocationPickerDialog } from '../../shared/components/location-picker-di
 interface ActivityItem {
   id: number;
   type: 'Order' | 'Offer';
+  category: string;
   merchantName: string;
   merchantId?: string;
   locationLabel: string;
@@ -213,6 +214,7 @@ export class ActivityPage {
           return {
             id: order.offer_id,
             type: 'Order',
+            category: order.category,
             merchantName: order.merchant_name,
             merchantId: order.merchant_id,
             locationLabel: order.location_label || '',
@@ -264,6 +266,7 @@ export class ActivityPage {
           return {
             id: offer.offer_id,
             type: 'Offer',
+            category: offer.category,
             merchantName: offer.merchant_name,
             locationLabel: offer.location_label || '',
             dateStr: finalDateStr,

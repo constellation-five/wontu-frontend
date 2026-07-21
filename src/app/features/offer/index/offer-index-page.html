@@ -13,20 +13,15 @@
 
     <mat-menu #filterMenu="matMenu">
       <div class="filter-menu-content" (click)="$event.stopPropagation()">
-        <mat-checkbox
-          [checked]="filterFood()"
-          (change)="filterFood.set($event.checked)"
-          class="filter-checkbox"
-         i18n>
-          Food
-        </mat-checkbox>
-        <mat-checkbox
-          [checked]="filterOther()"
-          (change)="filterOther.set($event.checked)"
-          class="filter-checkbox"
-         i18n>
-          Other
-        </mat-checkbox>
+        @for (category of availableCategories; track category) {
+          <mat-checkbox
+            [checked]="selectedCategories().has(category)"
+            (change)="toggleCategory(category)"
+            class="filter-checkbox"
+          >
+            {{ category | titlecase }}
+          </mat-checkbox>
+        }
       </div>
     </mat-menu>
   </ng-container>
@@ -38,31 +33,65 @@
     <p class="mat-font-body-lg mat-text-on-surface-variant" i18n>Loading offers...</p>
   </div>
 } @else if (filteredOffers().length > 0) {
-  <div class="offers-grid">
-    @for (offer of filteredOffers(); track offer.offer_id) {
-      <app-product-card
-        [imageUrl]="offer.items[0]?.image_url || ''"
-        [title]="offer.merchant_name || 'Unknown Merchant'"
-        [category]="offer.category"
-        i18n-subtitle subtitle="Arrives {{ offer.arrival_time | naturalDateTime }}"
-        [price]="getPriceRange(offer)"
-        i18n-stockText stockText="Stock: {{ getStockLeft(offer) }} left"
-        [clickable]="true"
-        (cardClick)="onCardClick(offer.offer_id)"
-      >
-        <!-- Arrow Icon Button -->
-        <button
-          matIconButton
-          appIconButtonVariant="tonal"
-          cardAction
-          (click)="onCardClick(offer.offer_id)"
-          i18n-aria-label aria-label="View Offer"
-        >
-          <mat-icon fontSet="material-symbols-outlined">arrow_forward</mat-icon>
-        </button>
-      </app-product-card>
-    }
-  </div>
+  @if (ongoingOffers().length > 0) {
+    <app-ongoing-section title="Ongoing">
+      <div class="offers-grid">
+        @for (offer of ongoingOffers(); track offer.offer_id) {
+          <app-product-card
+            [imageUrl]="offer.items[0]?.image_url || ''"
+            [title]="offer.merchant_name || 'Unknown Merchant'"
+            [category]="offer.category"
+            [subtitle]="'Arrives ' + (offer.arrival_time | naturalDateTime)"
+            [price]="getPriceRange(offer)"
+            [stockText]="'Stock: ' + getStockLeft(offer) + ' left'"
+            [clickable]="true"
+            (cardClick)="onCardClick(offer.offer_id)"
+          >
+            <!-- Arrow Icon Button -->
+            <button
+              matIconButton
+              appIconButtonVariant="tonal"
+              cardAction
+              (click)="onCardClick(offer.offer_id)"
+              aria-label="View Offer"
+            >
+              <mat-icon fontSet="material-symbols-outlined">arrow_forward</mat-icon>
+            </button>
+          </app-product-card>
+        }
+      </div>
+    </app-ongoing-section>
+  }
+
+  @if (otherOffers().length > 0) {
+    <div class="section-container">
+      <div class="offers-grid">
+        @for (offer of otherOffers(); track offer.offer_id) {
+          <app-product-card
+            [imageUrl]="offer.items[0]?.image_url || ''"
+            [title]="offer.merchant_name || 'Unknown Merchant'"
+            [category]="offer.category"
+            [subtitle]="'Arrives ' + (offer.arrival_time | naturalDateTime)"
+            [price]="getPriceRange(offer)"
+            [stockText]="'Stock: ' + getStockLeft(offer) + ' left'"
+            [clickable]="true"
+            (cardClick)="onCardClick(offer.offer_id)"
+          >
+            <!-- Arrow Icon Button -->
+            <button
+              matIconButton
+              appIconButtonVariant="tonal"
+              cardAction
+              (click)="onCardClick(offer.offer_id)"
+              aria-label="View Offer"
+            >
+              <mat-icon fontSet="material-symbols-outlined">arrow_forward</mat-icon>
+            </button>
+          </app-product-card>
+        }
+      </div>
+    </div>
+  }
 } @else {
   <div class="empty-state">
     <mat-icon fontSet="material-symbols-outlined" class="empty-icon">inbox</mat-icon>

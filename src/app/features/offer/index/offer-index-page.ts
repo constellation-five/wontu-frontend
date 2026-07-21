@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
+import { TitleCasePipe } from '@angular/common';
 import { AuthService } from '../../../core/auth.service';
 import { OfferService, Offer } from '../../../core/offer.service';
 import { PageHeaderService } from '../../../core/page-header.service';
@@ -22,6 +23,7 @@ import { LocationPickerDialog } from '../../../shared/components/location-picker
 import { IconButtonVariantDirective } from '../../../shared/directives/button';
 import { LocationLookupService } from '../../../core/location-lookup.service';
 import { LocationStateService, DEFAULT_LOCATION } from '../../../core/location-state.service';
+import { OngoingSection } from '../../../shared/components/ongoing-section/ongoing-section';
 
 @Component({
   selector: 'offer-index',
@@ -35,7 +37,9 @@ import { LocationStateService, DEFAULT_LOCATION } from '../../../core/location-s
     ProductCardComponent,
     NaturalDateTimePipe,
     MainPageHeaderComponent,
-    IconButtonVariantDirective
+    IconButtonVariantDirective,
+    OngoingSection,
+    TitleCasePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -56,28 +60,44 @@ export class OfferShowPage {
   readonly userLocationCoordinates = this.locationState.userLocationCoordinates;
 
   searchQuery = signal<string>('');
-  filterFood = signal<boolean>(true);
-  filterOther = signal<boolean>(true);
+  availableCategories = ['food', 'electronics', 'fashion', 'home', 'beauty', 'gaming', 'sports', 'other'];
+  selectedCategories = signal<Set<string>>(new Set(this.availableCategories));
 
   filteredOffers = computed(() => {
     const allOffers = this.offers();
-    const food = this.filterFood();
-    const other = this.filterOther();
+    const selected = this.selectedCategories();
 
-    if (food && other) {
-      return allOffers;
-    }
-
-    if (!food && !other) {
+    if (selected.size === 0) {
       return [];
     }
 
-    return allOffers.filter((offer) => {
-      const category = offer.category.toLowerCase();
-      if (food && category === 'food') return true;
-      if (other && category === 'other') return true;
-      return false;
+    if (selected.size === this.availableCategories.length) {
+      return allOffers;
+    }
+
+    return allOffers.filter((offer) => selected.has(offer.category));
+  });
+
+  toggleCategory(category: string) {
+    this.selectedCategories.update((current) => {
+      const updated = new Set(current);
+      if (updated.has(category)) {
+        updated.delete(category);
+      } else {
+        updated.add(category);
+      }
+      return updated;
     });
+  }
+
+  ongoingOffers = computed(() => {
+    const currentUserId = this.user()?.user_id;
+    return this.filteredOffers().filter((offer) => offer.seller_id === currentUserId);
+  });
+
+  otherOffers = computed(() => {
+    const currentUserId = this.user()?.user_id;
+    return this.filteredOffers().filter((offer) => offer.seller_id !== currentUserId);
   });
 
   constructor() {

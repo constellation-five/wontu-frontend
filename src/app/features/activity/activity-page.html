@@ -97,6 +97,7 @@
         @for (item of filteredItems(); track item.id) {
           <app-activity-card
             [type]="item.type"
+            [category]="item.category"
             [merchantName]="item.merchantName"
             [locationLabel]="item.locationLabel"
             [date]="item.dateStr"

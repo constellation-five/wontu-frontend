@@ -30,7 +30,7 @@ import { IconButtonVariantDirective } from '../../../shared/directives/button';
 export class RequestCard {
   title = input.required<string>();
   subtitle = input.required<string>();
-  category = input<'food' | 'other'>('other');
+  category = input<string>('other');
   votes = input<number>(0);
   
   hasVoted = input(false, { transform: booleanAttribute });

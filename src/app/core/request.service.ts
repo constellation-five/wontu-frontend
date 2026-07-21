@@ -7,7 +7,7 @@ export interface RequestItem {
   request_id: number;
   requester_id: string;
   item_name: string;
-  category: 'food' | 'other';
+  category: string;
   arrival_time: string;
   location_label: string | null;
   total_votes: number;
@@ -23,7 +23,7 @@ export interface RequestItem {
 
 export interface CreateRequestPayload {
   item_name: string;
-  category: 'food' | 'other';
+  category: string;
   arrival_time: string;
   location_label?: string;
   location?: { lat: number; lng: number }; 

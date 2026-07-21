@@ -2,8 +2,17 @@
   display: inline-block;
   padding: var(--spacing-2xs) var(--spacing-sm);
   background-color: var(--mat-sys-secondary);
-  color: var(--mat-sys-on-secondary);
+  color: #ffffff;
   font: var(--mat-sys-label-small);
   border-radius: var(--mat-sys-corner-small);
   text-transform: capitalize;
 }
+
+.cat-food { background-color: var(--cat-food); }
+.cat-electronics { background-color: var(--cat-electronics); }
+.cat-fashion { background-color: var(--cat-fashion); }
+.cat-home { background-color: var(--cat-home); }
+.cat-beauty { background-color: var(--cat-beauty); }
+.cat-gaming { background-color: var(--cat-gaming); }
+.cat-sports { background-color: var(--cat-sports); }
+.cat-other { background-color: var(--cat-other); }
