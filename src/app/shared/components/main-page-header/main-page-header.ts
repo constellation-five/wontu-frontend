@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { SearchBarComponent } from '../search-bar/search-bar';
 import { NotificationBellComponent } from '../notification-bell/notification-bell';
 import { ButtonSizeDirective } from '../../directives/button/button-size';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
   selector: 'app-main-page-header',
@@ -30,6 +31,8 @@ import { ButtonSizeDirective } from '../../directives/button/button-size';
 })
 export class MainPageHeaderComponent {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly auth = inject(AuthService);
+  readonly user = this.auth.user;
 
   pageTitle = input.required<string>();
   location = input<string>('');

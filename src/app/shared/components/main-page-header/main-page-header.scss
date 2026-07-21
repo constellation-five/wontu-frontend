@@ -12,16 +12,16 @@
 
 .title-row {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--spacing-md);
-  padding-top: var(--spacing-sm);
+  flex-direction: column;
+  gap: var(--spacing-2xs);
 }
 
 .title-location {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2xs);
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding-top: var(--spacing-sm);
 }
 
 .page-title {
@@ -37,6 +37,10 @@
   align-self: flex-start;
   padding-left: 4px;
   padding-right: 8px;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   @include mat.button-overrides(
     (
