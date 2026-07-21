@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal, inject, OnInit } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
 import { AuthService } from './core/auth.service';
+import { ThemeService } from './core/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class App implements OnInit {
   protected readonly title = signal('wontu-frontend');
   private readonly router = inject(Router);
   private readonly auth = inject(AuthService);
+  private readonly themeService = inject(ThemeService);
 
   ngOnInit() {
     const returnUrl = sessionStorage.getItem('authReturnUrl');

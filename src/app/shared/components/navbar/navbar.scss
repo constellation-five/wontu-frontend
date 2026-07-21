@@ -83,6 +83,43 @@
   max-width: 120px;
 }
 
+.dark {
+  display: none;
+}
+
+.light {
+  display: inline-block;
+}
+
+::ng-deep body[data-theme='system'] {
+  @media (prefers-color-scheme: dark) {
+    .light {
+      display: none;
+    }
+    .dark {
+      display: inline-block;
+    }
+  }
+}
+
+::ng-deep body[data-theme='dark'] {
+  .light {
+    display: none !important;
+  }
+  .dark {
+    display: inline-block !important;
+  }
+}
+
+::ng-deep body[data-theme='light'] {
+  .light {
+    display: inline-block !important;
+  }
+  .dark {
+    display: none !important;
+  }
+}
+
 .nav-list {
   display: flex !important;
   flex-direction: row;
