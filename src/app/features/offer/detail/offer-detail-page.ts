@@ -158,7 +158,6 @@ export class OfferPage implements OnInit, OnDestroy {
 
         const dismissedLater = localStorage.getItem(`dismissed_rating_${offerId}`) === 'true';
 
-        console.log(isArrived, hasRated, dismissedLater, this.previousArrivedAt, arrivedAt);
         if (isArrived && !hasRated && !dismissedLater) {
           const realTimeTransition = this.previousArrivedAt === null && arrivedAt !== null;
 

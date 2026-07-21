@@ -45,6 +45,16 @@ export class OfferMenuView {
   readonly openSellerProfile = output<string>();
   readonly navigateToMobileCart = output<void>();
 
+  ngOnInit() {
+    if (this.isEditingOrder()) {
+      console.log('hey');
+      const cartItemMap = new Map(this.cartItems().map((c) => [c.item.item_id, c.quantity]));
+      this.sortedItems().forEach((item) => {
+        item.current_slot -= cartItemMap.get(item.item_id) ?? 0;
+      });
+    }
+  }
+
   isItemInCart(itemId: number): boolean {
     return this.cartItems().some((c) => c.item.item_id === itemId);
   }
