@@ -120,6 +120,8 @@ $spacing-scale: (
 }
 
 html {
+  color-scheme: light dark;
+
   @include mat.system-classes();
 
   @include mat.theme(
@@ -127,43 +129,38 @@ html {
       color: (
         primary: theme.$primary-palette,
         tertiary: theme.$tertiary-palette,
+        theme-type: color-scheme,
       ),
       typography: Inter,
       density: 0,
     ),
     $overrides: (
       (
-        primary: #204ece,
-        on-primary: #fcfdff,
-        primary-container: #dbe1f5,
-        on-primary-container: #1c3399,
-
-        secondary: #ea9835,
-        on-secondary: #fcfdff,
-        secondary-container: #ffd896,
-        on-secondary-container: #ae6f22,
-
-        error: #e00000,
-        on-error: #fcfdff,
-        error-container: #ffded0,
-        on-error-container: #a42525,
-
-        background: #eaedf5,
-        surface: #eaedf5,
-        on-surface: #1c1b1f,
-        on-surface-variant: #52555d,
-        surface-container-lowest: #fbfcff,
-        surface-container: #f0f3fb,
-        surface-container-high: #dde0e7,
-        surface-container-highest: #cdcfd9,
-
-        outline: #7c808c,
-        outline-variant: #b3b8c7,
-
-        inverse-surface: #383a3f,
-        inverse-on-surface: #fcfdff,
-        inverse-primary: #a8b7fa,
-
+        primary: light-dark(#204ece, #9eb6f8),
+        on-primary: light-dark(#fcfdff, #112066),
+        primary-container: light-dark(#dbe1f5, #1c3399),
+        on-primary-container: light-dark(#1c3399, #dbe1f5),
+        secondary: light-dark(#ea9835, #edbd6f),
+        on-secondary: light-dark(#fcfdff, #714613),
+        secondary-container: light-dark(#ffd896, #ae6f22),
+        on-secondary-container: light-dark(#ae6f22, #ffd896),
+        error: light-dark(#e00000, #faaf9f),
+        on-error: light-dark(#fcfdff, #7a1111),
+        error-container: light-dark(#ffded0, #a42525),
+        on-error-container: light-dark(#a42525, #ffded0),
+        background: light-dark(#eaedf5, #161921),
+        surface: light-dark(#eaedf5, #161921),
+        on-surface: light-dark(#1c1b1f, #d9d9d9),
+        on-surface-variant: light-dark(#52555d, #adadad),
+        surface-container-lowest: light-dark(#fbfcff, #0e1015),
+        surface-container: light-dark(#f0f3fb, #1c212c),
+        surface-container-high: light-dark(#dde0e7, #212532),
+        surface-container-highest: light-dark(#cdcfd9, #262b3a),
+        outline: light-dark(#7c808c, #7c808c),
+        outline-variant: light-dark(#b3b8c7, #52555d),
+        inverse-surface: light-dark(#383a3f, #fcfdff),
+        inverse-on-surface: light-dark(#fcfdff, #1a1d25),
+        inverse-primary: light-dark(#a8b7fa, #a8b7fa),
         headline-large: 500 2.5rem / 3rem Inter,
         headline-large-line-height: 3rem,
         headline-large-size: 2.5rem,
@@ -344,7 +341,16 @@ router-outlet {
 }
 
 body {
+  color: var(--mat-sys-on-surface);
   background-color: var(--mat-sys-surface);
+}
+
+body[data-theme='light'] {
+  color-scheme: light;
+}
+
+body[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 a {

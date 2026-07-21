@@ -19,7 +19,10 @@
   width: 100%;
   height: 100%;
   path {
-    fill: var(--mat-sys-primary);
+    fill: light-dark(
+      var(--mat-sys-primary),
+      color-mix(in srgb, transparent 25%, var(--mat-sys-primary))
+    );
   }
 }
 
@@ -83,5 +86,40 @@
 
   @media (min-width: $breakpoint-md) {
     max-width: 384px;
+  }
+}
+
+.dark {
+  display: none;
+}
+
+.light {
+  display: inline-block;
+}
+
+@media (prefers-color-scheme: dark) {
+  .light {
+    display: none;
+  }
+  .dark {
+    display: inline-block;
+  }
+}
+
+body[data-theme='dark'] {
+  .light {
+    display: none !important;
+  }
+  .dark {
+    display: inline-block !important;
+  }
+}
+
+body[data-theme='light'] {
+  .light {
+    display: inline-block !important;
+  }
+  .dark {
+    display: none !important;
   }
 }

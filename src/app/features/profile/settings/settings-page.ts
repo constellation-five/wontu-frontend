@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PaneComponent } from '../../../shared/components/pane/pane';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { environment } from '../../../../environments/environment';
+import { ThemeService } from '../../../core/theme.service';
 
 interface NotificationSetting {
   id: string;
@@ -50,6 +51,7 @@ export class SettingsPage implements OnInit {
   private http = inject(HttpClient);
 
   private pageHeader = inject(PageHeaderService);
+  private themeService = inject(ThemeService);
   isLoading = signal(true);
 
   ngOnInit() {
@@ -114,32 +116,34 @@ export class SettingsPage implements OnInit {
   ];
 
   loadSettings() {
-    this.http.get<SettingsResponse>(`${environment.api}/settings`, { withCredentials: true }).subscribe({
-      next: (res) => {
-        // Map backend data to frontend structure
-        const settings = this.notificationMetadata.map(meta => ({
-          id: meta.id,
-          label: meta.label,
-          description: meta.description,
-          push: res.data.notifications[meta.id]?.push ?? false,
-          email: res.data.notifications[meta.id]?.email ?? false,
-        }));
+    this.http
+      .get<SettingsResponse>(`${environment.api}/settings`, { withCredentials: true })
+      .subscribe({
+        next: (res) => {
+          // Map backend data to frontend structure
+          const settings = this.notificationMetadata.map((meta) => ({
+            id: meta.id,
+            label: meta.label,
+            description: meta.description,
+            push: res.data.notifications[meta.id]?.push ?? false,
+            email: res.data.notifications[meta.id]?.email ?? false,
+          }));
 
-        this.notificationSettings.set(settings);
-        this.selectedLanguage.set(res.data.language);
-        this.darkMode.set(res.data.dark_mode);
-        this.isLoading.set(false);
-      },
-      error: () => {
-        this.isLoading.set(false);
-      },
-    });
+          this.notificationSettings.set(settings);
+          this.selectedLanguage.set(res.data.language);
+          this.darkMode.set(res.data.dark_mode);
+          this.isLoading.set(false);
+        },
+        error: () => {
+          this.isLoading.set(false);
+        },
+      });
   }
 
   saveSettings() {
     // Convert frontend structure to backend format
     const notifications: Record<string, { push: boolean; email: boolean }> = {};
-    this.notificationSettings().forEach(setting => {
+    this.notificationSettings().forEach((setting) => {
       notifications[setting.id] = {
         push: setting.push,
         email: setting.email,
@@ -152,29 +156,28 @@ export class SettingsPage implements OnInit {
       dark_mode: this.darkMode(),
     };
 
-    this.http.put<SettingsResponse>(`${environment.api}/settings`, data, { withCredentials: true }).subscribe();
+    this.http
+      .put<SettingsResponse>(`${environment.api}/settings`, data, { withCredentials: true })
+      .subscribe();
   }
 
   togglePush(settingId: string) {
-    this.notificationSettings.update(settings =>
-      settings.map(s =>
-        s.id === settingId ? { ...s, push: !s.push } : s
-      )
+    this.notificationSettings.update((settings) =>
+      settings.map((s) => (s.id === settingId ? { ...s, push: !s.push } : s)),
     );
     this.saveSettings();
   }
 
   toggleEmail(settingId: string) {
-    this.notificationSettings.update(settings =>
-      settings.map(s =>
-        s.id === settingId ? { ...s, email: !s.email } : s
-      )
+    this.notificationSettings.update((settings) =>
+      settings.map((s) => (s.id === settingId ? { ...s, email: !s.email } : s)),
     );
     this.saveSettings();
   }
 
   toggleDarkMode() {
-    this.darkMode.update(mode => !mode);
+    this.darkMode.update((mode) => !mode);
+    this.themeService.setTheme(this.darkMode() ? 'dark' : 'light');
     this.saveSettings();
   }
 

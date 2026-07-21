@@ -83,6 +83,43 @@
   max-width: 120px;
 }
 
+.dark {
+  display: none;
+}
+
+.light {
+  display: inline-block;
+}
+
+@media (prefers-color-scheme: dark) {
+  body[data-theme='system'] {
+    .light {
+      display: none;
+    }
+    .dark {
+      display: inline-block;
+    }
+  }
+}
+
+body[data-theme='dark'] {
+  .light {
+    display: none !important;
+  }
+  .dark {
+    display: inline-block !important;
+  }
+}
+
+body[data-theme='light'] {
+  .light {
+    display: inline-block !important;
+  }
+  .dark {
+    display: none !important;
+  }
+}
+
 .nav-list {
   display: flex !important;
   flex-direction: row;
