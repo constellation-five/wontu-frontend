@@ -1,0 +1,85 @@
+<app-main-page-header
+  pageTitle="Activity"
+  [location]="userLocation()"
+  [searchValue]="searchQuery()"
+  searchPlaceholder="Search"
+  (searchValueChange)="searchQuery.set($event)"
+>
+  <ng-container searchPrefix>
+    @if (!isLoading()) {
+      <div class="desktop-tabs">
+        <app-segmented-control 
+          [options]="['History', 'Ongoing']" 
+          [value]="activeTab()" 
+          (valueChange)="onTabChange($event)">
+        </app-segmented-control>
+      </div>
+    }
+  </ng-container>
+
+  <ng-container filterActions>
+    <button mat-icon-button [matMenuTriggerFor]="filterMenu">
+      <mat-icon fontSet="material-symbols-outlined">filter_list</mat-icon>
+    </button>
+    <mat-menu #filterMenu="matMenu">
+      <div class="filter-menu-content" (click)="$event.stopPropagation()">
+        <mat-checkbox [checked]="filterOrder()" (change)="filterOrder.set($event.checked)" class="filter-checkbox">Order</mat-checkbox>
+        <mat-checkbox [checked]="filterOffer()" (change)="filterOffer.set($event.checked)" class="filter-checkbox">Offer</mat-checkbox>
+      </div>
+    </mat-menu>
+  </ng-container>
+</app-main-page-header>
+
+<div class="activity-page">
+  @if (isLoading()) {
+    <div class="loading-state" style="display: flex; justify-content: center; align-items: center; padding: var(--spacing-3xl) 0;">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <div class="tabs-container mobile-tabs">
+      <app-segmented-control 
+        [options]="['History', 'Ongoing']" 
+        [value]="activeTab()" 
+        (valueChange)="onTabChange($event)">
+      </app-segmented-control>
+    </div>
+
+    <div class="activity-list">
+      @if (filteredItems().length === 0) {
+        <div class="empty-state">
+          <mat-icon class="empty-icon" fontSet="material-symbols-outlined">receipt_long</mat-icon>
+          <p class="mat-body-large">No activity found.</p>
+        </div>
+      } @else {
+        <!-- Desktop Header Row -->
+        <div class="desktop-header mat-font-label-lg mat-text-on-surface-variant">
+          <div class="header-desktop-columns">
+            <div class="header-badge"></div>
+            <div class="header-time">{{ activeTab() === 'History' ? 'Date & Time' : 'Time' }}</div>
+            <div class="header-merchant">Merchant</div>
+            <div class="header-location">Location</div>
+            <div class="header-status">{{ activeTab() === 'History' ? 'Total' : 'Status' }}</div>
+          </div>
+          <div class="header-action"></div>
+        </div>
+
+        @for (item of filteredItems(); track item.id) {
+          <app-activity-card
+            [type]="item.type"
+            [merchantName]="item.merchantName"
+            [locationLabel]="item.locationLabel"
+            [date]="item.dateStr"
+            [statusText]="item.statusText"
+            [statusColor]="item.statusColor"
+            [imageUrl]="item.imageUrl"
+            [totalPrice]="item.totalPrice"
+            [isHistory]="item.isHistory"
+            [isRated]="item.isRated || false"
+            (cardClick)="viewDetail(item)"
+            (rateClick)="openRatingDialog(item)"
+          />
+        }
+      }
+    </div>
+  }
+</div>

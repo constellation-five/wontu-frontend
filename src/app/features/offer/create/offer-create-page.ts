@@ -37,6 +37,7 @@ import { BottomBarService } from '../../../core/bottom-bar.service';
 import { PageHeaderService } from '../../../core/page-header.service';
 import { OfferService, Offer, OfferItemInput, OfferInput } from '../../../core/offer.service';
 import { LocationStateService } from '../../../core/location-state.service';
+import { LocationLookupService } from '../../../core/location-lookup.service';
 import { ResponsiveDialogService } from '../../../shared/components/responsive-dialog/responsive-dialog.service';
 import {
   PaymentMethodFormDialog,
@@ -85,6 +86,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
   private readonly pageHeader = inject(PageHeaderService);
   private readonly snackBar = inject(MatSnackBar);
   private readonly locationState = inject(LocationStateService);
+  private readonly locationLookup = inject(LocationLookupService);
   private readonly dialog = inject(MatDialog);
   private readonly requestService = inject(RequestService);
 
@@ -101,6 +103,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
 
   private locationLat = -6.2088;
   private locationLng = 106.8456;
+  private locationLabel: string | null = null;
 
   readonly model = signal({
     category: (this.existingOffer?.category as 'food' | 'other') ?? 'food',
@@ -151,6 +154,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     if (this.existingOffer) {
       this.locationLat = this.existingOffer.latitude ?? this.locationLat;
       this.locationLng = this.existingOffer.longitude ?? this.locationLng;
+      this.locationLabel = this.existingOffer.location_label ?? null;
       this.items.set(
         this.existingOffer.items.map((item) => ({
           localId: crypto.randomUUID(),
@@ -168,11 +172,22 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
         // Use the location already set on the main Offers page, if any.
         this.locationLat = currentLocation.lat;
         this.locationLng = currentLocation.lng;
+        const currentLabel = this.locationState.userLocation();
+        if (currentLabel !== 'Choose your location') {
+          this.locationLabel = currentLabel;
+        } else {
+          this.locationLookup.resolvePlaceName(currentLocation).then(name => {
+            this.locationLabel = name;
+          });
+        }
       } else if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (pos) => {
             this.locationLat = pos.coords.latitude;
             this.locationLng = pos.coords.longitude;
+            this.locationLookup.resolvePlaceName({ lat: this.locationLat, lng: this.locationLng }).then(name => {
+              this.locationLabel = name;
+            });
           },
           () => {
             // Keep the Jakarta fallback already set above.
@@ -373,6 +388,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     const payload: OfferInput = {
       category: m.category,
       merchant_name: m.merchant_name,
+      location_label: this.locationLabel,
       location_lat: this.locationLat,
       location_lng: this.locationLng,
       closing_time: closingTime,

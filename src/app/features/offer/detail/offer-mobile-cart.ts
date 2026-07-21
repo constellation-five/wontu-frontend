@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, signal, computed, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,7 +34,7 @@ import { of } from 'rxjs';
   styleUrls: ['./offer-mobile-cart.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferMobileCart {
+export class OfferMobileCart implements OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
@@ -101,8 +101,17 @@ export class OfferMobileCart {
 
     // Auto-redirect to offer-detail when resizing to desktop
     if (typeof window !== 'undefined') {
-      window.addEventListener('resize', this.handleResize.bind(this));
+      this.resizeListener = this.handleResize.bind(this);
+      window.addEventListener('resize', this.resizeListener);
       this.checkScreenSize();
+    }
+  }
+
+  private resizeListener?: () => void;
+
+  ngOnDestroy() {
+    if (typeof window !== 'undefined' && this.resizeListener) {
+      window.removeEventListener('resize', this.resizeListener);
     }
   }
 

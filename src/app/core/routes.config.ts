@@ -1,4 +1,4 @@
-export const PROTECTED_ROUTES: readonly string[] = ['/profile', '/history'];
+export const PROTECTED_ROUTES: readonly string[] = ['/profile', '/activity'];
 
 export function isProtectedRoute(url: string): boolean {
   if (!url) return false;

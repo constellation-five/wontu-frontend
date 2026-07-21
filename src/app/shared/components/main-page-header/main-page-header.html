@@ -12,6 +12,8 @@
 </div>
 
 <div class="search-filter-row" [class.stuck]="stuck()">
+  <ng-content select="[searchPrefix]" />
+
   <app-search-bar
     class="search-bar"
     [value]="searchValue()"

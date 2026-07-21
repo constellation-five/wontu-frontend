@@ -1,0 +1,33 @@
+@use '../../../../_variables' as *;
+
+.segmented-control {
+  display: flex;
+  background-color: var(--mat-sys-surface-container-high);
+  border: none;
+  border-radius: var(--mat-sys-corner-full);
+  padding: 0;
+  width: fit-content;
+  height: 100%;
+  overflow: hidden;
+}
+
+.segment-btn {
+  flex: 1;
+  border-radius: var(--mat-sys-corner-full) !important;
+  box-shadow: none !important;
+  color: var(--mat-sys-on-surface-variant);
+  min-width: 160px;
+  height: 100%;
+  padding: var(--spacing-xs) var(--spacing-xl) !important;
+
+  &.active {
+    background-color: var(--mat-sys-primary) !important;
+    color: var(--mat-sys-on-primary) !important;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .segmented-control {
+    width: 100%;
+  }
+}
