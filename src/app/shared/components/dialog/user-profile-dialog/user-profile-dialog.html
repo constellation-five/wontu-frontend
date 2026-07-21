@@ -1,7 +1,7 @@
 <app-dialog [showClose]="true">
   <div class="profile-dialog">
     @if (isLoading()) {
-      <div class="loading-state" i18n>Loading...</div>
+      <div class="loading-state"><mat-spinner diameter="40"></mat-spinner></div>
     } @else if (profile(); as user) {
       <div class="profile-content">
         <div class="avatar-container">

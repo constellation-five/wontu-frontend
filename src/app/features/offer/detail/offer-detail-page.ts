@@ -193,6 +193,12 @@ export class OfferPage implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    const resolvedOffer = this.route.snapshot.data['offer'] as Offer | null;
+    if (resolvedOffer) {
+      this.pageHeader.setTitle(resolvedOffer.merchant_name);
+      this.setBreadcrumbs(resolvedOffer);
+    }
+
     const offerId = this.route.snapshot.paramMap.get('id');
     if (offerId) {
       this.echoService.listenToOfferUpdates(offerId, () => {

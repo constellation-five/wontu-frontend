@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
+  OnInit,
   computed,
   effect,
   inject,
@@ -29,7 +30,7 @@ import { UserProfileDialog } from '../../../shared/components/dialog/user-profil
   styleUrls: ['./private-chat-page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PrivateChatPage implements OnDestroy {
+export class PrivateChatPage implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly location = inject(Location);
@@ -49,9 +50,7 @@ export class PrivateChatPage implements OnDestroy {
 
   constructor() {
     const id = this.route.snapshot.paramMap.get('conversationId');
-    if (id) {
-      this.chatService.openConversation(id);
-    } else {
+    if (!id) {
       this.router.navigate(['/offers']);
     }
 
@@ -59,13 +58,13 @@ export class PrivateChatPage implements OnDestroy {
       this.pageHeaderService.forceTopBarSolid.set(true);
       this.pageHeaderService.customBackAction.set(() => this.goBack());
     });
+  }
 
-    effect(() => {
-      const other = this.otherParticipant();
-      if (other) {
-        this.pageHeaderService.setTitle(other.name);
-      }
-    });
+  ngOnInit() {
+    const other = this.otherParticipant();
+    if (other) {
+      this.pageHeaderService.setTitle(other.name);
+    }
   }
 
   goBack(): void {

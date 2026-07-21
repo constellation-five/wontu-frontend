@@ -5,7 +5,7 @@ import {
   provideAppInitializer,
   isDevMode,
 } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withViewTransitions } from '@angular/router';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import {
   provideHttpClient,
@@ -27,7 +27,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideAnimationsAsync(),
     provideNativeDateAdapter(),
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(routes, withComponentInputBinding(), withViewTransitions({ skipInitialTransition: true })),
     provideHttpClient(withInterceptors([credentialsInterceptor])),
     provideAppInitializer(() => {
       const auth = inject(AuthService);

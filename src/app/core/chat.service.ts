@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, catchError, tap, throwError, switchMap, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { EchoService } from './echo.service';
 import { MessageTemplateService } from './message-template.service';
@@ -78,13 +78,13 @@ export class ChatService {
   }
 
   /** Loads (and lazily creates) the given offer's group conversation as the active conversation. */
-  openOfferConversation(offerId: number | string): void {
-    this.load(`${environment.api}/offers/${offerId}/conversation`);
+  openOfferConversation(offerId: number | string): Observable<boolean> {
+    return this.load(`${environment.api}/offers/${offerId}/conversation`);
   }
 
   /** Loads an already-known conversation id as the active conversation. */
-  openConversation(conversationId: string): void {
-    this.load(`${environment.api}/conversations/${conversationId}`);
+  openConversation(conversationId: string): Observable<boolean> {
+    return this.load(`${environment.api}/conversations/${conversationId}`);
   }
 
   /**
@@ -143,27 +143,25 @@ export class ChatService {
     this.closeConversation();
   }
 
-  private load(conversationUrl: string): void {
+  private load(conversationUrl: string): Observable<boolean> {
     this._isLoading.set(true);
     this._messages.set([]);
-    this.http.get<ConversationSummary>(conversationUrl).subscribe({
-      next: (conversation) => {
-        this._conversation.set(conversation);
-        this.http
-          .get<ChatMessage[]>(`${environment.api}/conversations/${conversation.id}/messages`)
-          .subscribe({
-            next: (messages) => {
-              this._messages.set(messages.map(m => this.processMessage(m)));
-              this._isLoading.set(false);
-            },
-            error: () => this._isLoading.set(false),
-          });
-      },
-      error: () => {
+    return this.http.get<ConversationSummary>(conversationUrl).pipe(
+      tap((conversation) => this._conversation.set(conversation)),
+      switchMap((conversation) =>
+        this.http.get<ChatMessage[]>(`${environment.api}/conversations/${conversation.id}/messages`)
+      ),
+      tap((messages) => {
+        this._messages.set(messages.map(m => this.processMessage(m)));
+        this._isLoading.set(false);
+      }),
+      map(() => true),
+      catchError(() => {
         this._conversation.set(null);
         this._isLoading.set(false);
-      },
-    });
+        return throwError(() => new Error('Failed to load conversation'));
+      })
+    );
   }
 
   /**

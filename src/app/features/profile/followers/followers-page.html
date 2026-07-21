@@ -2,7 +2,7 @@
   <h2 class="page-title mat-text-on-surface mb-lg" style="font: var(--mat-sys-title-large);" i18n>Followers</h2>
 
     @if (isLoading()) {
-      <div class="loading-state mat-font-body-md mat-text-on-surface-variant" i18n>Loading...</div>
+      <div class="loading-state mat-font-body-md mat-text-on-surface-variant"><mat-spinner diameter="40"></mat-spinner></div>
     } @else {
       <div class="followers-container">
         <!-- Search Bar -->

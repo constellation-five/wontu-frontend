@@ -1,4 +1,5 @@
 import { Injectable, signal, inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -32,6 +33,7 @@ export class PageHeaderService {
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private titleService = inject(Title);
 
   constructor() {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
@@ -43,6 +45,7 @@ export class PageHeaderService {
         this.showHeader.set(true);
         this.title.set(routeData.title);
         this.breadcrumbs.set(routeData.breadcrumbs);
+        this.updateDocumentTitle(routeData.title);
       }
       this.hideDesktopHeader.set(routeData.hideDesktopHeader);
       this.forceTopBarSolid.set(routeData.forceTopBarSolid);
@@ -51,6 +54,15 @@ export class PageHeaderService {
 
   setTitle(title: string) {
     this.title.set(title);
+    this.updateDocumentTitle(title);
+  }
+
+  private updateDocumentTitle(title: string) {
+    if (title) {
+      this.titleService.setTitle(`${title} - Wontu`);
+    } else {
+      this.titleService.setTitle('Wontu');
+    }
   }
 
   setBreadcrumbs(breadcrumbs: BreadcrumbItem[]) {

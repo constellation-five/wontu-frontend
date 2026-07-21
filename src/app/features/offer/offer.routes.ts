@@ -35,6 +35,7 @@ export const OFFER_ROUTES: Routes = [
         path: ':id',
         component: OfferPage,
         title: $localize`Offer Detail`,
+        resolve: { offer: offerResolver },
       },
       {
         path: ':id/mobile-cart',
