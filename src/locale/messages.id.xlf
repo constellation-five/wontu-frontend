@@ -218,9 +218,9 @@
         <source>Rate</source>
         <target>Nilai</target>
       </trans-unit>
-      <trans-unit id="530314455755134933" datatype="html">
-        <source>&apos;Arrives <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/>&apos;</source>
-        <target>&apos;Tiba <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/>&apos;</target>
+      <trans-unit id="2625407669106231842" datatype="html">
+        <source>Arrives <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/></source>
+        <target>Tiba <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/></target>
       </trans-unit>
       <trans-unit id="5306473977542913614" datatype="html">
         <source>Activity</source>
@@ -1110,9 +1110,9 @@
         <source>Chat messages</source>
         <target>Pesan chat</target>
       </trans-unit>
-      <trans-unit id="1048017581244987170" datatype="html">
-        <source>&apos;Stock: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/> left&apos;</source>
-        <target>&apos;Stok: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/>&apos;</target>
+      <trans-unit id="7816388157456408950" datatype="html">
+        <source>Stock: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/> left</source>
+        <target>Stok: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/></target>
       </trans-unit>
       <trans-unit id="2778911758332098933" datatype="html">
         <source>You receive a new direct or group chat message.</source>

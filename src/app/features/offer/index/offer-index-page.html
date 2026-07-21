@@ -44,10 +44,10 @@
             [title]="offer.merchant_name || 'Unknown Merchant'"
             [category]="offer.category"
             i18n-subtitle
-            subtitle="'Arrives {{ offer.arrival_time | naturalDateTime }}'"
+            subtitle="Arrives {{ offer.arrival_time | naturalDateTime }}"
             [price]="getPriceRange(offer)"
             i18n-stockText
-            stockText="'Stock: {{ getStockLeft(offer) }} left'"
+            stockText="Stock: {{ getStockLeft(offer) }} left"
             [clickable]="true"
             (cardClick)="onCardClick(offer.offer_id)"
           >
@@ -77,10 +77,10 @@
             [title]="offer.merchant_name || 'Unknown Merchant'"
             [category]="offer.category"
             i18n-subtitle
-            subtitle="'Arrives {{ offer.arrival_time | naturalDateTime }}'"
+            subtitle="Arrives {{ offer.arrival_time | naturalDateTime }}"
             [price]="getPriceRange(offer)"
             i18n-stockText
-            stockText="'Stock: {{ getStockLeft(offer) }} left'"
+            stockText="Stock: {{ getStockLeft(offer) }} left"
             [clickable]="true"
             (cardClick)="onCardClick(offer.offer_id)"
           >

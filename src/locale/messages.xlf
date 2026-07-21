@@ -179,8 +179,8 @@
       <trans-unit id="5639297788212274461" datatype="html">
         <source>Rate</source>
       </trans-unit>
-      <trans-unit id="530314455755134933" datatype="html">
-        <source>&apos;Arrives <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/>&apos;</source>
+      <trans-unit id="2625407669106231842" datatype="html">
+        <source>Arrives <x id="INTERPOLATION" equiv-text="{{ offer.arrival_time | naturalDateTime }}"/></source>
       </trans-unit>
       <trans-unit id="5306473977542913614" datatype="html">
         <source>Activity</source>
@@ -866,8 +866,8 @@
       <trans-unit id="1043007201408240983" datatype="html">
         <source>Chat messages</source>
       </trans-unit>
-      <trans-unit id="1048017581244987170" datatype="html">
-        <source>&apos;Stock: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/> left&apos;</source>
+      <trans-unit id="7816388157456408950" datatype="html">
+        <source>Stock: <x id="INTERPOLATION" equiv-text="{{ getStockLeft(offer) }}"/> left</source>
       </trans-unit>
       <trans-unit id="2778911758332098933" datatype="html">
         <source>You receive a new direct or group chat message.</source>
