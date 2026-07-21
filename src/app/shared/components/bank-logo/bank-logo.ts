@@ -6,6 +6,10 @@ const BANK_LOGO_MAP: Record<string, string> = {
   'Bank Negara Indonesia': 'bni.svg',
   'Bank Rakyat Indonesia': 'bri.svg',
   'Bank Mandiri': 'mandiri.svg',
+  'Bank Danamon': 'danamon.svg',
+  'Bank Permata': 'permata.svg',
+  'Gopay': 'gopay.svg',
+  'Ovo': 'ovo.svg',
 };
 
 @Component({
