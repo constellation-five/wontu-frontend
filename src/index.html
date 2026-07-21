@@ -18,6 +18,23 @@
     />
     <!-- Runtime config injected at build/deploy time, never committed with real values -->
     <script src="assets/env-config.js"></script>
+    <script>
+      (function() {
+        var lang = localStorage.getItem('language');
+        var isId = window.location.pathname.startsWith('/id/') || window.location.pathname === '/id';
+        if (lang) {
+          if (lang === 'id' && !isId) {
+            window.location.replace('/id' + window.location.pathname + window.location.search);
+          } else if (lang === 'en' && isId) {
+            var newPath = window.location.pathname.replace(/^\/id\/?/, '/') || '/';
+            window.location.replace(newPath + window.location.search);
+          }
+        } else if (isId) {
+          var newPath = window.location.pathname.replace(/^\/id\/?/, '/') || '/';
+          window.location.replace(newPath + window.location.search);
+        }
+      })();
+    </script>
   </head>
   <body>
     <app-root></app-root>

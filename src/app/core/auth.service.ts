@@ -14,6 +14,7 @@ export interface User {
   username: string;
   google_id: string;
   avatar: string;
+  language?: string;
 }
 
 @Injectable({
@@ -55,6 +56,20 @@ export class AuthService {
           this.state.update((s) => ({ ...s, user, isLoading: false }));
           this.notificationService.initialize(user.user_id);
           this.chatService.initialize(user.user_id);
+          
+          if (user.language) {
+            const currentLang = localStorage.getItem('language');
+            if (currentLang !== user.language) {
+              localStorage.setItem('language', user.language);
+              const isId = window.location.pathname.startsWith('/id/') || window.location.pathname === '/id';
+              if (user.language === 'id' && !isId) {
+                window.location.replace('/id' + window.location.pathname + window.location.search);
+              } else if (user.language === 'en' && isId) {
+                const newPath = window.location.pathname.replace(/^\/id\/?/, '/') || '/';
+                window.location.replace(newPath + window.location.search);
+              }
+            }
+          }
         }),
         catchError(() => {
           this.state.update((s) => ({ ...s, user: null, isLoading: false }));
