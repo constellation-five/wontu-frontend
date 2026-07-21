@@ -45,9 +45,20 @@
       </button>
     }
     <div class="spacer"></div>
+
+    <button
+      (click)="close()"
+      matButton="outlined"
+      appButtonSize="sm"
+      type="button"
+      mat-dialog-close
+      i18n
+    >
+      Cancel
+    </button>
     <button
       matButton="filled"
-      appButtonSize="md"
+      appButtonSize="sm"
       [disabled]="form().invalid() || isUploading()"
       (click)="submit()"
     >
