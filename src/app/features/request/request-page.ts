@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
+import { TitleCasePipe } from '@angular/common';
 import { AuthService } from '../../core/auth.service';
 import { RequestService, RequestItem } from '../../core/request.service';
 import { PageHeaderService } from '../../core/page-header.service';
@@ -36,7 +37,8 @@ import { OngoingSection } from '../../shared/components/ongoing-section/ongoing-
     NaturalDateTimePipe,
     MainPageHeaderComponent,
     MatCheckboxModule,
-    OngoingSection
+    OngoingSection,
+    TitleCasePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -57,25 +59,31 @@ export class RequestPage {
   readonly userLocationCoordinates = this.locationState.userLocationCoordinates;
 
   searchQuery = signal<string>('');
-  filterFood = signal<boolean>(true);
-  filterOther = signal<boolean>(true);
+  availableCategories = ['food', 'electronics', 'fashion', 'home', 'beauty', 'gaming', 'sports', 'other'];
+  selectedCategories = signal<Set<string>>(new Set(this.availableCategories));
 
   // FILTER
   filteredRequests = computed(() => {
     const allReqs = this.requests();
-    const food = this.filterFood();
-    const other = this.filterOther();
+    const selected = this.selectedCategories();
 
-    if (food && other) return allReqs;
-    if (!food && !other) return [];
+    if (selected.size === 0) return [];
+    if (selected.size === this.availableCategories.length) return allReqs;
 
-    return allReqs.filter((req) => {
-      const category = req.category.toLowerCase();
-      if (food && category === 'food') return true;
-      if (other && category === 'other') return true;
-      return false;
-    });
+    return allReqs.filter((req) => selected.has(req.category));
   });
+
+  toggleCategory(category: string) {
+    this.selectedCategories.update((current) => {
+      const updated = new Set(current);
+      if (updated.has(category)) {
+        updated.delete(category);
+      } else {
+        updated.add(category);
+      }
+      return updated;
+    });
+  }
 
   // Ongoing Requests
   ongoingRequests = computed(() => {

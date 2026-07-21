@@ -1,1 +1,1 @@
-<span class="category-label">{{ category() }}</span>
+<span class="category-label" [ngClass]="categoryClass">{{ category() | titlecase }}</span>

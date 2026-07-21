@@ -7,7 +7,7 @@
     
     <div class="activity-desktop-columns">
       <div class="column-badge">
-        <app-category-label [category]="type()" />
+        <app-category-label [category]="category()" />
       </div>
       <div class="column-time">
         <span class="activity-date mat-font-label-lg mat-text-on-surface-variant">{{ date() }}</span>
@@ -51,11 +51,11 @@
       <!-- Top Row: Badge & Status/Total -->
       <div class="mobile-row space-between">
         @if (isHistory()) {
-          <app-category-label [category]="type()" />
+          <app-category-label [category]="category()" />
           <span class="mobile-total mat-font-body-sm mat-text-on-surface">{{ totalPrice() | rupiahFormat }}</span>
         } @else {
           <span class="mobile-status mat-font-label-sm text-bold" [style.color]="statusColor()">{{ statusText() }}</span>
-          <app-category-label [category]="type()" />
+          <app-category-label [category]="category()" />
         }
       </div>
       

@@ -47,7 +47,7 @@ export class RequestFormDialog {
   readonly isSubmitting = signal(false);
 
   readonly model = signal({
-    category: (this.existingRequest?.category as 'food' | 'other') ?? 'food',
+    category: (this.existingRequest?.category as string) ?? 'food',
     item_name: this.existingRequest?.item_name ?? '',
     arrival_date: this.existingRequest ? new Date(this.existingRequest.arrival_time) : new Date(),
     arrival_time_of_day: this.existingRequest ? this.toTimeOfDay(this.existingRequest.arrival_time) : '',

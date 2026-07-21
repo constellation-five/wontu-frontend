@@ -106,7 +106,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
   private locationLabel: string | null = null;
 
   readonly model = signal({
-    category: (this.existingOffer?.category as 'food' | 'other') ?? 'food',
+    category: (this.existingOffer?.category as string) ?? 'food',
     merchant_name: this.existingOffer?.merchant_name ?? '',
     closing_date: this.existingOffer ? new Date(this.existingOffer.closing_time) : new Date(),
     closing_time_of_day: this.existingOffer

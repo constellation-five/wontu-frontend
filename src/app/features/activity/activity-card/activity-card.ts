@@ -14,6 +14,7 @@ import { RupiahFormatPipe } from '../../../shared/pipes/rupiah-format.pipe';
 })
 export class ActivityCardComponent {
   type = input.required<'Order' | 'Offer'>();
+  category = input.required<string>();
   merchantName = input.required<string>();
   locationLabel = input.required<string>();
   date = input.required<string>();
