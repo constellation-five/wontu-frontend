@@ -1932,7 +1932,7 @@
       </trans-unit>
       <trans-unit id="6250742806431534479" datatype="html">
         <source>Cancel order</source>
-        <target>Batalkan pesanan</target>
+        <target>Batalkan</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
           <context context-type="linenumber">97,98</context>
@@ -1952,7 +1952,7 @@
       </trans-unit>
       <trans-unit id="5144500553106830489" datatype="html">
         <source>Edit order</source>
-        <target>Edit pesanan</target>
+        <target>Ubah pesanan</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
           <context context-type="linenumber">101,102</context>
