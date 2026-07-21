@@ -39,8 +39,7 @@
 } @else if (filteredRequests().length > 0) {
 
   @if (ongoingRequests().length > 0) {
-    <div class="section-container">
-      <h2 class="section-title mat-font-title-lg" i18n>Ongoing</h2>
+    <app-ongoing-section title="Ongoing">
       <div class="requests-grid">
         @for (req of ongoingRequests(); track req.request_id) {
           <app-request-card
@@ -57,14 +56,11 @@
           />
         }
       </div>
-    </div>
+    </app-ongoing-section>
   }
 
   @if (otherRequests().length > 0) {
-    <div class="section-container" [class.mt-xl]="ongoingRequests().length > 0">
-      @if (ongoingRequests().length > 0) {
-        <h2 class="section-title mat-font-title-lg" i18n>Others</h2>
-      }
+    <div class="section-container">
       <div class="requests-grid">
         @for (req of otherRequests(); track req.request_id) {
           <app-request-card

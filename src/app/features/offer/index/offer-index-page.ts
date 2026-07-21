@@ -22,6 +22,7 @@ import { LocationPickerDialog } from '../../../shared/components/location-picker
 import { IconButtonVariantDirective } from '../../../shared/directives/button';
 import { LocationLookupService } from '../../../core/location-lookup.service';
 import { LocationStateService, DEFAULT_LOCATION } from '../../../core/location-state.service';
+import { OngoingSection } from '../../../shared/components/ongoing-section/ongoing-section';
 
 @Component({
   selector: 'offer-index',
@@ -35,7 +36,8 @@ import { LocationStateService, DEFAULT_LOCATION } from '../../../core/location-s
     ProductCardComponent,
     NaturalDateTimePipe,
     MainPageHeaderComponent,
-    IconButtonVariantDirective
+    IconButtonVariantDirective,
+    OngoingSection
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -78,6 +80,16 @@ export class OfferShowPage {
       if (other && category === 'other') return true;
       return false;
     });
+  });
+
+  ongoingOffers = computed(() => {
+    const currentUserId = this.user()?.user_id;
+    return this.filteredOffers().filter((offer) => offer.seller_id === currentUserId);
+  });
+
+  otherOffers = computed(() => {
+    const currentUserId = this.user()?.user_id;
+    return this.filteredOffers().filter((offer) => offer.seller_id !== currentUserId);
   });
 
   constructor() {

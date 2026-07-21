@@ -22,6 +22,7 @@ import { LocationLookupService } from '../../core/location-lookup.service';
 import { LocationStateService, DEFAULT_LOCATION } from '../../core/location-state.service';
 import { LocationPickerDialog } from '../../shared/components/location-picker-dialog/location-picker-dialog';
 import { RequestFormDialog } from './request-form-dialog/request-form-dialog';
+import { OngoingSection } from '../../shared/components/ongoing-section/ongoing-section';
 
 @Component({
   selector: 'request-page',
@@ -34,7 +35,8 @@ import { RequestFormDialog } from './request-form-dialog/request-form-dialog';
     RequestCard,
     NaturalDateTimePipe,
     MainPageHeaderComponent,
-    MatCheckboxModule
+    MatCheckboxModule,
+    OngoingSection
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
