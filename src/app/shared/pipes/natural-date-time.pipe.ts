@@ -1,13 +1,15 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject, LOCALE_ID } from '@angular/core';
 
 @Pipe({
   name: 'naturalDateTime',
   standalone: true,
 })
 export class NaturalDateTimePipe implements PipeTransform {
+  private readonly localeId = inject(LOCALE_ID, { optional: true }) || (typeof navigator !== 'undefined' ? navigator.language : 'en-US');
+
   transform(
     date: Date | string | number,
-    locale: string = typeof navigator !== 'undefined' ? navigator.language : 'en-US',
+    locale: string = this.localeId,
     showTodayLabel: boolean = true,
     // Unused — pass a periodically-changing value (e.g. TimeTickService.now())
     // to force this pure pipe to recompute on a timer, so relative labels

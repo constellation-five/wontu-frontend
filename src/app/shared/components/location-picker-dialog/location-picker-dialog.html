@@ -55,7 +55,9 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button matButton="outlined" appButtonSize="sm" type="button" mat-dialog-close i18n>Cancel</button>
+  <button matButton="outlined" appButtonSize="sm" type="button" mat-dialog-close i18n>
+    Cancel
+  </button>
   <button
     matButton="filled"
     appButtonSize="sm"
@@ -64,6 +66,15 @@
     [disabled]="!locationInput().trim() || isVerifying()"
     (click)="confirmLocation()"
   >
-    @if(isVerifying()){<ng-container i18n>Verifying...</ng-container>}@else{<ng-container i18n>Confirm Location</ng-container>}
+    <mat-icon fontSet="material-symbols-outlined">
+      @if (!isVerifying()) {
+        check
+      }
+    </mat-icon>
+    @if (isVerifying()) {
+      <ng-container i18n>Verifying...</ng-container>
+    } @else {
+      <ng-container i18n>Confirm location</ng-container>
+    }
   </button>
 </mat-dialog-actions>

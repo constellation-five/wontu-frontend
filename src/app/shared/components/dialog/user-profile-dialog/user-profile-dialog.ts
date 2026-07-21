@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { ButtonSizeDirective } from '../../../directives/button';
@@ -38,6 +39,7 @@ interface UserProfileResponse {
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     ButtonSizeDirective,
     DialogComponent,
   ],

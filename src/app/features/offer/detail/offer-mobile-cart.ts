@@ -16,6 +16,7 @@ import { DialogComponent } from '../../../shared/components/dialog/dialog';
 import { DecimalPipe } from '@angular/common';
 import { CounterField } from '../../../shared/components/counter-field/counter-field';
 import { of } from 'rxjs';
+import { NaturalDateTimePipe } from '../../../shared/pipes/natural-date-time.pipe';
 
 @Component({
   selector: 'app-offer-mobile-cart',
@@ -29,6 +30,7 @@ import { of } from 'rxjs';
     IconButtonVariantDirective,
     DecimalPipe,
     CounterField,
+    NaturalDateTimePipe,
   ],
   templateUrl: './offer-mobile-cart.html',
   styleUrls: ['./offer-mobile-cart.scss'],
@@ -46,6 +48,7 @@ export class OfferMobileCart implements OnDestroy {
   offer = signal<Offer | null>(null);
   cart = signal<Map<number, CheckoutItem>>(new Map());
   isLoading = signal(true);
+  isEditingOrder = signal(false);
 
   cartItems = computed(() => Array.from(this.cart().values()));
   totalItems = computed(() => this.cartItems().reduce((sum, item) => sum + item.quantity, 0));
@@ -63,6 +66,7 @@ export class OfferMobileCart implements OnDestroy {
       this.offer.set(state['offer']);
       const cartMap = new Map<number, CheckoutItem>(state['cart']);
       this.cart.set(cartMap);
+      this.isEditingOrder.set(!!state['isEditingOrder']);
       this.isLoading.set(false);
     } else if (offerId) {
       // Direct navigation, refresh, or back/forward: no history.state to
@@ -105,11 +109,14 @@ export class OfferMobileCart implements OnDestroy {
       window.addEventListener('resize', this.resizeListener);
       this.checkScreenSize();
     }
+
+    this.pageHeader.customBackAction.set(() => this.goBack());
   }
 
   private resizeListener?: () => void;
 
   ngOnDestroy() {
+    this.pageHeader.customBackAction.set(null);
     if (typeof window !== 'undefined' && this.resizeListener) {
       window.removeEventListener('resize', this.resizeListener);
     }
@@ -266,26 +273,6 @@ export class OfferMobileCart implements OnDestroy {
     }
   }
 
-  formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return (
-      date.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      }) +
-      ', ' +
-      date
-        .toLocaleTimeString('en-GB', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true,
-        })
-        .replace('am', 'AM')
-        .replace('pm', 'PM')
-    );
-  }
-
   onPlaceOrder() {
     const offer = this.offer();
     if (!offer || this.totalItems() === 0) return;
@@ -303,22 +290,35 @@ export class OfferMobileCart implements OnDestroy {
       notes: cartItem.notes,
     }));
 
-    // This page only ever builds a draft cart before an order exists (see the
-    // constructor's redirect when an order is already found), so placing here
-    // is always a fresh order, never an edit of an existing one.
-    this.offerService.placeOrder(offer.offer_id, items).subscribe({
-      next: () => {
-        this.snackBar.open($localize`Order placed successfully.`, $localize`Close`, { duration: 3000 });
-        this.clearCartFromLocalStorage(offer.offer_id);
-        this.router.navigate(['/offers', offer.offer_id]);
-      },
-      error: (err) => {
-        console.error('Failed to place order:', err);
-        const msg = err.error?.message || 'Please try again.';
-        const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open($localize`Failed to place order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
-      },
-    });
+    if (this.isEditingOrder()) {
+      this.offerService.replaceOrder(offer.offer_id, items).subscribe({
+        next: () => {
+          this.snackBar.open($localize`Order saved successfully.`, $localize`Close`, { duration: 3000 });
+          this.clearCartFromLocalStorage(offer.offer_id);
+          this.router.navigate(['/offers', offer.offer_id]);
+        },
+        error: (err) => {
+          console.error('Failed to replace order:', err);
+          const msg = err.error?.message || 'Please try again.';
+          const status = err.status ? ` (${err.status})` : '';
+          this.snackBar.open($localize`Failed to save order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        },
+      });
+    } else {
+      this.offerService.placeOrder(offer.offer_id, items).subscribe({
+        next: () => {
+          this.snackBar.open($localize`Order placed successfully.`, $localize`Close`, { duration: 3000 });
+          this.clearCartFromLocalStorage(offer.offer_id);
+          this.router.navigate(['/offers', offer.offer_id]);
+        },
+        error: (err) => {
+          console.error('Failed to place order:', err);
+          const msg = err.error?.message || 'Please try again.';
+          const status = err.status ? ` (${err.status})` : '';
+          this.snackBar.open($localize`Failed to place order: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        },
+      });
+    }
   }
 
   openRemoveConfirm(cartItem: CheckoutItem) {

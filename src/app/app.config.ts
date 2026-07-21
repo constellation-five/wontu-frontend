@@ -5,7 +5,7 @@ import {
   provideAppInitializer,
   isDevMode,
 } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withViewTransitions } from '@angular/router';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import {
   provideHttpClient,
@@ -15,6 +15,7 @@ import {
 } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AuthService } from './core/auth.service';
+import { TransitionDirectionService } from './core/transition-direction.service';
 
 import { routes } from './app.routes';
 import { credentialsInterceptor } from './core/credentials.interceptor';
@@ -27,10 +28,15 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideAnimationsAsync(),
     provideNativeDateAdapter(),
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withViewTransitions({ skipInitialTransition: true }),
+    ),
     provideHttpClient(withInterceptors([credentialsInterceptor])),
     provideAppInitializer(() => {
       const auth = inject(AuthService);
+      inject(TransitionDirectionService);
       return auth.loadUser();
     }),
     { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } },

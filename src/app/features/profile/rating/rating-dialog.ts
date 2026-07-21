@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../core/auth.service';
@@ -31,6 +32,7 @@ interface RatingResponse {
     CommonModule,
     MatDialogModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './rating-dialog.html',
   styleUrl: './rating-dialog.scss',

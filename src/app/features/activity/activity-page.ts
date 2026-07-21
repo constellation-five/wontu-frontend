@@ -26,6 +26,7 @@ interface ActivityItem {
   type: 'Order' | 'Offer';
   category: string;
   merchantName: string;
+  itemName: string;
   merchantId?: string;
   locationLabel: string;
   dateStr: string;
@@ -95,6 +96,7 @@ export class ActivityPage {
     
     return this.combinedItems().filter(item => {
       const matchesSearch = item.merchantName.toLowerCase().includes(search) ||
+                            item.itemName.toLowerCase().includes(search) ||
                             item.locationLabel.toLowerCase().includes(search) ||
                             item.statusText.toLowerCase().includes(search) ||
                             item.dateStr.toLowerCase().includes(search);
@@ -182,6 +184,7 @@ export class ActivityPage {
         // Process Orders
         const mappedOrders: ActivityItem[] = (ordersRes.data || []).map((order: any) => {
           const firstItem = order.items[0];
+          const itemName = firstItem?.item?.item_name || '';
           const imageUrl = firstItem?.item?.image_url || '';
           const orderDate = new Date(order.created_at);
           let totalPrice = 0;
@@ -216,6 +219,7 @@ export class ActivityPage {
             type: 'Order',
             category: order.category,
             merchantName: order.merchant_name,
+            itemName,
             merchantId: order.merchant_id,
             locationLabel: order.location_label || '',
             dateStr: finalDateStr,
@@ -232,6 +236,7 @@ export class ActivityPage {
 
         // Process Offers
         const mappedOffers: ActivityItem[] = (offersRes.data || []).map((offer: Offer) => {
+          const itemName = offer.items[0]?.item_name || '';
           const imageUrl = offer.items[0]?.image_url || '';
           const offerDate = new Date(offer.created_at);
 
@@ -268,6 +273,7 @@ export class ActivityPage {
             type: 'Offer',
             category: offer.category,
             merchantName: offer.merchant_name,
+            itemName,
             locationLabel: offer.location_label || '',
             dateStr: finalDateStr,
             timestamp: dateToUse.getTime(),

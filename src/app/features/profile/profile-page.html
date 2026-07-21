@@ -29,13 +29,17 @@
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{
               formatNumber(user.followers_count)
             }}</span>
-            <span i18n class="stat-label mat-font-body-sm mat-text-on-surface-variant">Followers</span>
+            <span i18n class="stat-label mat-font-body-sm mat-text-on-surface-variant"
+              >Followers</span
+            >
           </a>
           <a routerLink="/profile/following" class="stat-item">
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{
               formatNumber(user.following_count)
             }}</span>
-            <span i18n class="stat-label mat-font-body-sm mat-text-on-surface-variant">Following</span>
+            <span i18n class="stat-label mat-font-body-sm mat-text-on-surface-variant"
+              >Following</span
+            >
           </a>
           <button (click)="openRatingDialog()" class="stat-item stat-button">
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface"
@@ -53,7 +57,7 @@
             class="menu-item mat-font-label-lg mat-text-on-surface"
           >
             <mat-icon class="menu-icon" fontSet="material-symbols-outlined">person</mat-icon>
-            <span i18n>Account</span>
+            <ng-container i18n>Account</ng-container>
           </button>
 
           <button
@@ -62,7 +66,7 @@
             class="menu-item mat-font-label-lg mat-text-on-surface"
           >
             <mat-icon class="menu-icon" fontSet="material-symbols-outlined">attach_money</mat-icon>
-            <span i18n>Payment Methods</span>
+            <ng-container i18n>Payment Methods</ng-container>
           </button>
 
           <button
@@ -71,7 +75,7 @@
             class="menu-item mat-font-label-lg mat-text-on-surface"
           >
             <mat-icon class="menu-icon" fontSet="material-symbols-outlined">settings</mat-icon>
-            <span i18n>Settings</span>
+            <ng-container i18n>Settings</ng-container>
           </button>
 
           <button (click)="logout()" class="menu-item mat-font-label-lg logout-btn">

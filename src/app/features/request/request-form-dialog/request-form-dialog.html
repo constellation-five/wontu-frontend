@@ -1,17 +1,17 @@
 <app-dialog [title]="dialogTitle" [buttons]="buttons()">
-  
+
   <div class="form-grid">
     <mat-form-field appearance="outline">
       <mat-label i18n>Category</mat-label>
       <mat-select [formField]="form.category">
-        <mat-option value="food">Food</mat-option>
-        <mat-option value="electronics">Electronics</mat-option>
-        <mat-option value="fashion">Fashion</mat-option>
-        <mat-option value="home">Home</mat-option>
-        <mat-option value="beauty">Beauty</mat-option>
-        <mat-option value="gaming">Gaming</mat-option>
-        <mat-option value="sports">Sports</mat-option>
-        <mat-option value="other">Other</mat-option>
+        <mat-option value="food" i18n>Food</mat-option>
+        <mat-option value="electronics" i18n>Electronics</mat-option>
+        <mat-option value="fashion" i18n>Fashion</mat-option>
+        <mat-option value="home" i18n>Home</mat-option>
+        <mat-option value="beauty" i18n>Beauty</mat-option>
+        <mat-option value="gaming" i18n>Gaming</mat-option>
+        <mat-option value="sports" i18n>Sports</mat-option>
+        <mat-option value="other" i18n>Other</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -34,7 +34,7 @@
           <mat-datepicker-toggle matIconSuffix [for]="arrivalPicker"></mat-datepicker-toggle>
           <mat-datepicker #arrivalPicker></mat-datepicker>
         </mat-form-field>
-        
+
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label i18n>Time</mat-label>
           <input matInput type="time" [formField]="form.arrival_time_of_day" />

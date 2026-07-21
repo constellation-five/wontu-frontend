@@ -4,13 +4,13 @@
       <div class="info-row">
         <span i18n class="mat-font-body-md mat-text-on-surface-variant">Offer closes at</span>
         <span class="mat-font-body-md mat-text-on-surface text-bold">
-          {{ formatDate(offer().closing_time) }}
+          {{ offer().closing_time | naturalDateTime }}
         </span>
       </div>
       <div class="info-row">
         <span i18n class="mat-font-body-md mat-text-on-surface-variant">Items arrive at</span>
         <span class="mat-font-body-md mat-text-on-surface text-bold">
-          {{ formatDate(offer().arrival_time) }}
+          {{ offer().arrival_time | naturalDateTime }}
         </span>
       </div>
     </div>
@@ -24,16 +24,24 @@
           </div>
           <div class="seller-rating">
             <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
-            <span class="mat-font-label-md mat-text-on-surface">@if (offer().seller.received_ratings_avg_rating) {{{ offer().seller.received_ratings_avg_rating | number: '1.1-1' }}} @else {<ng-container i18n>New</ng-container>}</span>
+            <span class="mat-font-label-md mat-text-on-surface">
+              @if (offer().seller.received_ratings_avg_rating) {
+                {{ offer().seller.received_ratings_avg_rating | number: '1.1-1' }}
+              } @else {
+                <ng-container i18n>New</ng-container>
+              }
+            </span>
             @if (offer().seller.received_ratings_count) {
-              <span class="mat-font-body-sm mat-text-on-surface-variant">({{ offer().seller.received_ratings_count }})</span>
+              <span class="mat-font-body-sm mat-text-on-surface-variant"
+                >({{ offer().seller.received_ratings_count }})</span
+              >
             }
           </div>
         </div>
       </div>
       <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
         <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-        <span i18n>Chat</span>
+        <ng-container i18n>Chat</ng-container>
       </button>
     </div>
   </app-pane>
@@ -59,7 +67,7 @@
             (click)="addToCart.emit(item)"
           >
             <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-            <span i18n>Add</span>
+            <ng-container i18n>Add</ng-container>
           </button>
         } @else {
           <app-counter-field
@@ -111,8 +119,18 @@
         [disabled]="cartItems().length === 0"
         (click)="placeOrder.emit()"
       >
-        <mat-icon fontSet="material-symbols-outlined">@if(isEditingOrder()){save}@else{check}</mat-icon>
-        @if(isEditingOrder()){<ng-container i18n>Save order</ng-container>}@else{<ng-container i18n>Place order</ng-container>}
+        <mat-icon fontSet="material-symbols-outlined">
+          @if (isEditingOrder()) {
+            save
+          } @else {
+            check
+          }
+        </mat-icon>
+        @if (isEditingOrder()) {
+          <ng-container i18n>Save order</ng-container>
+        } @else {
+          <ng-container i18n>Place order</ng-container>
+        }
       </button>
     </div>
   </app-pane>
@@ -148,7 +166,8 @@
   class="mobile-cart-fab"
   [disabled]="cartItems().length === 0"
   (click)="navigateToMobileCart.emit()"
-  i18n-aria-label aria-label="View Cart"
+  i18n-aria-label
+  aria-label="View Cart"
 >
   <mat-icon fontSet="material-symbols-outlined">shopping_cart</mat-icon>
   @if (totalItems() > 0) {

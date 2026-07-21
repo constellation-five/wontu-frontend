@@ -42,7 +42,11 @@
     object-fit: cover;
   }
 
-  height: 160px;
+  height: 80px;
+
+  @media (min-width: $breakpoint-sm) {
+    height: 120px;
+  }
 
   @media (min-width: $breakpoint-md) {
     height: 180px;
@@ -90,6 +94,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   margin-top: var(--spacing-xs);
   gap: var(--spacing-md);
 }

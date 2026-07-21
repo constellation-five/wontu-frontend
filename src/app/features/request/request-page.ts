@@ -12,7 +12,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
-import { TitleCasePipe } from '@angular/common';
 import { AuthService } from '../../core/auth.service';
 import { RequestService, RequestItem } from '../../core/request.service';
 import { PageHeaderService } from '../../core/page-header.service';
@@ -38,7 +37,6 @@ import { OngoingSection } from '../../shared/components/ongoing-section/ongoing-
     MainPageHeaderComponent,
     MatCheckboxModule,
     OngoingSection,
-    TitleCasePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -59,7 +57,26 @@ export class RequestPage {
   readonly userLocationCoordinates = this.locationState.userLocationCoordinates;
 
   searchQuery = signal<string>('');
-  availableCategories = ['food', 'electronics', 'fashion', 'home', 'beauty', 'gaming', 'sports', 'other'];
+  availableCategories = [
+    'food',
+    'electronics',
+    'fashion',
+    'home',
+    'beauty',
+    'gaming',
+    'sports',
+    'other',
+  ];
+  localizedCategories = [
+    $localize`Food`,
+    $localize`Electronics`,
+    $localize`Fashion`,
+    $localize`Home`,
+    $localize`Beauty`,
+    $localize`Gaming`,
+    $localize`Sports`,
+    $localize`Other`,
+  ];
   selectedCategories = signal<Set<string>>(new Set(this.availableCategories));
 
   // FILTER
@@ -88,13 +105,13 @@ export class RequestPage {
   // Ongoing Requests
   ongoingRequests = computed(() => {
     const currentUserId = this.user()?.user_id;
-    return this.filteredRequests().filter(req => req.requester_id === currentUserId);
+    return this.filteredRequests().filter((req) => req.requester_id === currentUserId);
   });
 
   // Other Requests
   otherRequests = computed(() => {
     const currentUserId = this.user()?.user_id;
-    return this.filteredRequests().filter(req => req.requester_id !== currentUserId);
+    return this.filteredRequests().filter((req) => req.requester_id !== currentUserId);
   });
 
   constructor() {
@@ -109,9 +126,11 @@ export class RequestPage {
   }
 
   fetchRequests(query?: string, silent = false) {
-    this.requestService.loadRequests(query, this.userLocationCoordinates() ?? undefined, silent).subscribe({
-      error: (err) => console.error('Error fetching requests:', err),
-    });
+    this.requestService
+      .loadRequests(query, this.userLocationCoordinates() ?? undefined, silent)
+      .subscribe({
+        error: (err) => console.error('Error fetching requests:', err),
+      });
   }
 
   onSearchChange(query: string) {
@@ -129,12 +148,12 @@ export class RequestPage {
     const dialogRef = this.dialog.open(RequestFormDialog, {
       width: '500px',
       maxWidth: '95vw',
-      data: { coords: this.userLocationCoordinates() }
+      data: { coords: this.userLocationCoordinates() },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.fetchRequests(this.searchQuery()); 
+        this.fetchRequests(this.searchQuery());
       }
     });
   }
@@ -144,15 +163,15 @@ export class RequestPage {
     const dialogRef = this.dialog.open(RequestFormDialog, {
       width: '500px',
       maxWidth: '95vw',
-      data: { 
-        request: req, 
-        coords: this.userLocationCoordinates() 
-      }
+      data: {
+        request: req,
+        coords: this.userLocationCoordinates(),
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.fetchRequests(this.searchQuery(), true); 
+        this.fetchRequests(this.searchQuery(), true);
       }
     });
   }
@@ -167,15 +186,15 @@ export class RequestPage {
 
   onVoteRequest(req: RequestItem) {
     if (!this.user()) {
-      this.router.navigate(['/signin']); 
+      this.router.navigate(['/signin']);
       return;
     }
 
     this.requestService.toggleVote(req.request_id).subscribe({
       next: () => {
-        this.fetchRequests(this.searchQuery(), true); 
+        this.fetchRequests(this.searchQuery(), true);
       },
-      error: (err) => console.error('Failed to vote', err)
+      error: (err) => console.error('Failed to vote', err),
     });
   }
 
@@ -192,7 +211,7 @@ export class RequestPage {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && result.location) {
-        this.locationState.isManuallySet.set(true); 
+        this.locationState.isManuallySet.set(true);
         this.userLocation.set(result.location);
         this.userLocationCoordinates.set(result.coords ?? null);
         this.cdr.markForCheck();
@@ -228,7 +247,7 @@ export class RequestPage {
 
   private async applyDetectedLocation(coords: { lat: number; lng: number }) {
     if (this.locationState.isManuallySet()) {
-      return; 
+      return;
     }
 
     this.userLocationCoordinates.set(coords);

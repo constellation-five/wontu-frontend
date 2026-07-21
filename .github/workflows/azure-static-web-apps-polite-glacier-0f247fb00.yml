@@ -48,6 +48,12 @@ jobs:
           pnpm run build
           mv dist/wontu-frontend/browser/en/* dist/wontu-frontend/browser/
           rm -rf dist/wontu-frontend/browser/en
+          
+          # Prevent root Service Worker from intercepting /id/* navigation requests
+          if [ -f dist/wontu-frontend/browser/ngsw.json ]; then
+            jq '.navigationUrls += [{"positive": false, "regex": "^\\\\/id\\\\/.*$"}]' dist/wontu-frontend/browser/ngsw.json > dist/wontu-frontend/browser/ngsw.tmp.json
+            mv dist/wontu-frontend/browser/ngsw.tmp.json dist/wontu-frontend/browser/ngsw.json
+          fi
       - name: Deploy
         id: deploy
         uses: Azure/static-web-apps-deploy@v1

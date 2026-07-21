@@ -26,6 +26,8 @@
           (click)="invoke(button.action)"
           [disabled]="button.disabled"
           [attr.cdkFocusInitial]="button.focus ? '' : null"
+          [class.dialog-btn]="true"
+          [class.delete-btn]="button.color === 'error'"
         >
           @if (button.icon) {
             <mat-icon fontSet="material-symbols-outlined">{{ button.icon }}</mat-icon>
@@ -38,6 +40,8 @@
           [appButtonColor]="button.color ?? 'primary'"
           [mat-dialog-close]="button.action ?? ''"
           [attr.cdkFocusInitial]="button.focus ? '' : null"
+          [class.dialog-btn]="true"
+          [class.delete-btn]="button.color === 'error'"
         >
           @if (button.icon) {
             <mat-icon fontSet="material-symbols-outlined">{{ button.icon }}</mat-icon>

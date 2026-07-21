@@ -7,5 +7,5 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OngoingSection {
-  title = input<string>('Ongoing');
+  title = input<string>($localize`Ongoing`);
 }

@@ -9,7 +9,7 @@
 
   <!-- Content -->
   @if (isLoading()) {
-    <div class="loading-state mat-font-body-md mat-text-on-surface-variant" i18n>Loading...</div>
+    <div class="loading-state mat-font-body-md mat-text-on-surface-variant"><mat-spinner diameter="40"></mat-spinner></div>
   } @else if (ratingData(); as data) {
     <div class="rating-content">
       <!-- Average Rating Display -->

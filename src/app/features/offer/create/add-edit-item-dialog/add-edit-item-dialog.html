@@ -1,10 +1,5 @@
 <div class="item-dialog">
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label i18n>Item link (optional)</mat-label>
-    <input matInput [formField]="form.item_url" i18n-placeholder placeholder="https://..." />
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" class="full-width">
     <mat-label i18n>Item name</mat-label>
     <input matInput [formField]="form.item_name" />
     @if (form.item_name().invalid() && form.item_name().touched()) {
@@ -42,20 +37,38 @@
       <button
         matButton="outlined"
         appButtonColor="error"
-        appButtonSize="md"
+        appButtonSize="sm"
         (click)="openDeleteConfirm()"
       >
         <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
-        <span i18n>Delete</span>
+        <ng-container i18n>Delete</ng-container>
       </button>
     }
     <div class="spacer"></div>
+
+    <button
+      (click)="close()"
+      matButton="outlined"
+      appButtonSize="sm"
+      type="button"
+      mat-dialog-close
+      i18n
+    >
+      Cancel
+    </button>
     <button
       matButton="filled"
-      appButtonSize="md"
+      appButtonSize="sm"
       [disabled]="form().invalid() || isUploading()"
       (click)="submit()"
     >
+      <mat-icon fontSet="material-symbols-outlined">
+        @if (isEdit) {
+          save
+        } @else {
+          check
+        }
+      </mat-icon>
       @if (isEdit) {
         <ng-container i18n>Save item</ng-container>
       } @else {
@@ -72,10 +85,28 @@
     [disabled]="form().invalid() || isUploading()"
     (click)="submit()"
   >
+    <mat-icon fontSet="material-symbols-outlined">
+      @if (isEdit) {
+        save
+      } @else {
+        check
+      }
+    </mat-icon>
     @if (isEdit) {
       <ng-container i18n>Save item</ng-container>
     } @else {
       <ng-container i18n>Add item</ng-container>
     }
   </button>
+  @if (isEdit) {
+    <button
+      matButton="outlined"
+      appButtonColor="error"
+      appButtonSize="sm"
+      (click)="openDeleteConfirm()"
+    >
+      <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+      <ng-container i18n>Delete</ng-container>
+    </button>
+  }
 </ng-template>

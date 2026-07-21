@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -54,6 +55,7 @@ interface FollowingResponse {
     FormsModule,
     PaneComponent,
     ButtonSizeDirective,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './following-page.html',
   styleUrl: './following-page.scss',

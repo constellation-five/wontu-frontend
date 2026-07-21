@@ -90,6 +90,9 @@ importers:
       jsdom:
         specifier: ^28.1.0
         version: 28.1.0
+      ng-extract-i18n-merge:
+        specifier: ^3.4.0
+        version: 3.4.0(@angular/build@21.2.19(f0e8c8569c56e1583d40bca5613e4257))(chokidar@5.0.0)
       postcss:
         specifier: ^8.5.19
         version: 8.5.19
@@ -3838,6 +3841,12 @@ packages:
   neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
+  ng-extract-i18n-merge@3.4.0:
+    resolution: {integrity: sha512-8eOvyTSeaEGtaLIFFRug16AwuVS400bKfT/AqTZG8FlSAT6T8UpItlMi4rW0Z8bdmOPkK0ZzxGk8Ew/+NMWiCg==}
+    engines: {node: '>=20.19.0'}
+    peerDependencies:
+      '@angular/build': ^20.0.0 || ^21.0.0 || ^22.0.0
+
   no-case@3.0.4:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
 
@@ -4978,6 +4987,9 @@ packages:
 
   xmlchars@2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
+
+  xmldoc@1.3.0:
+    resolution: {integrity: sha512-y7IRWW6PvEnYQZNZFMRLNJw+p3pezM4nKYPfr15g4OOW9i8VpeydycFuipE2297OvZnh3jSb2pxOt9QpkZUVng==}
 
   y18n@5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
@@ -9033,6 +9045,17 @@ snapshots:
 
   neo-async@2.6.2: {}
 
+  ng-extract-i18n-merge@3.4.0(@angular/build@21.2.19(f0e8c8569c56e1583d40bca5613e4257))(chokidar@5.0.0):
+    dependencies:
+      '@angular-devkit/architect': 0.2102.19(chokidar@5.0.0)
+      '@angular-devkit/core': 21.2.19(chokidar@5.0.0)
+      '@angular-devkit/schematics': 21.2.19(chokidar@5.0.0)
+      '@angular/build': 21.2.19(f0e8c8569c56e1583d40bca5613e4257)
+      '@schematics/angular': 21.2.19(chokidar@5.0.0)
+      xmldoc: 1.3.0
+    transitivePeerDependencies:
+      - chokidar
+
   no-case@3.0.4:
     dependencies:
       lower-case: 2.0.2
@@ -9586,8 +9609,7 @@ snapshots:
     optionalDependencies:
       '@parcel/watcher': 2.5.6
 
-  sax@1.6.0:
-    optional: true
+  sax@1.6.0: {}
 
   saxes@6.0.0:
     dependencies:
@@ -10283,6 +10305,10 @@ snapshots:
   xml-name-validator@5.0.0: {}
 
   xmlchars@2.2.0: {}
+
+  xmldoc@1.3.0:
+    dependencies:
+      sax: 1.6.0
 
   y18n@5.0.8: {}
 

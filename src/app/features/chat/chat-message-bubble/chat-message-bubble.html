@@ -12,9 +12,9 @@
 } @else {
   <div class="message-row" [class.own]="isOwn()">
     @if (!isOwn()) {
-      <button 
-        class="avatar-button" 
-        type="button" 
+      <button
+        class="avatar-button"
+        type="button"
         (click)="onAvatarClick()"
         [style.visibility]="isLastInGroup() ? 'visible' : 'hidden'"
       >
@@ -33,7 +33,7 @@
         <div class="message-meta">
           <span class="meta-name mat-font-label-sm mat-text-on-surface">
             @if (isOwn()) {
-              <span i18n>You</span>
+              <ng-container i18n>You</ng-container>
             } @else {
               {{ message().sender?.name }}
             }
@@ -42,7 +42,7 @@
             @if (message().created_at) {
               {{ message().created_at | naturalDateTime: undefined : false : timeTick.now() }}
             } @else {
-              <span i18n>Sending</span>
+              <ng-container i18n>Sending</ng-container>
             }
           </span>
           @if (targetLabel()) {
@@ -59,10 +59,12 @@
         [class.scoped-bubble]="isScoped()"
       >
         @if (message().image_url) {
-          <img 
-            [src]="message().image_url" 
-            i18n-alt i18n-alt alt="Attachment" 
-            class="bubble-image clickable-image" 
+          <img
+            [src]="message().image_url"
+            i18n-alt
+            i18n-alt
+            alt="Attachment"
+            class="bubble-image clickable-image"
             (click)="openImagePreview()"
           />
         }

@@ -11,8 +11,8 @@
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title class="panel-title">
-                  <img [src]="order.buyer.avatar" [alt]="order.buyer.name" class="buyer-avatar" />
-                  <span class="buyer-name mat-font-title-md mat-text-on-surface">{{
+                  <img [src]="order.buyer.avatar" [alt]="order.buyer.name" class="buyer-avatar" (click)="openBuyerProfile(order.buyer.user_id, $event)" style="cursor: pointer;" />
+                  <span class="buyer-name mat-font-title-md mat-text-on-surface" (click)="openBuyerProfile(order.buyer.user_id, $event)" style="cursor: pointer;">{{
                     order.buyer.name
                   }}</span>
                 </mat-panel-title>
@@ -39,29 +39,33 @@
                 <span class="mat-font-body-lg mat-text-on-surface text-bold">
                   Total: Rp {{ orderTotal(order) | number: '1.0-0' }}
                 </span>
-                <div class="order-actions">
-                  <button
-                    matButton="outlined"
-                    appButtonSize="sm"
-                    [disabled]="!order.payment_proof_url"
-                    (click)="viewProofOfPayment(order)"
-                  >
-                    <mat-icon fontSet="material-symbols-outlined">visibility</mat-icon>
-                    <span i18n>Proof of payment</span>
-                  </button>
-                  @if (!order.is_confirmed) {
-                    <button matButton="filled" appButtonSize="sm" (click)="confirmPayment(order)">
-                      <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-                      <span i18n>Confirm payment</span>
+                @if (isClosed()) {
+                  <div class="order-actions">
+                    <button
+                      matButton="outlined"
+                      appButtonSize="sm"
+                      [disabled]="!order.payment_proof_url"
+                      (click)="viewProofOfPayment(order)"
+                    >
+                      <mat-icon fontSet="material-symbols-outlined">visibility</mat-icon>
+                      <ng-container i18n>Proof of payment</ng-container>
                     </button>
-                  }
-                </div>
+                    @if (!order.is_confirmed) {
+                      <button matButton="filled" appButtonSize="sm" (click)="confirmPayment(order)">
+                        <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
+                        <ng-container i18n>Confirm payment</ng-container>
+                      </button>
+                    }
+                  </div>
+                }
               </div>
             </mat-expansion-panel>
           }
         </mat-accordion>
       } @else if (!isLoading()) {
-        <p class="mat-font-body-md mat-text-on-surface-variant" i18n>No customers have joined yet.</p>
+        <p class="mat-font-body-md mat-text-on-surface-variant" i18n>
+          No customers have joined yet.
+        </p>
       }
     </app-pane>
 
@@ -89,11 +93,11 @@
             [disabled]="isActionInProgress()"
           >
             <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-            <span i18n>Close offer now</span>
+            <ng-container i18n>Close offer now</ng-container>
           </button>
           <button matButton="tonal" appButtonSize="sm" (click)="openChat()">
             <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-            <span i18n>Chat</span>
+            <ng-container i18n>Chat</ng-container>
           </button>
         } @else {
           @if (!isArrived()) {
@@ -104,12 +108,12 @@
               [disabled]="isActionInProgress()"
             >
               <mat-icon fontSet="material-symbols-outlined">local_shipping</mat-icon>
-              <span i18n>Mark items as arrived</span>
+              <ng-container i18n>Mark items as arrived</ng-container>
             </button>
           }
           <button matButton="tonal" appButtonSize="sm" (click)="openChat()">
             <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-            <span i18n>Chat</span>
+            <ng-container i18n>Chat</ng-container>
           </button>
         }
       </div>
@@ -130,7 +134,7 @@
         <div class="edit-delete">
           <button matButton="outlined" appButtonSize="sm" (click)="editOffer()">
             <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-            <span i18n>Edit offer</span>
+            <ng-container i18n>Edit offer</ng-container>
           </button>
           <button
             matButton="outlined"
@@ -139,7 +143,7 @@
             (click)="openDeleteConfirm()"
           >
             <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
-            <span i18n>Delete offer</span>
+            <ng-container i18n>Delete offer</ng-container>
           </button>
         </div>
       }
@@ -152,33 +156,33 @@
 <ng-template #actionsTpl>
   @if (!isClosed()) {
     <button
-      matButton="tonal"
+      matButton="filled"
       appButtonSize="sm"
       (click)="closeOfferNow()"
       [disabled]="isActionInProgress()"
     >
       <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-      <span i18n>Close offer now</span>
+      <ng-container i18n>Close offer now</ng-container>
     </button>
     <button matButton="tonal" appButtonSize="sm" (click)="openChat()">
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-      <span i18n>Chat</span>
+      <ng-container i18n>Chat</ng-container>
     </button>
   } @else {
     @if (!isArrived()) {
       <button
-        matButton="tonal"
+        matButton="filled"
         appButtonSize="sm"
         (click)="markItemsArrived()"
         [disabled]="isActionInProgress() || isArrived()"
       >
         <mat-icon fontSet="material-symbols-outlined">local_shipping</mat-icon>
-        <span i18n>Mark items as arrived</span>
+        <ng-container i18n>Mark items as arrived</ng-container>
       </button>
     }
     <button matButton="tonal" appButtonSize="sm" (click)="openChat()">
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-      <span i18n>Chat</span>
+      <ng-container i18n>Chat</ng-container>
     </button>
   }
 </ng-template>

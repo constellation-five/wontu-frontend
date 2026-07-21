@@ -8,6 +8,7 @@ import { PaneComponent } from '../../../shared/components/pane/pane';
 import { CartItemCard } from '../../../shared/components/cart-item-card/cart-item-card';
 import { ButtonSizeDirective } from '../../../shared/directives/button';
 import { Offer, OfferItem, CheckoutItem } from '../../../core/offer.service';
+import { NaturalDateTimePipe } from '../../../shared/pipes/natural-date-time.pipe';
 
 @Component({
   selector: 'app-offer-menu-view',
@@ -22,6 +23,7 @@ import { Offer, OfferItem, CheckoutItem } from '../../../core/offer.service';
     ButtonSizeDirective,
     DecimalPipe,
     NgTemplateOutlet,
+    NaturalDateTimePipe,
   ],
   templateUrl: './offer-menu-view.html',
   styleUrls: ['./offer-menu-view.scss'],
@@ -44,6 +46,16 @@ export class OfferMenuView {
   readonly openChat = output<void>();
   readonly openSellerProfile = output<string>();
   readonly navigateToMobileCart = output<void>();
+
+  ngOnInit() {
+    if (this.isEditingOrder()) {
+      console.log('hey');
+      const cartItemMap = new Map(this.cartItems().map((c) => [c.item.item_id, c.quantity]));
+      this.sortedItems().forEach((item) => {
+        item.current_slot -= cartItemMap.get(item.item_id) ?? 0;
+      });
+    }
+  }
 
   isItemInCart(itemId: number): boolean {
     return this.cartItems().some((c) => c.item.item_id === itemId);
@@ -68,26 +80,6 @@ export class OfferMenuView {
 
   getItemStockVariant(item: OfferItem): 'default' | 'low' {
     return item.slot - item.current_slot > 5 ? 'default' : 'low';
-  }
-
-  formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return (
-      date.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      }) +
-      ', ' +
-      date
-        .toLocaleTimeString('en-GB', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true,
-        })
-        .replace('am', 'AM')
-        .replace('pm', 'PM')
-    );
   }
 
   onItemCounterChange(item: OfferItem, newValue: number, field: CounterField) {

@@ -31,13 +31,13 @@
           [checked]="filterOrder()"
           (change)="filterOrder.set($event.checked)"
           class="filter-checkbox"
-          ><span i18n>Order</span></mat-checkbox
+          ><ng-container i18n>Order</ng-container></mat-checkbox
         >
         <mat-checkbox
           [checked]="filterOffer()"
           (change)="filterOffer.set($event.checked)"
           class="filter-checkbox"
-          ><span i18n>Offer</span></mat-checkbox
+          ><ng-container i18n>Offer</ng-container></mat-checkbox
         >
       </div>
     </mat-menu>
@@ -60,7 +60,7 @@
   } @else {
     <div class="tabs-container mobile-tabs">
       <app-segmented-control
-        [options]="['History', 'Ongoing']"
+        [options]="tabOptions"
         [value]="activeTab()"
         (valueChange)="onTabChange($event)"
       >
@@ -79,15 +79,15 @@
           <div class="header-desktop-columns">
             <div class="header-badge"></div>
             <div class="header-time">
-              <span i18n>Time</span>
+              <ng-container i18n>Time</ng-container>
             </div>
             <div class="header-merchant" i18n>Merchant</div>
             <div class="header-location" i18n>Location</div>
             <div class="header-status">
               @if (activeTab() === tabOptions[0]) {
-                <span i18n>Total</span>
+                <ng-container i18n>Total</ng-container>
               } @else {
-                <span i18n>Status</span>
+                <ng-container i18n>Status</ng-container>
               }
             </div>
           </div>

@@ -5,6 +5,7 @@ import {
   effect,
   inject,
   signal,
+  OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,7 +43,7 @@ import { UserProfileDialog } from '../../../shared/components/dialog/user-profil
   styleUrls: ['./offer-chat-page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OfferChatPage implements OnDestroy {
+export class OfferChatPage implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly offerService = inject(OfferService);
@@ -56,15 +57,15 @@ export class OfferChatPage implements OnDestroy {
   isLoading = signal<boolean>(true);
 
   constructor() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.loadOffer(id);
+    const offer = this.route.snapshot.data['offer'] as Offer | undefined;
+    if (offer) {
+      this.offer.set(offer);
+      this.isLoading.set(false);
     } else {
       this.router.navigate(['/offers']);
     }
 
     effect(() => {
-      this.pageHeaderService.setTitle(this.offer()?.merchant_name ?? 'Chat');
       this.pageHeaderService.setInfoAction({
         icon: 'info',
         action: () => this.openInfoDialog(),
@@ -74,27 +75,16 @@ export class OfferChatPage implements OnDestroy {
     });
   }
 
-  loadOffer(id: string) {
-    this.isLoading.set(true);
-    this.offerService.getOfferById(id).subscribe({
-      next: (data) => {
-        this.offer.set(data);
-
-        this.pageHeaderService.setBreadcrumbs([
-          { label: $localize`Offers`, route: '/offers' },
-          { label: data.merchant_name, route: `/offers/${data.offer_id}` },
-          { label: $localize`Chat` },
-        ]);
-
-        this.chatService.openOfferConversation(data.offer_id);
-        this.isLoading.set(false);
-      },
-      error: (err) => {
-        console.error('Failed to load offer:', err);
-        this.isLoading.set(false);
-        this.router.navigate(['/offers']);
-      },
-    });
+  ngOnInit() {
+    const offer = this.offer();
+    if (offer) {
+      this.pageHeaderService.setTitle(offer.merchant_name);
+      this.pageHeaderService.setBreadcrumbs([
+        { label: $localize`Offers`, route: '/offers' },
+        { label: offer.merchant_name, route: `/offers/${offer.offer_id}` },
+        { label: $localize`Chat` },
+      ]);
+    }
   }
 
   goBack(): void {

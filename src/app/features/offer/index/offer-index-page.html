@@ -1,8 +1,10 @@
 <app-main-page-header
-  i18n-pageTitle pageTitle="Offers"
+  i18n-pageTitle
+  pageTitle="Offers"
   [location]="userLocation()"
   [searchValue]="searchQuery()"
-  i18n-searchPlaceholder searchPlaceholder="Search offers"
+  i18n-searchPlaceholder
+  searchPlaceholder="Search offers"
   (locationClick)="onChangeLocation()"
   (searchValueChange)="onSearchChange($event)"
 >
@@ -19,7 +21,7 @@
             (change)="toggleCategory(category)"
             class="filter-checkbox"
           >
-            {{ category | titlecase }}
+            {{ localizedCategories[$index] }}
           </mat-checkbox>
         }
       </div>
@@ -34,16 +36,18 @@
   </div>
 } @else if (filteredOffers().length > 0) {
   @if (ongoingOffers().length > 0) {
-    <app-ongoing-section title="Ongoing">
+    <app-ongoing-section i18n-title title="Ongoing">
       <div class="offers-grid">
         @for (offer of ongoingOffers(); track offer.offer_id) {
           <app-product-card
             [imageUrl]="offer.items[0]?.image_url || ''"
             [title]="offer.merchant_name || 'Unknown Merchant'"
             [category]="offer.category"
-            [subtitle]="'Arrives ' + (offer.arrival_time | naturalDateTime)"
+            i18n-subtitle
+            subtitle="Arrives {{ offer.arrival_time | naturalDateTime }}"
             [price]="getPriceRange(offer)"
-            [stockText]="'Stock: ' + getStockLeft(offer) + ' left'"
+            i18n-stockText
+            stockText="Stock: {{ getStockLeft(offer) }} left"
             [clickable]="true"
             (cardClick)="onCardClick(offer.offer_id)"
           >
@@ -53,6 +57,7 @@
               appIconButtonVariant="tonal"
               cardAction
               (click)="onCardClick(offer.offer_id)"
+              i18n-aria-label
               aria-label="View Offer"
             >
               <mat-icon fontSet="material-symbols-outlined">arrow_forward</mat-icon>
@@ -71,9 +76,11 @@
             [imageUrl]="offer.items[0]?.image_url || ''"
             [title]="offer.merchant_name || 'Unknown Merchant'"
             [category]="offer.category"
-            [subtitle]="'Arrives ' + (offer.arrival_time | naturalDateTime)"
+            i18n-subtitle
+            subtitle="Arrives {{ offer.arrival_time | naturalDateTime }}"
             [price]="getPriceRange(offer)"
-            [stockText]="'Stock: ' + getStockLeft(offer) + ' left'"
+            i18n-stockText
+            stockText="Stock: {{ getStockLeft(offer) }} left"
             [clickable]="true"
             (cardClick)="onCardClick(offer.offer_id)"
           >
@@ -83,6 +90,7 @@
               appIconButtonVariant="tonal"
               cardAction
               (click)="onCardClick(offer.offer_id)"
+              i18n-aria-label
               aria-label="View Offer"
             >
               <mat-icon fontSet="material-symbols-outlined">arrow_forward</mat-icon>
@@ -100,7 +108,13 @@
 }
 
 <!-- Floating Create Offer Button (Mobile only) -->
-<button matFab (click)="openCreateOffer()" class="create-offer-fab" i18n-aria-label aria-label="Create Offer">
+<button
+  matFab
+  (click)="openCreateOffer()"
+  class="create-offer-fab"
+  i18n-aria-label
+  aria-label="Create Offer"
+>
   <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
 </button>
 
@@ -110,8 +124,9 @@
   extended
   (click)="openCreateOffer()"
   class="create-offer-fab-desktop"
-  i18n-aria-label aria-label="Create Offer"
+  i18n-aria-label
+  aria-label="Create Offer"
 >
   <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-  <span i18n>Create Offer</span>
+  <ng-container i18n>Create Offer</ng-container>
 </button>

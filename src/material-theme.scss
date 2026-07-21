@@ -3,6 +3,7 @@
 @use './app/shared/directives/button/button-size.scss';
 @use './app/shared/directives/button/button-color.scss';
 @use './app/shared/directives/button/icon-button-variant.scss';
+@use './app/shared/animations.scss';
 
 $spacing-scale: (
   3xs: var(--spacing-3xs),
