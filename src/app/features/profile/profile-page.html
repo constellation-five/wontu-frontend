@@ -29,19 +29,19 @@
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{
               formatNumber(user.followers_count)
             }}</span>
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant">Followers</span>
+            <span i18n class="stat-label mat-font-body-sm mat-text-on-surface-variant">Followers</span>
           </a>
           <a routerLink="/profile/following" class="stat-item">
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{
               formatNumber(user.following_count)
             }}</span>
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant">Following</span>
+            <span i18n class="stat-label mat-font-body-sm mat-text-on-surface-variant">Following</span>
           </a>
           <button (click)="openRatingDialog()" class="stat-item stat-button">
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface"
               >{{ user.average_rating }}/5</span
             >
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant">Rating</span>
+            <span i18n class="stat-label mat-font-body-sm mat-text-on-surface-variant">Rating</span>
           </button>
         </div>
 
@@ -53,7 +53,7 @@
             class="menu-item mat-font-label-lg mat-text-on-surface"
           >
             <mat-icon class="menu-icon" fontSet="material-symbols-outlined">person</mat-icon>
-            Account
+            <span i18n>Account</span>
           </button>
 
           <button
@@ -62,7 +62,7 @@
             class="menu-item mat-font-label-lg mat-text-on-surface"
           >
             <mat-icon class="menu-icon" fontSet="material-symbols-outlined">attach_money</mat-icon>
-            Payment Methods
+            <span i18n>Payment Methods</span>
           </button>
 
           <button
@@ -71,14 +71,14 @@
             class="menu-item mat-font-label-lg mat-text-on-surface"
           >
             <mat-icon class="menu-icon" fontSet="material-symbols-outlined">settings</mat-icon>
-            Settings
+            <span i18n>Settings</span>
           </button>
 
           <button (click)="logout()" class="menu-item mat-font-label-lg logout-btn">
             <mat-icon class="menu-icon logout-icon" fontSet="material-symbols-outlined"
               >logout</mat-icon
             >
-            <span class="logout-text">Sign out</span>
+            <span i18n class="logout-text">Sign out</span>
           </button>
         </nav>
       }

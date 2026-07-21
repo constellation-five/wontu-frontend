@@ -1,8 +1,8 @@
 <app-pane>
-  <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-large);">Payment Methods</h2>
+  <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-large);" i18n>Payment Methods</h2>
 
   @if (isLoading()) {
-    <div class="loading-state">Loading data...</div>
+    <div class="loading-state" i18n>Loading data...</div>
   } @else {
     <div class="payment-methods-content">
       @if (paymentMethods().length > 0) {
@@ -17,10 +17,10 @@
         </div>
       } @else {
         <div class="empty-state">
-          <img src="assets/img/wontusad.svg" alt="No Data" class="empty-image">
+          <img src="assets/img/wontusad.svg" i18n-alt alt="No Data" class="empty-image">
           <div class="empty-text">
-            <p>No payment methods yet.</p>
-            <p>Add some!</p>
+            <p i18n>No payment methods yet.</p>
+            <p i18n>Add some!</p>
           </div>
         </div>
       }
@@ -32,7 +32,7 @@
         class="add-button"
         (click)="openAddModal()">
         <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-        <span>Add payment method</span>
+        <span i18n>Add payment method</span>
       </button>
     </div>
   }

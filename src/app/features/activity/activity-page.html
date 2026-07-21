@@ -1,17 +1,21 @@
 <app-main-page-header
+  i18n-pageTitle
   pageTitle="Activity"
   [location]="userLocation()"
   [searchValue]="searchQuery()"
+  i18n-searchPlaceholder
   searchPlaceholder="Search"
   (searchValueChange)="searchQuery.set($event)"
+  (locationClick)="onChangeLocation()"
 >
   <ng-container searchPrefix>
     @if (!isLoading()) {
       <div class="desktop-tabs">
-        <app-segmented-control 
-          [options]="['History', 'Ongoing']" 
-          [value]="activeTab()" 
-          (valueChange)="onTabChange($event)">
+        <app-segmented-control
+          [options]="tabOptions"
+          [value]="activeTab()"
+          (valueChange)="onTabChange($event)"
+        >
         </app-segmented-control>
       </div>
     }
@@ -23,8 +27,18 @@
     </button>
     <mat-menu #filterMenu="matMenu">
       <div class="filter-menu-content" (click)="$event.stopPropagation()">
-        <mat-checkbox [checked]="filterOrder()" (change)="filterOrder.set($event.checked)" class="filter-checkbox">Order</mat-checkbox>
-        <mat-checkbox [checked]="filterOffer()" (change)="filterOffer.set($event.checked)" class="filter-checkbox">Offer</mat-checkbox>
+        <mat-checkbox
+          [checked]="filterOrder()"
+          (change)="filterOrder.set($event.checked)"
+          class="filter-checkbox"
+          ><span i18n>Order</span></mat-checkbox
+        >
+        <mat-checkbox
+          [checked]="filterOffer()"
+          (change)="filterOffer.set($event.checked)"
+          class="filter-checkbox"
+          ><span i18n>Offer</span></mat-checkbox
+        >
       </div>
     </mat-menu>
   </ng-container>
@@ -32,15 +46,24 @@
 
 <div class="activity-page">
   @if (isLoading()) {
-    <div class="loading-state" style="display: flex; justify-content: center; align-items: center; padding: var(--spacing-3xl) 0;">
+    <div
+      class="loading-state"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: var(--spacing-3xl) 0;
+      "
+    >
       <mat-spinner diameter="40"></mat-spinner>
     </div>
   } @else {
     <div class="tabs-container mobile-tabs">
-      <app-segmented-control 
-        [options]="['History', 'Ongoing']" 
-        [value]="activeTab()" 
-        (valueChange)="onTabChange($event)">
+      <app-segmented-control
+        [options]="['History', 'Ongoing']"
+        [value]="activeTab()"
+        (valueChange)="onTabChange($event)"
+      >
       </app-segmented-control>
     </div>
 
@@ -48,17 +71,25 @@
       @if (filteredItems().length === 0) {
         <div class="empty-state">
           <mat-icon class="empty-icon" fontSet="material-symbols-outlined">receipt_long</mat-icon>
-          <p class="mat-body-large">No activity found.</p>
+          <p class="mat-body-large" i18n>No activity found.</p>
         </div>
       } @else {
         <!-- Desktop Header Row -->
         <div class="desktop-header mat-font-label-lg mat-text-on-surface-variant">
           <div class="header-desktop-columns">
             <div class="header-badge"></div>
-            <div class="header-time">{{ activeTab() === 'History' ? 'Date & Time' : 'Time' }}</div>
-            <div class="header-merchant">Merchant</div>
-            <div class="header-location">Location</div>
-            <div class="header-status">{{ activeTab() === 'History' ? 'Total' : 'Status' }}</div>
+            <div class="header-time">
+              <span i18n>Time</span>
+            </div>
+            <div class="header-merchant" i18n>Merchant</div>
+            <div class="header-location" i18n>Location</div>
+            <div class="header-status">
+              @if (activeTab() === tabOptions[0]) {
+                <span i18n>Total</span>
+              } @else {
+                <span i18n>Status</span>
+              }
+            </div>
           </div>
           <div class="header-action"></div>
         </div>

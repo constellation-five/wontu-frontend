@@ -19,7 +19,7 @@ import { RequestCard } from './request-card/request-card';
 import { NaturalDateTimePipe } from '../../shared/pipes/natural-date-time.pipe';
 import { MainPageHeaderComponent } from '../../shared/components/main-page-header/main-page-header';
 import { LocationLookupService } from '../../core/location-lookup.service';
-import { LocationStateService } from '../../core/location-state.service';
+import { LocationStateService, DEFAULT_LOCATION } from '../../core/location-state.service';
 import { LocationPickerDialog } from '../../shared/components/location-picker-dialog/location-picker-dialog';
 import { RequestFormDialog } from './request-form-dialog/request-form-dialog';
 
@@ -88,8 +88,8 @@ export class RequestPage {
   });
 
   constructor() {
-    this.pageHeader.setTitle('Requests');
-    this.pageHeader.setBreadcrumbs([{ label: 'Requests', route: '/requests' }]);
+    this.pageHeader.setTitle($localize`Requests`);
+    this.pageHeader.setBreadcrumbs([{ label: $localize`Requests`, route: '/requests' }]);
 
     if (!this.userLocationCoordinates()) {
       this.detectCurrentLocation();
@@ -175,7 +175,7 @@ export class RequestPage {
       width: '500px',
       data: {
         coords: this.userLocationCoordinates() ?? undefined,
-        label: this.userLocation() !== 'Choose your location' ? this.userLocation() : undefined,
+        label: this.userLocation() !== DEFAULT_LOCATION ? this.userLocation() : undefined,
       },
       disableClose: false,
     });
@@ -240,7 +240,7 @@ export class RequestPage {
   }
 
   openCurrentLocationInMaps() {
-    if (this.userLocation() !== 'Choose your location') {
+    if (this.userLocation() !== DEFAULT_LOCATION) {
       this.openLocationInMaps(this.userLocation());
     }
   }

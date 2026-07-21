@@ -53,10 +53,10 @@ export class SettingsPage implements OnInit {
   isLoading = signal(true);
 
   ngOnInit() {
-    this.pageHeader.setTitle('Settings');
+    this.pageHeader.setTitle($localize`Settings`);
     this.pageHeader.setBreadcrumbs([
-      { label: 'Profile', route: '/profile' },
-      { label: 'Settings', route: '/profile/settings' },
+      { label: $localize`Profile`, route: '/profile' },
+      { label: $localize`Settings`, route: '/profile/settings' },
     ]);
     this.loadSettings();
   }
@@ -71,46 +71,46 @@ export class SettingsPage implements OnInit {
   private notificationMetadata = [
     {
       id: 'new-orders',
-      label: 'New orders & payments',
+      label: $localize`New orders & payments`,
       description:
-        'A buyer joins, places, updates, or cancels an order on one of your offers, or submits proof of payment.',
+        $localize`A buyer joins, places, updates, or cancels an order on one of your offers, or submits proof of payment.`,
     },
     {
       id: 'offer-lifecycle',
-      label: 'Offer status changes',
+      label: $localize`Offer status changes`,
       description:
-        "One of your offers closes automatically — either it reached its closing time or sold out.",
+        $localize`One of your offers closes automatically — either it reached its closing time or sold out.`,
     },
     {
       id: 'offer-updates',
-      label: 'Offer updates',
+      label: $localize`Offer updates`,
       description:
-        "An offer you've joined is edited, closed, deleted, or completed, or your order on it is adjusted or removed.",
+        $localize`An offer you've joined is edited, closed, deleted, or completed, or your order on it is adjusted or removed.`,
     },
     {
       id: 'order-status',
-      label: 'Order status',
-      description: 'Your payment is confirmed, or the items you ordered have arrived.',
+      label: $localize`Order status`,
+      description: $localize`Your payment is confirmed, or the items you ordered have arrived.`,
     },
     {
       id: 'social',
-      label: 'Social',
-      description: 'Someone follows your profile.',
+      label: $localize`Social`,
+      description: $localize`Someone follows your profile.`,
     },
     {
       id: 'chat-messages',
-      label: 'Chat messages',
-      description: 'You receive a new direct or group chat message.',
+      label: $localize`Chat messages`,
+      description: $localize`You receive a new direct or group chat message.`,
     },
   ];
 
   notificationSettings = signal<NotificationSetting[]>([]);
-  selectedLanguage = signal('english');
+  selectedLanguage = signal('en');
   darkMode = signal(false);
 
   languages = [
-    { value: 'english', label: 'English' },
-    { value: 'indonesian', label: 'Indonesian' },
+    { value: 'en', label: $localize`English` },
+    { value: 'id', label: $localize`Indonesian` },
   ];
 
   loadSettings() {
@@ -124,7 +124,7 @@ export class SettingsPage implements OnInit {
           push: res.data.notifications[meta.id]?.push ?? false,
           email: res.data.notifications[meta.id]?.email ?? false,
         }));
-        
+
         this.notificationSettings.set(settings);
         this.selectedLanguage.set(res.data.language);
         this.darkMode.set(res.data.dark_mode);
@@ -179,7 +179,28 @@ export class SettingsPage implements OnInit {
   }
 
   changeLanguage(language: string) {
+    if (this.selectedLanguage() === language) return;
     this.selectedLanguage.set(language);
-    this.saveSettings();
+
+    const notifications: Record<string, { push: boolean; email: boolean }> = {};
+    this.notificationSettings().forEach(setting => {
+      notifications[setting.id] = { push: setting.push, email: setting.email };
+    });
+
+    const data = {
+      notifications,
+      language: this.selectedLanguage(),
+      dark_mode: this.darkMode(),
+    };
+
+    this.http.put<SettingsResponse>(`${environment.api}/settings`, data, { withCredentials: true }).subscribe({
+      next: () => {
+        if (language === 'id') {
+          window.location.href = '/id/';
+        } else {
+          window.location.href = '/';
+        }
+      }
+    });
   }
 }

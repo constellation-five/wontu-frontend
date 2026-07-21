@@ -1,6 +1,6 @@
-<nav class="navbar-container" aria-label="Navigation">
+<nav class="navbar-container" i18n-aria-label aria-label="Navigation">
   <div class="logo-container">
-    <img src="/assets/img/wontulogo.svg" alt="Logo" class="logo-image" />
+    <img src="/assets/img/wontulogo.svg" i18n-alt alt="Logo" class="logo-image" />
   </div>
 
   <mat-nav-list class="nav-list">
@@ -18,7 +18,7 @@
           @if (link.path === '/profile' && user()?.avatar && !avatarError()) {
             <img
               [src]="user()?.avatar"
-              alt="Avatar"
+              i18n-alt alt="Avatar"
               (error)="onAvatarError()"
               matListItemIcon
               class="user-avatar"
@@ -44,12 +44,12 @@
     @if (!user()) {
       <button matButton="filled" (click)="goToSignIn()" class="auth-button">
         <mat-icon fontSet="material-symbols-outlined" matListItemIcon> login </mat-icon>
-        <span class="auth-label">Sign in</span>
+        <span i18n class="auth-label">Sign in</span>
       </button>
     } @else {
       <button matButton="outlined" appButtonColor="error" (click)="logout()" class="auth-button">
         <mat-icon fontSet="material-symbols-outlined" matListItemIcon> logout </mat-icon>
-        <span class="auth-label">Sign out</span>
+        <span i18n class="auth-label">Sign out</span>
       </button>
     }
   </div>

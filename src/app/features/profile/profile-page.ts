@@ -66,7 +66,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
-    this.pageHeader.setTitle('Profile');
+    this.pageHeader.setTitle($localize`Profile`);
     this.fetchProfile();
     this.checkMobile();
 
@@ -179,16 +179,16 @@ export class ProfilePage implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: '540px',
       data: {
-        title: 'Sign out',
-        content: 'Are you sure you want to Sign out?',
+        title: $localize`Sign out`,
+        content: $localize`Are you sure you want to Sign out?`,
         buttons: [
           {
-            label: 'Cancel',
+            label: $localize`Cancel`,
             type: 'outlined',
             action: 'cancel'
           },
           {
-            label: 'Sign out',
+            label: $localize`Sign out`,
             icon: 'logout',
             type: 'filled',
             action: 'logout',

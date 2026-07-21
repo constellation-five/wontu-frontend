@@ -23,7 +23,7 @@ export class NaturalDateTimePipe implements PipeTransform {
 
     const diffMinutes = Math.floor((now.getTime() - d.getTime()) / 60000);
     if (diffMinutes >= 0 && diffMinutes < 60) {
-      return diffMinutes < 1 ? 'Just now' : `${diffMinutes}m ago`;
+      return diffMinutes < 1 ? $localize`Just now` : $localize`${diffMinutes}m ago`;
     }
 
     // Normalize to start of day for accurate day differences
@@ -36,14 +36,14 @@ export class NaturalDateTimePipe implements PipeTransform {
     let dateStr = '';
 
     if (diffDays === 0) {
-      dateStr = showTodayLabel ? 'Today' : '';
+      dateStr = showTodayLabel ? $localize`Today` : '';
     } else if (diffDays === 1) {
-      dateStr = 'Tomorrow';
+      dateStr = $localize`Tomorrow`;
     } else if (diffDays === -1) {
-      dateStr = 'Yesterday';
+      dateStr = $localize`Yesterday`;
     } else if (diffDays > 1 && diffDays < 7) {
       const dayName = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(d);
-      dateStr = `This ${dayName}`;
+      dateStr = $localize`This ${dayName}`;
     } else if (diffDays < -1) {
       const last12Months = new Date(nowDate);
       last12Months.setMonth(last12Months.getMonth() - 12);

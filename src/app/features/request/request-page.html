@@ -1,8 +1,8 @@
 <app-main-page-header
-  pageTitle="Requests"
+  i18n-pageTitle pageTitle="Requests"
   [location]="userLocation()"
   [searchValue]="searchQuery()"
-  searchPlaceholder="Search requests"
+  i18n-searchPlaceholder searchPlaceholder="Search requests"
   (locationClick)="onChangeLocation()"
   (searchValueChange)="searchQuery.set($event)"
 >
@@ -17,14 +17,14 @@
           [checked]="filterFood()"
           (change)="filterFood.set($event.checked)"
           class="filter-checkbox"
-        >
+         i18n>
           Food
         </mat-checkbox>
         <mat-checkbox
           [checked]="filterOther()"
           (change)="filterOther.set($event.checked)"
           class="filter-checkbox"
-        >
+         i18n>
           Other
         </mat-checkbox>
       </div>
@@ -34,18 +34,18 @@
 
 @if (isLoading()) {
   <div class="loading-container">
-    <p class="mat-font-body-lg mat-text-on-surface-variant">Loading requests...</p>
+    <p class="mat-font-body-lg mat-text-on-surface-variant" i18n>Loading requests...</p>
   </div>
 } @else if (filteredRequests().length > 0) {
-  
+
   @if (ongoingRequests().length > 0) {
     <div class="section-container">
-      <h2 class="section-title mat-font-title-lg">Ongoing</h2>
+      <h2 class="section-title mat-font-title-lg" i18n>Ongoing</h2>
       <div class="requests-grid">
         @for (req of ongoingRequests(); track req.request_id) {
-          <app-request-card 
+          <app-request-card
             [title]="req.item_name"
-            [subtitle]="'For ' + (req.arrival_time | naturalDateTime)"
+            i18n-subtitle subtitle="For {{ req.arrival_time | naturalDateTime }}"
             [category]="req.category"
             [votes]="req.total_votes"
             [hasVoted]="req.has_voted || false"
@@ -63,13 +63,13 @@
   @if (otherRequests().length > 0) {
     <div class="section-container" [class.mt-xl]="ongoingRequests().length > 0">
       @if (ongoingRequests().length > 0) {
-        <h2 class="section-title mat-font-title-lg">Others</h2>
+        <h2 class="section-title mat-font-title-lg" i18n>Others</h2>
       }
       <div class="requests-grid">
         @for (req of otherRequests(); track req.request_id) {
-          <app-request-card 
+          <app-request-card
             [title]="req.item_name"
-            [subtitle]="'For ' + (req.arrival_time | naturalDateTime)"
+            i18n-subtitle subtitle="For {{ req.arrival_time | naturalDateTime }}"
             [category]="req.category"
             [votes]="req.total_votes"
             [hasVoted]="req.has_voted || false"
@@ -87,11 +87,11 @@
 } @else {
   <div class="empty-state">
     <mat-icon fontSet="material-symbols-outlined" class="empty-icon">inbox</mat-icon>
-    <p class="mat-font-body-lg mat-text-on-surface-variant">No requests available</p>
+    <p class="mat-font-body-lg mat-text-on-surface-variant" i18n>No requests available</p>
   </div>
 }
 
-<button matFab class="create-req-fab" aria-label="Create Request" (click)="openCreateRequest()">
+<button matFab class="create-req-fab" i18n-aria-label aria-label="Create Request" (click)="openCreateRequest()">
   <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
 </button>
 
@@ -99,9 +99,9 @@
   matFab
   extended
   class="create-req-fab-desktop"
-  aria-label="Create Request"
+  i18n-aria-label aria-label="Create Request"
   (click)="openCreateRequest()"
 >
   <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-  Create Request
+  <span i18n>Create Request</span>
 </button>

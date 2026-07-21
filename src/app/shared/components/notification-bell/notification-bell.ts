@@ -50,8 +50,8 @@ export class NotificationBellComponent {
 
   protected readonly headerText = computed<string>(() =>
     this.notificationService.notifications().length === 0
-      ? 'You have no notifications'
-      : 'Notifications',
+      ? $localize`You have no notifications`
+      : $localize`Notifications`,
   );
 
   protected readonly showTopFade = signal(false);

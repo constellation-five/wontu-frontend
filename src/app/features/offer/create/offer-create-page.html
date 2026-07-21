@@ -1,54 +1,59 @@
 <div class="content-layout">
   <div class="left-column">
-    <app-pane title="Offer Information">
+    <app-pane i18n-title title="Offer Information">
       <div class="form-grid">
         <mat-form-field appearance="outline">
-          <mat-label>Category</mat-label>
+          <mat-label i18n>Category</mat-label>
           <mat-select [formField]="form.category">
-            <mat-option value="food">Food</mat-option>
-            <mat-option value="other">Other</mat-option>
+            <mat-option value="food" i18n>Food</mat-option>
+            <mat-option value="other" i18n>Other</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Merchant</mat-label>
-          <input matInput [formField]="form.merchant_name" placeholder="Merchant name" />
+          <mat-label i18n>Merchant</mat-label>
+          <input
+            matInput
+            [formField]="form.merchant_name"
+            i18n-placeholder
+            placeholder="Merchant name"
+          />
           @if (form.merchant_name().invalid() && form.merchant_name().touched()) {
             <mat-error>{{ form.merchant_name().errors()[0]?.message }}</mat-error>
           }
         </mat-form-field>
 
         <div class="datetime-group">
-          <span class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant"
+          <span i18n class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant"
             >Offer closes at</span
           >
           <div class="datetime-row">
             <mat-form-field appearance="outline">
-              <mat-label>Date</mat-label>
+              <mat-label i18n>Date</mat-label>
               <input matInput [matDatepicker]="closingPicker" [formField]="form.closing_date" />
               <mat-datepicker-toggle matIconSuffix [for]="closingPicker"></mat-datepicker-toggle>
               <mat-datepicker #closingPicker></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="outline">
-              <mat-label>Time</mat-label>
+              <mat-label i18n>Time</mat-label>
               <input matInput type="time" [formField]="form.closing_time_of_day" />
             </mat-form-field>
           </div>
         </div>
 
         <div class="datetime-group">
-          <span class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant"
+          <span i18n class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant"
             >Items arrive at</span
           >
           <div class="datetime-row">
             <mat-form-field appearance="outline">
-              <mat-label>Date</mat-label>
+              <mat-label i18n>Date</mat-label>
               <input matInput [matDatepicker]="arrivalPicker" [formField]="form.arrival_date" />
               <mat-datepicker-toggle matIconSuffix [for]="arrivalPicker"></mat-datepicker-toggle>
               <mat-datepicker #arrivalPicker></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="outline">
-              <mat-label>Time</mat-label>
+              <mat-label i18n>Time</mat-label>
               <input matInput type="time" [formField]="form.arrival_time_of_day" />
             </mat-form-field>
           </div>
@@ -56,7 +61,7 @@
       </div>
     </app-pane>
 
-    <app-pane title="Payment Methods">
+    <app-pane i18n-title title="Payment Methods">
       @if (paymentMethods().length > 0) {
         <div class="payment-methods-list">
           @for (method of paymentMethods(); track method.payment_method_id) {
@@ -71,8 +76,10 @@
         </div>
       } @else {
         <div class="empty-items-container">
-          <img src="assets/img/wontusad.svg" alt="No payment methods" />
-          <p class="mat-font-body-md mat-text-on-surface-variant">You have no payment methods.</p>
+          <img src="assets/img/wontusad.svg" i18n-alt alt="No payment methods" />
+          <p class="mat-font-body-md mat-text-on-surface-variant" i18n>
+            You have no payment methods.
+          </p>
         </div>
       }
 
@@ -83,13 +90,13 @@
         (click)="openAddPaymentMethodDialog()"
       >
         <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-        Add payment method
+        <span i18n>Add payment method</span>
       </button>
     </app-pane>
   </div>
 
   <div class="right-column">
-    <app-pane title="Item Summary">
+    <app-pane i18n-title title="Item Summary">
       @if (items().length > 0) {
         <div class="items-list">
           @for (item of items(); track item.localId) {
@@ -108,6 +115,7 @@
                 appButtonSize="xs"
                 appIconButtonVariant="outlined"
                 (click)="openEditItemDialog(item)"
+                i18n-aria-label
                 aria-label="Edit item"
               >
                 <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
@@ -123,8 +131,8 @@
         </div>
       } @else {
         <div class="empty-items-container">
-          <img src="assets/img/wontusad.svg" alt="No items" />
-          <p class="mat-font-body-md mat-text-on-surface-variant">No items added yet.</p>
+          <img src="assets/img/wontusad.svg" i18n-alt alt="No items" />
+          <p class="mat-font-body-md mat-text-on-surface-variant" i18n>No items added yet.</p>
         </div>
       }
 
@@ -135,10 +143,11 @@
         (click)="openAddItemDialog()"
       >
         <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-        Add item
+        <span i18n>Add item</span>
       </button>
 
       <button
+        
         matButton="filled"
         appButtonSize="md"
         class="submit-btn desktop-only"
@@ -148,7 +157,7 @@
         @if (isSubmitting()) {
           <mat-spinner diameter="20"></mat-spinner>
         } @else {
-          {{ isEditMode ? 'Save changes' : 'Create offer' }}
+          @if(isEditMode){<ng-container i18n>Save changes</ng-container>}@else{<ng-container i18n>Create offer</ng-container>}
         }
       </button>
     </app-pane>
@@ -159,6 +168,7 @@
 
 <ng-template #actionsTpl>
   <button
+    
     matButton="filled"
     appButtonSize="sm"
     class="submit-btn"
@@ -168,7 +178,7 @@
     @if (isSubmitting()) {
       <mat-spinner diameter="20"></mat-spinner>
     } @else {
-      {{ isEditMode ? 'Save changes' : 'Create offer' }}
+      @if(isEditMode){<ng-container i18n>Save changes</ng-container>}@else{<ng-container i18n>Create offer</ng-container>}
     }
   </button>
 </ng-template>

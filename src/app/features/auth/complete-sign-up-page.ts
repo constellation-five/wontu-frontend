@@ -41,17 +41,18 @@ export default class CompleteSignUpPage implements OnInit {
   });
 
   readonly form = form(this.model, (f) => {
+    required(f.name, { message: $localize`Name is required` });
     required(f.username, {
-      message: 'Username is required',
+      message: $localize`Username is required`,
     });
     pattern(f.username, /^[a-z0-9_\.]*$/, {
-      message: 'Username can only contain lowercase letters, numbers, underscores, and periods',
+      message: $localize`Username can only contain lowercase letters, numbers, underscores, and periods`,
     });
     maxLength(f.username, 30, {
-      message: 'Username must not exceed 30 characters',
+      message: $localize`Username must not exceed 30 characters`,
     });
     maxLength(f.name, 255, {
-      message: 'Name must not exceed 255 characters',
+      message: $localize`Name must not exceed 255 characters`,
     });
     readonly(f.email);
   });

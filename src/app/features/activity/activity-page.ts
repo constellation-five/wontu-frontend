@@ -12,12 +12,14 @@ import { NaturalDateTimePipe } from '../../shared/pipes/natural-date-time.pipe';
 import { GiveRatingDialog } from '../../shared/components/give-rating-dialog/give-rating-dialog';
 import { SegmentedControlComponent } from '../../shared/components/segmented-control/segmented-control';
 import { PageHeaderService } from '../../core/page-header.service';
-import { LocationStateService } from '../../core/location-state.service';
+import { LocationStateService, DEFAULT_LOCATION } from '../../core/location-state.service';
+import { LocationLookupService } from '../../core/location-lookup.service';
 import { Offer, OfferService } from '../../core/offer.service';
 import { ProfileService } from '../../core/profile.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MainPageHeaderComponent } from '../../shared/components/main-page-header/main-page-header';
 import { ActivityCardComponent } from './activity-card/activity-card';
+import { LocationPickerDialog } from '../../shared/components/location-picker-dialog/location-picker-dialog';
 
 interface ActivityItem {
   id: number;
@@ -57,6 +59,7 @@ export class ActivityPage {
   private readonly router = inject(Router);
   protected readonly pageHeader = inject(PageHeaderService);
   private readonly locationState = inject(LocationStateService);
+  private readonly locationLookup = inject(LocationLookupService);
   private readonly offerService = inject(OfferService);
   private readonly profileService = inject(ProfileService);
   private readonly snackBar = inject(MatSnackBar);
@@ -65,6 +68,7 @@ export class ActivityPage {
   private readonly naturalPipe = new NaturalDateTimePipe();
   
   readonly userLocation = this.locationState.userLocation;
+  readonly userLocationCoordinates = this.locationState.userLocationCoordinates;
 
   orders = signal<ActivityItem[]>([]);
   offers = signal<ActivityItem[]>([]);
@@ -74,7 +78,8 @@ export class ActivityPage {
   filterOffer = signal<boolean>(true);
   
   isLoading = signal<boolean>(true);
-  activeTab = signal<'History' | 'Ongoing'>('Ongoing');
+  tabOptions = [$localize`History`, $localize`Ongoing`];
+  activeTab = signal<string>(this.tabOptions[1]);
 
   combinedItems = computed(() => {
     return [...this.orders(), ...this.offers()]
@@ -83,7 +88,7 @@ export class ActivityPage {
 
   filteredItems = computed(() => {
     const search = this.searchQuery().toLowerCase();
-    const isHistoryTab = this.activeTab() === 'History';
+    const isHistoryTab = this.activeTab() === this.tabOptions[0];
     const showOrder = this.filterOrder();
     const showOffer = this.filterOffer();
     
@@ -99,12 +104,71 @@ export class ActivityPage {
   });
 
   onTabChange(tab: string) {
-    this.activeTab.set(tab as 'History' | 'Ongoing');
+    this.activeTab.set(tab);
   }
 
   constructor() {
     this.pageHeader.setTitle('Activity');
+    
+    if (!this.userLocationCoordinates()) {
+      this.detectCurrentLocation();
+    }
+    
     this.loadData();
+  }
+
+  onChangeLocation() {
+    const dialogRef = this.dialog.open(LocationPickerDialog, {
+      width: '500px',
+      data: {
+        coords: this.userLocationCoordinates() ?? undefined,
+        label: this.userLocation() !== DEFAULT_LOCATION ? this.userLocation() : undefined,
+      },
+      disableClose: false,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.location) {
+        this.locationState.isManuallySet.set(true);
+        this.userLocation.set(result.location);
+        this.userLocationCoordinates.set(result.coords ?? null);
+      }
+    });
+  }
+
+  private detectCurrentLocation(retriesLeft = 2) {
+    if (!navigator.geolocation) {
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const coords = { lat: position.coords.latitude, lng: position.coords.longitude };
+        this.applyDetectedLocation(coords);
+      },
+      (error) => {
+        console.log('Geolocation error:', error);
+        if (error.code === error.POSITION_UNAVAILABLE && retriesLeft > 0) {
+          setTimeout(() => this.detectCurrentLocation(retriesLeft - 1), 2000);
+        }
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+    );
+  }
+
+  private async applyDetectedLocation(coords: { lat: number; lng: number }) {
+    if (this.locationState.isManuallySet()) {
+      return;
+    }
+
+    this.userLocationCoordinates.set(coords);
+
+    try {
+      this.userLocation.set(await this.locationLookup.resolvePlaceName(coords));
+    } catch (err) {
+      console.log('Location lookup error:', err);
+      this.userLocation.set(`${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)}`);
+    }
   }
 
   private loadData() {
@@ -136,10 +200,10 @@ export class ActivityPage {
           } else {
              if (order.closed_at) { // Waiting to arrive
                 dateToUse = order.arrival_time ? new Date(order.arrival_time) : orderDate;
-                prefix = 'Arrives ';
+                prefix = $localize`Arrives `;
              } else { // Waiting to close
                 dateToUse = order.closing_time ? new Date(order.closing_time) : orderDate;
-                prefix = 'Closes ';
+                prefix = $localize`Closes `;
              }
           }
           
@@ -187,10 +251,10 @@ export class ActivityPage {
           } else {
              if (offer.closed_at) { // Waiting to arrive
                 dateToUse = offer.arrival_time ? new Date(offer.arrival_time) : offerDate;
-                prefix = 'Arrives ';
+                prefix = $localize`Arrives `;
              } else { // Waiting to close
                 dateToUse = offer.closing_time ? new Date(offer.closing_time) : offerDate;
-                prefix = 'Closes ';
+                prefix = $localize`Closes `;
              }
           }
 
@@ -216,7 +280,7 @@ export class ActivityPage {
         // Smart Default Tab: If no ongoing items, switch to History
         const hasOngoing = this.combinedItems().some(item => !item.isHistory);
         if (!hasOngoing) {
-          this.activeTab.set('History');
+          this.activeTab.set(this.tabOptions[0]);
         }
         this.isLoading.set(false);
       },
@@ -233,19 +297,19 @@ export class ActivityPage {
 
   // --- Status Mappings for Orders ---
   private getOrderStatus(order: any) {
-    if (order.arrived_at) return { text: 'Items arrive', color: 'var(--mat-sys-success)', isHistory: true };
-    if (order.is_confirmed) return { text: 'Payment confirmed', color: 'var(--mat-sys-secondary)', isHistory: false };
-    if (order.payment_submitted_at) return { text: 'Payment made', color: 'var(--mat-sys-secondary)', isHistory: false };
-    if (order.closed_at) return { text: 'Offer closed', color: 'var(--mat-sys-secondary)', isHistory: false };
-    return { text: 'Offer joined', color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (order.arrived_at) return { text: $localize`Items arrive`, color: 'var(--mat-sys-success)', isHistory: true };
+    if (order.is_confirmed) return { text: $localize`Payment confirmed`, color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (order.payment_submitted_at) return { text: $localize`Payment made`, color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (order.closed_at) return { text: $localize`Offer closed`, color: 'var(--mat-sys-secondary)', isHistory: false };
+    return { text: $localize`Offer joined`, color: 'var(--mat-sys-secondary)', isHistory: false };
   }
 
   // --- Status Mappings for Offers ---
   private getOfferStatus(offer: Offer) {
-    if (offer.arrived_at) return { text: 'Items arrived', color: 'var(--mat-sys-success)', isHistory: true };
-    if (offer.payments_confirmed_at) return { text: 'Payments confirmed', color: 'var(--mat-sys-secondary)', isHistory: false };
-    if (offer.closed_at) return { text: 'Offer closed', color: 'var(--mat-sys-secondary)', isHistory: false };
-    return { text: 'Offer opened', color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (offer.arrived_at) return { text: $localize`Items arrived`, color: 'var(--mat-sys-success)', isHistory: true };
+    if (offer.payments_confirmed_at) return { text: $localize`Payments confirmed`, color: 'var(--mat-sys-secondary)', isHistory: false };
+    if (offer.closed_at) return { text: $localize`Offer closed`, color: 'var(--mat-sys-secondary)', isHistory: false };
+    return { text: $localize`Offer opened`, color: 'var(--mat-sys-secondary)', isHistory: false };
   }
 
   viewDetail(item: ActivityItem) {

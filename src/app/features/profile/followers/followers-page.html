@@ -1,8 +1,8 @@
 <app-pane>
-  <h2 class="page-title mat-text-on-surface mb-lg" style="font: var(--mat-sys-title-large);">Followers</h2>
+  <h2 class="page-title mat-text-on-surface mb-lg" style="font: var(--mat-sys-title-large);" i18n>Followers</h2>
 
     @if (isLoading()) {
-      <div class="loading-state mat-font-body-md mat-text-on-surface-variant">Loading...</div>
+      <div class="loading-state mat-font-body-md mat-text-on-surface-variant" i18n>Loading...</div>
     } @else {
       <div class="followers-container">
         <!-- Search Bar -->
@@ -10,7 +10,7 @@
           <mat-icon matPrefix fontSet="material-symbols-outlined" class="search-icon">search</mat-icon>
           <input
             matInput
-            placeholder="Search"
+            i18n-placeholder placeholder="Search"
             [ngModel]="searchQuery()"
             (ngModelChange)="onSearchChange($event)"
           />
@@ -71,13 +71,13 @@
                   [ngClass]="follower.is_following ? 'btn-following' : 'btn-follow-back'"
                   (click)="toggleFollow(follower)"
                 >
-                  {{ follower.is_following ? 'Following' : 'Follow Back' }}
+                  @if(follower.is_following){<ng-container i18n>Following</ng-container>}@else{<ng-container i18n>Follow Back</ng-container>}
                 </button>
               </div>
             }
           </div>
         } @else {
-          <div class="empty-state mat-font-body-md mat-text-on-surface-variant">
+          <div class="empty-state mat-font-body-md mat-text-on-surface-variant" i18n>
             No followers found
           </div>
         }

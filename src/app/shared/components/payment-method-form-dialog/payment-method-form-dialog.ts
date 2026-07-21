@@ -81,14 +81,14 @@ export class PaymentMethodFormDialog {
 
     request$.subscribe({
       next: (res) => {
-        this.snackBar.open('Payment method saved successfully.', 'Close', { duration: 3000 });
+        this.snackBar.open($localize`Payment method saved successfully.`, $localize`Close`, { duration: 3000 });
         this.isSaving.set(false);
         this.dialogRef.close(res.data);
       },
       error: (err) => {
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to save payment method: ${msg}${status}`, 'Close', { duration: 5000 });
+        this.snackBar.open($localize`Failed to save payment method: ${msg}${status}`, $localize`Close`, { duration: 5000 });
         this.isSaving.set(false);
       },
     });
@@ -101,12 +101,11 @@ export class PaymentMethodFormDialog {
     const confirmRef = this.dialog.open(DialogComponent, {
       width: '540px',
       data: {
-        title: 'Delete Payment Method',
-        content:
-          'Are you sure you want to delete this payment method?<br>This action cannot be undone.',
+        title: $localize`Delete Payment Method`,
+        content: $localize`Are you sure you want to delete this payment method?<br>This action cannot be undone.`,
         buttons: [
-          { label: 'Cancel', type: 'outlined', focus: true },
-          { label: 'Delete', icon: 'delete', type: 'filled', action: 'delete', color: 'error' },
+          { label: $localize`Cancel`, type: 'outlined', focus: true },
+          { label: $localize`Delete`, icon: 'delete', type: 'filled', action: 'delete', color: 'error' },
         ],
       },
     });
@@ -121,13 +120,13 @@ export class PaymentMethodFormDialog {
   private confirmDelete(id: number) {
     this.http.delete(`${environment.api}/payment-methods/${id}`, { withCredentials: true }).subscribe({
       next: () => {
-        this.snackBar.open('Payment method deleted successfully.', 'Close', { duration: 3000 });
+        this.snackBar.open($localize`Payment method deleted successfully.`, $localize`Close`, { duration: 3000 });
         this.dialogRef.close('deleted');
       },
       error: (err) => {
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open(`Failed to delete payment method: ${msg}${status}`, 'Close', { duration: 5000 });
+        this.snackBar.open($localize`Failed to delete payment method: ${msg}${status}`, $localize`Close`, { duration: 5000 });
       },
     });
   }

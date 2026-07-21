@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Choose Your Location</h2>
+<h2 mat-dialog-title i18n>Choose Your Location</h2>
 
 <mat-dialog-content>
   <mat-form-field appearance="outline" class="search-field">
-    <mat-label>Search for a building or address</mat-label>
+    <mat-label i18n>Search for a building or address</mat-label>
     <mat-icon matPrefix fontSet="material-symbols-outlined">search</mat-icon>
     <input
       matInput
@@ -29,7 +29,7 @@
 
   <div class="map-wrapper">
     @if (mapsLoading()) {
-      <div class="map-status">Loading map...</div>
+      <div class="map-status" i18n>Loading map...</div>
     }
     @if (mapsError()) {
       <div class="map-status map-error">{{ mapsError() }}</div>
@@ -55,7 +55,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button matButton="outlined" appButtonSize="sm" type="button" mat-dialog-close>Cancel</button>
+  <button matButton="outlined" appButtonSize="sm" type="button" mat-dialog-close i18n>Cancel</button>
   <button
     matButton="filled"
     appButtonSize="sm"
@@ -64,6 +64,6 @@
     [disabled]="!locationInput().trim() || isVerifying()"
     (click)="confirmLocation()"
   >
-    {{ isVerifying() ? 'Verifying...' : 'Confirm Location' }}
+    @if(isVerifying()){<ng-container i18n>Verifying...</ng-container>}@else{<ng-container i18n>Confirm Location</ng-container>}
   </button>
 </mat-dialog-actions>

@@ -1,36 +1,36 @@
-<app-dialog [title]="isEditMode ? 'Edit Request' : 'Create Request'" [buttons]="buttons()">
+<app-dialog [title]="dialogTitle" [buttons]="buttons()">
   
   <div class="form-grid">
     <mat-form-field appearance="outline">
-      <mat-label>Category</mat-label>
+      <mat-label i18n>Category</mat-label>
       <mat-select [formField]="form.category">
-        <mat-option value="food">Food</mat-option>
-        <mat-option value="other">Other</mat-option>
+        <mat-option value="food" i18n>Food</mat-option>
+        <mat-option value="other" i18n>Other</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="outline" subscriptSizing="dynamic">
-      <mat-label>Name</mat-label>
-      <input matInput [formField]="form.item_name" placeholder="Name" />
+      <mat-label i18n>Name</mat-label>
+      <input matInput [formField]="form.item_name" i18n-placeholder placeholder="Name" />
       @if (form.item_name().invalid() && form.item_name().touched()) {
         <mat-error>{{ form.item_name().errors()[0]?.message }}</mat-error>
       }
     </mat-form-field>
 
     <div class="datetime-group">
-      <span class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant">
+      <span class="datetime-group-label mat-font-label-lg mat-text-on-surface-variant" i18n>
         Item arrive at
       </span>
       <div class="datetime-row">
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-          <mat-label>Date</mat-label>
+          <mat-label i18n>Date</mat-label>
           <input matInput [matDatepicker]="arrivalPicker" [formField]="form.arrival_date" />
           <mat-datepicker-toggle matIconSuffix [for]="arrivalPicker"></mat-datepicker-toggle>
           <mat-datepicker #arrivalPicker></mat-datepicker>
         </mat-form-field>
         
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
-          <mat-label>Time</mat-label>
+          <mat-label i18n>Time</mat-label>
           <input matInput type="time" [formField]="form.arrival_time_of_day" />
         </mat-form-field>
       </div>

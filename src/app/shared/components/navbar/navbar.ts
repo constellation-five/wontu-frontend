@@ -17,10 +17,10 @@ export type NavLink = {
 };
 
 export const NAV_LINKS: readonly NavLink[] = [
-  { label: 'Offers', path: '/offers', icon: 'shopping_bag' },
-  { label: 'Requests', path: '/requests', icon: 'concierge' },
-  { label: 'Activity', path: '/activity', icon: 'receipt_long' },
-  { label: 'Profile', path: '/profile', icon: 'account_circle' },
+  { label: $localize`Offers`, path: '/offers', icon: 'shopping_bag' },
+  { label: $localize`Requests`, path: '/requests', icon: 'concierge' },
+  { label: $localize`Activity`, path: '/activity', icon: 'receipt_long' },
+  { label: $localize`Profile`, path: '/profile', icon: 'account_circle' },
 ];
 
 @Component({

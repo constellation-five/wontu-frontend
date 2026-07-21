@@ -95,7 +95,7 @@ export class ChatThread implements AfterViewChecked {
     const userId = this.currentUserId();
     if (!conversation || !userId) return [];
 
-    const everyone: ScopeOption = { label: 'Everyone', value: ALL_MEMBERS };
+    const everyone: ScopeOption = { label: $localize`Everyone`, value: ALL_MEMBERS };
 
     if (this.isOwner()) {
       const buyers = conversation.participants.filter(
@@ -105,7 +105,7 @@ export class ChatThread implements AfterViewChecked {
     }
 
     if (conversation.owner) {
-      return [everyone, { label: 'Seller', value: conversation.owner.user_id }];
+      return [everyone, { label: $localize`Seller`, value: conversation.owner.user_id }];
     }
 
     return [everyone];

@@ -1,14 +1,14 @@
 <ng-template #offerInfoTpl>
-  <app-pane title="Offer Information">
+  <app-pane i18n-title title="Offer Information">
     <div class="info-rows">
       <div class="info-row">
-        <span class="mat-font-body-md mat-text-on-surface-variant">Offer closes at</span>
+        <span i18n class="mat-font-body-md mat-text-on-surface-variant">Offer closes at</span>
         <span class="mat-font-body-md mat-text-on-surface text-bold">
           {{ formatDate(offer().closing_time) }}
         </span>
       </div>
       <div class="info-row">
-        <span class="mat-font-body-md mat-text-on-surface-variant">Items arrive at</span>
+        <span i18n class="mat-font-body-md mat-text-on-surface-variant">Items arrive at</span>
         <span class="mat-font-body-md mat-text-on-surface text-bold">
           {{ formatDate(offer().arrival_time) }}
         </span>
@@ -24,7 +24,7 @@
           </div>
           <div class="seller-rating">
             <mat-icon fontSet="material-symbols-outlined" class="star-icon">star</mat-icon>
-            <span class="mat-font-label-md mat-text-on-surface">{{ offer().seller.received_ratings_avg_rating ? (offer().seller.received_ratings_avg_rating | number: '1.1-1') : 'New' }}</span>
+            <span class="mat-font-label-md mat-text-on-surface">@if (offer().seller.received_ratings_avg_rating) {{{ offer().seller.received_ratings_avg_rating | number: '1.1-1' }}} @else {<ng-container i18n>New</ng-container>}</span>
             @if (offer().seller.received_ratings_count) {
               <span class="mat-font-body-sm mat-text-on-surface-variant">({{ offer().seller.received_ratings_count }})</span>
             }
@@ -33,7 +33,7 @@
       </div>
       <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
         <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-        <span>Chat</span>
+        <span i18n>Chat</span>
       </button>
     </div>
   </app-pane>
@@ -59,7 +59,7 @@
             (click)="addToCart.emit(item)"
           >
             <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-            Add
+            <span i18n>Add</span>
           </button>
         } @else {
           <app-counter-field
@@ -77,7 +77,7 @@
 </ng-template>
 
 <ng-template #cartPaneTpl>
-  <app-pane title="Cart">
+  <app-pane i18n-title title="Cart">
     @if (cartItems().length > 0) {
       <div class="cart-items-container">
         @for (cartItem of cartItems(); track cartItem.item.item_id) {
@@ -92,8 +92,8 @@
       </div>
     } @else {
       <div class="empty-cart-container">
-        <img src="assets/img/wontusad.svg" alt="Empty cart" class="empty-cart-icon" />
-        <p class="mat-font-body-md mat-text-on-surface-variant">You have no items yet.</p>
+        <img src="assets/img/wontusad.svg" i18n-alt alt="Empty cart" class="empty-cart-icon" />
+        <p class="mat-font-body-md mat-text-on-surface-variant" i18n>You have no items yet.</p>
       </div>
     }
 
@@ -111,8 +111,8 @@
         [disabled]="cartItems().length === 0"
         (click)="placeOrder.emit()"
       >
-        <mat-icon fontSet="material-symbols-outlined">{{ isEditingOrder() ? 'save' : 'check' }}</mat-icon>
-        {{ isEditingOrder() ? 'Save order' : 'Place order' }}
+        <mat-icon fontSet="material-symbols-outlined">@if(isEditingOrder()){save}@else{check}</mat-icon>
+        @if(isEditingOrder()){<ng-container i18n>Save order</ng-container>}@else{<ng-container i18n>Place order</ng-container>}
       </button>
     </div>
   </app-pane>
@@ -148,7 +148,7 @@
   class="mobile-cart-fab"
   [disabled]="cartItems().length === 0"
   (click)="navigateToMobileCart.emit()"
-  aria-label="View Cart"
+  i18n-aria-label aria-label="View Cart"
 >
   <mat-icon fontSet="material-symbols-outlined">shopping_cart</mat-icon>
   @if (totalItems() > 0) {

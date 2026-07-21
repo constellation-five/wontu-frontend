@@ -12,29 +12,40 @@
 
     <form (submit)="submit($event)" class="signup-form">
       <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
+        <mat-label i18n>Email</mat-label>
         <input matInput [formField]="form.email" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
-        <input matInput [formField]="form.name" placeholder="Your display name" />
+        <mat-label i18n>Name</mat-label>
+        <input matInput [formField]="form.name" i18n-placeholder placeholder="Your display name" />
         @if (form.name().invalid() && form.name().touched()) {
           <mat-error>{{ getFirstErrorMessage(form.name().errors()) }}</mat-error>
         }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
-        <input matInput [formField]="form.username" placeholder="Enter a unique username" />
-        <mat-hint>*required</mat-hint>
+        <mat-label i18n>Username</mat-label>
+        <input
+          matInput
+          [formField]="form.username"
+          i18n-placeholder
+          i18n-placeholder placeholder="Enter a unique username"
+        />
+        <mat-hint i18n>*required</mat-hint>
         @if (form.username().invalid() && form.username().touched()) {
           <mat-error>{{ getFirstErrorMessage(form.username().errors()) }}</mat-error>
         }
       </mat-form-field>
 
       <div class="form-actions">
-        <button matButton="filled" appButtonSize="md" type="submit" [disabled]="form().invalid()">
+        <button i18n
+          matButton="filled"
+          appButtonSize="md"
+          type="submit"
+          [disabled]="form().invalid()"
+          i18n
+        >
           Sign up
         </button>
       </div>

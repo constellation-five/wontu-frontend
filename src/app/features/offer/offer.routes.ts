@@ -13,20 +13,20 @@ export const OFFER_ROUTES: Routes = [
       {
         path: '',
         component: OfferShowPage,
-        title: 'Offers',
+        title: $localize`Offers`,
         data: { hideHeader: true },
       },
       {
         path: 'create',
         loadComponent: () => import('./create/offer-create-page'),
-        title: 'Create Offer',
+        title: $localize`Create Offer`,
         canActivate: [authGuard],
         data: { hideBottomBar: true },
       },
       {
         path: ':id/edit',
         loadComponent: () => import('./create/offer-create-page'),
-        title: 'Edit Offer',
+        title: $localize`Edit Offer`,
         canActivate: [authGuard, sellerGuard],
         resolve: { offer: offerResolver },
         data: { hideBottomBar: true },
@@ -34,12 +34,12 @@ export const OFFER_ROUTES: Routes = [
       {
         path: ':id',
         component: OfferPage,
-        title: 'Offer Detail',
+        title: $localize`Offer Detail`,
       },
       {
         path: ':id/mobile-cart',
         component: OfferMobileCart,
-        title: 'Cart',
+        title: $localize`Cart`,
         data: { hideBottomBar: true },
       },
     ],

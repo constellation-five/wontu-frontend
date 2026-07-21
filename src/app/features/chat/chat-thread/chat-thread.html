@@ -6,7 +6,7 @@
       </div>
     } @else if (messages().length === 0) {
       <div class="empty-container">
-        <p class="mat-font-body-md mat-text-on-surface-variant">No messages yet. Say hello!</p>
+        <p class="mat-font-body-md mat-text-on-surface-variant" i18n>No messages yet. Say hello!</p>
       </div>
     } @else {
       @for (entry of displayMessages(); track entry.message.id) {
@@ -34,13 +34,13 @@
       <div class="composer">
         @if (imagePreviewUrl(); as previewUrl) {
           <div class="image-preview">
-            <img [src]="previewUrl" alt="Selected attachment" />
+            <img [src]="previewUrl" i18n-alt alt="Selected attachment" />
             <button
               matIconButton
               type="button"
               class="remove-image-btn"
               (click)="clearSelectedImage()"
-              aria-label="Remove attachment"
+              i18n-aria-label aria-label="Remove attachment"
             >
               <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
             </button>
@@ -53,7 +53,7 @@
               <mat-select
                 [ngModel]="selectedTarget()"
                 (ngModelChange)="selectedTarget.set($event)"
-                aria-label="Send to"
+                i18n-aria-label aria-label="Send to"
                 hideSingleSelectionIndicator="true"
               >
                 @for (option of scopeOptions(); track option.value) {
@@ -70,7 +70,7 @@
               <input
                 class="text-input mat-font-body-md"
                 type="text"
-                placeholder="Type a message"
+                i18n-placeholder placeholder="Type a message"
                 [ngModel]="bodyText()"
                 (ngModelChange)="bodyText.set($event)"
                 (keydown.enter)="send()"
@@ -83,7 +83,7 @@
                 appButtonSize="compact"
                 class="attach-btn"
                 (click)="fileInput.click()"
-                aria-label="Attach image"
+                i18n-aria-label i18n-aria-label aria-label="Attach image"
               >
                 <mat-icon fontSet="material-symbols-outlined">image</mat-icon>
               </button>
@@ -103,7 +103,7 @@
               class="send-btn"
               [disabled]="!canSend()"
               (click)="send()"
-              aria-label="Send"
+              i18n-aria-label aria-label="Send"
             >
               <mat-icon fontSet="material-symbols-outlined">send</mat-icon>
             </button>

@@ -3,6 +3,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { EchoService } from './echo.service';
+import { MessageTemplateService } from './message-template.service';
 
 export interface ChatParticipant {
   user_id: string;
@@ -32,6 +33,8 @@ export interface ChatMessage {
   image_url: string | null;
   type: 'text' | 'system';
   metadata: {
+    template_key?: string;
+    params?: Record<string, any>;
     title?: string;
     description?: string;
     icon?: string;
@@ -45,6 +48,7 @@ export interface ChatMessage {
 export class ChatService {
   private readonly http = inject(HttpClient);
   private readonly echoService = inject(EchoService);
+  private readonly messageTemplateService = inject(MessageTemplateService);
 
   private readonly _conversation = signal<ConversationSummary | null>(null);
   private readonly _messages = signal<ChatMessage[]>([]);
@@ -149,7 +153,7 @@ export class ChatService {
           .get<ChatMessage[]>(`${environment.api}/conversations/${conversation.id}/messages`)
           .subscribe({
             next: (messages) => {
-              this._messages.set(messages);
+              this._messages.set(messages.map(m => this.processMessage(m)));
               this._isLoading.set(false);
             },
             error: () => this._isLoading.set(false),
@@ -172,12 +176,25 @@ export class ChatService {
    * flicker/duplicate.
    */
   private receiveMessage(message: ChatMessage): void {
-    if (message.sender?.user_id === this.currentUserId && this.pendingOptimisticIds.length > 0) {
+    const processed = this.processMessage(message);
+    if (processed.sender?.user_id === this.currentUserId && this.pendingOptimisticIds.length > 0) {
       const tempId = this.pendingOptimisticIds.shift()!;
-      this.replaceMessage(tempId, message);
+      this.replaceMessage(tempId, processed);
       return;
     }
-    this.appendMessage(message);
+    this.appendMessage(processed);
+  }
+
+  private processMessage(message: ChatMessage): ChatMessage {
+    if (message.type === 'system' && message.metadata?.template_key) {
+      const resolved = this.messageTemplateService.resolveTemplate(
+        message.metadata.template_key,
+        message.metadata.params || {}
+      );
+      message.metadata.title = resolved.title;
+      message.metadata.description = resolved.description;
+    }
+    return message;
   }
 
   private appendMessage(message: ChatMessage): void {

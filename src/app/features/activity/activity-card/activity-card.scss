@@ -4,7 +4,6 @@
   border-radius: var(--mat-sys-corner-medium);
   background-color: var(--mat-sys-surface-container-lowest);
   border: none;
-  box-shadow: var(--mat-sys-level2);
   cursor: pointer;
   transition: all 0.2s ease;
   overflow: hidden;
@@ -30,10 +29,10 @@
   border-radius: var(--mat-sys-corner-small);
   overflow: hidden;
   background-color: var(--mat-sys-surface-variant);
-  
+
   &.no-image {
     background-color: transparent;
-    
+
     .activity-image {
       object-fit: contain;
       padding: var(--spacing-sm);
@@ -55,7 +54,7 @@
   .activity-image-wrapper {
     width: 80px;
     height: 60px;
-    
+
     &.no-image .activity-image {
       padding: var(--spacing-3xs);
     }
@@ -92,7 +91,7 @@
     flex: 1.8;
     display: flex;
     align-items: center;
-    
+
     .merchant-name {
       margin: 0;
       display: -webkit-box;
@@ -129,7 +128,7 @@
       width: 24px;
       height: 24px;
     }
-    
+
     .rate-button {
       display: flex;
       align-items: center;
@@ -168,11 +167,11 @@
   .mobile-row {
     display: flex;
     align-items: center;
-    
+
     &.space-between {
       justify-content: space-between;
     }
-    
+
     &.bottom-row {
       margin-top: 0;
     }

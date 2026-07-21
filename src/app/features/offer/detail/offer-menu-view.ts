@@ -63,7 +63,7 @@ export class OfferMenuView {
 
   getItemStockText(item: OfferItem): string {
     const remaining = item.slot - item.current_slot;
-    return remaining > 0 ? `Stock: ${remaining} left` : 'Out of Stock';
+    return remaining > 0 ? $localize`Stock: ${remaining} left` : $localize`Out of Stock`;
   }
 
   getItemStockVariant(item: OfferItem): 'default' | 'low' {

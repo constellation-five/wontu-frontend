@@ -75,10 +75,10 @@ export class FollowersPage implements OnInit, OnDestroy {
   private profileUpdatedListener = () => this.fetchFollowers();
 
   ngOnInit() {
-    this.pageHeader.setTitle('Followers');
+    this.pageHeader.setTitle($localize`Followers`);
     this.pageHeader.setBreadcrumbs([
-      { label: 'Profile', route: '/profile' },
-      { label: 'Followers', route: '/profile/followers' },
+      { label: $localize`Profile`, route: '/profile' },
+      { label: $localize`Followers`, route: '/profile/followers' },
     ]);
     this.fetchFollowers();
 

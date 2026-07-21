@@ -9,7 +9,7 @@
       <chat-thread class="mobile-thread" [isGroup]="true" (avatarClick)="onMemberClick($event)" />
     } @else {
       <div class="content-layout">
-        <app-pane title="Chat Information" class="sidebar">
+        <app-pane i18n-title title="Chat Information" class="sidebar">
           <chat-information-pane
             [owner]="chatService.conversation()?.owner ?? null"
             [participants]="chatService.conversation()?.participants ?? []"

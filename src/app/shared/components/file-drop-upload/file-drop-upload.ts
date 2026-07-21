@@ -78,7 +78,7 @@ export class FileDropUpload {
   private setFile(file: File) {
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
     if (!allowedTypes.includes(file.type)) {
-      this.snackBar.open('Invalid file type. Please upload .jpg, .jpeg, or .png file.', 'Close', {
+      this.snackBar.open($localize`Invalid file type. Please upload .jpg, .jpeg, or .png file.`, $localize`Close`, {
         duration: 3000,
       });
       return;
@@ -86,7 +86,7 @@ export class FileDropUpload {
 
     const maxSize = this.maxSizeMb() * 1024 * 1024;
     if (file.size > maxSize) {
-      this.snackBar.open(`File size too large. Maximum size is ${this.maxSizeMb()} MB.`, 'Close', {
+      this.snackBar.open($localize`File size too large. Maximum size is ${this.maxSizeMb()} MB.`, $localize`Close`, {
         duration: 3000,
       });
       return;

@@ -21,14 +21,16 @@ export class GiveRatingDialog {
   readonly rating = signal(0);
   readonly hoverRating = signal(0);
 
+  readonly dialogTitle = computed(() => $localize`Rate ${this.data.merchantName}`);
+
   readonly buttons = computed<DialogButton[]>(() => [
     {
-      label: 'Later',
+      label: $localize`Later`,
       type: 'outlined',
       action: () => this.dialogRef.close('later'),
     },
     {
-      label: 'Submit',
+      label: $localize`Submit`,
       type: 'filled',
       disabled: this.rating() === 0,
       action: () => this.dialogRef.close({ rating: this.rating() }),

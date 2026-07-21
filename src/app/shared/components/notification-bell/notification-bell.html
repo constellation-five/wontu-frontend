@@ -5,6 +5,7 @@
   [matMenuTriggerFor]="notificationMenu"
   class="notification-button"
   (menuOpened)="onPanelOpen()"
+  i18n-aria-label
   aria-label="Open notifications"
 >
   <mat-icon
@@ -37,8 +38,8 @@
       [disabled]="notificationService.notifications().length === 0"
       [attr.aria-hidden]="notificationService.notifications().length === 0"
       [tabIndex]="notificationService.notifications().length === 0 ? -1 : 0"
-      matTooltip="Clear all"
       (click)="onClearAll()"
+      i18n-aria-label
       aria-label="Clear all notifications"
     >
       <mat-icon fontSet="material-symbols-outlined">delete_sweep</mat-icon>
@@ -55,7 +56,11 @@
       (click)="$event.stopPropagation()"
       (scroll)="onListScroll($event)"
     >
-      <app-notification-stack [items]="items()" (dismissed)="onDismissed($event)" (clicked)="onNotificationClick($event)" />
+      <app-notification-stack
+        [items]="items()"
+        (dismissed)="onDismissed($event)"
+        (clicked)="onNotificationClick($event)"
+      />
     </div>
   }
 </mat-menu>

@@ -1,11 +1,11 @@
 <div class="item-dialog">
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Item link (optional)</mat-label>
-    <input matInput [formField]="form.item_url" placeholder="https://..." />
+    <mat-label i18n>Item link (optional)</mat-label>
+    <input matInput [formField]="form.item_url" i18n-placeholder placeholder="https://..." />
   </mat-form-field>
 
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Item name</mat-label>
+    <mat-label i18n>Item name</mat-label>
     <input matInput [formField]="form.item_name" />
     @if (form.item_name().invalid() && form.item_name().touched()) {
       <mat-error>{{ form.item_name().errors()[0]?.message }}</mat-error>
@@ -14,17 +14,18 @@
 
   <div class="price-quantity">
     <mat-form-field appearance="outline" class="price">
-      <mat-label>Price</mat-label>
-      <span matTextPrefix>Rp&nbsp;</span>
+      <mat-label i18n>Price</mat-label>
+      <span matTextPrefix i18n>Rp&nbsp;</span>
       <input matInput type="number" [formField]="form.item_price" />
       @if (form.item_price().invalid() && form.item_price().touched()) {
         <mat-error>{{ form.item_price().errors()[0]?.message }}</mat-error>
       }
     </mat-form-field>
-    <app-counter-field label="Quantity" [(value)]="slot" [min]="1" />
+    <app-counter-field i18n-label label="Quantity" [(value)]="slot" [min]="1" />
   </div>
 
   <app-file-drop-upload
+    i18n-label
     label="Item image"
     [existingUrl]="existingImageUrl"
     [uploading]="isUploading()"
@@ -45,7 +46,7 @@
         (click)="openDeleteConfirm()"
       >
         <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
-        Delete
+        <span i18n>Delete</span>
       </button>
     }
     <div class="spacer"></div>
@@ -55,7 +56,11 @@
       [disabled]="form().invalid() || isUploading()"
       (click)="submit()"
     >
-      {{ isEdit ? 'Save item' : 'Add item' }}
+      @if (isEdit) {
+        <ng-container i18n>Save item</ng-container>
+      } @else {
+        <ng-container i18n>Add item</ng-container>
+      }
     </button>
   </div>
 </div>
@@ -67,6 +72,10 @@
     [disabled]="form().invalid() || isUploading()"
     (click)="submit()"
   >
-    {{ isEdit ? 'Save item' : 'Add item' }}
+    @if (isEdit) {
+      <ng-container i18n>Save item</ng-container>
+    } @else {
+      <ng-container i18n>Add item</ng-container>
+    }
   </button>
 </ng-template>

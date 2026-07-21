@@ -1,12 +1,12 @@
 <app-pane>
-  <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-large);">Account</h2>
+  <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-large);" i18n>Account</h2>
   
   @if (personalInfo(); as info) {
         <div class="account-container">
           <!-- Profile Section -->
           <section class="profile-section">
-            <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface">Profile</h3>
-            <p class="section-desc mat-font-body-sm mat-text-on-surface-variant">
+            <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface" i18n>Profile</h3>
+            <p class="section-desc mat-font-body-sm mat-text-on-surface-variant" i18n>
               This information will be displayed publicly so be careful what you share.
             </p>
 
@@ -14,15 +14,15 @@
             <div class="form-field">
               <div class="field-input-group">
                 <mat-form-field appearance="outline" class="field-input">
-                  <mat-label>Name</mat-label>
+                  <mat-label i18n>Name</mat-label>
                   <input 
                     matInput 
                     [formControl]="profileForm.controls.name" 
-                    placeholder="Enter name"
+                    i18n-placeholder placeholder="Enter name"
                     [readonly]="!isEditingName()"
                   />
                   @if (profileForm.get('name')?.hasError('required') && profileForm.get('name')?.touched) {
-                    <mat-error>Name is required</mat-error>
+                    <mat-error i18n>Name is required</mat-error>
                   }
                 </mat-form-field>
                 @if (isEditingName()) {
@@ -33,8 +33,8 @@
                     (click)="saveProfile()"
                     [disabled]="profileForm.invalid || isSaving()"
                     class="save-btn"
-                  >
-                    Save
+                   >
+                    <span i18n>Save</span>
                   </button>
                 } @else {
                   <button
@@ -52,15 +52,15 @@
             <div class="form-field">
               <div class="field-input-group">
                 <mat-form-field appearance="outline" class="field-input">
-                  <mat-label>Username</mat-label>
+                  <mat-label i18n>Username</mat-label>
                   <input 
                     matInput 
                     [formControl]="profileForm.controls.username" 
-                    placeholder="Enter username"
+                    i18n-placeholder placeholder="Enter username"
                     [readonly]="!isEditingUsername()"
                   />
                   @if (profileForm.get('username')?.hasError('required') && profileForm.get('username')?.touched) {
-                    <mat-error>Username is required</mat-error>
+                    <mat-error i18n>Username is required</mat-error>
                   }
                 </mat-form-field>
                 @if (isEditingUsername()) {
@@ -71,8 +71,8 @@
                     (click)="saveProfile()"
                     [disabled]="profileForm.invalid || isSaving()"
                     class="save-btn"
-                  >
-                    Save
+                   >
+                    <span i18n>Save</span>
                   </button>
                 } @else {
                   <button
@@ -89,17 +89,17 @@
 
           <!-- Personal Information Section -->
           <section class="personal-info-section">
-            <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface">Personal Information</h3>
-            <p class="section-desc mat-font-body-sm mat-text-on-surface-variant">
+            <h3 class="section-title mat-font-body-lg text-bold mat-text-on-surface" i18n>Personal Information</h3>
+            <p class="section-desc mat-font-body-sm mat-text-on-surface-variant" i18n>
               This information is only displayed to you.
             </p>
 
             <mat-form-field appearance="outline" class="field-input">
-              <mat-label>Email address</mat-label>
+              <mat-label i18n>Email address</mat-label>
               <input matInput [value]="info.email" readonly>
             </mat-form-field>
 
-            <p class="created-at mat-font-body-sm mat-text-on-surface-variant">
+            <p class="created-at mat-font-body-sm mat-text-on-surface-variant" i18n>
               This account was created on {{ formatDate(info.created_at) }}.
             </p>
           </section>
