@@ -71,8 +71,8 @@ type LocalItem = OfferItemInput & { localId: string };
     PaymentMethodCard,
     BottomBar,
     ButtonSizeDirective,
-    IconButtonVariantDirective
-],
+    IconButtonVariantDirective,
+  ],
   templateUrl: './offer-create-page.html',
   styleUrls: ['./offer-create-page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -178,7 +178,7 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
         if (currentLabel !== DEFAULT_LOCATION) {
           this.locationLabel = currentLabel;
         } else {
-          this.locationLookup.resolvePlaceName(currentLocation).then(name => {
+          this.locationLookup.resolvePlaceName(currentLocation).then((name) => {
             this.locationLabel = name;
           });
         }
@@ -187,9 +187,11 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
           (pos) => {
             this.locationLat = pos.coords.latitude;
             this.locationLng = pos.coords.longitude;
-            this.locationLookup.resolvePlaceName({ lat: this.locationLat, lng: this.locationLng }).then(name => {
-              this.locationLabel = name;
-            });
+            this.locationLookup
+              .resolvePlaceName({ lat: this.locationLat, lng: this.locationLng })
+              .then((name) => {
+                this.locationLabel = name;
+              });
           },
           () => {
             // Keep the Jakarta fallback already set above.
@@ -225,10 +227,10 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
                 localId: crypto.randomUUID(),
                 item_name: req.item_name,
                 item_price: 0,
-                slot: 1,    
+                slot: 1,
                 item_url: '',
                 image_url: null,
-              }
+              },
             ]);
           }
         }
@@ -262,10 +264,13 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     return combined.toISOString();
   }
 
-  private loadPaymentMethods() {
+  private loadPaymentMethods(enabledId: number | null = null) {
     this.offerService.listMyPaymentMethods().subscribe({
       next: (res) => {
         this.paymentMethods.set(res.data || []);
+        if (enabledId) {
+          this.toggleMethod(enabledId, true);
+        }
       },
       error: (err) => console.error('Failed to load payment methods:', err),
     });
@@ -292,8 +297,8 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result !== undefined) {
-        this.loadPaymentMethods();
+      if (result !== undefined && result !== 'deleted') {
+        this.loadPaymentMethods(result.payment_method_id);
       }
     });
   }
@@ -351,9 +356,13 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
 
     const m = this.model();
     if (!m.closing_date || !m.arrival_date) {
-      this.snackBar.open($localize`Please fill in the closing and arrival dates.`, $localize`Close`, {
-        duration: 3000,
-      });
+      this.snackBar.open(
+        $localize`Please fill in the closing and arrival dates.`,
+        $localize`Close`,
+        {
+          duration: 3000,
+        },
+      );
       return;
     }
 
@@ -364,9 +373,13 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
     const arrivalDateOnly = this.startOfDay(m.arrival_date);
 
     if (arrivalDateOnly.getTime() < closingDateOnly.getTime()) {
-      this.snackBar.open($localize`Items must arrive on or after the offer closing date.`, $localize`Close`, {
-        duration: 3000,
-      });
+      this.snackBar.open(
+        $localize`Items must arrive on or after the offer closing date.`,
+        $localize`Close`,
+        {
+          duration: 3000,
+        },
+      );
       return;
     }
 
@@ -376,7 +389,9 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
       m.arrival_time_of_day &&
       m.arrival_time_of_day < m.closing_time_of_day
     ) {
-      this.snackBar.open($localize`On the same day, items must arrive at or after the offer closing time.`, $localize`Close`,
+      this.snackBar.open(
+        $localize`On the same day, items must arrive at or after the offer closing time.`,
+        $localize`Close`,
         { duration: 3000 },
       );
       return;
@@ -413,7 +428,13 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
 
     request$.subscribe({
       next: (res) => {
-        this.snackBar.open(this.existingOffer ? $localize`Offer saved successfully.` : $localize`Offer created successfully.`, $localize`Close`, { duration: 3000 });
+        this.snackBar.open(
+          this.existingOffer
+            ? $localize`Offer saved successfully.`
+            : $localize`Offer created successfully.`,
+          $localize`Close`,
+          { duration: 3000 },
+        );
         this.isSubmitting.set(false);
         const offerId = res.offer?.offer_id ?? this.existingOffer?.offer_id;
         this.router.navigate(['/offers', offerId]);
@@ -422,7 +443,9 @@ export default class OfferCreate implements OnInit, AfterViewInit, OnDestroy {
         this.isSubmitting.set(false);
         const msg = err.error?.message || 'Please try again.';
         const status = err.status ? ` (${err.status})` : '';
-        this.snackBar.open($localize`Failed to save offer: ${msg}${status}`, $localize`Close`, { duration: 5000 });
+        this.snackBar.open($localize`Failed to save offer: ${msg}${status}`, $localize`Close`, {
+          duration: 5000,
+        });
       },
     });
   }
