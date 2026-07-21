@@ -1,10 +1,5 @@
 <div class="item-dialog">
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label i18n>Item link (optional)</mat-label>
-    <input matInput [formField]="form.item_url" i18n-placeholder placeholder="https://..." />
-  </mat-form-field>
-
-  <mat-form-field appearance="outline" class="full-width">
     <mat-label i18n>Item name</mat-label>
     <input matInput [formField]="form.item_name" />
     @if (form.item_name().invalid() && form.item_name().touched()) {

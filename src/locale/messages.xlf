@@ -350,12 +350,6 @@
       <trans-unit id="7668600654612737658" datatype="html">
         <source>Offers</source>
       </trans-unit>
-      <trans-unit id="6100138174240016562" datatype="html">
-        <source>Item link (optional)</source>
-      </trans-unit>
-      <trans-unit id="3246467004668431059" datatype="html">
-        <source>https://...</source>
-      </trans-unit>
       <trans-unit id="7711245667123213632" datatype="html">
         <source>Item name</source>
       </trans-unit>

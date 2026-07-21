@@ -442,14 +442,6 @@
         <source>Offers</source>
         <target>Offer</target>
       </trans-unit>
-      <trans-unit id="6100138174240016562" datatype="html">
-        <source>Item link (optional)</source>
-        <target>Tautan item (opsional)</target>
-      </trans-unit>
-      <trans-unit id="3246467004668431059" datatype="html">
-        <source>https://...</source>
-        <target>https://...</target>
-      </trans-unit>
       <trans-unit id="7711245667123213632" datatype="html">
         <source>Item name</source>
         <target>Nama item</target>
