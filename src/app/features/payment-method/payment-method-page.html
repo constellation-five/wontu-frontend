@@ -1,5 +1,7 @@
 <app-pane>
-  <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-large);" i18n>Payment Methods</h2>
+  <h2 class="page-title mat-text-on-surface" style="font: var(--mat-sys-title-large)" i18n>
+    Payment Methods
+  </h2>
 
   @if (isLoading()) {
     <div class="loading-state" i18n>Loading data...</div>
@@ -12,12 +14,13 @@
               [method]="method"
               [showEdit]="true"
               [isMobile]="isMobile()"
-              (edit)="openEditModal($event)" />
+              (edit)="openEditModal($event)"
+            />
           }
         </div>
       } @else {
         <div class="empty-state">
-          <img src="assets/img/wontusad.svg" i18n-alt alt="No Data" class="empty-image">
+          <img src="assets/img/wontusad.svg" i18n-alt alt="No Data" class="empty-image" />
           <div class="empty-text">
             <p i18n>No payment methods yet.</p>
             <p i18n>Add some!</p>
@@ -30,9 +33,10 @@
         appButtonSize="sm"
         appButtonColor="primary"
         class="add-button"
-        (click)="openAddModal()">
+        (click)="openAddModal()"
+      >
         <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-        <span i18n>Add payment method</span>
+        <ng-container i18n>Add payment method</ng-container>
       </button>
     </div>
   }

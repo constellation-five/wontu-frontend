@@ -41,7 +41,7 @@
       </div>
       <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
         <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-        <span i18n>Chat</span>
+        <ng-container i18n>Chat</ng-container>
       </button>
     </div>
   </app-pane>
@@ -67,7 +67,7 @@
             (click)="addToCart.emit(item)"
           >
             <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-            <span i18n>Add</span>
+            <ng-container i18n>Add</ng-container>
           </button>
         } @else {
           <app-counter-field

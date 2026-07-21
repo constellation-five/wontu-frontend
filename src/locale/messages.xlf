@@ -475,9 +475,6 @@
       <trans-unit id="5394188582994379137" datatype="html">
         <source>No items added yet.</source>
       </trans-unit>
-      <trans-unit id="7000649363168371045" datatype="html">
-        <source>Save changes</source>
-      </trans-unit>
       <trans-unit id="6740617001434617442" datatype="html">
         <source>Create offer</source>
       </trans-unit>
@@ -742,6 +739,9 @@
       <trans-unit id="8069236030483721351" datatype="html">
         <source>Loading data...</source>
       </trans-unit>
+      <trans-unit id="460769596304503399" datatype="html">
+        <source> Account </source>
+      </trans-unit>
       <trans-unit id="4627725927234237190" datatype="html">
         <source>No Data</source>
       </trans-unit>
@@ -766,8 +766,8 @@
       <trans-unit id="5762208451608373302" datatype="html">
         <source>Enter username</source>
       </trans-unit>
-      <trans-unit id="3465962430409924123" datatype="html">
-        <source>Personal Information</source>
+      <trans-unit id="2486562954024066123" datatype="html">
+        <source> Personal Information </source>
       </trans-unit>
       <trans-unit id="8288999479592178985" datatype="html">
         <source> This information is only displayed to you. </source>
@@ -822,6 +822,9 @@
       </trans-unit>
       <trans-unit id="5338923183168765550" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{ data.average_rating }}"/> out of 5 </source>
+      </trans-unit>
+      <trans-unit id="5359929361842951813" datatype="html">
+        <source> Payment Methods </source>
       </trans-unit>
       <trans-unit id="3399242821009936371" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{ data.total_ratings }}"/> customer ratings </source>
@@ -943,6 +946,9 @@
       <trans-unit id="5453242926626726291" datatype="html">
         <source>Failed to save request: <x id="PH" equiv-text="msg"/><x id="PH_1" equiv-text="status"/></source>
       </trans-unit>
+      <trans-unit id="2330577642930707695" datatype="html">
+        <source> Cancel </source>
+      </trans-unit>
       <trans-unit id="2398407606701767789" datatype="html">
         <source>Requests</source>
       </trans-unit>
@@ -1000,8 +1006,8 @@
       <trans-unit id="4371485180715105780" datatype="html">
         <source>Verifying...</source>
       </trans-unit>
-      <trans-unit id="2428178311695303552" datatype="html">
-        <source>Confirm Location</source>
+      <trans-unit id="2247056776399761477" datatype="html">
+        <source>Confirm location</source>
       </trans-unit>
       <trans-unit id="1348774649041038169" datatype="html">
         <source>Navigation</source>
@@ -1029,6 +1035,9 @@
       </trans-unit>
       <trans-unit id="6424164076261744306" datatype="html">
         <source>Account Number</source>
+      </trans-unit>
+      <trans-unit id="8004160201243389904" datatype="html">
+        <source>Save offer</source>
       </trans-unit>
       <trans-unit id="8057745565493131709" datatype="html">
         <source>Copied to clipboard.</source>

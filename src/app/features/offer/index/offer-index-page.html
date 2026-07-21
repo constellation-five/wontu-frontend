@@ -1,8 +1,10 @@
 <app-main-page-header
-  i18n-pageTitle pageTitle="Offers"
+  i18n-pageTitle
+  pageTitle="Offers"
   [location]="userLocation()"
   [searchValue]="searchQuery()"
-  i18n-searchPlaceholder searchPlaceholder="Search offers"
+  i18n-searchPlaceholder
+  searchPlaceholder="Search offers"
   (locationClick)="onChangeLocation()"
   (searchValueChange)="onSearchChange($event)"
 >
@@ -100,7 +102,13 @@
 }
 
 <!-- Floating Create Offer Button (Mobile only) -->
-<button matFab (click)="openCreateOffer()" class="create-offer-fab" i18n-aria-label aria-label="Create Offer">
+<button
+  matFab
+  (click)="openCreateOffer()"
+  class="create-offer-fab"
+  i18n-aria-label
+  aria-label="Create Offer"
+>
   <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
 </button>
 
@@ -110,8 +118,9 @@
   extended
   (click)="openCreateOffer()"
   class="create-offer-fab-desktop"
-  i18n-aria-label aria-label="Create Offer"
+  i18n-aria-label
+  aria-label="Create Offer"
 >
   <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-  <span i18n>Create Offer</span>
+  <ng-container i18n>Create Offer</ng-container>
 </button>

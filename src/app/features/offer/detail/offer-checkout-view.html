@@ -32,7 +32,7 @@
         <div class="tablet-only-action">
           <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
             <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-            <span i18n>Chat</span>
+            <ng-container i18n>Chat</ng-container>
           </button>
         </div>
       </div>
@@ -45,7 +45,7 @@
           (click)="openRating.emit()"
         >
           <mat-icon fontSet="material-symbols-outlined">star</mat-icon>
-          <span i18n>Give rating</span>
+          <ng-container i18n>Give rating</ng-container>
         </button>
       }
     </app-pane>
@@ -89,11 +89,11 @@
               (click)="cancelOrder.emit()"
             >
               <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-              <span i18n>Cancel order</span>
+              <ng-container i18n>Cancel order</ng-container>
             </button>
             <button matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
               <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-              <span i18n>Edit order</span>
+              <ng-container i18n>Edit order</ng-container>
             </button>
           </div>
         }
@@ -139,7 +139,7 @@
               (click)="completePayment.emit()"
             >
               <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-              <span i18n>Submit payment</span>
+              <ng-container i18n>Submit payment</ng-container>
             </button>
           }
         </div>
@@ -199,7 +199,7 @@
                   (click)="completePayment.emit()"
                 >
                   <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-                  <span i18n>Submit payment</span>
+                  <ng-container i18n>Submit payment</ng-container>
                 </button>
               }
             </div>
@@ -244,7 +244,7 @@
             </div>
             <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
               <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-              <span i18n>Chat</span>
+              <ng-container i18n>Chat</ng-container>
             </button>
           </div>
 
@@ -256,7 +256,7 @@
               (click)="openRating.emit()"
             >
               <mat-icon fontSet="material-symbols-outlined">star</mat-icon>
-              <span i18n>Give rating</span>
+              <ng-container i18n>Give rating</ng-container>
             </button>
           }
         </app-pane>
@@ -297,11 +297,11 @@
                   (click)="cancelOrder.emit()"
                 >
                   <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-                  <span i18n>Cancel order</span>
+                  <ng-container i18n>Cancel order</ng-container>
                 </button>
                 <button matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
                   <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-                  <span i18n>Edit order</span>
+                  <ng-container i18n>Edit order</ng-container>
                 </button>
               </div>
             }
@@ -316,12 +316,12 @@
     @if (offer().arrived_at && !offer().seller.has_rated_seller) {
       <button matButton="filled" appButtonSize="sm" (click)="openRating.emit()" style="width: 100%">
         <mat-icon fontSet="material-symbols-outlined">star</mat-icon>
-        <span i18n>Give rating</span>
+        <ng-container i18n>Give rating</ng-container>
       </button>
     }
     <button matButton="tonal" appButtonSize="sm" class="chat-action-btn" (click)="openChat.emit()">
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-      <span i18n>Chat</span>
+      <ng-container i18n>Chat</ng-container>
     </button>
     @if (!isOfferClosed()) {
       <div class="bottom-actions-row">
@@ -333,7 +333,7 @@
           (click)="cancelOrder.emit()"
         >
           <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-          <span i18n>Cancel order</span>
+          <ng-container i18n>Cancel order</ng-container>
         </button>
         <button
           matButton="tonal"
@@ -342,7 +342,7 @@
           (click)="editOrder.emit()"
         >
           <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-          <span i18n>Edit order</span>
+          <ng-container i18n>Edit order</ng-container>
         </button>
       </div>
     }

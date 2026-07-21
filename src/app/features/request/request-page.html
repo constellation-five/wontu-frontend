@@ -1,8 +1,10 @@
 <app-main-page-header
-  i18n-pageTitle pageTitle="Requests"
+  i18n-pageTitle
+  pageTitle="Requests"
   [location]="userLocation()"
   [searchValue]="searchQuery()"
-  i18n-searchPlaceholder searchPlaceholder="Search requests"
+  i18n-searchPlaceholder
+  searchPlaceholder="Search requests"
   (locationClick)="onChangeLocation()"
   (searchValueChange)="searchQuery.set($event)"
 >
@@ -32,14 +34,14 @@
     <p class="mat-font-body-lg mat-text-on-surface-variant" i18n>Loading requests...</p>
   </div>
 } @else if (filteredRequests().length > 0) {
-
   @if (ongoingRequests().length > 0) {
     <app-ongoing-section title="Ongoing">
       <div class="requests-grid">
         @for (req of ongoingRequests(); track req.request_id) {
           <app-request-card
             [title]="req.item_name"
-            i18n-subtitle subtitle="For {{ req.arrival_time | naturalDateTime }}"
+            i18n-subtitle
+            subtitle="For {{ req.arrival_time | naturalDateTime }}"
             [category]="req.category"
             [votes]="req.total_votes"
             [hasVoted]="req.has_voted || false"
@@ -60,7 +62,8 @@
         @for (req of otherRequests(); track req.request_id) {
           <app-request-card
             [title]="req.item_name"
-            i18n-subtitle subtitle="For {{ req.arrival_time | naturalDateTime }}"
+            i18n-subtitle
+            subtitle="For {{ req.arrival_time | naturalDateTime }}"
             [category]="req.category"
             [votes]="req.total_votes"
             [hasVoted]="req.has_voted || false"
@@ -74,7 +77,6 @@
       </div>
     </div>
   }
-
 } @else {
   <div class="empty-state">
     <mat-icon fontSet="material-symbols-outlined" class="empty-icon">inbox</mat-icon>
@@ -82,7 +84,13 @@
   </div>
 }
 
-<button matFab class="create-req-fab" i18n-aria-label aria-label="Create Request" (click)="openCreateRequest()">
+<button
+  matFab
+  class="create-req-fab"
+  i18n-aria-label
+  aria-label="Create Request"
+  (click)="openCreateRequest()"
+>
   <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
 </button>
 
@@ -90,9 +98,10 @@
   matFab
   extended
   class="create-req-fab-desktop"
-  i18n-aria-label aria-label="Create Request"
+  i18n-aria-label
+  aria-label="Create Request"
   (click)="openCreateRequest()"
 >
   <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-  <span i18n>Create Request</span>
+  <ng-container i18n>Create Request</ng-container>
 </button>

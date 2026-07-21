@@ -46,7 +46,7 @@
         (click)="openDeleteConfirm()"
       >
         <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
-        <span i18n>Delete</span>
+        <ng-container i18n>Delete</ng-container>
       </button>
     }
     <div class="spacer"></div>
@@ -56,6 +56,13 @@
       [disabled]="form().invalid() || isUploading()"
       (click)="submit()"
     >
+      <mat-icon fontSet="material-symbols-outlined">
+        @if (isEdit) {
+          save
+        } @else {
+          check
+        }
+      </mat-icon>
       @if (isEdit) {
         <ng-container i18n>Save item</ng-container>
       } @else {
@@ -72,6 +79,13 @@
     [disabled]="form().invalid() || isUploading()"
     (click)="submit()"
   >
+    <mat-icon fontSet="material-symbols-outlined">
+      @if (isEdit) {
+        save
+      } @else {
+        check
+      }
+    </mat-icon>
     @if (isEdit) {
       <ng-container i18n>Save item</ng-container>
     } @else {

@@ -96,7 +96,7 @@
         (click)="openAddPaymentMethodDialog()"
       >
         <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-        <span i18n>Add payment method</span>
+        <ng-container i18n>Add payment method</ng-container>
       </button>
     </app-pane>
   </div>
@@ -149,21 +149,27 @@
         (click)="openAddItemDialog()"
       >
         <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-        <span i18n>Add item</span>
+        <ng-container i18n>Add item</ng-container>
       </button>
 
       <button
-        
         matButton="filled"
         appButtonSize="md"
         class="submit-btn desktop-only"
         [disabled]="!canSubmit() || isSubmitting()"
         (click)="submit()"
       >
-        @if (isSubmitting()) {
-          <mat-spinner diameter="20"></mat-spinner>
+        <mat-icon fontSet="material-symbols-outlined">
+          @if (isEditMode) {
+            save
+          } @else {
+            check
+          }
+        </mat-icon>
+        @if (isEditMode) {
+          <ng-container i18n>Save offer</ng-container>
         } @else {
-          @if(isEditMode){<ng-container i18n>Save changes</ng-container>}@else{<ng-container i18n>Create offer</ng-container>}
+          <ng-container i18n>Create offer</ng-container>
         }
       </button>
     </app-pane>
@@ -174,17 +180,23 @@
 
 <ng-template #actionsTpl>
   <button
-    
     matButton="filled"
     appButtonSize="sm"
     class="submit-btn"
     [disabled]="!canSubmit() || isSubmitting()"
     (click)="submit()"
   >
-    @if (isSubmitting()) {
-      <mat-spinner diameter="20"></mat-spinner>
+    <mat-icon fontSet="material-symbols-outlined">
+      @if (isEditMode) {
+        save
+      } @else {
+        check
+      }
+    </mat-icon>
+    @if (isEditMode) {
+      <ng-container i18n>Save offer</ng-container>
     } @else {
-      @if(isEditMode){<ng-container i18n>Save changes</ng-container>}@else{<ng-container i18n>Create offer</ng-container>}
+      <ng-container i18n>Create offer</ng-container>
     }
   </button>
 </ng-template>

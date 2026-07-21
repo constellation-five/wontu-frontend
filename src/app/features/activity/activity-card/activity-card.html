@@ -2,41 +2,56 @@
   <!-- DESKTOP LAYOUT -->
   <div class="activity-card-container desktop-layout">
     <div class="activity-image-wrapper" [class.no-image]="!imageUrl()">
-      <img [src]="imageUrl() || 'assets/img/wontusad.svg'" [alt]="merchantName()" class="activity-image" />
+      <img
+        [src]="imageUrl() || 'assets/img/wontusad.svg'"
+        [alt]="merchantName()"
+        class="activity-image"
+      />
     </div>
-    
+
     <div class="activity-desktop-columns">
       <div class="column-badge">
         <app-category-label [category]="category()" />
       </div>
       <div class="column-time">
-        <span class="activity-date mat-font-label-lg mat-text-on-surface-variant">{{ date() }}</span>
+        <span class="activity-date mat-font-label-lg mat-text-on-surface-variant">{{
+          date()
+        }}</span>
       </div>
-      
+
       <div class="column-merchant">
-        <span class="merchant-name mat-font-label-lg mat-text-on-surface">{{ merchantName() }}</span>
+        <span class="merchant-name mat-font-label-lg mat-text-on-surface">{{
+          merchantName()
+        }}</span>
       </div>
-      
+
       <div class="column-location">
         <span class="info-value mat-font-label-lg mat-text-on-surface">{{ locationLabel() }}</span>
       </div>
-      
+
       <div class="column-status">
         @if (isHistory()) {
-          <span class="info-value mat-font-label-lg mat-text-on-surface">{{ totalPrice() | rupiahFormat }}</span>
+          <span class="info-value mat-font-label-lg mat-text-on-surface">{{
+            totalPrice() | rupiahFormat
+          }}</span>
         } @else {
-          <span class="info-value mat-font-label-lg text-bold" [style.color]="statusColor()">{{ statusText() }}</span>
+          <span class="info-value mat-font-label-lg text-bold" [style.color]="statusColor()">{{
+            statusText()
+          }}</span>
         }
       </div>
     </div>
-    
+
     <div class="activity-action">
       @if (isHistory() && type() === 'Order' && !isRated()) {
         <button class="rate-button mat-font-body-md text-bold" (click)="onRateClick($event)">
-          <span i18n>Rate</span> <mat-icon class="arrow-icon" fontSet="material-symbols-outlined">arrow_forward</mat-icon>
+          <ng-container i18n>Rate</ng-container>
+          <mat-icon class="arrow-icon" fontSet="material-symbols-outlined">arrow_forward</mat-icon>
         </button>
       } @else {
-        <mat-icon class="arrow-icon mat-text-on-surface" fontSet="material-symbols-outlined">arrow_forward</mat-icon>
+        <mat-icon class="arrow-icon mat-text-on-surface" fontSet="material-symbols-outlined"
+          >arrow_forward</mat-icon
+        >
       }
     </div>
   </div>
@@ -44,9 +59,13 @@
   <!-- MOBILE LAYOUT -->
   <div class="activity-card-container mobile-layout">
     <div class="activity-image-wrapper" [class.no-image]="!imageUrl()">
-      <img [src]="imageUrl() || 'assets/img/wontusad.svg'" [alt]="merchantName()" class="activity-image" />
+      <img
+        [src]="imageUrl() || 'assets/img/wontusad.svg'"
+        [alt]="merchantName()"
+        class="activity-image"
+      />
     </div>
-    
+
     <div class="mobile-content">
       <!-- Top Row: Badge & Status/Total -->
       <div class="mobile-row space-between">
@@ -58,23 +77,29 @@
           <app-category-label [category]="category()" />
         }
       </div>
-      
+
       <!-- Middle Row: Merchant & Location -->
       <h3 class="mobile-title mat-font-label-lg mat-text-on-surface">{{ merchantName() }}</h3>
       @if (locationLabel()) {
-        <div class="mobile-location mat-font-body-sm mat-text-on-surface">{{ locationLabel() }}</div>
+        <div class="mobile-location mat-font-body-sm mat-text-on-surface">
+          {{ locationLabel() }}
+        </div>
       }
-      
+
       <!-- Bottom Row: Date & Action -->
       <div class="mobile-row space-between bottom-row">
         <span class="mobile-date mat-font-label-sm mat-text-on-surface-variant">{{ date() }}</span>
         @if (isHistory() && type() === 'Order' && !isRated()) {
           <button class="rate-button" (click)="onRateClick($event)">
             <span class="mat-font-body-md text-bold mat-text-primary" i18n>Rate</span>
-            <mat-icon class="arrow-icon mat-text-primary" fontSet="material-symbols-outlined">arrow_forward</mat-icon>
+            <mat-icon class="arrow-icon mat-text-primary" fontSet="material-symbols-outlined"
+              >arrow_forward</mat-icon
+            >
           </button>
         } @else {
-          <mat-icon class="arrow-icon mat-text-on-surface" fontSet="material-symbols-outlined">arrow_forward</mat-icon>
+          <mat-icon class="arrow-icon mat-text-on-surface" fontSet="material-symbols-outlined"
+            >arrow_forward</mat-icon
+          >
         }
       </div>
     </div>

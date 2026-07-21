@@ -21,13 +21,17 @@
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{
               formatNumber(user.followers_count)
             }}</span>
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant" i18n>Followers</span>
+            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant" i18n
+              >Followers</span
+            >
           </div>
           <div class="stat-item">
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface">{{
               formatNumber(user.following_count)
             }}</span>
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant" i18n>Following</span>
+            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant" i18n
+              >Following</span
+            >
           </div>
           <div class="stat-item">
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface"
@@ -48,11 +52,11 @@
             class="follow-button"
           >
             @if (user.is_following) {
-              <span i18n>Following</span>
+              <ng-container i18n>Following</ng-container>
             } @else if (user.is_following_back) {
-              <span i18n>Follow Back</span>
+              <ng-container i18n>Follow Back</ng-container>
             } @else {
-              <span i18n>Follow</span>
+              <ng-container i18n>Follow</ng-container>
             }
           </button>
 
@@ -64,7 +68,7 @@
             class="chat-button"
           >
             <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-            <span i18n>Chat</span>
+            <ng-container i18n>Chat</ng-container>
           </button>
         </div>
       </div>
