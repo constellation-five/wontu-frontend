@@ -1,7 +1,7 @@
 <div class="responsive-dialog" [class.is-mobile]="isMobile()">
   @if (isMobile()) {
     <div class="responsive-dialog-topbar">
-      <button i18n matIconButton (click)="close()" class="back-button">
+      <button matIconButton (click)="close()" class="back-button">
         <mat-icon fontSet="material-symbols-outlined">arrow_back</mat-icon>
       </button>
       <div class="responsive-dialog-title mat-font-title-md mat-text-on-surface">{{ title }}</div>

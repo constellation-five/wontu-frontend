@@ -3,7 +3,7 @@
 }
 
 @if (resolvedShowClose) {
-  <button i18n mat-icon-button class="dialog-close-btn" mat-dialog-close>
+  <button mat-icon-button class="dialog-close-btn" mat-dialog-close>
     <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
   </button>
 }
@@ -20,7 +20,7 @@
   <mat-dialog-actions align="end">
     @for (button of resolvedButtons; track button.label) {
       @if (isCallback(button.action)) {
-        <button i18n
+        <button
           [matButton]="button.type"
           [appButtonColor]="button.color ?? 'primary'"
           (click)="invoke(button.action)"
@@ -33,7 +33,7 @@
           {{ button.label }}
         </button>
       } @else {
-        <button i18n
+        <button
           [matButton]="button.type"
           [appButtonColor]="button.color ?? 'primary'"
           [mat-dialog-close]="button.action ?? ''"

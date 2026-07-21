@@ -42,14 +42,14 @@
 
   <div class="auth-button-container">
     @if (!user()) {
-      <button i18n matButton="filled" (click)="goToSignIn()" class="auth-button">
+      <button matButton="filled" (click)="goToSignIn()" class="auth-button">
         <mat-icon fontSet="material-symbols-outlined" matListItemIcon> login </mat-icon>
-        <span class="auth-label">Sign in</span>
+        <span i18n class="auth-label">Sign in</span>
       </button>
     } @else {
-      <button i18n matButton="outlined" appButtonColor="error" (click)="logout()" class="auth-button">
+      <button matButton="outlined" appButtonColor="error" (click)="logout()" class="auth-button">
         <mat-icon fontSet="material-symbols-outlined" matListItemIcon> logout </mat-icon>
-        <span class="auth-label">Sign out</span>
+        <span i18n class="auth-label">Sign out</span>
       </button>
     }
   </div>

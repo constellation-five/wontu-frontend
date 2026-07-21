@@ -31,9 +31,9 @@
           </div>
         </div>
       </div>
-      <button i18n matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
+      <button matButton="tonal" appButtonSize="sm" class="chat-btn" (click)="openChat.emit()">
         <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-        <span>Chat</span>
+        <span i18n>Chat</span>
       </button>
     </div>
   </app-pane>
@@ -51,7 +51,7 @@
         [disabled]="isItemOutOfStock(item)"
       >
         @if (!isItemInCart(item.item_id)) {
-          <button i18n
+          <button
             cardAction
             matButton="tonal"
             appButtonSize="xs"
@@ -59,7 +59,7 @@
             (click)="addToCart.emit(item)"
           >
             <mat-icon fontSet="material-symbols-outlined">add</mat-icon>
-            Add
+            <span i18n>Add</span>
           </button>
         } @else {
           <app-counter-field

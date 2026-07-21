@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../core/auth.service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import AuthLayout from './auth-layout';
 import { ButtonSizeDirective } from '../../shared/directives/button';
 
@@ -10,7 +10,7 @@ import { ButtonSizeDirective } from '../../shared/directives/button';
   selector: 'sign-in-page',
   templateUrl: './sign-in-page.html',
   styleUrl: './sign-in-page.scss',
-  imports: [MatButtonModule, MatIconModule, ButtonSizeDirective, RouterLink, AuthLayout],
+  imports: [MatButtonModule, MatIconModule, ButtonSizeDirective, AuthLayout],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class SignInPage {

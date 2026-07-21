@@ -31,14 +31,13 @@
         there up it's hidden, so this pane needs its own Chat button. -->
         <div class="tablet-only-action">
           <button
-            i18n
             matButton="tonal"
             appButtonSize="sm"
             class="chat-btn"
             (click)="openChat.emit()"
           >
             <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-            <span>Chat</span>
+            <span i18n>Chat</span>
           </button>
         </div>
       </div>
@@ -89,18 +88,17 @@
         @if (!isOfferClosed()) {
           <div class="cart-actions">
             <button
-              i18n
               matButton="outlined"
               appButtonColor="error"
               class="cancel-order-btn"
               (click)="cancelOrder.emit()"
             >
               <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-              <span>Cancel order</span>
+              <span i18n>Cancel order</span>
             </button>
-            <button i18n matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
+            <button matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
               <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-              <span>Edit order</span>
+              <span i18n>Edit order</span>
             </button>
           </div>
         }
@@ -142,7 +140,6 @@
 
         @if (!myOrder()?.payment_submitted_at) {
           <button
-            i18n
             matButton="filled"
             appButtonSize="sm"
             class="complete-payment-btn"
@@ -150,7 +147,7 @@
             (click)="completePayment.emit()"
           >
             <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-            Submit payment
+            <span i18n>Submit payment</span>
           </button>
         }
       </div>
@@ -203,7 +200,6 @@
 
             @if (!myOrder()?.payment_submitted_at) {
               <button
-                i18n
                 matButton="filled"
                 appButtonSize="md"
                 class="complete-payment-btn"
@@ -211,7 +207,7 @@
                 (click)="completePayment.emit()"
               >
                 <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-                Submit payment
+                <span i18n>Submit payment</span>
               </button>
             }
           </div>
@@ -252,14 +248,13 @@
               </div>
             </div>
             <button
-              i18n
               matButton="tonal"
               appButtonSize="sm"
               class="chat-btn"
               (click)="openChat.emit()"
             >
               <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-              <span>Chat</span>
+              <span i18n>Chat</span>
             </button>
           </div>
 
@@ -306,18 +301,17 @@
             @if (!isOfferClosed()) {
               <div class="cart-actions">
                 <button
-                  i18n
                   matButton="outlined"
                   appButtonColor="error"
                   class="cancel-order-btn"
                   (click)="cancelOrder.emit()"
                 >
                   <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-                  <span>Cancel order</span>
+                  <span i18n>Cancel order</span>
                 </button>
-                <button i18n matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
+                <button matButton="tonal" class="edit-order-btn" (click)="editOrder.emit()">
                   <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-                  <span>Edit order</span>
+                  <span i18n>Edit order</span>
                 </button>
               </div>
             }
@@ -336,19 +330,17 @@
       </button>
     }
     <button
-      i18n
       matButton="tonal"
       appButtonSize="sm"
       class="chat-action-btn"
       (click)="openChat.emit()"
     >
       <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-      <span>Chat</span>
+      <span i18n>Chat</span>
     </button>
     @if (!isOfferClosed()) {
       <div class="bottom-actions-row">
         <button
-          i18n
           matButton="outlined"
           appButtonSize="sm"
           appButtonColor="error"
@@ -356,17 +348,16 @@
           (click)="cancelOrder.emit()"
         >
           <mat-icon fontSet="material-symbols-outlined">close</mat-icon>
-          <span>Cancel order</span>
+          <span i18n>Cancel order</span>
         </button>
         <button
-          i18n
           matButton="tonal"
           appButtonSize="sm"
           class="edit-action-btn"
           (click)="editOrder.emit()"
         >
           <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
-          <span>Edit order</span>
+          <span i18n>Edit order</span>
         </button>
       </div>
     }

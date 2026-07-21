@@ -63,7 +63,7 @@
                     Rp {{ +cartItem.item.item_price | number: '1.0-0' }}
                   </div>
                   <div class="cart-item-controls">
-                    <button i18n
+                    <button
                       matIconButton
                       appButtonSize="xs"
                       appIconButtonVariant="outlined"
@@ -104,7 +104,7 @@
 
     <!-- Fixed Bottom Button -->
     <div class="bottom-button-container">
-      <button i18n
+      <button
         matButton="filled"
         appButtonSize="sm"
         class="place-order-btn"
@@ -112,7 +112,7 @@
         (click)="onPlaceOrder()"
       >
         <mat-icon fontSet="material-symbols-outlined">check</mat-icon>
-        Place order
+        <span i18n>Place order</span>
       </button>
     </div>
   </div>

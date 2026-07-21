@@ -40,14 +40,13 @@
   <div class="dialog-footer" [class.hide-inline]="dialogContext?.isMobile()">
     @if (isEdit) {
       <button
-        i18n
         matButton="outlined"
         appButtonColor="error"
         appButtonSize="md"
         (click)="openDeleteConfirm()"
       >
         <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
-        Delete
+        <span i18n>Delete</span>
       </button>
     }
     <div class="spacer"></div>

@@ -7,7 +7,7 @@
   (searchValueChange)="searchQuery.set($event)"
 >
   <ng-container filterActions>
-    <button i18n mat-icon-button [matMenuTriggerFor]="filterMenu">
+    <button mat-icon-button [matMenuTriggerFor]="filterMenu">
       <mat-icon fontSet="material-symbols-outlined">filter_list</mat-icon>
     </button>
 
@@ -37,15 +37,15 @@
     <p class="mat-font-body-lg mat-text-on-surface-variant" i18n>Loading requests...</p>
   </div>
 } @else if (filteredRequests().length > 0) {
-  
+
   @if (ongoingRequests().length > 0) {
     <div class="section-container">
       <h2 class="section-title mat-font-title-lg" i18n>Ongoing</h2>
       <div class="requests-grid">
         @for (req of ongoingRequests(); track req.request_id) {
-          <app-request-card 
+          <app-request-card
             [title]="req.item_name"
-            i18n-subtitle subtitle="Untuk {{ req.arrival_time | naturalDateTime }}"
+            i18n-subtitle subtitle="For {{ req.arrival_time | naturalDateTime }}"
             [category]="req.category"
             [votes]="req.total_votes"
             [hasVoted]="req.has_voted || false"
@@ -67,9 +67,9 @@
       }
       <div class="requests-grid">
         @for (req of otherRequests(); track req.request_id) {
-          <app-request-card 
+          <app-request-card
             [title]="req.item_name"
-            i18n-subtitle subtitle="Untuk {{ req.arrival_time | naturalDateTime }}"
+            i18n-subtitle subtitle="For {{ req.arrival_time | naturalDateTime }}"
             [category]="req.category"
             [votes]="req.total_votes"
             [hasVoted]="req.has_voted || false"

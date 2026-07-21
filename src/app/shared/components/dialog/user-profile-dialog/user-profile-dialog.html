@@ -38,7 +38,7 @@
         </div>
 
         <div class="actions">
-          <button i18n
+          <button
             [matButton]="user.is_following ? 'outlined' : 'filled'"
             [appButtonSize]="'sm'"
             [disabled]="isProcessing()"
@@ -48,15 +48,15 @@
             class="follow-button"
           >
             @if (user.is_following) {
-              Following
+              <span i18n>Following</span>
             } @else if (user.is_following_back) {
-              Follow Back
+              <span i18n>Follow Back</span>
             } @else {
-              Follow
+              <span i18n>Follow</span>
             }
           </button>
 
-          <button i18n
+          <button
             matButton="tonal"
             [appButtonSize]="'sm'"
             [disabled]="isOpeningChat()"
@@ -64,7 +64,7 @@
             class="chat-button"
           >
             <mat-icon fontSet="material-symbols-outlined">chat</mat-icon>
-            Chat
+            <span i18n>Chat</span>
           </button>
         </div>
       </div>

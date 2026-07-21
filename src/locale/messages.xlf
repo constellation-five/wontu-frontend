@@ -475,18 +475,11 @@
           <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2517285658005471643" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>login<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Sign in with Google </source>
+      <trans-unit id="2734138791192936323" datatype="html">
+        <source>Sign in with Google</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/auth/sign-in-page.html</context>
-          <context context-type="linenumber">3,7</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6967248691718982330" datatype="html">
-        <source> By signing in, you agree to our <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/terms&quot;&gt;"/>Terms of Service<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/> and <x id="START_LINK_1" equiv-text="&lt;a routerLink=&quot;/privacy&quot;&gt;"/>Privacy Policy<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>. </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/auth/sign-in-page.html</context>
-          <context context-type="linenumber">8,13</context>
+          <context context-type="linenumber">4,5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6788358286201282167" datatype="html">
@@ -694,17 +687,6 @@
           <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8974301203152244473" datatype="html">
-        <source><x id="START_BLOCK_IF" equiv-text="@if (owner.avatar) {"/><x id="TAG_IMG" ctype="image" equiv-text="&lt;img [src]=&quot;owner.avatar&quot; [alt]=&quot;owner.name&quot; class=&quot;avatar&quot; /&gt;"/><x id="CLOSE_BLOCK_IF" equiv-text="}"/><x id="START_BLOCK_ELSE" equiv-text="@else {"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div class=&quot;avatar-placeholder mat-bg-primary mat-text-on-primary&quot;&gt;"/> <x id="INTERPOLATION" equiv-text="{{ owner.name.charAt(0).toUpperCase() }}"/> <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="CLOSE_BLOCK_ELSE" equiv-text="}"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;member-name mat-font-body-md mat-text-on-surface&quot;&gt;"/><x id="INTERPOLATION_1" equiv-text="{{ owner.name }}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/chat/chat-information-pane/chat-information-pane.html</context>
-          <context context-type="linenumber">5,14</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/chat/chat-information-pane/chat-information-pane.html</context>
-          <context context-type="linenumber">21,30</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="4691887509600985309" datatype="html">
         <source>Members</source>
         <context-group purpose="location">
@@ -717,13 +699,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/chat/chat-information-pane/chat-information-pane.html</context>
           <context context-type="linenumber">31,33</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2799775818585784647" datatype="html">
-        <source><x id="START_BLOCK_IF" equiv-text="@if (message().sender?.avatar) {"/><x id="TAG_IMG" ctype="image" equiv-text="&lt;img [src]=&quot;message().sender!.avatar&quot; [alt]=&quot;message().sender!.name&quot; class=&quot;avatar&quot; /&gt;"/><x id="CLOSE_BLOCK_IF" equiv-text="}"/><x id="START_BLOCK_ELSE" equiv-text="@else {"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div class=&quot;avatar-placeholder mat-bg-primary mat-text-on-primary&quot;&gt;"/> <x id="INTERPOLATION" equiv-text="{{ message().sender?.name?.charAt(0)?.toUpperCase() }}"/> <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="CLOSE_BLOCK_ELSE" equiv-text="}"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/chat/chat-message-bubble/chat-message-bubble.html</context>
-          <context context-type="linenumber">21,29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="720557322859638078" datatype="html">
@@ -816,6 +791,42 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/chat/group/offer-chat-page.ts</context>
           <context context-type="linenumber">86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">257,258</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">339,340</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
+          <context context-type="linenumber">96,97</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
+          <context context-type="linenumber">112,113</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
+          <context context-type="linenumber">165,166</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
+          <context context-type="linenumber">181,182</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
+          <context context-type="linenumber">67,68</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7668600654612737658" datatype="html">
@@ -992,33 +1003,53 @@
           <context context-type="linenumber">29,30</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5050307465636924350" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>delete<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Delete </source>
+      <trans-unit id="7022070615528435141" datatype="html">
+        <source>Delete</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.html</context>
-          <context context-type="linenumber">49,51</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.ts</context>
+          <context context-type="linenumber">156</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.ts</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="664642376054511775" datatype="html">
         <source>Save item</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2722549756198502062" datatype="html">
         <source>Add item</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
+          <context context-type="linenumber">146,147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3919970762431388474" datatype="html">
@@ -1090,21 +1121,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.ts</context>
           <context context-type="linenumber">107</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7022070615528435141" datatype="html">
-        <source>Delete</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/create/add-edit-item-dialog/add-edit-item-dialog.ts</context>
-          <context context-type="linenumber">156</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/request/request-form-dialog/request-form-dialog.ts</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.ts</context>
-          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3490413854487460802" datatype="html">
@@ -1237,7 +1253,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">111,112</context>
+          <context context-type="linenumber">109,110</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
@@ -1255,6 +1271,10 @@
           <context context-type="sourcefile">src/app/features/payment-method/payment-method.routes.ts</context>
           <context context-type="linenumber">8</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
+          <context context-type="linenumber">65,66</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="4496332663920624461" datatype="html">
         <source>No payment methods</source>
@@ -1270,18 +1290,22 @@
           <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5586706918499988479" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Add payment method </source>
+      <trans-unit id="1933914522140491059" datatype="html">
+        <source>Add payment method</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
-          <context context-type="linenumber">93,95</context>
+          <context context-type="linenumber">93,94</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/payment-method/payment-method-page.html</context>
+          <context context-type="linenumber">35,36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5802735201456620000" datatype="html">
         <source>Item Summary</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
-          <context context-type="linenumber">100,101</context>
+          <context context-type="linenumber">99,100</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
@@ -1292,50 +1316,43 @@
         <source>Edit item</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
-          <context context-type="linenumber">120,121</context>
+          <context context-type="linenumber">119,120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="559616104966742986" datatype="html">
         <source>No items</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
-          <context context-type="linenumber">135,136</context>
+          <context context-type="linenumber">134,135</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5394188582994379137" datatype="html">
         <source>No items added yet.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
-          <context context-type="linenumber">136,137</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5896527948926081771" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Add item </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
-          <context context-type="linenumber">147,149</context>
+          <context context-type="linenumber">135,136</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7000649363168371045" datatype="html">
         <source>Save changes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
-          <context context-type="linenumber">162</context>
+          <context context-type="linenumber">160</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
-          <context context-type="linenumber">183</context>
+          <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6740617001434617442" datatype="html">
         <source>Create offer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
-          <context context-type="linenumber">162</context>
+          <context context-type="linenumber">160</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/create/offer-create-page.html</context>
-          <context context-type="linenumber">183</context>
+          <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5551307948733637188" datatype="html">
@@ -1485,6 +1502,14 @@
           <context context-type="sourcefile">src/app/features/offer/detail/edit-notes-dialog.ts</context>
           <context context-type="linenumber">23</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
+          <context context-type="linenumber">75,76</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="5280218112746407598" datatype="html">
         <source>New</source>
@@ -1501,49 +1526,30 @@
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7731589110257300757" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>chat<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Chat<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">40,42</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">261,263</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">345,348</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
-          <context context-type="linenumber">35,38</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="1014381678648847909" datatype="html">
         <source>Give rating</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">54,55</context>
+          <context context-type="linenumber">53,54</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">274,275</context>
+          <context context-type="linenumber">269,270</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">335,336</context>
+          <context context-type="linenumber">329,330</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4398863504443682316" datatype="html">
         <source>Cart</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">65</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">281</context>
+          <context context-type="linenumber">276</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
@@ -1574,11 +1580,11 @@
         <source>Empty cart</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">73</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">292,293</context>
+          <context context-type="linenumber">287,288</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
@@ -1593,78 +1599,86 @@
         <source>You have no items.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">75,76</context>
+          <context context-type="linenumber">74,75</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">295,296</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5767099475841832120" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>close<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Cancel order<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">98,100</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">315,317</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">358,360</context>
+          <context context-type="linenumber">290,291</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="195402996272871523" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>edit<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Edit order<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+      <trans-unit id="6250742806431534479" datatype="html">
+        <source>Cancel order</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">102,104</context>
+          <context context-type="linenumber">97,98</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">319,321</context>
+          <context context-type="linenumber">310,311</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">368,370</context>
+          <context context-type="linenumber">351,352</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-detail-page.ts</context>
+          <context context-type="linenumber">501</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5144500553106830489" datatype="html">
+        <source>Edit order</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">101,102</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">314,315</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
+          <context context-type="linenumber">360,361</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4882758884531066374" datatype="html">
         <source>Proof of payment</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">126,128</context>
+          <context context-type="linenumber">124,126</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">136,137</context>
+          <context context-type="linenumber">134,135</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">187,189</context>
+          <context context-type="linenumber">184,186</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">197,198</context>
+          <context context-type="linenumber">194,195</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
+          <context context-type="linenumber">50,51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4782334743073426234" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>check<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Submit payment </source>
+      <trans-unit id="4963500109583985017" datatype="html">
+        <source>Submit payment</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">152,154</context>
+          <context context-type="linenumber">150,151</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">213,215</context>
+          <context context-type="linenumber">210,211</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4892553839051604445" datatype="html">
         <source>Payment</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-checkout-view.html</context>
-          <context context-type="linenumber">171,172</context>
+          <context context-type="linenumber">168,169</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4593198389671383779" datatype="html">
@@ -1796,13 +1810,6 @@
           <context context-type="linenumber">496</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6250742806431534479" datatype="html">
-        <source>Cancel order</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/detail/offer-detail-page.ts</context>
-          <context context-type="linenumber">501</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="6187963014541155434" datatype="html">
         <source>Order cancelled successfully.</source>
         <context-group purpose="location">
@@ -1892,11 +1899,11 @@
           <context context-type="linenumber">760</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="594606019241856064" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Add </source>
+      <trans-unit id="3249513483374643425" datatype="html">
+        <source>Add</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
-          <context context-type="linenumber">61,63</context>
+          <context context-type="linenumber">62,63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6165610455390034144" datatype="html">
@@ -1923,6 +1930,10 @@
           <context context-type="sourcefile">src/app/features/offer/detail/offer-menu-view.html</context>
           <context context-type="linenumber">115</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.html</context>
+          <context context-type="linenumber">115,116</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="1541035388696902116" datatype="html">
         <source>View Cart</source>
@@ -1945,33 +1956,6 @@
           <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6320826642679765525" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>edit<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.html</context>
-          <context context-type="linenumber">73,74</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
-          <context context-type="linenumber">45,46</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
-          <context context-type="linenumber">83,84</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/request/request-card/request-card.html</context>
-          <context context-type="linenumber">42,44</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/cart-item-card/cart-item-card.html</context>
-          <context context-type="linenumber">37,38</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/payment-method-card/payment-method-card.html</context>
-          <context context-type="linenumber">47,49</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="3448462145758383019" datatype="html">
         <source>Total</source>
         <context-group purpose="location">
@@ -1979,29 +1963,11 @@
           <context context-type="linenumber">97,98</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8952191148884594625" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>check<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Place order </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/detail/offer-mobile-cart.html</context>
-          <context context-type="linenumber">114,116</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="3354327203668161014" datatype="html">
         <source>Search offers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
           <context context-type="linenumber">5,6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2958474740851753232" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>filter_list<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
-          <context context-type="linenumber">11,14</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/request/request-page.html</context>
-          <context context-type="linenumber">11,14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2839169248416475627" datatype="html">
@@ -2061,17 +2027,6 @@
           <context context-type="linenumber">69,70</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5108291808218367313" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/index/offer-index-page.html</context>
-          <context context-type="linenumber">75,78</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/counter-field/counter-field.html</context>
-          <context context-type="linenumber">35,37</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="8634025124141616528" datatype="html">
         <source>Customers</source>
         <context-group purpose="location">
@@ -2079,18 +2034,11 @@
           <context context-type="linenumber">7,8</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4845600977964286440" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>visibility<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Proof of payment </source>
+      <trans-unit id="2026450774937892412" datatype="html">
+        <source>Confirm payment</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">49,51</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5701737465145793885" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>check<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Confirm payment </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">54,56</context>
+          <context context-type="linenumber">55,56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="404947696695291150" datatype="html">
@@ -2107,63 +2055,44 @@
           <context context-type="linenumber">76,77</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="396049442565305311" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>check<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Close offer now </source>
+      <trans-unit id="4453652050416555263" datatype="html">
+        <source>Close offer now</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">91,93</context>
+          <context context-type="linenumber">92,93</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">160,163</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="38248729830912381" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>chat<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Chat </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">95,97</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">111,113</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">164,167</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">180,183</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
-          <context context-type="linenumber">66,68</context>
+          <context context-type="linenumber">161,162</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6441463417190728141" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>local_shipping<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Mark items as arrived </source>
+      <trans-unit id="267273248478330201" datatype="html">
+        <source>Mark items as arrived</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">106,108</context>
+          <context context-type="linenumber">107,108</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">175,177</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7957286061738960713" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>edit<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Edit offer </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">132,134</context>
+          <context context-type="linenumber">176,177</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5507948590958922776" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>delete<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Delete offer </source>
+      <trans-unit id="6602573058780469604" datatype="html">
+        <source>Edit offer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
-          <context context-type="linenumber">141,143</context>
+          <context context-type="linenumber">133,134</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2509563724331980771" datatype="html">
+        <source>Delete offer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.html</context>
+          <context context-type="linenumber">142,143</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.ts</context>
+          <context context-type="linenumber">299</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4262983296715679816" datatype="html">
@@ -2264,13 +2193,6 @@
           <context context-type="linenumber">295</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2509563724331980771" datatype="html">
-        <source>Delete offer</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/offer/manage/manage-offer-page.ts</context>
-          <context context-type="linenumber">299</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="6254111697774024785" datatype="html">
         <source>Offer deleted successfully.</source>
         <context-group purpose="location">
@@ -2320,13 +2242,6 @@
           <context context-type="linenumber">23,24</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5444227563365430925" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>add<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Add payment method<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/payment-method/payment-method-page.html</context>
-          <context context-type="linenumber">34,37</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="4086606389696938932" datatype="html">
         <source>Account</source>
         <context-group purpose="location">
@@ -2340,6 +2255,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/account/account-page.ts</context>
           <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
+          <context context-type="linenumber">56,57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/profile.routes.ts</context>
@@ -2397,17 +2316,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
           <context context-type="linenumber">21,22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3620188369327429839" datatype="html">
-        <source> Save </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/account/account-page.html</context>
-          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5762208451608373302" datatype="html">
@@ -2546,12 +2454,20 @@
           <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
           <context context-type="linenumber">30,31</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="7410381671309784681" datatype="html">
         <source>Follow Back</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/followers/followers-page.html</context>
           <context context-type="linenumber">74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
+          <context context-type="linenumber">53,54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6744074839912035158" datatype="html">
@@ -2575,64 +2491,23 @@
           <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8528472629007912759" datatype="html">
-        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;stat-value mat-font-body-lg text-bold mat-text-on-surface&quot;
-              &gt;"/><x id="INTERPOLATION" equiv-text="{{ user.average_rating }}"/>/5<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="START_TAG_SPAN_1" ctype="x-span_1" equiv-text="&lt;span class=&quot;stat-label mat-font-body-sm mat-text-on-surface-variant&quot;&gt;"/>Rating<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+      <trans-unit id="3706222784708785028" datatype="html">
+        <source>Rating</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
-          <context context-type="linenumber">41,45</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="332845202915869808" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;menu-icon&quot; fontSet=&quot;material-symbols-outlined&quot;&gt;"/>person<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Account </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
-          <context context-type="linenumber">55,57</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="443480739371437473" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;menu-icon&quot; fontSet=&quot;material-symbols-outlined&quot;&gt;"/>attach_money<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Payment Methods </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
-          <context context-type="linenumber">64,66</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="663002514756981497" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;menu-icon&quot; fontSet=&quot;material-symbols-outlined&quot;&gt;"/>settings<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Settings </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
-          <context context-type="linenumber">73,75</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6486292083535762606" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon class=&quot;menu-icon logout-icon&quot; fontSet=&quot;material-symbols-outlined&quot;
-              &gt;"/>logout<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon
-            &gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;logout-text&quot;&gt;"/>Sign out<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
-          <context context-type="linenumber">78,82</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2949848596707725099" datatype="html">
-        <source>Sign out</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/profile-page.ts</context>
-          <context context-type="linenumber">182</context>
+          <context context-type="linenumber">44,45</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/profile-page.ts</context>
-          <context context-type="linenumber">191</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4032564796655469317" datatype="html">
-        <source>Are you sure you want to Sign out?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/profile-page.ts</context>
-          <context context-type="linenumber">183</context>
+          <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
+          <context context-type="linenumber">36,37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4930506384627295710" datatype="html">
         <source>Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
+          <context context-type="linenumber">74,75</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/profile.routes.ts</context>
           <context context-type="linenumber">41</context>
@@ -2650,30 +2525,37 @@
           <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="2949848596707725099" datatype="html">
+        <source>Sign out</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/profile-page.html</context>
+          <context context-type="linenumber">81,82</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/profile-page.ts</context>
+          <context context-type="linenumber">182</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/profile-page.ts</context>
+          <context context-type="linenumber">191</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/components/navbar/navbar.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4032564796655469317" datatype="html">
+        <source>Are you sure you want to Sign out?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/profile-page.ts</context>
+          <context context-type="linenumber">183</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4562415420394460770" datatype="html">
         <source>Customer Ratings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/rating/rating-dialog.html</context>
           <context context-type="linenumber">4,5</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6923398455202409832" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>close<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/profile/rating/rating-dialog.html</context>
-          <context context-type="linenumber">6,8</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/dialog/dialog.html</context>
-          <context context-type="linenumber">7,11</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/file-drop-upload/file-drop-upload.html</context>
-          <context context-type="linenumber">11,13</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/location-picker-dialog/location-picker-dialog.html</context>
-          <context context-type="linenumber">15,17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5338923183168765550" datatype="html">
@@ -3010,8 +2892,8 @@
           <context context-type="linenumber">43,44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1865347317606860963" datatype="html">
-        <source>Untuk <x id="INTERPOLATION" equiv-text="{{ req.arrival_time | naturalDateTime }}"/></source>
+      <trans-unit id="367244073978197034" datatype="html">
+        <source>For <x id="INTERPOLATION" equiv-text="{{ req.arrival_time | naturalDateTime }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/request/request-page.html</context>
           <context context-type="linenumber">48,49</context>
@@ -3035,36 +2917,11 @@
           <context context-type="linenumber">90,91</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3611242113152271168" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>remove<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/counter-field/counter-field.html</context>
-          <context context-type="linenumber">14,17</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4941807605073703580" datatype="html">
-        <source><x id="START_BLOCK_IF" equiv-text="@if (button.icon) {"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/><x id="INTERPOLATION" equiv-text="{{ button.icon }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="CLOSE_BLOCK_IF" equiv-text="}"/> <x id="INTERPOLATION_1" equiv-text="{{ button.label }}"/> </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/dialog/dialog.html</context>
-          <context context-type="linenumber">30,35</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/dialog/dialog.html</context>
-          <context context-type="linenumber">42,47</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3706222784708785028" datatype="html">
-        <source>Rating</source>
+      <trans-unit id="6018246591673612412" datatype="html">
+        <source>Follow</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
-          <context context-type="linenumber">36,37</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5501716871279695308" datatype="html">
-        <source><x id="START_BLOCK_IF" equiv-text="@if (user.is_following) {"/> Following <x id="CLOSE_BLOCK_IF" equiv-text="}"/><x id="START_BLOCK_ELSE_IF" equiv-text="@else if (user.is_following_back) {"/> Follow Back <x id="CLOSE_BLOCK_ELSE_IF" equiv-text="}"/><x id="START_BLOCK_ELSE" equiv-text="@else {"/> Follow <x id="CLOSE_BLOCK_ELSE" equiv-text="}"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/dialog/user-profile-dialog/user-profile-dialog.html</context>
-          <context context-type="linenumber">50,57</context>
+          <context context-type="linenumber">55,56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5093913984358284289" datatype="html">
@@ -3158,13 +3015,6 @@
           <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1697920748334383570" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>location_on<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> <x id="INTERPOLATION" equiv-text="{{ location() }}"/> </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/main-page-header/main-page-header.html</context>
-          <context context-type="linenumber">6,9</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="1348774649041038169" datatype="html">
         <source>Navigation</source>
         <context-group purpose="location">
@@ -3186,18 +3036,11 @@
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2714759071040902361" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot; matListItemIcon&gt;"/> login <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;auth-label&quot;&gt;"/>Sign in<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+      <trans-unit id="5207635742003539443" datatype="html">
+        <source>Sign in</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/navbar/navbar.html</context>
-          <context context-type="linenumber">46,49</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3280395262081693668" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot; matListItemIcon&gt;"/> logout <x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;auth-label&quot;&gt;"/>Sign out<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/navbar/navbar.html</context>
-          <context context-type="linenumber">51,54</context>
+          <context context-type="linenumber">47,48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="186236568870281953" datatype="html">
@@ -3255,13 +3098,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
           <context context-type="linenumber">27</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4542684186080088942" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>content_copy<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/payment-method-card/payment-method-card.html</context>
-          <context context-type="linenumber">32,33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8057745565493131709" datatype="html">
@@ -3369,13 +3205,6 @@
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5910325088759396964" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>delete<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Delete<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.html</context>
-          <context context-type="linenumber">48,51</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="9178182467454450952" datatype="html">
         <source>Confirm</source>
         <context-group purpose="location">
@@ -3430,13 +3259,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/payment-method-form-dialog/payment-method-form-dialog.ts</context>
           <context context-type="linenumber">129</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="805021073728944072" datatype="html">
-        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon fontSet=&quot;material-symbols-outlined&quot;&gt;"/>arrow_back<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/components/responsive-dialog/responsive-dialog-wrapper.html</context>
-          <context context-type="linenumber">5,7</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3643866539136239218" datatype="html">

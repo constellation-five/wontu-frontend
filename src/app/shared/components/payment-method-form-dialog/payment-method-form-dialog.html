@@ -37,7 +37,7 @@
 
 <mat-dialog-actions>
   @if (isEditMode) {
-    <button i18n
+    <button
       type="button"
       matButton="outlined"
       appButtonSize="sm"
@@ -46,7 +46,7 @@
       (click)="openDeleteConfirm()"
     >
       <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
-      <span>Delete</span>
+      <span i18n>Delete</span>
     </button>
   }
 

@@ -37,48 +37,48 @@
             }}</span>
             <span i18n class="stat-label mat-font-body-sm mat-text-on-surface-variant">Following</span>
           </a>
-          <button i18n (click)="openRatingDialog()" class="stat-item stat-button">
+          <button (click)="openRatingDialog()" class="stat-item stat-button">
             <span class="stat-value mat-font-body-lg text-bold mat-text-on-surface"
               >{{ user.average_rating }}/5</span
             >
-            <span class="stat-label mat-font-body-sm mat-text-on-surface-variant">Rating</span>
+            <span i18n class="stat-label mat-font-body-sm mat-text-on-surface-variant">Rating</span>
           </button>
         </div>
 
         <!-- Menu Items -->
         <nav class="menu">
-          <button i18n
+          <button
             (click)="navigateToSubpage('')"
             [class.active]="currentRoute() === 'account'"
             class="menu-item mat-font-label-lg mat-text-on-surface"
           >
             <mat-icon class="menu-icon" fontSet="material-symbols-outlined">person</mat-icon>
-            Account
+            <span i18n>Account</span>
           </button>
 
-          <button i18n
+          <button
             (click)="navigateToSubpage('payment-method')"
             [class.active]="currentRoute() === 'payment'"
             class="menu-item mat-font-label-lg mat-text-on-surface"
           >
             <mat-icon class="menu-icon" fontSet="material-symbols-outlined">attach_money</mat-icon>
-            Payment Methods
+            <span i18n>Payment Methods</span>
           </button>
 
-          <button i18n
+          <button
             (click)="navigateToSubpage('settings')"
             [class.active]="currentRoute() === 'settings'"
             class="menu-item mat-font-label-lg mat-text-on-surface"
           >
             <mat-icon class="menu-icon" fontSet="material-symbols-outlined">settings</mat-icon>
-            Settings
+            <span i18n>Settings</span>
           </button>
 
-          <button i18n (click)="logout()" class="menu-item mat-font-label-lg logout-btn">
+          <button (click)="logout()" class="menu-item mat-font-label-lg logout-btn">
             <mat-icon class="menu-icon logout-icon" fontSet="material-symbols-outlined"
               >logout</mat-icon
             >
-            <span class="logout-text">Sign out</span>
+            <span i18n class="logout-text">Sign out</span>
           </button>
         </nav>
       }

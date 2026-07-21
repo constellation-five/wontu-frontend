@@ -1,7 +1,7 @@
 <div class="section">
   <h3 class="section-title mat-font-label-lg mat-text-on-surface-variant" i18n>Seller</h3>
   @if (owner(); as owner) {
-    <button i18n class="member-row" type="button" (click)="memberClick.emit(owner.user_id)">
+    <button class="member-row" type="button" (click)="memberClick.emit(owner.user_id)">
       @if (owner.avatar) {
         <img [src]="owner.avatar" [alt]="owner.name" class="avatar" />
       } @else {
@@ -17,7 +17,7 @@
 <div class="section">
   <h3 class="section-title mat-font-label-lg mat-text-on-surface-variant" i18n>Members</h3>
   @for (member of members(); track member.user_id) {
-    <button i18n class="member-row" type="button" (click)="memberClick.emit(member.user_id)">
+    <button class="member-row" type="button" (click)="memberClick.emit(member.user_id)">
       @if (member.avatar) {
         <img [src]="member.avatar" [alt]="member.name" class="avatar" />
       } @else {

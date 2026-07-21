@@ -26,18 +26,18 @@
                   }
                 </mat-form-field>
                 @if (isEditingName()) {
-                  <button i18n
+                  <button
                     matButton="filled"
                     appButtonSize="sm"
                     appButtonColor="primary"
                     (click)="saveProfile()"
                     [disabled]="profileForm.invalid || isSaving()"
                     class="save-btn"
-                   i18n>
-                    Save
+                   >
+                    <span i18n>Save</span>
                   </button>
                 } @else {
-                  <button i18n
+                  <button
                     mat-icon-button
                     (click)="enableNameEdit()"
                     class="edit-btn"
@@ -71,11 +71,11 @@
                     (click)="saveProfile()"
                     [disabled]="profileForm.invalid || isSaving()"
                     class="save-btn"
-                   i18n>
-                    Save
+                   >
+                    <span i18n>Save</span>
                   </button>
                 } @else {
-                  <button i18n
+                  <button
                     mat-icon-button
                     (click)="enableUsernameEdit()"
                     class="edit-btn"
