@@ -108,6 +108,11 @@ export class SettingsPage implements OnInit {
       label: $localize`Chat messages`,
       description: $localize`You receive a new direct or group chat message.`,
     },
+    {
+      id: 'following-new-posts',
+      label: $localize`Following new posts`,
+      description: $localize`Someone you follow creates a new offer or request.`,
+    },
   ];
 
   notificationSettings = signal<NotificationSetting[]>([]);

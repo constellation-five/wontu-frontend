@@ -380,6 +380,34 @@
           <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="notif.following_new_offer.title" datatype="html">
+        <source>New Offer from <x id="PH" equiv-text="params[&apos;user_name&apos;]"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.following_new_offer.desc" datatype="html">
+        <source><x id="PH" equiv-text="params[&apos;user_name&apos;]"/> just created a new offer: <x id="PH_1" equiv-text="params[&apos;offer_name&apos;]"/>.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.following_new_request.title" datatype="html">
+        <source>New Request from <x id="PH" equiv-text="params[&apos;user_name&apos;]"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">147</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.following_new_request.desc" datatype="html">
+        <source><x id="PH" equiv-text="params[&apos;user_name&apos;]"/> just created a new request: <x id="PH_1" equiv-text="params[&apos;request_name&apos;]"/>.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5639297788212274461" datatype="html">
         <source>Rate</source>
         <context-group purpose="location">
@@ -2832,39 +2860,53 @@
           <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="5581456603673044979" datatype="html">
+        <source>Following new posts</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2576129612206714566" datatype="html">
+        <source>Someone you follow creates a new offer or request.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5866254605255506989" datatype="html">
         <source>English</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">123</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8312065814232621608" datatype="html">
         <source>Indonesian</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6434435800257256684" datatype="html">
         <source>System theme</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="413116577994876478" datatype="html">
         <source>Light</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3892161059518616136" datatype="html">
         <source>Dark</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">130</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7808678925665188385" datatype="html">

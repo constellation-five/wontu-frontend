@@ -3798,6 +3798,54 @@
           <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="notif.following_new_offer.title" datatype="html">
+        <source>New Offer from <x id="PH" equiv-text="params['user_name']"/></source>
+        <target>Offer Baru dari <x id="PH" equiv-text="params['user_name']"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.following_new_offer.desc" datatype="html">
+        <source><x id="PH" equiv-text="params['user_name']"/> just created a new offer: <x id="PH_1" equiv-text="params['offer_name']"/>.</source>
+        <target><x id="PH" equiv-text="params['user_name']"/> baru saja membuat offer baru: <x id="PH_1" equiv-text="params['offer_name']"/>.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.following_new_request.title" datatype="html">
+        <source>New Request from <x id="PH" equiv-text="params['user_name']"/></source>
+        <target>Request Baru dari <x id="PH" equiv-text="params['user_name']"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">147</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="notif.following_new_request.desc" datatype="html">
+        <source><x id="PH" equiv-text="params['user_name']"/> just created a new request: <x id="PH_1" equiv-text="params['request_name']"/>.</source>
+        <target><x id="PH" equiv-text="params['user_name']"/> baru saja membuat request baru: <x id="PH_1" equiv-text="params['request_name']"/>.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/core/message-template.service.ts</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5581456603673044979" datatype="html">
+        <source>Following new posts</source>
+        <target>Postingan baru dari yang difollow</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2576129612206714566" datatype="html">
+        <source>Someone you follow creates a new offer or request.</source>
+        <target>Seseorang yang Anda follow membuat penawaran atau permintaan baru.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/profile/settings/settings-page.ts</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+      </trans-unit>
     </body>
   </file>
 </xliff>

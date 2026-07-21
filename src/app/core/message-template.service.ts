@@ -142,6 +142,16 @@ export class MessageTemplateService {
             ? $localize`:@@notif.new_chat_message.sent_image:Sent an image` 
             : params['preview'],
         };
+      case 'NOTIF_FOLLOWING_NEW_OFFER':
+        return {
+          title: $localize`:@@notif.following_new_offer.title:New Offer from ${params['user_name']}`,
+          description: $localize`:@@notif.following_new_offer.desc:${params['user_name']} just created a new offer: ${params['offer_name']}.`,
+        };
+      case 'NOTIF_FOLLOWING_NEW_REQUEST':
+        return {
+          title: $localize`:@@notif.following_new_request.title:New Request from ${params['user_name']}`,
+          description: $localize`:@@notif.following_new_request.desc:${params['user_name']} just created a new request: ${params['request_name']}.`,
+        };
       default:
         return { title: 'Notification', description: '' };
     }
