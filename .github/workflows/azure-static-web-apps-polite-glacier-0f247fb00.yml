@@ -51,7 +51,7 @@ jobs:
           
           # Prevent root Service Worker from intercepting /id/* navigation requests
           if [ -f dist/wontu-frontend/browser/ngsw.json ]; then
-            jq '.navigationUrls += [{"positive": false, "regex": "^\\\\/id\\\\/.*$"}]' dist/wontu-frontend/browser/ngsw.json > dist/wontu-frontend/browser/ngsw.tmp.json
+            jq '.navigationUrls += [{"positive": false, "regex": "^\\/id(?:\\/.*)?$"}]' dist/wontu-frontend/browser/ngsw.json > dist/wontu-frontend/browser/ngsw.tmp.json
             mv dist/wontu-frontend/browser/ngsw.tmp.json dist/wontu-frontend/browser/ngsw.json
           fi
       - name: Deploy
