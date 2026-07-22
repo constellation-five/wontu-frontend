@@ -101,24 +101,6 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
       rel="stylesheet"
     />
-    <script>
-      (function () {
-        var lang = localStorage.getItem('language');
-        var isId =
-          window.location.pathname.startsWith('/id/') || window.location.pathname === '/id';
-        if (lang) {
-          if (lang === 'id' && !isId) {
-            window.location.replace('/id' + window.location.pathname + window.location.search);
-          } else if (lang === 'en' && isId) {
-            var newPath = window.location.pathname.replace(/^\/id\/?/, '/') || '/';
-            window.location.replace(newPath + window.location.search);
-          }
-        } else if (isId) {
-          var newPath = window.location.pathname.replace(/^\/id\/?/, '/') || '/';
-          window.location.replace(newPath + window.location.search);
-        }
-      })();
-    </script>
     <link rel="manifest" href="manifest.webmanifest" />
   </head>
   <body>

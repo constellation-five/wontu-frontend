@@ -40,7 +40,7 @@ export const appConfig: ApplicationConfig = {
       return auth.loadUser();
     }),
     { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } },
-    provideServiceWorker('ngsw-worker.js', {
+    provideServiceWorker('/ngsw-worker.js', {
       registrationStrategy: 'registerWhenStable:30000',
     }),
   ],

@@ -46,14 +46,17 @@ jobs:
           npm install -g pnpm
           pnpm install --no-frozen-lockfile --dangerously-allow-all-builds
           pnpm run build
-          mv dist/wontu-frontend/browser/en/* dist/wontu-frontend/browser/
-          rm -rf dist/wontu-frontend/browser/en
+          cp src/root-redirect.html dist/wontu-frontend/browser/index.html
           
-          # Prevent root Service Worker from intercepting /id/* navigation requests
-          if [ -f dist/wontu-frontend/browser/ngsw.json ]; then
-            jq '.navigationUrls += [{"positive": false, "regex": "^\\/id(?:\\/.*)?$"}]' dist/wontu-frontend/browser/ngsw.json > dist/wontu-frontend/browser/ngsw.tmp.json
-            mv dist/wontu-frontend/browser/ngsw.tmp.json dist/wontu-frontend/browser/ngsw.json
-          fi
+          # Move Service Worker to root so both apps share it
+          mv dist/wontu-frontend/browser/en/ngsw.json dist/wontu-frontend/browser/ngsw.json
+          mv dist/wontu-frontend/browser/en/ngsw-worker.js dist/wontu-frontend/browser/ngsw-worker.js
+          
+          # Move Azure Static Web Apps config to root so it applies to the whole app
+          mv dist/wontu-frontend/browser/en/staticwebapp.config.json dist/wontu-frontend/browser/staticwebapp.config.json
+          
+          # Clean up unused duplicate files to save space
+          rm -f dist/wontu-frontend/browser/id/ngsw.json dist/wontu-frontend/browser/id/ngsw-worker.js dist/wontu-frontend/browser/id/staticwebapp.config.json
       - name: Deploy
         id: deploy
         uses: Azure/static-web-apps-deploy@v1

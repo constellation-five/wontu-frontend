@@ -14,7 +14,7 @@
       "sourceRoot": "src",
       "prefix": "app",
       "i18n": {
-        "sourceLocale": { "code": "en", "baseHref": "/" },
+        "sourceLocale": { "code": "en", "baseHref": "/en/" },
         "locales": {
           "id": {
             "translation": "src/locale/messages.id.xlf",
@@ -26,7 +26,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "localize": ["id"],
+            "localize": ["en", "id"],
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
