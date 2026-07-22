@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Wontu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script>
+      (function () {
+        var lang = localStorage.getItem('language');
+
+        if (!lang) {
+          var browserLang = navigator.language || navigator.userLanguage;
+          lang = browserLang.startsWith('id') ? 'id' : 'en';
+        }
+
+        var targetPath = window.location.pathname;
+        if (targetPath === '/' || targetPath === '') {
+            targetPath = '/offers'; // Default route
+        }
+        var targetUrl = '/' + lang + targetPath + window.location.search;
+        window.location.replace(targetUrl);
+      })();
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
